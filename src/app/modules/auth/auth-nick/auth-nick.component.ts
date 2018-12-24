@@ -12,7 +12,7 @@ import { AuthMailData, User } from '../../../shared/models';
 })
 export class AuthNickComponent implements OnInit {
   @Input() authMailData: AuthMailData;
-  private nickForm: FormGroup;
+  nickForm: FormGroup;
   private submitting = false;
 
   constructor(

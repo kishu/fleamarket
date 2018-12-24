@@ -8,8 +8,8 @@ import { User } from '../../shared/models';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  protected displayName: string;
-  protected corpDisplayName: string;
+  displayName: string;
+  corpDisplayName: string;
 
   constructor(
     private route: ActivatedRoute) { }

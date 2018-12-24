@@ -9,8 +9,8 @@ enum Phase { mail, code, nick }
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
-  private Phase: typeof Phase = Phase;
-  private phase = Phase.mail;
+  Phase: typeof Phase = Phase;
+  phase = Phase.mail;
   private authMailData: AuthMailData;
 
   constructor() { }

@@ -11,11 +11,11 @@ export class AuthCodeComponent implements OnInit {
   @Input() authMailData: AuthMailData;
   @Output() reset = new EventEmitter<string>();
   @Output() submitted = new EventEmitter<null>();
-  private codeForm: FormGroup;
+  codeForm: FormGroup;
 
   private timerVal = 180; // 3min
   private timerInterval: any;
-  private timeEnd = false;
+  timeEnd = false;
 
   constructor(private fb: FormBuilder) {
     this.codeForm = this.fb.group({

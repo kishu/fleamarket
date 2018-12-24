@@ -13,8 +13,8 @@ import { SendgridService } from '../../../shared/services';
 })
 export class AuthMailComponent implements OnInit {
   @Output() submitted = new EventEmitter<AuthMailData>();
-  protected corps$: Observable<Corp[]>;
-  protected mailForm: FormGroup;
+  corps$: Observable<Corp[]>;
+  mailForm: FormGroup;
   private submitting = false;
   private authCode: string;
 
