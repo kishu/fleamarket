@@ -61,10 +61,9 @@ export class AuthMailComponent implements OnInit {
   onSubmit() {
     if (!this.submitting) {
       this.submitting = true;
-      // this.sendGridService
-      //   .sendLoginMail(this.mail, this.upperCorpName, this.authCode)
-      //   .subscribe(this.successl, this.error);
-      this.success();
+      this.sendGridService
+        .sendLoginMail(this.email, this.corp.value.displayName, this.authCode)
+        .subscribe(this.success, this.error);
     }
   }
 
