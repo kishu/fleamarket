@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { SharedModule } from './shared/shared.module';
+import { UserResolver } from './shared/resolvers';
 import { AuthModule } from './modules/auth/auth.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,7 +31,9 @@ import { HomeComponent } from './modules/home/home.component';
     AngularFirestoreModule,
     AngularFireStorageModule
   ],
-  providers: [],
+  providers: [
+    UserResolver
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../core/http';
+import { ActivatedRoute } from '@angular/router';
+import { User } from '../../shared/models';
 
 @Component({
   selector: 'app-home',
@@ -7,14 +8,16 @@ import { AuthService } from '../../core/http';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  private displayName: string;
+  protected displayName: string;
+  protected corpDisplayName: string;
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.authService.loginUserInfo.subscribe(user => {
-      this.displayName = user.displayName;
-    });
+    const user: User = this.route.snapshot.data.user;
+    this.displayName = user.displayName;
+    this.corpDisplayName = user.corp.displayName;
   }
 
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { first } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { User } from '../../shared/models';
 
 @Injectable({
@@ -15,8 +15,15 @@ export class UserService {
 
   getUser(uid) {
     return this.afs.doc<User>(`users/${uid}`)
-      .valueChanges()
-      .pipe(first());
+      .snapshotChanges()
+      .pipe(
+        first(),
+        map(user => {
+          const data = user.payload.data();
+          const id = user.payload.id;
+          return { id, ...data };
+        })
+      );
   }
 
   addUser(uid: string, userExt: User) {
