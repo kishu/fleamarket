@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
 
   error = (e) => {
     console.error(e);
-    alert(e.error);
+    alert(e.message);
   }
 
   onLogout() {
