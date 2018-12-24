@@ -1,0 +1,41 @@
+<div class="wrap sub form">
+  <header>
+    <h2>이메일 인증</h2>
+    <!--<a href="join2.html" class="back">이전</a>-->
+  </header>
+
+  <ng-container [ngSwitch]="phase">
+    <ng-container *ngSwitchCase="Phase.mail">
+      <app-auth-mail
+        (submitted)="onSubmittedMail($event)"></app-auth-mail>
+    </ng-container>
+    <ng-container *ngSwitchCase="Phase.code">
+      <app-auth-code
+        [authMailData]="authMailData"
+        (reset)="onReset()"
+        (submitted)="onSubmittedCode()"></app-auth-code>
+    </ng-container>
+    <ng-container *ngSwitchCase="Phase.nick">
+      <app-auth-nick
+        [authMailData]="authMailData"></app-auth-nick>
+    </ng-container>
+  </ng-container>
+</div>
+
+<div style="display:none">
+  <section class="nickname" style="display:none">
+    <h3>e-mail 인증 완료</h3>
+    <p class="explain">이메일 인증이 완료되었습니다.</p>
+  </section>
+
+  <section class="nickname" style="display:none">
+    <h3>이름 입력</h3>
+    <p class="explain">그룹 내 다른 사용자에게 보여지는 정보입니다.</p>
+    <div class="table margin2">
+      <div class="td">
+        <input type="text" placeholder="이름(10자 이내)" class="input">
+      </div>
+    </div>
+    <a href="index.html" class="button margin3">완료</a>
+  </section>
+</div>

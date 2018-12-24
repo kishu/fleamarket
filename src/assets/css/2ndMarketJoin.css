@@ -1,0 +1,213 @@
+@charset "UTF-8";
+
+.intro {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.intro div {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: contain;
+}
+
+.intro .intro1 {
+  background-image: url(../img/intro1.png);
+}
+
+.intro .intro2 {
+  background-image: url(../img/intro2.png);
+}
+
+.intro .intro3 {
+  background-image: url(../img/intro3.png);
+}
+
+.intro .intro4 {
+  background-image: url(../img/intro4.png);
+}
+
+.intro div a {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 44px;
+  background-color: #ef494f;
+  color: rgba(0, 0, 0, 0);
+}
+
+.intro .slick-prev {
+  display: none !important;
+}
+
+.intro .slick-next {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background-color: #ef494f;
+  color: rgba(0, 0, 0, 0);
+  background-image: url(../img/intro_next.png);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: auto 48px;
+}
+
+.intro .slick-next.slick-disabled {
+  background-image: url(../img/intro_start.png);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: auto 48px;
+  pointer-events: none;
+}
+
+.intro .slick-dots {
+    bottom: 58px;
+}
+
+.join_thumb {
+  position: relative;
+  height: 155px;
+  margin: 0 auto;
+}
+
+.join_thumb.join {
+  height: 130px;
+  background-image: url(../img/bg_join.png);
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: 320px 155px;
+}
+
+.join_thumb.join_market {
+  /*background-image: url(../img/bg_join_market.png);*/
+  background-image: url(../img/join_loading.png);
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: 320px 1705px;
+  animation: 5.5s linear 0s infinite loading;
+  /*animation-fill-mode: none;*/
+}
+
+.join_thumb.create_group {
+  background-image: url(../img/bg_create_group.png);
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: 320px 155px;
+}
+
+.join_thumb.congratulation {
+  background-image: url(../img/bg_congratulation.png);
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: 320px 155px;
+}
+
+.join_thumb.join_market .group_name,
+.join_thumb.congratulation .group_name {
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 98px;
+  width: 150px;
+  margin: 0 auto;
+  font-size: 16px;
+  text-align: center;
+  line-height: 34px;
+  color: #fff;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.main_copy {
+  width: 80%;
+  margin: 0 auto;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  word-break: keep-all;
+  word-wrap: break-word;
+}
+
+.join_copy {
+  width: 80%;
+  margin: 0 auto;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  color: #333;
+}
+
+.main_copy + .join_copy,
+.join_copy + .join_copy {
+  margin-top: 5px;
+}
+
+.dimmed {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 30;
+}
+
+.welcome {
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  top: 44px;
+  padding: 20px;
+  border-radius: 3px;
+  background-color: #fff;
+  z-index: 30;
+
+}
+
+@keyframes loading {
+  0%, 10% {
+    background-position: 50% 0;
+  }
+  10.01%, 19% {
+    background-position: 50% -155px;
+  }
+  19.01%, 28% {
+    background-position: 50% -310px;
+  }
+  28.01%, 37% {
+    background-position: 50% -465px;
+  }
+  37.01%, 46% {
+    background-position: 50% -620px;
+  }
+  46.01%, 55% {
+    background-position: 50% -775px;
+  }
+  55.01%, 64% {
+    background-position: 50% -930px;
+  }
+  64.01%, 73% {
+    background-position: 50% -1085px;
+  }
+  73.01%, 82% {
+    background-position: 50% -1240px;
+  }
+  82.01%, 91% {
+    background-position: 50% -1395px;
+  }
+  91.01%, 100% {
+    background-position: 50% -1550px;
+  }
+}

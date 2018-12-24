@@ -1,0 +1,29 @@
+<section class="reverification">
+  <h3>인증 메일 발송</h3>
+  <p class="explain">
+    인증 메일을 발송했습니다.<br>
+    3분안에 인증을 완료해 주세요.<br>
+    메일을 받지 못했다면
+    <a href="#" (click)="onClickRetry($event)">다시 인증하기</a>를 눌러주세요.
+  </p>
+
+  <form [formGroup]="codeForm" (ngSubmit)="onSubmit()">
+    <input type="text"
+      formControlName="code"
+      placeholder="인증코드"
+      maxlength="4"
+      class="input"
+      [disabled]="timeEnd">
+    <span>({{ timerStr }})</span>
+    <button
+      [disabled]="codeForm.invalid && timeEnd"
+      class="button margin3 verification">확인</button>
+    <a href="#" (click)="onClickRetry($event)" class="button margin3">다시 인증하기</a>
+  </form>
+
+  <div *ngIf="code.invalid && (code.dirty || code.touched)" class="">
+    <small *ngIf="code.errors['required']">인증 코드를 입력하세요.</small>
+    <small *ngIf="code.errors['minlength']">4자를 입력하세요.</small>
+  </div>
+
+</section>

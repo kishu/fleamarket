@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>2ndMarket</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/2ndMarket.css">
+    <link rel="stylesheet" href="css/2ndMarketForm.css">
+</head>
+<body ontouchstart="">
+
+<div class="wrap sub form">
+    <header>
+        <h2>상품 등록</h2>
+        <a href="index.html" class="back">네이버웹툰</a>
+    </header>
+    <div>
+        <section>
+            <h3>상품 등록 위치</h3>
+            <p class="explain">2nd Lounge를 선택하시면, 다른 그룹에도 상품을 판매할 수 있습니다.</p>
+
+            <div class="table spacing fixed margin1">
+                <div class="td">
+                    <input type="checkbox" name="" class="checkbox" id="r1" checked>
+                    <label for="r1" class="block center"><small>내 그룹</small><br><strong>NAVER</strong></label>
+                </div>
+                <div class="td">
+                    <input type="checkbox" name="" class="checkbox" id="r2">
+                    <label for="r2" class="block center"><small>공개 그룹</small><br><strong>2nd Lounge</strong></label>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3>상품 이미지 등록</h3>
+            <p class="explain">상품의 상태를 알 수 있도록 여러장의 사진을 등록하는 것이 좋습니다.</p>
+
+            <div class="attach_file">
+                <div class="goods_thumb_area">
+                    <div class="goods_thumb" style="background-image: url(img/sample1.png);">
+                        <div class="set_profile_thumb">정면 이미지</div>
+                        <input type="file" accept="image/gif, image/jpeg, image/png">
+                    </div>
+                    <a href="#" class="attach_delete">삭제</a>
+                </div>
+
+                <div class="goods_thumb_area">
+                    <div class="goods_thumb">
+                        <div class="set_profile_thumb">측면 이미지</div>
+                        <input type="file" accept="image/gif, image/jpeg, image/png">
+                    </div>
+                    <a href="#" class="attach_delete">삭제</a>
+                </div>
+
+                <div class="goods_thumb_area">
+                    <div class="goods_thumb">
+                        <div class="set_profile_thumb">뒷면 이미지</div>
+                        <input type="file" accept="image/gif, image/jpeg, image/png">
+                    </div>
+                    <a href="#" class="attach_delete">삭제</a>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3>카테고리 선택</h3>
+            <p class="explain">상품의 분류에 맞는 카테고리를 선택해 주세요.</p>
+            <div class="margin1 grid">
+                <span class="grid3">
+                    <input type="radio" name="r1" class="radio" id="r1_1" checked>
+                    <label for="r1_1" class="block center">
+                        <img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt="">
+                        가전/디지털
+                    </label>
+                </span>
+                <span class="grid3">
+                    <input type="radio" name="r1" class="radio" id="r1_2">
+                    <label for="r1_2" class="block center">
+                        <img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt="">
+                        생활용품
+                    </label>
+                </span>
+                <span class="grid3">
+                    <input type="radio" name="r1" class="radio" id="r1_3">
+                    <label for="r1_3" class="block center">
+                        <img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt="">
+                        뷰티
+                    </label>
+                </span>
+                <span class="grid3">
+                    <input type="radio" name="r1" class="radio" id="r1_4">
+                    <label for="r1_4" class="block center">
+                        <img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt="">
+                        홈데코
+                    </label>
+                </span>
+                <span class="grid3">
+                    <input type="radio" name="r1" class="radio" id="r1_5">
+                    <label for="r1_5" class="block center">
+                        <img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt="">
+                        여성의류
+                    </label>
+                </span>
+                <span class="grid3">
+                    <input type="radio" name="r1" class="radio" id="r1_6">
+                    <label for="r1_6" class="block center">
+                        <img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt="">
+                        남성의류
+                    </label>
+                </span>
+                <span class="grid3">
+                    <input type="radio" name="r1" class="radio" id="r1_7">
+                    <label for="r1_7" class="block center">
+                        <img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt="">
+                        패션잡화
+                    </label>
+                </span>
+                <span class="grid3">
+                    <input type="radio" name="r1" class="radio" id="r1_8">
+                    <label for="r1_8" class="block center">
+                        <img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt="">
+                        명품/주얼리
+                    </label>
+                </span>
+                <span class="grid3">
+                    <input type="radio" name="r1" class="radio" id="r1_9">
+                    <label for="r1_9" class="block center">
+                        <img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt="">
+                        유아/출산
+                    </label>
+                </span>
+            </div>
+            <h3 class="margin2">자주 쓰는 카테고리</h3>
+            <p class="explain">최근 등록한 상품의 카테고리입니다.<br> 재사용 시 쉽고 빠르게 카테고리를 선택할 수 있습니다.</p>
+            <div class="margin1 grid">
+                <span class="grid3">
+                    <input type="radio" name="r1" class="radio" id="r1_10">
+                    <label for="r1_10" class="block center">
+                        <img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt="">
+                        가전/디지털
+                    </label>
+                </span>
+                <span class="grid3">
+                    <input type="radio" name="r1" class="radio" id="r1_11">
+                    <label for="r1_11" class="block center">
+                        <img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt="">
+                        여성의류
+                    </label>
+                </span>
+            </div>
+        </section>
+
+        <section>
+            <h3>구입시기</h3>
+            <div class="margin1 grid">
+                <span>
+                    <input type="radio" name="r2" class="radio" id="r2_1" checked>
+                    <label for="r2_1" class="block">알 수 없음</label>
+                </span>
+                <span>
+                    <input type="radio" name="r2" class="radio" id="r2_2">
+                    <label for="r2_2" class="block">일주일 내</label>
+                </span>
+                <span>
+                    <input type="radio" name="r2" class="radio" id="r2_3">
+                    <label for="r2_3" class="block">한 달 이내</label>
+                </span>
+                <span>
+                    <input type="radio" name="r2" class="radio" id="r2_4">
+                    <label for="r2_4" class="block">석 달 이내</label>
+                </span>
+                <span>
+                    <input type="radio" name="r2" class="radio" id="r2_5">
+                    <label for="r2_5" class="block">일 년 이내</label>
+                </span>
+            </div>
+        </section>
+
+        <section>
+            <h3>상품 상태</h3>
+            <div class="margin1 grid">
+                <span>
+                    <input type="radio" name="r3" class="radio" id="r3_1" checked>
+                    <label for="r3_1" class="block center">미개봉</label>
+                </span>
+                <span>
+                    <input type="radio" name="r3" class="radio" id="r3_2">
+                    <label for="r3_2" class="block center">사용감 있음</label>
+                </span>
+                <span>
+                    <input type="radio" name="r3" class="radio" id="r3_3">
+                    <label for="r3_3" class="block center">하자 없는 거의 새 상품</label>
+                </span>
+            </div>
+        </section>
+
+        <section>
+            <h3>등록 제목</h3>
+            <p class="explain">원하시는 제목을 30자 이내로 적어주세요.</p>
+            <div class="table spacing margin1">
+                <div class="td">
+                    <input type="text" class="input" placeholder="등록 제목 (30자 이내)">
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3>상품 설명</h3>
+            <p class="explain">상품의 특징, 사용감 사이즈, 소재 등 상품의 정보를 상세히 적어주세요.</p>
+            <div class="table spacing margin1">
+                <div class="td">
+                    <textarea cols="50" rows="10" class="textarea" placeholder="#해시태그를 입력하시면 검색이 더욱 잘 됩니다."></textarea>
+                    <xmp class="clone"></xmp>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3>상품가격</h3>
+            <p class="explain">원하시는 가격을 적어주세요.</p>
+            <div class="table spacing margin1">
+                <div class="td">
+                    <input type="tel" class="input" placeholder="상품가격(원)">
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3>거래방법</h3>
+            <p class="explain">원하시는 거래 방법을 선택해주세요.</p>
+            <div class="margin1 grid">
+                <span>
+                    <input type="radio" name="r4" class="radio" id="r4_1" checked>
+                    <label for="r4_1" class="block">직거래</label>
+                </span>
+                <span>
+                    <input type="radio" name="r4" class="radio" id="r4_2">
+                    <label for="r4_2" class="block">택배</label>
+                </span>
+            </div>
+            <div class="grid">
+                <span class="grid1">
+                    <input type="text" class="input" placeholder="기타 거래 가능한 방법을 적어주세요.">
+                </span>
+            </div>
+        </section>
+
+        <section>
+            <h3>연락처 (선택사항)</h3>
+            <p class="explain">전화번호, 카카오톡ID, 이메일 등 연락 가능한 방법을 적어주세요.</p>
+            <div class="table spacing margin1">
+                <div class="td">
+                    <input type="text" class="input">
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3>기부 약속 (선택사항)</h3>
+            <p class="explain">판매 완료 시 지정한 금액만큼 기부가 이루어집니다.</p>
+            <div class="margin1 grid">
+                <span>
+                    <input type="radio" name="r5" class="radio" id="r5_1" checked>
+                    <label for="r5_1" class="block">다음에 할래요</label>
+                </span>
+                <span>
+                    <input type="radio" name="r5" class="radio" id="r5_2">
+                    <label for="r5_2" class="block">100원</label>
+                </span>
+                <span>
+                    <input type="radio" name="r5" class="radio" id="r5_3">
+                    <label for="r5_3" class="block">500원</label>
+                </span>
+                <span>
+                    <input type="radio" name="r5" class="radio" id="r5_4">
+                    <label for="r5_4" class="block">1000원</label>
+                </span>
+                <span>
+                    <input type="radio" name="r5" class="radio" id="r5_5">
+                    <label for="r5_5" class="block">5000원</label>
+                </span>
+                <span>
+                    <input type="radio" name="r5" class="radio" id="r5_6">
+                    <label for="r5_6">10000원</label>
+                </span>
+            </div>
+        </section>
+
+        <section>
+            <div class="table spacing">
+                <div class="td">
+                    <a href="#" class="button cancel">취소</a>
+                </div>
+                <div class="td">
+                </div>
+                <div class="td">
+                    <a href="#" class="button">등록</a>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="table spacing fixed">
+                <div class="td">
+                    <a href="#" class="button cancel">취소</a>
+                </div>
+                <div class="td">
+                    <a href="#" class="button temp">임시저장</a>
+                </div>
+                <div class="td">
+                    <a href="#" class="button">등록</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.uploadPreview.min.js"></script>
+<script>
+$.uploadPreview({
+    input_field: ".goods_thumb_area input",
+    preview_box: ".goods_thumb"
+});
+
+$(".textarea").on("change keydown keyup", function(e) {
+    $(".textarea + .clone").html($(this)[0].value);
+    $(".textarea").css("minHeight", $(".textarea + .clone").outerHeight()+18);
+});
+</script>
+
+</body>
+</html>

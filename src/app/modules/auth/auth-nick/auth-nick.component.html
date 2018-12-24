@@ -1,0 +1,24 @@
+<section class="reverification">
+  <h3>넥네임 입력</h3>
+  <p class="explain">
+    세컨드마겟에서 사용할<br>
+    닉네임을 입력해 주세요.
+  </p>
+
+  <form [formGroup]="nickForm" (ngSubmit)="onSubmit()">
+    <input type="text"
+           formControlName="nick"
+           placeholder="닉네임"
+           maxlength="16"
+           class="input">
+    <button
+      [disabled]="nickForm.invalid"
+      class="button margin3 verification">확인</button>
+  </form>
+
+  <div *ngIf="nick.invalid && (nick.dirty || nick.touched)" class="">
+    <small *ngIf="nick.errors['required']">닉네임을 입력하세요.</small>
+    <small *ngIf="nick.errors['minlength']">2자 이상 입력하세요.</small>
+  </div>
+
+</section>

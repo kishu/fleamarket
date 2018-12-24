@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>2ndMarket</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/2ndMarket.css">
+    <link rel="stylesheet" href="css/2ndMarketForm.css">
+    <link rel="stylesheet" href="css/2ndMarketJoin.css">
+</head>
+<body ontouchstart="">
+
+<div class="wrap sub form">
+    <header>
+        <h2>지인 관리</h2>
+        <a href="index.html" class="back">이전</a>
+    </header>
+    <section>
+        <div class="join_thumb create_group"></div>
+        <p class="explain center">세컨마켓을 함께 이용하고 싶은 지인을 초대해보세요.<br> 초대를 받은 지인도 임직원과 동일하게 세컨마켓을 이용할 수 있습니다.</p>
+
+
+        <h3 class="margin5">초대한 지인 목록</h3>
+        <p class="explain">재인증 버튼을 누르면 지인에게 인증 메일이 발송됩니다.<br> 삭제된 지인은 더 이상 세컨마켓을 이용할 수 없습니다.</p>
+
+        <div class="hr margin1"></div>
+
+        <div class="table margin1">
+            <div class="td">
+                <h3>안성준</h3>
+                <p class="explain small">ahn0914@naver.com</p>
+            </div>
+            <div class="td" style="width: 70px;">
+                <a href="#" class="button">재인증</a>
+            </div>
+            <div class="td" style="width:5px;">
+            </div>
+            <div class="td" style="width: 50px;">
+                <a href="#" class="button temp">삭제</a>
+            </div>
+        </div>
+
+        <div class="hr margin1"></div>
+
+        <div class="table margin1">
+            <div class="td">
+                <h3>용영환</h3>
+                <p class="explain small">xenonix@google.com</p>
+            </div>
+            <div class="td" style="width: 70px;">
+                <a href="#" class="button">재인증</a>
+            </div>
+            <div class="td" style="width:5px;">
+            </div>
+            <div class="td" style="width: 50px;">
+                <a href="#" class="button temp">삭제</a>
+            </div>
+        </div>
+
+        <div class="hr margin1"></div>
+
+        <div class="table margin1">
+            <div class="td">
+                <h3>유경진</h3>
+                <p class="explain small">kenzin@apple.com</p>
+            </div>
+            <div class="td" style="width: 70px;">
+                <a href="#" class="button">재인증</a>
+            </div>
+            <div class="td" style="width:5px;">
+            </div>
+            <div class="td" style="width: 50px;">
+                <a href="#" class="button temp">삭제</a>
+            </div>
+        </div>
+
+        <div class="hr margin1"></div>
+
+        <div class="table margin1">
+            <div class="td">
+                <h3>소지훈</h3>
+                <p class="explain small">sogoonii@</p>
+            </div>
+            <div class="td" style="width: 70px;">
+                <a href="#" class="button">재인증</a>
+            </div>
+            <div class="td" style="width:5px;">
+            </div>
+            <div class="td" style="width: 50px;">
+                <a href="#" class="button temp">삭제</a>
+            </div>
+        </div>
+
+        <div class="hr margin1"></div>
+
+        <div class="table margin5">
+            <div class="td" style="width:120px;">
+                <input type="text" placeholder="이름" class="input" value="">
+            </div>
+            <div class="td" style="width:5px;">
+            </div>
+            <div class="td">
+                <input type="email" placeholder="이메일" class="input">
+            </div>
+        </div>
+
+        <a href="#" class="button margin1">초대하기</a>
+    </section>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.uploadPreview.min.js"></script>
+<script>
+$(document).ready(function() {
+  $.uploadPreview({
+    input_field: "#setProfileThumb",
+    preview_box: ".profile_thumb"
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>2ndMarket</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/slick.css"/>
+    <link rel="stylesheet" href="css/2ndMarket.css">
+    <link rel="stylesheet" href="css/2ndMarketForm.css">
+</head>
+<body ontouchstart="">
+
+<div class="wrap sub">
+    <header>
+        <h2>등록상품</h2>
+        <a href="index.html" class="back">이전</a>
+    </header>
+
+    <section>
+        <ul class="large_list" id="goods_list">
+            <li>
+                <div class="item">
+                    <a href="view.html">
+                        <div class="goods_thumb" style="background-image:url(img/dark.png),url(img/thumb.png);">
+                            <dl class="feed">
+                                <dt class="like"></dt>
+                                <dd>99</dd>
+                                <dt class="comment"></dt>
+                                <dd>999</dd>
+                                <dt class="donate"></dt>
+                                <dd>20%</dd>
+                            </dl>
+                        </div>
+                        <div class="item_description">
+                            <div class="author">
+                                <span class="author_thumb" style="background-image:url(img/author.png);"></span>
+                            </div>
+                            <div class="text">
+                                <span class="name ellipsis">캐논 정품 렌즈 EFS 18-200mm</span>
+                                <span class="price ellipsis">100,000원</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="item soldout">
+                    <a href="view.html">
+                        <div class="goods_thumb" style="background-image:url(img/dark.png),url(img/thumb.png);">
+                            <dl class="feed">
+                                <dt class="like"></dt>
+                                <dd>99</dd>
+                                <dt class="comment"></dt>
+                                <dd>999</dd>
+                                <dt class="donate"></dt>
+                                <dd>20%</dd>
+                            </dl>
+                        </div>
+                        <div class="item_description">
+                            <div class="author">
+                                <span class="author_thumb" style="background-image:url(img/author.png);"></span>
+                            </div>
+                            <div class="text">
+                                <span class="name ellipsis">캐논 정품 렌즈 EFS 18-200mm</span>
+                                <span class="price ellipsis">100,000원</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="item soldout">
+                    <a href="view.html">
+                        <div class="goods_thumb" style="background-image:url(img/dark.png),url(img/thumb.png);">
+                            <dl class="feed">
+                                <dt class="like"></dt>
+                                <dd>99</dd>
+                                <dt class="comment"></dt>
+                                <dd>999</dd>
+                                <dt class="donate"></dt>
+                                <dd>20%</dd>
+                            </dl>
+                        </div>
+                        <div class="item_description">
+                            <div class="author">
+                                <span class="author_thumb" style="background-image:url(img/author.png);"></span>
+                            </div>
+                            <div class="text">
+                                <span class="name ellipsis">캐논 정품 렌즈 EFS 18-200mm</span>
+                                <span class="price ellipsis">100,000원</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </section>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.uploadPreview.min.js"></script>
+<script src="js/slick.min.js"></script>
+<script>
+    $('.single-item').slick({
+        arrows: false,
+        dots: true
+    });
+</script>
+<script>
+$.uploadPreview({
+    input_field: ".goods_thumb_area input",
+    preview_box: ".goods_thumb"
+});
+
+$(".textarea").on("change keydown keyup", function(e) {
+    $(".textarea + .clone").html($(this)[0].value);
+    $(".textarea").css("minHeight", $(".textarea + .clone").outerHeight()+22);
+});
+</script>
+
+</body>
+</html>

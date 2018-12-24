@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>2nd Market</title>
+  <base href="./">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<link rel="icon" type="image/x-icon" href="favicon.ico">-->
+  <link rel="stylesheet" href="assets/css/normalize.css">
+  <link rel="stylesheet" href="assets/css/pikabu.css">
+  <link rel="stylesheet" href="assets/css/slick.css"/>
+  <link rel="stylesheet" href="assets/css/2ndMarket.css">
+  <link rel="stylesheet" href="assets/css/2ndMarketForm.css">
+  <link rel="stylesheet" href="assets/css/2ndMarketJoin.css">
+</head>
+<body>
+  <app-root></app-root>
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/pikabu.js"></script>
+  <script>
+    $(function() {
+      pikabu = new Pikabu();
+    });
+  </script>
+
+  <script src="assets/js/slick.min.js"></script>
+  <script>
+    $(function() {
+      $('.single-item').slick({
+        arrows: false,
+        dots: true
+      });
+
+      $('.intro').slick({
+        infinite: false,
+        arrows: true,
+        dots: false
+      });
+    });
+  </script>
+
+  <script>
+    // $(window).scroll(function() {
+    //     if($(window).scrollTop() > $("header + nav").offset().top) {
+    //         $(".m-pikabu-sidebar-close nav.clone").show();
+    //     } else {
+    //         $(".m-pikabu-sidebar-close nav.clone").hide();
+    //     }
+
+    //     if($(window).scrollTop() > $("header + nav").offset().top) {
+    //         $(".top").addClass("on");
+    //     } else {
+    //         $(".top").removeClass("on");
+    //     }
+    // });
+
+    $(window).on("scroll", function() {
+      if($(window).scrollTop() > $("header + nav").offset().top) {
+        $(".m-pikabu-sidebar-close nav.clone").show();
+      } else {
+        $(".m-pikabu-sidebar-close nav.clone").hide();
+      }
+
+      if($(window).scrollTop() > $("header + nav").offset().top) {
+        $(".top").addClass("on");
+      } else {
+        $(".top").removeClass("on");
+      }
+
+      if($(window).scrollTop() < -200) {
+        location.reload();
+      }
+
+      if($(window).scrollTop() >= $(document).height() - $(window).height() - 200) {
+        $("#goods_list li").eq(0).clone().appendTo($("#goods_list"));
+      }
+    });
+
+    $(function() {
+
+      $(".top").on("click", function () {
+        $(document).scrollTop(0);
+        return false;
+      });
+
+      $(".group h1.clone span").on("click", function () {
+        $(this)
+          .addClass("on")
+          .siblings().removeClass("on");
+      });
+
+      $(".view_option .large").on("click", function () {
+        $(".view_option .large").hide();
+        $(".view_option .small").show();
+        $(".small_list")
+          .addClass("large_list")
+          .removeClass("small_list");
+        return false;
+      });
+
+      $(".view_option .small").on("click", function () {
+        $(".view_option .large").show();
+        $(".view_option .small").hide();
+        $(".large_list")
+          .addClass("small_list")
+          .removeClass("large_list");
+        return false;
+      });
+
+      $(".view_option .crown").on("click", function () {
+        $(".view_option .crown").toggleClass("on");
+        return false;
+      });
+
+      $(".alarm_body").on("click", function () {
+        $(this).find(".alarm_nothing").toggle();
+        $(this).find(".alarm_list").toggle();
+      });
+
+      $(".welcome .button").on("click", function () {
+        $(".welcome").hide();
+        $(".dimmed").hide();
+      });
+
+      $(".likeit").on("click", function () {
+        $(this).toggleClass("on");
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>2ndMarket</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/2ndMarket.css">
+    <link rel="stylesheet" href="css/2ndMarketForm.css">
+</head>
+<body ontouchstart="">
+
+<div class="wrap sub form">
+    <header>
+        <h2>Step3. 본인 인증</h2>
+        <a href="join2.html" class="back">이전</a>
+    </header>
+    <section class="email">
+        <h3>e-mail 주소 입력</h3>
+        <p class="explain">본인 인증 후 서비스를 이용하실 수 있습니다.</p>
+        <p class="explain">본인 인증을 위해 메일 주소를 입력해주세요.<br> 입력하신 메일 주소로 인증 메일을 발송합니다.</p>
+
+        <div class="table margin2">
+            <div class="td">
+                <input type="email" placeholder="메일 주소" class="input">
+            </div>
+            <div class="td at">
+                @
+            </div>
+            <div class="td">
+                <select class="select">
+                    <option>도메인 선택</option>
+                    <option>snu.com</option>
+                    <option>naver.com</option>
+                    <option>navercorp.com</option>
+                </select>
+            </div>
+        </div>
+
+        <a href="#" class="button margin3 verification">메일 인증하기</a>
+    </section>
+
+    <section class="reverification" style="display:none">
+        <h3>인증 메일 발송</h3>
+        <p class="explain">인증 메일을 발송했습니다.<br> 메일 발송 후 3분안에 인증을 완료해야 합니다.<br> 메일을 받지 못하셨다면 <a href="#">다시 인증하기</a>를 눌러주세요.</p>
+        <a href="#" class="button margin3">다시 인증하기 <span>(2:59)</span></a>
+    </section>
+
+    <section class="nickname" style="display:none">
+        <h3>e-mail 인증 완료</h3>
+        <p class="explain">이메일 인증이 완료되었습니다.</p>
+    </section>
+
+    <section class="nickname" style="display:none">
+        <h3>이름 입력</h3>
+        <p class="explain">그룹 내 다른 사용자에게 보여지는 정보입니다.</p>
+        <div class="table margin2">
+            <div class="td">
+                <input type="text" placeholder="이름(10자 이내)" class="input">
+            </div>
+        </div>
+        <a href="index.html" class="button margin3">완료</a>
+    </section>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script>
+function verificated() {
+    $(".email").hide();
+    $(".reverification").hide();
+    $(".nickname").show();
+}
+
+$(".verification").on("click", function() {
+    $(".nickname").removeClass("disabled");
+    $(".reverification").show();
+    $(".email").addClass("disabled");
+    setTimeout(verificated, 5000);
+});
+
+$(".reverification .button").on("click", function() {
+    $(".reverification").hide();
+    $(".email").removeClass("disabled");
+});
+</script>
+
+</body>
+</html>

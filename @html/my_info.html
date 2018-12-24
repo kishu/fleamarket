@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>2ndMarket</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/2ndMarket.css">
+    <link rel="stylesheet" href="css/2ndMarketForm.css">
+</head>
+<body ontouchstart="">
+
+<div class="wrap sub form">
+    <header>
+        <h2>내정보 설정</h2>
+        <a href="index.html" class="back">이전</a>
+    </header>
+    <section>
+        <div class="profile_border margin2">
+            <div class="profile_thumb" style="background-image: url(img/author.png);"></div>
+            <div class="profile_camera"></div>
+            <input type="file" accept="image/gif, image/jpeg, image/png" id="setProfileThumb">
+        </div>
+
+        <div class="table margin2">
+            <div class="td">
+                <input type="text" placeholder="이름을 입력하세요" class="input" value="유경진">
+            </div>
+        </div>
+        <p class="explain small">그룹 내 다른 사용자에게 보여지는 정보입니다.</p>
+
+        <div class="table margin2">
+            <div class="td">
+                <input type="text" placeholder="자기소개" class="input">
+            </div>
+        </div>
+        <p class="explain small">연락처, 메신저 ID 등 연락 가능한 방법을 적어주세요.</p>
+
+        <div class="table margin5">
+            <div class="td">
+                <h3>내 상품 알림</h3>
+                <p class="explain small">내 상품에 대한 좋아요, 댓글 알림을 받습니다.</p>
+            </div>
+            <div class="td">
+                <div class="switch">
+                    <input type="checkbox" id="c1">
+                    <label for="c1"><span></span></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="hr margin1"></div>
+
+        <div class="table margin2">
+            <div class="td">
+                <h3>내 상품 알림</h3>
+                <p class="explain small">내 상품에 대한 좋아요, 댓글 알림을 받습니다.</p>
+            </div>
+            <div class="td">
+                <div class="switch">
+                    <input type="checkbox" id="c2">
+                    <label for="c2"><span></span></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="hr margin1"></div>
+
+        <div class="table margin2">
+            <div class="td">
+                <h3>내 상품 알림</h3>
+                <p class="explain small">내 상품에 대한 좋아요, 댓글 알림을 받습니다.</p>
+            </div>
+            <div class="td">
+                <div class="switch">
+                    <input type="checkbox" id="c3" checked>
+                    <label for="c3"><span></span></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="hr margin1"></div>
+
+        <div class="table margin2">
+            <div class="td">
+                <h3>내 상품 알림</h3>
+                <p class="explain small">내 상품에 대한 좋아요, 댓글 알림을 받습니다.</p>
+            </div>
+            <div class="td">
+                <div class="switch">
+                    <input type="checkbox" id="c4">
+                    <label for="c4"><span></span></label>
+                </div>
+            </div>
+        </div>
+
+        <a href="#" class="button margin5">변경</a>
+        <a href="#" class="button margin2 temp">로그아웃</a>
+    </section>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.uploadPreview.min.js"></script>
+<script>
+$(document).ready(function() {
+  $.uploadPreview({
+    input_field: "#setProfileThumb",
+    preview_box: ".profile_thumb"
+  });
+
+  $(".button.temp").on("click", function() {
+    confirm("로그아웃을 하시면 재인증을 받아야 합니다.\n로그아웃 하시겠습니까?");
+  });
+});
+</script>
+
+</body>
+</html>

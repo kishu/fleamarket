@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>2ndMarket</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/2ndMarket.css">
+    <link rel="stylesheet" href="css/2ndMarketForm.css">
+</head>
+<body ontouchstart="">
+
+<div class="wrap sub form">
+    <header>
+        <h2>그룹 개설 신청</h2>
+        <a href="index.html" class="back">이전</a>
+    </header>
+    <section>
+        <h3>그룹 선택</h3>
+        <p class="explain">개설하고자 하는 그룹을 선택해주세요.</p>
+
+        <div class="table spacing fixed margin1">
+            <div class="td">
+                <input type="radio" name="group" class="checkbox" id="r1" checked>
+                <label for="r1" class="block">학교</label>
+            </div>
+            <div class="td">
+                <input type="radio" name="group" class="checkbox" id="r2">
+                <label for="r2" class="block">회사</label>
+            </div>
+        </div>
+
+        <h3 class="margin3"><span>학교</span>명</h3>
+        <div class="table spacing margin1">
+            <div class="td">
+                <input type="text" class="input" placeholder="예) 한국대학교">
+            </div>
+        </div>
+
+        <h3 class="margin3">e-mail</h3>
+        <div class="table spacing margin1">
+            <div class="td">
+                <input type="text" class="input" placeholder="@naver.com">
+            </div>
+        </div>
+        <p class="explain">개설을 신청하신 <span>학교</span>에서 사용하는 이메일 중 도메인을 입력해주세요.</p>
+
+        <div class="table spacing margin3">
+            <div class="td">
+                <a href="#" class="button">취소</a>
+            </div>
+            <div class="td">
+                <a href="#" class="button">신청</a>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.uploadPreview.min.js"></script>
+<script>
+$.uploadPreview({
+    input_field: ".goods_thumb_area input",
+    preview_box: ".goods_thumb"
+});
+
+$(".textarea").on("change keydown keyup", function(e) {
+    $(".textarea + .clone").html($(this)[0].value);
+    $(".textarea").css("minHeight", $(".textarea + .clone").outerHeight()+22);
+});
+</script>
+
+</body>
+</html>
