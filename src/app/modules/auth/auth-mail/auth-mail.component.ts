@@ -1,10 +1,10 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AngularFireFunctions } from '@angular/fire/functions';
 import { Observable } from 'rxjs';
 import { Corp } from '../../../shared/models';
 import { AuthMailData } from '../../../shared/models';
 import { AuthService, CorpService } from '../../../core/http';
-import { SendgridService } from '../../../shared/services';
 
 @Component({
   selector: 'app-auth-mail',
@@ -22,7 +22,7 @@ export class AuthMailComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private corpService: CorpService,
-    private sendGridService: SendgridService) {
+    private fns: AngularFireFunctions) {
     this.mailForm = this.fb.group({
       account: [
         '',
@@ -61,9 +61,13 @@ export class AuthMailComponent implements OnInit {
   onSubmit() {
     if (!this.submitting) {
       this.submitting = true;
-      this.sendGridService
-        .sendLoginMail(this.email, this.corp.value.displayName, this.authCode)
-        .subscribe(this.success, this.error);
+      const sendAuthMail = this.fns.httpsCallable('sendAuthMail');
+
+      sendAuthMail({
+        to: this.email,
+        corpName: this.corp.value.displayName,
+        authCode: this.authCode
+      }).subscribe(this.success, this.error);
     }
   }
 

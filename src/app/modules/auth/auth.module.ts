@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AuthService, CorpService } from '../../core/http';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth/auth.component';
@@ -21,6 +22,7 @@ import { LoginComponent } from './login/login.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    AngularFireFunctionsModule,
     AuthRoutingModule
   ],
   providers: [
