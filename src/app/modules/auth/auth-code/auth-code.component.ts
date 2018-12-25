@@ -46,7 +46,6 @@ export class AuthCodeComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.authMailData);
     this.initTimer();
   }
 
