@@ -1,3 +1,5 @@
+import * as $ from 'jquery';
+import 'slick-carousel';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../../shared/models';
@@ -18,6 +20,19 @@ export class HomeComponent implements OnInit {
     const user: User = this.route.snapshot.data.user;
     this.displayName = user.displayName;
     this.corpDisplayName = user.corp.displayName;
+
+    $(document).ready(function() {
+      $('.welcome .button').on('click', function(e) {
+        e.preventDefault();
+        $('.welcome').hide();
+        $('.dimmed').hide();
+      });
+
+      $('.single-item').slick({
+        arrows: false,
+        dots: true
+      });
+    });
   }
 
 }
