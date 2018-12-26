@@ -35,6 +35,10 @@ p {
   display: none;
 }
 
+.br {
+  display: inline-block;
+}
+
 .sub {
   background-color: #fff;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
