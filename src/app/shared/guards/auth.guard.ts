@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
       tap(isAuth => {
         if (!isAuth) {
           this.router.navigate(
-            ['/login'],
+            ['/intro'],
             { queryParams: { redirect: state.url }});
         }
       }));
