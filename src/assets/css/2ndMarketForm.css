@@ -47,11 +47,23 @@ body {
 }
 
 .form h3 + .explain {
-  /*margin-top: 10px;*/
+  margin-top: 10px;
 }
 
 .form .explain.small.small {
   margin-top: 5px;
+}
+
+.input-wrap {
+  position: relative;
+}
+
+.input-wrap .floating {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  color: #999;
+  transform: translateY(-50%);
 }
 
 .select_item1 {
@@ -255,6 +267,7 @@ body {
 
 .button {
   display: block;
+  width: 100%;
   padding: 10px 0;
   border: 1px solid #ef5359;
   border-radius: 2px;
