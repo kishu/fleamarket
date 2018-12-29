@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>2nd Market</title>
-  <base href="./">
+  <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--<link rel="icon" type="image/x-icon" href="favicon.ico">-->
@@ -49,27 +49,27 @@
     //     }
     // });
 
-    $(window).on("scroll", function() {
-      if($(window).scrollTop() > $("header + nav").offset().top) {
-        $(".m-pikabu-sidebar-close nav.clone").show();
-      } else {
-        $(".m-pikabu-sidebar-close nav.clone").hide();
-      }
+    // $(window).on("scroll", function() {
+      // if($(window).scrollTop() > $("header + nav").offset().top) {
+      //   $(".m-pikabu-sidebar-close nav.clone").show();
+      // } else {
+      //   $(".m-pikabu-sidebar-close nav.clone").hide();
+      // }
 
-      if($(window).scrollTop() > $("header + nav").offset().top) {
-        $(".top").addClass("on");
-      } else {
-        $(".top").removeClass("on");
-      }
+      // if($(window).scrollTop() > $("header + nav").offset().top) {
+      //   $(".top").addClass("on");
+      // } else {
+      //   $(".top").removeClass("on");
+      // }
 
-      if($(window).scrollTop() < -200) {
-        location.reload();
-      }
-
-      if($(window).scrollTop() >= $(document).height() - $(window).height() - 200) {
-        $("#goods_list li").eq(0).clone().appendTo($("#goods_list"));
-      }
-    });
+      // if($(window).scrollTop() < -200) {
+      //   location.reload();
+      // }
+      //
+      // if($(window).scrollTop() >= $(document).height() - $(window).height() - 200) {
+      //   $("#goods_list li").eq(0).clone().appendTo($("#goods_list"));
+      // }
+    // });
 
     $(function() {
 

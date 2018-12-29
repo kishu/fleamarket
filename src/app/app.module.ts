@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { AuthGuard } from './shared/guards';
 import { UserResolver } from './shared/resolvers';
 import { AuthModule } from './modules/auth/auth.module';
+import { GoodsModule } from './modules/goods/goods.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AngularFireModule } from '@angular/fire';
@@ -26,6 +27,7 @@ import { HomeComponent } from './modules/home/home.component';
     HttpClientModule,
     SharedModule,
     AuthModule,
+    GoodsModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
