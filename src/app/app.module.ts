@@ -15,7 +15,6 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 import { IntroComponent } from './modules/intro/intro.component';
 import { HomeComponent } from './modules/home/home.component';
-
 import { CloudinaryModule } from '@cloudinary/angular-5.x';
 import * as  Cloudinary from 'cloudinary-core';
 
@@ -23,7 +22,7 @@ import * as  Cloudinary from 'cloudinary-core';
   declarations: [
     AppComponent,
     HomeComponent,
-    IntroComponent
+    IntroComponent,
   ],
   imports: [
     BrowserModule,
