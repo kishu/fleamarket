@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { targetSelectedValidator } from '../target-selected-validator.directive';
 import { Cloudinary } from '@cloudinary/angular-5.x';
 import { User, Corp, ImageFile } from '../../../shared/models';
+import {del} from 'selenium-webdriver/http';
 
 enum ImageType {
   FRONT = 'front',
@@ -80,8 +81,33 @@ export class WriteComponent implements OnInit {
           Validators.required,
           Validators.maxLength(10)
         ]
-      ]
+      ],
+      delivery: this.fb.group({
+        selected: [
+          '직거래'
+        ],
+        etc: [
+          '',
+          Validators.maxLength(51)
+        ]
+      }, { validators: Validators.required })
     });
+
+    // TODO
+    // extract to method
+    const delivery = this.writeForm.get('delivery');
+
+    delivery.get('etc')
+      .valueChanges.subscribe(() => {
+        delivery.get('selected')
+          .setValue('', { emitEvent: false });
+      });
+
+    delivery.get('selected')
+      .valueChanges.subscribe(() => {
+        delivery.get('etc')
+          .setValue('', { emitEvent: false });
+      });
   }
 
   ngOnInit() {

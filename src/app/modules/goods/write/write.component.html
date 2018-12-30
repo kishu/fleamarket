@@ -329,24 +329,33 @@
       </div>
     </section>
 
-    <section>
+    <section formGroupName="delivery">
       <h3>거래방법</h3>
       <p class="explain">원하시는 거래 방법을 선택해주세요.</p>
       <div class="margin1 grid">
         <span>
-          <input type="radio" name="r4" class="radio" id="r4_1" checked>
-          <label for="r4_1" class="block">직거래</label>
+          <input type="radio" id="delivery1"
+                 name="selected" formControlName="selected"
+                 value="직거래"
+                 class="radio">
+          <label for="delivery1" class="block">직거래</label>
         </span>
         <span>
-          <input type="radio" name="r4" class="radio" id="r4_2">
-          <label for="r4_2" class="block">택배</label>
+          <input type="radio" id="delivery2"
+                 name="selected" formControlName="selected"
+                 value="택배"
+                 class="radio">
+          <label for="delivery2" class="block">택배</label>
         </span>
         </div>
         <div class="grid">
           <span class="grid1">
-          <input type="text" class="input" placeholder="기타 거래 가능한 방법을 적어주세요.">
-        </span>
-      </div>
+            <input type="text"
+                   name="etc" formControlName="etc"
+                   placeholder="기타 거래 가능한 방법을 적어주세요."
+                   class="input">
+          </span>
+        </div>
     </section>
 
     <section>
