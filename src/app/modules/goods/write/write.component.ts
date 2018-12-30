@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User, Corp } from '../../../shared/models';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { targetSelectedValidator } from '../target-selected.directive';
+import { Cloudinary } from '@cloudinary/angular-5.x';
+import { User, Corp, ImageFile } from '../../../shared/models';
 
 @Component({
   selector: 'app-write',
@@ -12,6 +13,7 @@ import { targetSelectedValidator } from '../target-selected.directive';
 export class WriteComponent implements OnInit {
   group: Corp;
   writeForm: FormGroup;
+  imageFiles = new Map();
 
   private submitting = false;
 
@@ -19,7 +21,8 @@ export class WriteComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private cloudinary: Cloudinary) {
     const user: User = this.route.snapshot.data.user;
     // TODO
     // corp -> group
@@ -39,6 +42,21 @@ export class WriteComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  protected onChangeFrontImage(e: any) {
+    const files = e.target.files;
+
+    if (files) {
+      Array.from(files).forEach(file => {
+        const random = Math.floor(Math.random() * 90000) + 10000;
+        const imageFile = new ImageFile(file);
+
+        imageFile.readAsDataURL().then(() => {
+          this.imageFiles.set(`f${random}`, imageFile);
+        });
+      });
+    }
   }
 
   protected onSubmit() {

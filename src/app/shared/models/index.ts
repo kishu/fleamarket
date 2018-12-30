@@ -30,4 +30,6 @@ export class AFSimpleUser {
   photoURL: string;
 }
 
+export * from './image-file';
+
 

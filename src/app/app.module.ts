@@ -16,6 +16,9 @@ import { environment } from '../environments/environment';
 import { IntroComponent } from './modules/intro/intro.component';
 import { HomeComponent } from './modules/home/home.component';
 
+import { CloudinaryModule } from '@cloudinary/angular-5.x';
+import * as  Cloudinary from 'cloudinary-core';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +35,8 @@ import { HomeComponent } from './modules/home/home.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    CloudinaryModule.forRoot(Cloudinary, { cloud_name: 'dhtyfa1la'}),
   ],
   providers: [
     AuthGuard,
