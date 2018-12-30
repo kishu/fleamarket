@@ -5,6 +5,12 @@ import { targetSelectedValidator } from '../target-selected.directive';
 import { Cloudinary } from '@cloudinary/angular-5.x';
 import { User, Corp, ImageFile } from '../../../shared/models';
 
+enum ImageType {
+  FRONT = 'front',
+  SIDE = 'side',
+  BACK = 'back'
+}
+
 @Component({
   selector: 'app-write',
   templateUrl: './write.component.html',
@@ -13,7 +19,10 @@ import { User, Corp, ImageFile } from '../../../shared/models';
 export class WriteComponent implements OnInit {
   group: Corp;
   writeForm: FormGroup;
-  imageFiles = new Map();
+
+  frontImageFiles = new Map<number, ImageFile>();
+  sideImageFiles = new Map<number, ImageFile>();
+  backImageFiles = new Map<number, ImageFile>();
 
   private submitting = false;
 
@@ -44,17 +53,25 @@ export class WriteComponent implements OnInit {
 
   }
 
-  protected onChangeFrontImage(e: any) {
+  protected onChangeImage(e: any, imageType: string) {
     const files = e.target.files;
 
-    if (files) {
-      Array.from(files).forEach(file => {
-        const random = Math.floor(Math.random() * 90000) + 10000;
-        const imageFile = new ImageFile(file);
+    for (let i = 0; i < files.length; i++) {
+      const file = files.item(i);
+      const imageFile = new ImageFile(file);
 
-        imageFile.readAsDataURL().then(() => {
-          this.imageFiles.set(`f${random}`, imageFile);
-        });
+      imageFile.readAsDataURL().then(() => {
+        switch (imageType) {
+          case ImageType.FRONT:
+            this.frontImageFiles.set(Date.now(), imageFile);
+            break;
+          case ImageType.SIDE:
+            this.sideImageFiles.set(Date.now(), imageFile);
+            break;
+          case ImageType.BACK:
+            this.backImageFiles.set(Date.now(), imageFile);
+            break;
+        }
       });
     }
   }
@@ -65,5 +82,4 @@ export class WriteComponent implements OnInit {
       console.log(this.writeForm.get(['target']));
     // }
   }
-
 }

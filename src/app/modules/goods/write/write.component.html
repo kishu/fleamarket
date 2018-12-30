@@ -35,12 +35,12 @@
             <input
               type="file" multiple
               accept="image/gif, image/jpeg, image/png"
-              (change)="onChangeFrontImage($event)">
+              (change)="onChangeImage($event, 'front')">
           </div>
           <a href="#" class="attach_delete">삭제</a>
         </div>
 
-        <div *ngFor="let imageFile of imageFiles | keyvalue" class="goods_thumb_area">
+        <div *ngFor="let imageFile of frontImageFiles | keyvalue" class="goods_thumb_area">
           <div class="goods_thumb" [style.backgroundImage]="'url(' + imageFile.value.dataURL + ')'">
             <div class="set_profile_thumb">{{ imageFile.key }}</div>
             <a href="#" class="attach_delete">삭제</a>
@@ -50,9 +50,19 @@
         <div class="goods_thumb_area">
           <div class="goods_thumb">
             <div class="set_profile_thumb">측면 이미지</div>
-            <input type="file" accept="image/gif, image/jpeg, image/png">
+            <input
+              type="file" multiple
+              accept="image/gif, image/jpeg, image/png"
+              (change)="onChangeImage($event, 'side')">
           </div>
           <a href="#" class="attach_delete">삭제</a>
+        </div>
+
+        <div *ngFor="let imageFile of sideImageFiles | keyvalue" class="goods_thumb_area">
+          <div class="goods_thumb" [style.backgroundImage]="'url(' + imageFile.value.dataURL + ')'">
+            <div class="set_profile_thumb">{{ imageFile.key }}</div>
+            <a href="#" class="attach_delete">삭제</a>
+          </div>
         </div>
 
         <div class="goods_thumb_area">
