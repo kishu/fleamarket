@@ -4,17 +4,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { targetSelectedValidator } from '../target-selected-validator.directive';
 import { Cloudinary } from '@cloudinary/angular-5.x';
 import { User, Corp, ImageFile } from '../../../shared/models';
-import {del} from 'selenium-webdriver/http';
 
 enum ImageType {
   FRONT = 'front',
   SIDE = 'side',
   BACK = 'back'
-}
-
-enum CategoryType {
-  CATEGORY = 'category',
-  RECENT = 'recent'
 }
 
 @Component({
@@ -50,68 +44,77 @@ export class WriteComponent implements OnInit {
     this.group = user.corp;
     console.log(user);
 
+    this.buildWriteForm();
+  }
+
+  ngOnInit() {
+
+  }
+
+  buildWriteForm() {
     this.writeForm = this.fb.group({
       target: this.fb.group({
-        group: [ true ],
-        lounge: [ false ]
+        group: true,
+        lounge: false
       }, { validators: targetSelectedValidator }),
-      categories: this.fb.group({
-        category: ['가전/디지털'],
-        recent: ['']
+      category: this.fb.group({
+        category: '가전/디지털',
+        recent: ''
       }, { validators: Validators.required }),
       purchase: ['알 수 없음', Validators.required],
       condition: ['미개봉', Validators.required],
       title: [
         '',
-        [
-          Validators.required,
-          Validators.maxLength(31)
-        ]
+        [ Validators.required,  Validators.maxLength(31) ]
       ],
       desc: [
         '',
-        [
-          Validators.required,
-          Validators.maxLength(201)
-        ]
+        [ Validators.required,  Validators.maxLength(201) ]
       ],
       price: [
         '',
-        [
-          Validators.required,
-          Validators.maxLength(10)
-        ]
+        [ Validators.required, Validators.maxLength(10) ]
       ],
       delivery: this.fb.group({
-        selected: [
-          '직거래'
-        ],
+        delivery: '직거래',
         etc: [
           '',
           Validators.maxLength(51)
         ]
-      }, { validators: Validators.required })
+      }, { validators: Validators.required }),
+      contact: [
+        '',
+        Validators.maxLength(51)
+      ],
+      donation: [
+        '0',
+        Validators.required
+      ]
     });
 
-    // TODO
-    // extract to method
-    const delivery = this.writeForm.get('delivery');
-
-    delivery.get('etc')
+    this.writeForm.get('category.category')
       .valueChanges.subscribe(() => {
-        delivery.get('selected')
+        this.writeForm.get('category.recent')
           .setValue('', { emitEvent: false });
-      });
+    });
 
-    delivery.get('selected')
+    this.writeForm.get('category.recent')
       .valueChanges.subscribe(() => {
-        delivery.get('etc')
+        this.writeForm.get('category.category')
           .setValue('', { emitEvent: false });
-      });
-  }
+    });
 
-  ngOnInit() {
+    this.writeForm.get('delivery.delivery')
+      .valueChanges.subscribe(() => {
+        this.writeForm.get('delivery.etc')
+          .setValue('', { emitEvent: false });
+    });
 
+    this.writeForm.get('delivery.etc')
+      .valueChanges.subscribe(() => {
+        this.writeForm.get('delivery.delivery')
+        .setValue('', { emitEvent: false });
+    });
   }
 
   protected onChangeImage(e: any, imageType: string) {
@@ -137,25 +140,30 @@ export class WriteComponent implements OnInit {
     }
   }
 
-  protected onChangeCategory(type: CategoryType) {
-    const categories = this.writeForm.get('categories');
-    const category = categories.get('category');
-    const recent = categories.get('recent');
-
-    switch (type) {
-      case CategoryType.CATEGORY:
-        recent.setValue('');
-        break;
-      case CategoryType.RECENT:
-        category.setValue('');
-        break;
-    }
-  }
-
   protected onSubmit() {
-    // if (!this.submitting) {
-      this.submitting = true;
-      console.log(this.writeForm.get(['target']));
-    // }
+    if (!this.submitting) {
+      // this.submitting = true;
+
+      const form = this.writeForm;
+      const goods = {
+        group: form.get('target.group').value,
+        lounge: form.get('target.lounge').value,
+        category:
+          form.get('category.category').value ||
+          form.get('category.recent').value,
+        purchase: form.get('purchase').value,
+        condition: form.get('condition').value,
+        title: form.get('title').value,
+        desc: form.get('desc').value,
+        price: form.get('price').value,
+        delivery:
+          form.get('delivery.delivery').value ||
+          form.get('delivery.etc').value,
+        contact: form.get('contact').value,
+        donation: form.get('donation').value
+      };
+
+      console.log(goods);
+    }
   }
 }

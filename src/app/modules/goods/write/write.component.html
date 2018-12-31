@@ -22,7 +22,7 @@
           <input type="checkbox" id="lounge"
                  formControlName="lounge"
                  class="checkbox">
-          <label for="r2" class="block center"><small>공개 그룹</small><br><strong>2nd Lounge</strong></label>
+          <label for="lounge" class="block center"><small>공개 그룹</small><br><strong>2nd Lounge</strong></label>
         </div>
       </div>
     </section>
@@ -78,7 +78,7 @@
       </div>
     </section>
 
-    <section formGroupName="categories">
+    <section formGroupName="category">
       <h3>카테고리 선택</h3>
       <p class="explain">상품의 분류에 맞는 카테고리를 선택해 주세요.</p>
       <div class="margin1 grid">
@@ -86,7 +86,6 @@
           <input type="radio" id="category1"
                  name="category" formControlName="category"
                  value="가전/디지털"
-                 (change)="onChangeCategory('category')"
                  class="radio">
           <label for="category1" class="block center">
             <img src="https://dummyimage.com/480/999/000.png&text=C1" width="48" height="48" alt="">
@@ -97,7 +96,6 @@
           <input type="radio" id="category2"
                  name="category" formControlName="category"
                  value="생활용품"
-                 (change)="onChangeCategory('category')"
                  class="radio">
           <label for="category2" class="block center">
             <img src="https://dummyimage.com/480/999/000.png&text=C2" width="48" height="48" alt="">
@@ -108,7 +106,6 @@
           <input type="radio" id="category3"
                  name="category" formControlName="category"
                  value="뷰티"
-                 (change)="onChangeCategory('category')"
                  class="radio">
           <label for="category3" class="block center">
             <img src="https://dummyimage.com/480/999/000.png&text=C3" width="48" height="48" alt="">
@@ -119,7 +116,6 @@
           <input type="radio" id="category4"
                  name="category" formControlName="category"
                  value="홈데코"
-                 (change)="onChangeCategory('category')"
                  class="radio">
           <label for="category4" class="block center">
             <img src="https://dummyimage.com/480/999/000.png&text=C4" width="48" height="48" alt="">
@@ -130,7 +126,6 @@
           <input type="radio" id="category5"
                  name="category" formControlName="category"
                  value="여성의류"
-                 (change)="onChangeCategory('category')"
                  class="radio">
           <label for="category5" class="block center">
             <img src="https://dummyimage.com/480/999/000.png&text=C5" width="48" height="48" alt="">
@@ -141,7 +136,6 @@
           <input type="radio" id="category6"
                  name="category" formControlName="category"
                  value="남성의류"
-                 (change)="onChangeCategory('category')"
                  class="radio">
           <label for="category6" class="block center">
             <img src="https://dummyimage.com/480/999/000.png&text=C6" width="48" height="48" alt="">
@@ -152,7 +146,6 @@
           <input type="radio" id="category7"
                  name="category" formControlName="category"
                  value="패션잡화"
-                 (change)="onChangeCategory('category')"
                  class="radio">
           <label for="category7" class="block center">
             <img src="https://dummyimage.com/480/999/000.png&text=C7" width="48" height="48" alt="">
@@ -163,7 +156,6 @@
           <input type="radio" id="category8"
                  name="category" formControlName="category"
                  value="명품/주얼리"
-                 (change)="onChangeCategory('category')"
                  class="radio">
           <label for="category8" class="block center">
             <img src="https://dummyimage.com/480/999/000.png&text=C8" width="48" height="48" alt="">
@@ -174,7 +166,6 @@
           <input type="radio" id="category9"
                  name="category" formControlName="category"
                  value="유아/출산"
-                 (change)="onChangeCategory('category')"
                  class="radio">
           <label for="category9" class="block center">
             <img src="https://dummyimage.com/480/999/000.png&text=C9" width="48" height="48" alt="">
@@ -189,7 +180,6 @@
           <input type="radio" id="recent1"
                  name="recent" formControlName="recent"
                  value="생활용품"
-                 (change)="onChangeCategory('recent')"
                  class="radio">
           <label for="recent1" class="block center">
             <img src="https://dummyimage.com/480/999/000.png&text=C2" width="48" height="48" alt="">
@@ -200,7 +190,6 @@
           <input type="radio" id="recent2"
                  name="recent" formControlName="recent"
                  value="홈데코"
-                 (change)="onChangeCategory('recent')"
                  class="radio">
           <label for="recent2" class="block center">
             <img src="https://dummyimage.com/480/999/000.png&text=C4" width="48" height="48" alt="">
@@ -335,14 +324,14 @@
       <div class="margin1 grid">
         <span>
           <input type="radio" id="delivery1"
-                 name="selected" formControlName="selected"
+                 name="delivery" formControlName="delivery"
                  value="직거래"
                  class="radio">
           <label for="delivery1" class="block">직거래</label>
         </span>
         <span>
           <input type="radio" id="delivery2"
-                 name="selected" formControlName="selected"
+                 name="delivery" formControlName="delivery"
                  value="택배"
                  class="radio">
           <label for="delivery2" class="block">택배</label>
@@ -363,7 +352,10 @@
       <p class="explain">전화번호, 카카오톡ID, 이메일 등 연락 가능한 방법을 적어주세요.</p>
       <div class="table spacing margin1">
         <div class="td">
-          <input type="text" class="input">
+          <input type="text"
+                 name="contact" formControlName="contact"
+                 maxlength="50"
+                 class="input">
         </div>
       </div>
     </section>
@@ -373,28 +365,46 @@
       <p class="explain">판매 완료 시 지정한 금액만큼 기부가 이루어집니다.</p>
       <div class="margin1 grid">
         <span>
-          <input type="radio" name="r5" class="radio" id="r5_1" checked>
-          <label for="r5_1" class="block">다음에 할래요</label>
+          <input type="radio" id="donation1"
+                 name="donation" formControlName="donation"
+                 value="0"
+                 class="radio" >
+          <label for="donation1" class="block">다음에 할래요</label>
         </span>
         <span>
-          <input type="radio" name="r5" class="radio" id="r5_2">
-          <label for="r5_2" class="block">100원</label>
+          <input type="radio" id="donation2"
+                 name="donation" formControlName="donation"
+                 value="100"
+                 class="radio" >
+          <label for="donation2" class="block">100원</label>
         </span>
         <span>
-          <input type="radio" name="r5" class="radio" id="r5_3">
-          <label for="r5_3" class="block">500원</label>
+          <input type="radio" id="donation3"
+                 name="donation" formControlName="donation"
+                 value="500"
+                 class="radio" >
+          <label for="donation3" class="block">500원</label>
         </span>
         <span>
-          <input type="radio" name="r5" class="radio" id="r5_4">
-          <label for="r5_4" class="block">1000원</label>
+          <input type="radio" id="donation4"
+                 name="donation" formControlName="donation"
+                 value="1000"
+                 class="radio" >
+          <label for="donation4" class="block">1000원</label>
         </span>
         <span>
-          <input type="radio" name="r5" class="radio" id="r5_5">
-          <label for="r5_5" class="block">5000원</label>
+          <input type="radio" id="donation5"
+                 name="donation" formControlName="donation"
+                 value="5000"
+                 class="radio" >
+          <label for="donation5" class="block">5000원</label>
         </span>
         <span>
-          <input type="radio" name="r5" class="radio" id="r5_6">
-          <label for="r5_6">10000원</label>
+          <input type="radio" id="donation6"
+                 name="donation" formControlName="donation"
+                 value="10000"
+                 class="radio" >
+          <label for="donation6">10000원</label>
         </span>
       </div>
     </section>
@@ -407,7 +417,10 @@
         <div class="td">
         </div>
         <div class="td">
-      <a href="#" class="button">등록</a>
+          <button type="submit"
+                  [disabled]="writeForm.invalid"
+                  class="button">등록</button>
+          <p>{{ writeForm.invalid }}, {{ writeForm.errors | json }}</p>
         </div>
       </div>
     </section>
