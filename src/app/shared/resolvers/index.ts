@@ -1,1 +1,1 @@
-export * from './user.resolver';
+export * from './login-info-resolver.service';

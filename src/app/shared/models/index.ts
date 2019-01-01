@@ -6,6 +6,11 @@ export interface AuthData {
   code: string;
 }
 
+export interface LoginInfo {
+  user: User;
+  group: Group;
+}
+
 export enum GroupType {
   Corp = 'CORP',
   School = 'SCHOOL',

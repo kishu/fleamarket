@@ -3,7 +3,7 @@ import { CommonModule, DecimalPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { AuthGuard } from '../../shared/guards';
-import { UserResolver } from '../../shared/resolvers';
+import { LoginInfoResolver } from '../../shared/resolvers';
 import { TargetSelectedValidatorDirective } from './target-selected-validator.directive';
 import { RemoveCommaPipe } from './remove-comma.pipe';
 import { GoodsRoutingModule } from './goods-routing.module';
@@ -25,7 +25,7 @@ import { FileUploadService } from './file-upload.service';
   ],
   providers: [
     AuthGuard,
-    UserResolver,
+    LoginInfoResolver,
     DecimalPipe,
     FileUploadService
   ],

@@ -13,7 +13,7 @@ import { GoodsModule } from './modules/goods/goods.module';
 import { AppRoutingModule } from './app-routing.module';
 // providers
 import { AuthGuard } from './shared/guards';
-import { UserResolver } from './shared/resolvers';
+import { LoginInfoResolver } from './shared/resolvers';
 // components
 import { AppComponent } from './app.component';
 import { IntroComponent } from './modules/intro/intro.component';
@@ -41,7 +41,7 @@ import { environment } from '../environments/environment';
   ],
   providers: [
     AuthGuard,
-    UserResolver
+    LoginInfoResolver
   ],
   bootstrap: [AppComponent]
 })

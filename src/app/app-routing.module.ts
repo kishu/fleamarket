@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './shared/guards';
-import { UserResolver } from './shared/resolvers';
+import { LoginInfoResolver } from './shared/resolvers';
 import { IntroComponent } from './modules/intro/intro.component';
 import { HomeComponent } from './modules/home/home.component';
 
 const routes: Routes = [
   {
     path: '', canActivate: [AuthGuard],
-    resolve: {user: UserResolver},
+    resolve: { loginInfo: LoginInfoResolver },
     children: [
       {path: '', component: HomeComponent},
     ]
