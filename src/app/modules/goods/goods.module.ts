@@ -5,7 +5,6 @@ import { SharedModule } from '../../shared/shared.module';
 import { AuthGuard } from '../../shared/guards';
 import { LoginInfoResolver } from '../../shared/resolvers';
 import { TargetSelectedValidatorDirective } from './target-selected-validator.directive';
-import { RemoveCommaPipe } from './remove-comma.pipe';
 import { GoodsRoutingModule } from './goods-routing.module';
 import { WriteComponent } from './write/write.component';
 import { FileUploadService } from '../../core/http/file-upload.service';
@@ -13,7 +12,6 @@ import { FileUploadService } from '../../core/http/file-upload.service';
 @NgModule({
   declarations: [
     TargetSelectedValidatorDirective,
-    RemoveCommaPipe,
     WriteComponent
   ],
   imports: [

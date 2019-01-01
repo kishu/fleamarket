@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, merge, Observable } from 'rxjs';
-import {map, switchMap} from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { targetSelectedValidator } from '../target-selected-validator.directive';
 import { FileUploadService, GoodsService } from '../../../core/http';
 import { Goods, Group, ImageFile, User } from '../../../shared/models';
@@ -36,6 +37,7 @@ export class WriteComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
+    private decimalPipe: DecimalPipe,
     private fileUploadService: FileUploadService,
     private goodsService: GoodsService) {
 
@@ -100,6 +102,18 @@ export class WriteComponent implements OnInit {
       .valueChanges.subscribe(() => {
         this.writeForm.get('category.category')
           .setValue('', { emitEvent: false });
+    });
+
+    this.writeForm.get('price')
+      .valueChanges.subscribe(value => {
+        if (value) {
+          const noCommaValue = value.replace(/,/g, '');
+          const intValue = parseInt(noCommaValue, 10);
+          const result = noCommaValue ?
+            this.decimalPipe.transform(intValue, '1.0-0') : '';
+          this.writeForm.get('price')
+            .setValue(result, { emitEvent: false });
+        }
     });
 
     this.writeForm.get('delivery.delivery')
@@ -197,7 +211,7 @@ export class WriteComponent implements OnInit {
       condition: form.get('condition').value,
       title: form.get('title').value,
       desc: form.get('desc').value,
-      price: form.get('price').value,
+      price: parseInt(form.get('price').value.replace(/,/g, ''), 10),
       delivery:
         form.get('delivery.delivery').value ||
         form.get('delivery.etc').value,
@@ -220,14 +234,14 @@ export class WriteComponent implements OnInit {
 
   success = () => {
     console.log('success');
-    this.submitting = false;
+    // this.submitting = false;
     // this.router.navigate(['/']);
   }
 
   error = (e) => {
     console.error(e);
     alert(e);
-    this.submitting = false;
+    // this.submitting = false;
   }
 
 }
