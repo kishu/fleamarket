@@ -11,6 +11,7 @@ import { User } from '../../shared/models';
 })
 export class HomeComponent implements OnInit {
   displayName: string;
+  // todo fetch group data for login user
   corpDisplayName: string;
 
   constructor(
@@ -19,7 +20,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     const user: User = this.route.snapshot.data.user;
     this.displayName = user.displayName;
-    this.corpDisplayName = user.corp.displayName;
+    // this.corpDisplayName = user.corp.displayName;
 
     $(document).ready(function() {
       $('.welcome .button').on('click', function(e) {

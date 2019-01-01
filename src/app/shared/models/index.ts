@@ -1,3 +1,5 @@
+import { firestore } from 'firebase';
+
 export interface AuthData {
   email: string;
   group: Group;
@@ -19,13 +21,10 @@ export class Group {
 
 export class User {
   uid?: string;
+  groupRef: firestore.DocumentReference | string;
   email: string;
   displayName: string;
   photoURL: string;
-  corp: {
-    domain: string
-    displayName: string
-  };
 }
 
 export class AFSimpleUser {

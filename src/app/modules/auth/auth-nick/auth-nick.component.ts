@@ -47,26 +47,14 @@ export class AuthNickComponent implements OnInit {
       this.authService.loginUserInfo.pipe(
         switchMap(afUser => {
           const user: User = {
+            groupRef: this.authData.group.id,
             email: this.authData.email,
             displayName: this.nick.value,
             photoURL: afUser.photoURL,
-            corp: {
-              domain: this.authData.group.domain,
-              displayName: this.authData.group.name
-            }
           };
-          return this.userService.addUser(afUser.uid, user);
+          return this.userService.setUser(afUser.uid, user);
         })
       ).subscribe(this.success, this.error);
-
-      // this.authService.loginUserInfo.pipe(
-      //   switchMap(userInfo => {
-      //     return concat(
-      //       // this.authService.updateDisplayName(this.nick.value),
-      //       this.userService.addUser(userInfo.uid, user)
-      //     );
-      //   })
-      // )
     }
   }
 

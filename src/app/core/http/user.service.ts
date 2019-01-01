@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { first, map } from 'rxjs/operators';
-import { User } from '../../shared/models';
+import { User, Group } from '../../shared/models';
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +26,12 @@ export class UserService {
       );
   }
 
-  addUser(uid: string, userExt: User) {
-    return this.usersCollection.doc(uid).set(userExt);
+  setUser(uid: string, user: User) {
+    if (typeof user.groupRef === 'string') {
+      user.groupRef = this.afs.collection('groups').doc<Group>(user.groupRef).ref;
+    }
+
+    return this.usersCollection.doc(uid).set(user);
   }
 
 }

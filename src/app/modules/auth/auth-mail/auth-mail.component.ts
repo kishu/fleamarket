@@ -69,11 +69,13 @@ export class AuthMailComponent implements OnInit {
 
   protected success = () => {
     this.submitting = false;
+
     const authData: AuthData = {
       email: this.email,
       group: this.group.value,
       code:  this.authCode
     };
+
     this.submitted.emit(authData);
     alert('인증 메일을 발송했습니다');
   }
