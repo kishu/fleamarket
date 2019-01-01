@@ -7,10 +7,24 @@ export interface AuthMailData {
   authCode: string;
 }
 
+// todo remove
 export class Corp {
   id?: string;
   domain: string;
   displayName: string;
+}
+
+export enum GroupType {
+  Corp = 'CORP',
+  School = 'SCHOOL',
+  Apt = 'Apt'
+}
+
+export class Group {
+  id?: string;
+  type: string;   // 'corp', 'apt', 'school' ...
+  name: string;
+  domain?: string;
 }
 
 export class User {
