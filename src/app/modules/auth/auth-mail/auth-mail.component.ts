@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { Observable } from 'rxjs';
 import { Group, GroupType } from '../../../shared/models';
-import { AuthMailData } from '../../../shared/models';
+import { AuthData } from '../../../shared/models';
 import { AuthService, GroupService } from '../../../core/http';
 
 @Component({
@@ -12,7 +12,7 @@ import { AuthService, GroupService } from '../../../core/http';
   styleUrls: ['./auth-mail.component.css']
 })
 export class AuthMailComponent implements OnInit {
-  @Output() submitted = new EventEmitter<AuthMailData>();
+  @Output() submitted = new EventEmitter<AuthData>();
   groups$: Observable<Group[]>;
   mailForm: FormGroup;
   private submitting = false;
@@ -61,7 +61,7 @@ export class AuthMailComponent implements OnInit {
       sendAuthMail({
         to: this.email,
         // todo corpName => groupName
-        corpName: this.group.value.displayName,
+        corpName: this.group.value.name,
         authCode: this.authCode
       }).subscribe(this.success, this.error);
     }
@@ -69,16 +69,12 @@ export class AuthMailComponent implements OnInit {
 
   protected success = () => {
     this.submitting = false;
-    const authMailData: AuthMailData = {
+    const authData: AuthData = {
       email: this.email,
-      // todo corp -> group
-      corp: {
-        domain: this.group.value.domain,
-        displayName: this.group.value.name
-      },
-      authCode:  this.authCode
+      group: this.group.value,
+      code:  this.authCode
     };
-    this.submitted.emit(authMailData);
+    this.submitted.emit(authData);
     alert('인증 메일을 발송했습니다');
   }
 

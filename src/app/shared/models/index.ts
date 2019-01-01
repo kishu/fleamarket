@@ -1,10 +1,7 @@
-export interface AuthMailData {
+export interface AuthData {
   email: string;
-  corp: {
-    domain: string,
-    displayName: string
-  };
-  authCode: string;
+  group: Group;
+  code: string;
 }
 
 export enum GroupType {

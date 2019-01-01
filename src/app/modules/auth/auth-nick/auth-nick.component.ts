@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 import { AuthService, UserService } from '../../../core/http';
-import { AuthMailData, User } from '../../../shared/models';
+import { AuthData, User } from '../../../shared/models';
 
 @Component({
   selector: 'app-auth-nick',
@@ -11,7 +11,7 @@ import { AuthMailData, User } from '../../../shared/models';
   styleUrls: ['./auth-nick.component.css']
 })
 export class AuthNickComponent implements OnInit {
-  @Input() authMailData: AuthMailData;
+  @Input() authData: AuthData;
   nickForm: FormGroup;
   private submitting = false;
 
@@ -47,10 +47,13 @@ export class AuthNickComponent implements OnInit {
       this.authService.loginUserInfo.pipe(
         switchMap(afUser => {
           const user: User = {
-            email: this.authMailData.email,
+            email: this.authData.email,
             displayName: this.nick.value,
             photoURL: afUser.photoURL,
-            corp: this.authMailData.corp,
+            corp: {
+              domain: this.authData.group.domain,
+              displayName: this.authData.group.name
+            }
           };
           return this.userService.addUser(afUser.uid, user);
         })

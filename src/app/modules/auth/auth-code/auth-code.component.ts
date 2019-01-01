@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Input, Output} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthMailData } from '../../../shared/models';
+import { AuthData } from '../../../shared/models';
 
 @Component({
   selector: 'app-auth-code',
@@ -8,7 +8,7 @@ import { AuthMailData } from '../../../shared/models';
   styleUrls: ['./auth-code.component.css']
 })
 export class AuthCodeComponent implements OnInit {
-  @Input() authMailData: AuthMailData;
+  @Input() authData: AuthData;
   @Output() reset = new EventEmitter<string>();
   @Output() submitted = new EventEmitter<null>();
   codeForm: FormGroup;
@@ -65,7 +65,7 @@ export class AuthCodeComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.code.value === this.authMailData.authCode) {
+    if (this.code.value === this.authData.code) {
       this.submitted.emit();
     } else {
       alert('인증코드가 맞지 않습니다. 다시 입력해 주세요.');

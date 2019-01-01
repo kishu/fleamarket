@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthMailData } from '../../../shared/models';
+import { AuthData } from '../../../shared/models';
 
 enum Phase { mail, code, nick }
 
@@ -11,7 +11,7 @@ enum Phase { mail, code, nick }
 export class AuthComponent implements OnInit {
   Phase: typeof Phase = Phase;
   phase = Phase.mail;
-  private authMailData: AuthMailData;
+  private authData: AuthData;
 
   constructor() { }
 
@@ -22,8 +22,8 @@ export class AuthComponent implements OnInit {
     this.phase = Phase.mail;
   }
 
-  onSubmittedMail(authMailData: AuthMailData) {
-    this.authMailData = authMailData;
+  onSubmittedMail(authData: AuthData) {
+    this.authData = authData;
     this.phase = Phase.code;
   }
 

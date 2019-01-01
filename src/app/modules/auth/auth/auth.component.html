@@ -11,13 +11,13 @@
     </ng-container>
     <ng-container *ngSwitchCase="Phase.code">
       <app-auth-code
-        [authMailData]="authMailData"
+        [authData]="authData"
         (reset)="onReset()"
         (submitted)="onSubmittedCode()"></app-auth-code>
     </ng-container>
     <ng-container *ngSwitchCase="Phase.nick">
       <app-auth-nick
-        [authMailData]="authMailData"></app-auth-nick>
+        [authData]="authData"></app-auth-nick>
     </ng-container>
   </ng-container>
 </div>
