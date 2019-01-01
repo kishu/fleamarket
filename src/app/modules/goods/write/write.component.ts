@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { forkJoin, merge } from 'rxjs';
 import { targetSelectedValidator } from '../target-selected-validator.directive';
-import { Cloudinary } from '@cloudinary/angular-5.x';
+import { FileUploadService } from '../file-upload.service';
 import { User, Corp, ImageFile } from '../../../shared/models';
 
 enum ImageType {
@@ -34,7 +35,7 @@ export class WriteComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private cloudinary: Cloudinary) {
+    private fileUploadeService: FileUploadService) {
     const user: User = this.route.snapshot.data.user;
     // TODO
     // corp -> group
@@ -51,7 +52,7 @@ export class WriteComponent implements OnInit {
 
   }
 
-  buildWriteForm() {
+  protected buildWriteForm() {
     this.writeForm = this.fb.group({
       target: this.fb.group({
         group: true,
@@ -119,7 +120,6 @@ export class WriteComponent implements OnInit {
 
   protected onChangeImage(e: any, imageType: string) {
     const files = e.target.files;
-
     for (let i = 0; i < files.length; i++) {
       const file = files.item(i);
       const imageFile = new ImageFile(file);
@@ -166,4 +166,30 @@ export class WriteComponent implements OnInit {
       console.log(goods);
     }
   }
+
+  protected test() {
+    const files = [];
+
+    this.frontImageFiles.forEach(imageFile => {
+      files.push(imageFile.file);
+    });
+
+    const progress$ = [];
+    const response$ = [];
+    const statusList = this.fileUploadeService.upload(files);
+
+    for (const key of Object.keys(statusList)) {
+      progress$.push(statusList[key].progress);
+      response$.push(statusList[key].response);
+    }
+
+    merge(progress$).pipe().subscribe(result => {
+      result.subscribe(r => console.log('progress$', r));
+    });
+
+    forkJoin(response$).subscribe(result => {
+      console.log('response$', result);
+    });
+  }
+
 }
