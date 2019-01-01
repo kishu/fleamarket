@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, merge } from 'rxjs';
 import { targetSelectedValidator } from '../target-selected-validator.directive';
 import { FileUploadService } from '../file-upload.service';
-import { User, Corp, ImageFile } from '../../../shared/models';
+import { Group, ImageFile, User } from '../../../shared/models';
 
 enum ImageType {
   FRONT = 'front',
@@ -18,7 +18,7 @@ enum ImageType {
   styleUrls: ['./write.component.css']
 })
 export class WriteComponent implements OnInit {
-  group: Corp;
+  group: Group;
   writeForm: FormGroup;
 
   frontImageFiles = new Map<number, ImageFile>();
@@ -42,7 +42,7 @@ export class WriteComponent implements OnInit {
     // add group ref to user
     // resolve user and group
     // remove and seprate corp of users
-    this.group = user.corp;
+    // this.group = user.corp;
     console.log(user);
 
     this.buildWriteForm();

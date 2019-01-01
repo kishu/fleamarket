@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
-import { AuthService, CorpService } from '../../core/http';
+import { AuthService, GroupService } from '../../core/http';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth/auth.component';
 import { AuthMailComponent } from './auth-mail/auth-mail.component';
@@ -27,7 +27,7 @@ import { LoginComponent } from './login/login.component';
   ],
   providers: [
     AuthService,
-    CorpService
+    GroupService
   ]
 })
 export class AuthModule { }

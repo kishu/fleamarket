@@ -4,7 +4,7 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { Observable } from 'rxjs';
 import { Group, GroupType } from '../../../shared/models';
 import { AuthMailData } from '../../../shared/models';
-import { AuthService, GroupService, CorpService } from '../../../core/http';
+import { AuthService, GroupService } from '../../../core/http';
 
 @Component({
   selector: 'app-auth-mail',
@@ -21,7 +21,6 @@ export class AuthMailComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private corpService: CorpService,
     private groupService: GroupService,
     private fns: AngularFireFunctions) {
     this.mailForm = this.fb.group({
