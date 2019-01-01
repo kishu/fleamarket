@@ -12,9 +12,9 @@
         @
       </div>
       <div class="td">
-        <select formControlName="corp" class="select">
+        <select formControlName="group" class="select">
           <option value="">도메인 선택</option>
-          <option *ngFor="let corp of corps$ | async" [ngValue]="corp">{{ corp.domain }}</option>
+          <option *ngFor="let group of groups$ | async" [ngValue]="group">{{ group.domain }}</option>
         </select>
       </div>
     </div>
@@ -23,8 +23,8 @@
       <span *ngIf="account.errors['required']">이메일 계정을 입력하세요.</span>
       <span *ngIf="account.errors['minlength']">2자 이상 입력하세요.</span>
     </div>
-    <div *ngIf="corp.invalid && (corp.dirty || corp.touched)" class="">
-      <small *ngIf="corp.errors['required']">도메인을 선택하세요.</small>
+    <div *ngIf="group.invalid && (group.dirty || group.touched)" class="">
+      <small *ngIf="group.errors['required']">도메인을 선택하세요.</small>
     </div>
 
     <button

@@ -2,9 +2,9 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { Observable } from 'rxjs';
-import { Corp } from '../../../shared/models';
+import { Group, GroupType } from '../../../shared/models';
 import { AuthMailData } from '../../../shared/models';
-import { AuthService, CorpService } from '../../../core/http';
+import { AuthService, GroupService, CorpService } from '../../../core/http';
 
 @Component({
   selector: 'app-auth-mail',
@@ -13,7 +13,7 @@ import { AuthService, CorpService } from '../../../core/http';
 })
 export class AuthMailComponent implements OnInit {
   @Output() submitted = new EventEmitter<AuthMailData>();
-  corps$: Observable<Corp[]>;
+  groups$: Observable<Group[]>;
   mailForm: FormGroup;
   private submitting = false;
   private authCode: string;
@@ -22,6 +22,7 @@ export class AuthMailComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private corpService: CorpService,
+    private groupService: GroupService,
     private fns: AngularFireFunctions) {
     this.mailForm = this.fb.group({
       account: [
@@ -32,12 +33,7 @@ export class AuthMailComponent implements OnInit {
           Validators.maxLength(30)
         ]
       ],
-      corp: [
-        '',
-        [
-          Validators.required
-        ]
-      ]
+      group: ['', Validators.required]
     });
   }
 
@@ -45,16 +41,16 @@ export class AuthMailComponent implements OnInit {
     return this.mailForm.get('account');
   }
 
-  get corp() {
-    return this.mailForm.get('corp');
+  get group() {
+    return this.mailForm.get('group');
   }
 
   get email() {
-    return `${this.account.value}@${this.corp.value.domain}`;
+    return `${this.account.value}@${this.group.value.domain}`;
   }
 
   ngOnInit() {
-    this.corps$ = this.corpService.getCorps();
+    this.groups$ = this.groupService.getGroupsByType(GroupType.Corp);
     this.authCode = (Math.floor(1000 + Math.random() * 9000)).toString();
   }
 
@@ -65,7 +61,8 @@ export class AuthMailComponent implements OnInit {
 
       sendAuthMail({
         to: this.email,
-        corpName: this.corp.value.displayName,
+        // todo corpName => groupName
+        corpName: this.group.value.displayName,
         authCode: this.authCode
       }).subscribe(this.success, this.error);
     }
@@ -75,9 +72,10 @@ export class AuthMailComponent implements OnInit {
     this.submitting = false;
     const authMailData: AuthMailData = {
       email: this.email,
+      // todo corp -> group
       corp: {
-        domain: this.corp.value.domain,
-        displayName: this.corp.value.displayName
+        domain: this.group.value.domain,
+        displayName: this.group.value.name
       },
       authCode:  this.authCode
     };
