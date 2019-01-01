@@ -8,7 +8,7 @@ import { TargetSelectedValidatorDirective } from './target-selected-validator.di
 import { RemoveCommaPipe } from './remove-comma.pipe';
 import { GoodsRoutingModule } from './goods-routing.module';
 import { WriteComponent } from './write/write.component';
-import { FileUploadService } from './file-upload.service';
+import { FileUploadService } from '../../core/http/file-upload.service';
 
 @NgModule({
   declarations: [

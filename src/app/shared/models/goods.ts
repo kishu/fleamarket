@@ -2,10 +2,16 @@ import { firestore } from 'firebase';
 
 export class Goods {
   id?: string;
-  userId: string;
-  groupId: string; // group id
-  lounge: boolean;
-  images: string[];
+  userRef: firestore.DocumentReference | string;
+  groupRef: firestore.DocumentReference | string;
+  post: {
+    group: boolean
+    lounge: boolean
+  };
+  images: [{
+    public_id: string;
+    url: string;
+  }];
   category: string;
   purchase: string;
   condition: string;

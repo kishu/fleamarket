@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { forkJoin, merge } from 'rxjs';
+import { forkJoin, merge, Observable } from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
 import { targetSelectedValidator } from '../target-selected-validator.directive';
-import { FileUploadService } from '../file-upload.service';
-import { Group, ImageFile, User } from '../../../shared/models';
+import { FileUploadService, GoodsService } from '../../../core/http';
+import { Goods, Group, ImageFile, User } from '../../../shared/models';
 
 enum ImageType {
   FRONT = 'front',
@@ -27,7 +28,7 @@ export class WriteComponent implements OnInit {
 
   private submitting = false;
 
-  get target() { return this.writeForm.get('target'); }
+  get post() { return this.writeForm.get('post'); }
   get title() { return this.writeForm.get('title'); }
   get desc() { return this.writeForm.get('desc'); }
   get price() { return this.writeForm.get('price'); }
@@ -35,7 +36,8 @@ export class WriteComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private fileUploadeService: FileUploadService) {
+    private fileUploadService: FileUploadService,
+    private goodsService: GoodsService) {
 
     const { group } = this.route.snapshot.data.loginInfo;
     this.groupName = group.name;
@@ -49,7 +51,7 @@ export class WriteComponent implements OnInit {
 
   protected buildWriteForm() {
     this.writeForm = this.fb.group({
-      target: this.fb.group({
+      post: this.fb.group({
         group: true,
         lounge: false
       }, { validators: targetSelectedValidator }),
@@ -135,56 +137,97 @@ export class WriteComponent implements OnInit {
     }
   }
 
-  protected onSubmit() {
-    if (!this.submitting) {
-      // this.submitting = true;
-
-      const form = this.writeForm;
-      const goods = {
-        group: form.get('target.group').value,
-        lounge: form.get('target.lounge').value,
-        category:
-          form.get('category.category').value ||
-          form.get('category.recent').value,
-        purchase: form.get('purchase').value,
-        condition: form.get('condition').value,
-        title: form.get('title').value,
-        desc: form.get('desc').value,
-        price: form.get('price').value,
-        delivery:
-          form.get('delivery.delivery').value ||
-          form.get('delivery.etc').value,
-        contact: form.get('contact').value,
-        donation: form.get('donation').value
-      };
-
-      console.log(goods);
-    }
-  }
-
-  protected test() {
+  protected upload(): Observable<any> {
     const files = [];
 
     this.frontImageFiles.forEach(imageFile => {
       files.push(imageFile.file);
     });
 
+    this.sideImageFiles.forEach(imageFile => {
+      files.push(imageFile.file);
+    });
+
+    this.backImageFiles.forEach(imageFile => {
+      files.push(imageFile.file);
+    });
+
     const progress$ = [];
     const response$ = [];
-    const statusList = this.fileUploadeService.upload(files);
+    const statusList = this.fileUploadService.upload(files);
 
     for (const key of Object.keys(statusList)) {
       progress$.push(statusList[key].progress);
       response$.push(statusList[key].response);
     }
 
-    merge(progress$).pipe().subscribe(result => {
-      result.subscribe(r => console.log('progress$', r));
-    });
+    // merge(progress$).pipe().subscribe(result => {
+    //   result.subscribe(r => console.log('progress$', r));
+    // });
+    //
 
-    forkJoin(response$).subscribe(result => {
-      console.log('response$', result);
-    });
+    return forkJoin(response$).pipe(
+      map(responses => {
+        return responses.map(response => {
+          return {
+            public_id: response.body.public_id,
+            url: response.body.url
+          };
+        });
+      })
+    );
+  }
+
+  protected getGoodsData(images): Goods {
+    const form = this.writeForm;
+    const { user, group } = this.route.snapshot.data.loginInfo;
+
+    return {
+      userRef: user.id,
+      groupRef: group.id,
+      post: {
+        group: form.get('post.group').value,
+        lounge: form.get('post.lounge').value,
+      },
+      images,
+      category:
+        form.get('category.category').value ||
+        form.get('category.recent').value,
+      purchase: form.get('purchase').value,
+      condition: form.get('condition').value,
+      title: form.get('title').value,
+      desc: form.get('desc').value,
+      price: form.get('price').value,
+      delivery:
+        form.get('delivery.delivery').value ||
+        form.get('delivery.etc').value,
+      contact: form.get('contact').value,
+      donation: form.get('donation').value
+    };
+  }
+
+  protected onSubmit() {
+    if (!this.submitting) {
+      this.submitting = true;
+      const upload$ = this.upload();
+
+      upload$.pipe(
+        map(images => this.getGoodsData(images)),
+        switchMap(goods => this.goodsService.addGoods(goods))
+      ).subscribe(this.success, this.error);
+    }
+  }
+
+  success = () => {
+    console.log('success');
+    this.submitting = false;
+    // this.router.navigate(['/']);
+  }
+
+  error = (e) => {
+    console.error(e);
+    alert(e);
+    this.submitting = false;
   }
 
 }

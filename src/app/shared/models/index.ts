@@ -38,6 +38,7 @@ export class AFSimpleUser {
   photoURL: string;
 }
 
+export * from './goods';
 export * from './image-file';
 
 
