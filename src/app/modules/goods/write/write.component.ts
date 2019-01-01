@@ -18,8 +18,8 @@ enum ImageType {
   styleUrls: ['./write.component.css']
 })
 export class WriteComponent implements OnInit {
-  group: Group;
   writeForm: FormGroup;
+  groupName: string;
 
   frontImageFiles = new Map<number, ImageFile>();
   sideImageFiles = new Map<number, ImageFile>();
@@ -36,14 +36,9 @@ export class WriteComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private fileUploadeService: FileUploadService) {
-    const user: User = this.route.snapshot.data.user;
-    // TODO
-    // corp -> group
-    // add group ref to user
-    // resolve user and group
-    // remove and seprate corp of users
-    // this.group = user.corp;
-    console.log(user);
+
+    const { group } = this.route.snapshot.data.loginInfo;
+    this.groupName = group.name;
 
     this.buildWriteForm();
   }

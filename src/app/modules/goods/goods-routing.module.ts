@@ -8,7 +8,7 @@ const routes: Routes = [
   {
     path: 'goods',
     canActivate: [AuthGuard],
-    resolve: {user: LoginInfoResolver},
+    resolve: { loginInfo: LoginInfoResolver },
     children: [
       {path: 'write', component: WriteComponent},
     ]
