@@ -21,11 +21,15 @@ import { HomeComponent } from './modules/home/home.component';
 // environment
 import { environment } from '../environments/environment';
 
+import { SpinnerService } from './modules/spinner/spinner.service';
+import { SpinnerComponent } from './modules/spinner/spinner.component';
+
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    SpinnerComponent,
     IntroComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +45,8 @@ import { environment } from '../environments/environment';
   ],
   providers: [
     AuthGuard,
-    LoginInfoResolver
+    LoginInfoResolver,
+    SpinnerService,
   ],
   bootstrap: [AppComponent]
 })
