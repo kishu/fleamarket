@@ -75,6 +75,13 @@
           </div>
           <a href="#" class="attach_delete">삭제</a>
         </div>
+
+        <div *ngFor="let imageFile of backImageFiles | keyvalue" class="goods_thumb_area">
+          <div class="goods_thumb" [style.backgroundImage]="'url(' + imageFile.value.dataURL + ')'">
+            <div class="set_profile_thumb">{{ imageFile.key }}</div>
+            <a href="#" class="attach_delete">삭제</a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -419,7 +426,6 @@
           <button type="submit"
                   [disabled]="writeForm.invalid"
                   class="button">등록</button>
-          <p>{{ writeForm.invalid }}, {{ writeForm.errors | json }}</p>
         </div>
       </div>
     </section>
