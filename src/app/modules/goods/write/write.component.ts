@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { forkJoin, merge, Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { forkJoin, Observable } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { targetSelectedValidator } from '../target-selected-validator.directive';
 import { FileUploadService, GoodsService } from '../../../core/http';
-import { Goods, Group, ImageFile, User } from '../../../shared/models';
+import { SpinnerService } from '../../spinner/spinner.service';
+import { Goods, ImageFile } from '../../../shared/models';
 
 enum ImageType {
   FRONT = 'front',
@@ -36,10 +37,12 @@ export class WriteComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder,
     private decimalPipe: DecimalPipe,
     private fileUploadService: FileUploadService,
-    private goodsService: GoodsService) {
+    private goodsService: GoodsService,
+    private spinnerService: SpinnerService) {
 
     const { group } = this.route.snapshot.data.loginInfo;
     this.groupName = group.name;
@@ -192,13 +195,13 @@ export class WriteComponent implements OnInit {
     );
   }
 
-  protected getGoodsData(images): Goods {
+  protected getGoods(images): Goods {
     const form = this.writeForm;
     const { user, group } = this.route.snapshot.data.loginInfo;
 
     return {
-      userRef: user.id,
-      groupRef: group.id,
+      userRef: this.goodsService.getUserRef(user.id),
+      groupRef: this.goodsService.getGroupRef(group.id),
       post: {
         group: form.get('post.group').value,
         lounge: form.get('post.lounge').value,
@@ -216,32 +219,37 @@ export class WriteComponent implements OnInit {
         form.get('delivery.delivery').value ||
         form.get('delivery.etc').value,
       contact: form.get('contact').value,
-      donation: form.get('donation').value
+      donation: parseInt(form.get('donation').value, 10),
+      updated: this.goodsService.getServerTimeStamp(),
+      created: this.goodsService.getServerTimeStamp()
     };
   }
 
   protected onSubmit() {
     if (!this.submitting) {
       this.submitting = true;
-      const upload$ = this.upload();
+      this.spinnerService.show(true);
 
-      upload$.pipe(
-        map(images => this.getGoodsData(images)),
+      this.upload().pipe(
+        map(images => this.getGoods(images)),
         switchMap(goods => this.goodsService.addGoods(goods))
       ).subscribe(this.success, this.error);
     }
   }
 
   success = () => {
-    console.log('success');
-    // this.submitting = false;
-    // this.router.navigate(['/']);
+    this.router.navigate(['/']).then(() => {
+      this.spinnerService.show(false);
+      this.submitting = false;
+    });
   }
 
   error = (e) => {
     console.error(e);
     alert(e);
-    // this.submitting = false;
+
+    this.spinnerService.show(false);
+    this.submitting = false;
   }
 
 }
