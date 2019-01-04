@@ -2,7 +2,7 @@ import * as $ from 'jquery';
 import 'slick-carousel';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { User, Group } from '../../shared/models';
+import { GoodsService } from '../../core/http';
 
 @Component({
   selector: 'app-home',
@@ -14,13 +14,20 @@ export class HomeComponent implements OnInit {
   groupName: string;
 
   constructor(
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private goodsService: GoodsService) {
 
-  ngOnInit() {
     const { user, group } = this.route.snapshot.data.loginInfo;
     this.userName = user.displayName;
     this.groupName = group.name;
 
+    console.log(user);
+
+    this.goodsService.getGoodsByGroup(user.groupRef)
+      .subscribe(goods => console.log(goods));
+  }
+
+  ngOnInit() {
     $(document).ready(function() {
       $('.welcome .button').on('click', function(e) {
         e.preventDefault();
