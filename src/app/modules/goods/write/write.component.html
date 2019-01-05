@@ -37,7 +37,7 @@
           <div class="set_profile_thumb">정면 이미지</div>
             <input type="file" multiple
               accept="image/gif, image/jpeg, image/png"
-              (change)="onChangeImage($event, 'front')">
+              (change)="onChangeImage($event, 'FRONT')">
           </div>
           <a href="#" class="attach_delete">삭제</a>
         </div>
@@ -54,7 +54,7 @@
             <div class="set_profile_thumb">측면 이미지</div>
             <input type="file" multiple
               accept="image/gif, image/jpeg, image/png"
-              (change)="onChangeImage($event, 'side')">
+              (change)="onChangeImage($event, 'SIDE')">
           </div>
           <a href="#" class="attach_delete">삭제</a>
         </div>
@@ -71,7 +71,7 @@
             <div class="set_profile_thumb">뒷면 이미지</div>
             <input type="file" multiple
                    accept="image/gif, image/jpeg, image/png"
-                   (change)="onChangeImage($event, 'back')">
+                   (change)="onChangeImage($event, 'BACK')">
           </div>
           <a href="#" class="attach_delete">삭제</a>
         </div>

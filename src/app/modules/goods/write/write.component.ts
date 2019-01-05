@@ -10,9 +10,9 @@ import { SpinnerService } from '../../spinner/spinner.service';
 import { Goods, ImageFile } from '../../../shared/models';
 
 enum ImageType {
-  FRONT = 'front',
-  SIDE = 'side',
-  BACK = 'back'
+  Front = 'FRONT',
+  Side = 'SIDE',
+  Back = 'BACK'
 }
 
 @Component({
@@ -140,13 +140,13 @@ export class WriteComponent implements OnInit {
 
       imageFile.readAsDataURL().then(() => {
         switch (imageType) {
-          case ImageType.FRONT:
+          case ImageType.Front:
             this.frontImageFiles.set(Date.now(), imageFile);
             break;
-          case ImageType.SIDE:
+          case ImageType.Side:
             this.sideImageFiles.set(Date.now(), imageFile);
             break;
-          case ImageType.BACK:
+          case ImageType.Back:
             this.backImageFiles.set(Date.now(), imageFile);
             break;
         }
