@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable, merge } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AuthService } from '../../core/http';
 import { first, map, tap } from 'rxjs/operators';
+import { PersistanceService } from '../services';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ import { first, map, tap } from 'rxjs/operators';
 export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private persistanceService: PersistanceService ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -20,10 +22,11 @@ export class AuthGuard implements CanActivate {
       first(),
       map(user => !!user),
       tap(isAuth => {
-        if (!isAuth) {
-          this.router.navigate(
-            ['/intro'],
-            { queryParams: { redirect: state.url }});
+        const viewIntro = this.persistanceService.get('viewIntro');
+        if (!isAuth && !viewIntro) {
+          this.router.navigate(['/intro']);
+        } else if (!isAuth && viewIntro) {
+          this.router.navigate(['/login']);
         }
       }));
   }
