@@ -3,6 +3,8 @@ import 'slick-carousel';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GoodsService } from '../../core/http';
+import { Goods } from '../../shared/models';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +14,8 @@ import { GoodsService } from '../../core/http';
 export class HomeComponent implements OnInit {
   userName: string;
   groupName: string;
+
+  goods$: Observable<Goods[]>;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,8 +27,7 @@ export class HomeComponent implements OnInit {
 
     console.log(user);
 
-    this.goodsService.getGoodsByGroup(user.groupRef)
-      .subscribe(goods => console.log(goods));
+    this.goods$ = this.goodsService.getGoodsByGroup(user.groupRef);
   }
 
   ngOnInit() {

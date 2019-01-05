@@ -229,10 +229,11 @@
         </div>
       </nav>
       <ul class="large_list" id="goods_list">
-        <li>
-          <div class="item">
+        <li *ngFor="let goods of goods$ | async">
+          <div [ngClass]="{'item': true, 'soldout': goods.soldout}">
             <a href="view.html">
-              <div class="goods_thumb" style="background-image:url(assets/img/dark.png),url(assets/img/thumb.png);">
+              <div class="goods_thumb"
+                   [ngStyle]="{'background-image': 'url(assets/img/dark.png), url(' + goods.images[0].url + ')'}">
                 <dl class="feed">
                   <dt class="like"></dt>
                   <dd>99</dd>
@@ -247,34 +248,8 @@
                   <span class="author_thumb" style="background-image:url(assets/img/author.png);"></span>
                 </div>
                 <div class="text">
-                  <span class="name ellipsis">캐논 정품 렌즈 EFS 18-200mm</span>
-                  <span class="price ellipsis">100,000원</span>
-                </div>
-              </div>
-            </a>
-            <a href="#" class="likeit"><span class="sr-only">좋아요</span></a>
-          </div>
-        </li>
-        <li>
-          <div class="item soldout">
-            <a href="view.html">
-              <div class="goods_thumb" style="background-image:url(assets/img/dark.png),url(assets/img/thumb.png);">
-                <dl class="feed">
-                  <dt class="like"></dt>
-                  <dd>99</dd>
-                  <dt class="comment"></dt>
-                  <dd>999</dd>
-                  <dt class="donate"></dt>
-                  <dd>20%</dd>
-                </dl>
-              </div>
-              <div class="item_description">
-                <div class="author">
-                  <span class="author_thumb" style="background-image:url(assets/img/author.png);"></span>
-                </div>
-                <div class="text">
-                  <span class="name ellipsis">캐논 정품 렌즈 EFS 18-200mm</span>
-                  <span class="price ellipsis">100,000원</span>
+                  <span class="name ellipsis">{{ goods.title }}</span>
+                  <span class="price ellipsis">{{ goods.price }}원</span>
                 </div>
               </div>
             </a>
