@@ -21,6 +21,7 @@ import { HomeComponent } from './modules/home/home.component';
 // environment
 import { environment } from '../environments/environment';
 
+import { PersistanceService } from './shared/services';
 import { SpinnerService } from './modules/spinner/spinner.service';
 import { SpinnerComponent } from './modules/spinner/spinner.component';
 
@@ -46,6 +47,7 @@ import { SpinnerComponent } from './modules/spinner/spinner.component';
   providers: [
     AuthGuard,
     LoginInfoResolver,
+    PersistanceService,
     SpinnerService,
   ],
   bootstrap: [AppComponent]
