@@ -30,7 +30,7 @@ export class WriteComponent implements OnInit {
 
   private submitting = false;
 
-  get post() { return this.writeForm.get('post'); }
+  get market() { return this.writeForm.get('market'); }
   get title() { return this.writeForm.get('title'); }
   get desc() { return this.writeForm.get('desc'); }
   get price() { return this.writeForm.get('price'); }
@@ -203,8 +203,8 @@ export class WriteComponent implements OnInit {
       userRef: this.goodsService.getUserRef(user.id),
       groupRef: this.goodsService.getGroupRef(group.id),
       market: {
-        group: form.get('post.group').value,
-        lounge: form.get('post.lounge').value,
+        group: form.get('market.group').value,
+        lounge: form.get('market.lounge').value,
       },
       images,
       category:
