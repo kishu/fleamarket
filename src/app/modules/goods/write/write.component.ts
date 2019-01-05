@@ -222,6 +222,7 @@ export class WriteComponent implements OnInit {
       donation: parseInt(form.get('donation').value, 10),
       commentCnt: 0,
       favoriteCnt: 0,
+      soldout: false,
       updated: this.goodsService.getServerTimeStamp(),
       created: this.goodsService.getServerTimeStamp()
     };

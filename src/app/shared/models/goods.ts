@@ -23,6 +23,7 @@ export class Goods {
   donation: number;
   commentCnt: number;
   favoriteCnt: number;
+  soldout: boolean;
   created: firestore.FieldValue | firestore.Timestamp;
   updated: firestore.FieldValue | firestore.Timestamp;
 }
