@@ -21,6 +21,8 @@ export class Goods {
   delivery: string;
   contact: string;
   donation: number;
+  commentCnt: number;
+  favoriteCnt: number;
   created: firestore.FieldValue | firestore.Timestamp;
   updated: firestore.FieldValue | firestore.Timestamp;
 }

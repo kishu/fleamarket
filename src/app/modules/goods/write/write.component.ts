@@ -220,6 +220,8 @@ export class WriteComponent implements OnInit {
         form.get('delivery.etc').value,
       contact: form.get('contact').value,
       donation: parseInt(form.get('donation').value, 10),
+      commentCnt: 0,
+      favoriteCnt: 0,
       updated: this.goodsService.getServerTimeStamp(),
       created: this.goodsService.getServerTimeStamp()
     };
