@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { firestore } from 'firebase';
+import { Observable } from 'rxjs';
+import { fromPromise } from 'rxjs/internal-compatibility';
 import { first, map } from 'rxjs/operators';
 import { Goods, Group, User } from '../../shared/models';
 
@@ -20,6 +22,12 @@ export class GoodsService {
 
   getGroupRef(groupId): firestore.DocumentReference {
     return this.afs.collection('groups').doc<Group>(groupId).ref;
+  }
+
+  getGoodsUser(userRef: firestore.DocumentReference): Observable<User | any> {
+    return fromPromise(userRef.get()).pipe(
+      map(user => ({ id: user.id, ...user.data() }))
+    );
   }
 
   getServerTimeStamp(): firestore.FieldValue {
@@ -62,6 +70,18 @@ export class GoodsService {
           } as Goods;
         });
       })
+    );
+  }
+
+  getGoods(id: string): Observable<Goods | null> {
+    return this.afs.doc<Goods>(`goods/${id}`).snapshotChanges().pipe(
+      first(),
+      map(goods => goods.payload.exists ? (
+          { id: goods.payload.id, ...goods.payload.data() } as Goods
+        ) : (
+          null
+        )
+      )
     );
   }
 }
