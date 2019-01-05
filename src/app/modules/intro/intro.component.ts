@@ -1,6 +1,7 @@
 import * as $ from 'jquery';
 import 'slick-carousel';
 import { Component, OnInit } from '@angular/core';
+import { PersistanceService } from '../../shared/services';
 
 @Component({
   selector: 'app-intro',
@@ -9,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IntroComponent implements OnInit {
 
-  constructor() { }
+  constructor(private persistanceService: PersistanceService ) { }
 
   ngOnInit() {
     $(document).ready(function() {
@@ -19,6 +20,10 @@ export class IntroComponent implements OnInit {
         dots: false
       });
     });
+  }
+
+  start() {
+    this.persistanceService.set('viewIntro', true);
   }
 
 }
