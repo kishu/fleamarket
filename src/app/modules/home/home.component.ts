@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
     this.userName = user.displayName;
     this.groupName = group.name;
 
-    console.log(user);
+    // console.log(user);
 
     this.goods$ = this.goodsService.getGoodsByGroup(user.groupRef);
   }

@@ -132,7 +132,7 @@ export class WriteComponent implements OnInit {
     });
   }
 
-  protected onChangeImage(e: any, imageType: string) {
+  onChangeImage(e: any, imageType: string) {
     const files = e.target.files;
     for (let i = 0; i < files.length; i++) {
       const file = files.item(i);
@@ -228,7 +228,7 @@ export class WriteComponent implements OnInit {
     };
   }
 
-  protected onSubmit() {
+  onSubmit() {
     if (!this.submitting) {
       this.submitting = true;
       this.spinnerService.show(true);
