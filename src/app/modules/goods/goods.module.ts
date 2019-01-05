@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
-import { AuthGuard } from '../../shared/guards';
-import { LoginInfoResolver } from '../../shared/resolvers';
 import { TargetSelectedValidatorDirective } from './target-selected-validator.directive';
+import { GoodsResolver } from './goods.resolver';
 import { GoodsRoutingModule } from './goods-routing.module';
 import { WriteComponent } from './write/write.component';
-import { FileUploadService } from '../../core/http/file-upload.service';
+import { FileUploadService } from '../../core/http';
 import { DetailComponent } from './detail/detail.component';
+
 
 @NgModule({
   declarations: [
@@ -24,8 +24,7 @@ import { DetailComponent } from './detail/detail.component';
     GoodsRoutingModule
   ],
   providers: [
-    AuthGuard,
-    LoginInfoResolver,
+    GoodsResolver,
     DecimalPipe,
     FileUploadService
   ],

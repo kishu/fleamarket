@@ -1,7 +1,12 @@
+import * as $ from 'jquery';
+import 'slick-carousel';
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {map, pluck, tap} from 'rxjs/operators';
-import { Market } from '../../../shared/models';
+import {Goods, Market, User} from '../../../shared/models';
+import {GoodsService} from '../../../core/http';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-detail',
@@ -11,12 +16,17 @@ import { Market } from '../../../shared/models';
 export class DetailComponent implements OnInit {
   group: string;
   market: Market;
+  goods: Goods;
+  user$: Observable<User>;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
-    private router: Router
+    private goodsService: GoodsService
   ) {
     const { user, group } = this.route.snapshot.data.loginInfo;
+    this.goods = this.route.snapshot.data.goods;
+    this.user$ = this.goodsService.getGoodsUser(this.goods.userRef);
 
     this.route.params.pipe(
       pluck('market'),
@@ -36,6 +46,12 @@ export class DetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    $(document).ready(function() {
+      $('.single-item').slick({
+        arrows: false,
+        dots: true
+      });
+    });
   }
 
 }
