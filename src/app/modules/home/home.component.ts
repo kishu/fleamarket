@@ -3,14 +3,9 @@ import 'slick-carousel';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GoodsService } from '../../core/http';
-import { Goods } from '../../shared/models';
-import {merge, Observable} from 'rxjs';
-import {filter, map, pluck, switchMap, switchMapTo, tap} from 'rxjs/operators';
-
-const enum GoodsBy {
-  Group = 'GROUP',
-  Lounge = 'LOUNGE'
-}
+import { Goods, Market } from '../../shared/models';
+import { Observable} from 'rxjs';
+import { map, pluck, switchMap, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +15,7 @@ const enum GoodsBy {
 export class HomeComponent implements OnInit {
   userName: string;
   groupName: string;
-  goodsBy =  GoodsBy.Group;
+  market =  Market.Group;
 
   goods$: Observable<Goods[]>;
 
@@ -37,19 +32,15 @@ export class HomeComponent implements OnInit {
     // console.log(user);
 
     this.goods$ = this.route.params.pipe(
-      pluck('goodsBy'),
-      map((goodsBy: string) => goodsBy && goodsBy.toUpperCase()),
-      tap(goodsBy => {
-        if (goodsBy) {
-          this.goodsBy = <GoodsBy>goodsBy;
-        } else {
-          this.goodsBy = GoodsBy.Group;
-        }
+      pluck('market'),
+      map((market: string) => market && market.toUpperCase()),
+      tap(market => {
+        this.market = <Market>market;
         this.cd.detectChanges();
       }),
-      switchMap(goodsBy => {
-        switch (goodsBy) {
-          case GoodsBy.Lounge:
+      switchMap(market => {
+        switch (market) {
+          case Market.Lounge:
             return this.goodsService.getGoodsByLounge();
           default:
             return this.goodsService.getGoodsByGroup(user.groupRef);
@@ -73,13 +64,13 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  showGoodsBy(goodsBy: GoodsBy) {
-    switch (goodsBy) {
-      case GoodsBy.Group:
-        this.router.navigate(['/home']);
+  showGoodsBy(market: Market) {
+    switch (market) {
+      case Market.Group:
+        this.router.navigate(['/group']);
         break;
-      case GoodsBy.Lounge:
-        this.router.navigate(['/home', goodsBy.toLowerCase()]);
+      case Market.Lounge:
+        this.router.navigate(['/lounge']);
         break;
     }
   }

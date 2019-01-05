@@ -17,7 +17,7 @@ export enum GroupType {
   Apt = 'Apt'
 }
 
-export const enum GoodsBy {
+export const enum Market {
   Group = 'GROUP',
   Lounge = 'LOUNGE'
 }

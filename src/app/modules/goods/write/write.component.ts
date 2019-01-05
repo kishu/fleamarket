@@ -56,7 +56,7 @@ export class WriteComponent implements OnInit {
 
   protected buildWriteForm() {
     this.writeForm = this.fb.group({
-      post: this.fb.group({
+      market: this.fb.group({
         group: true,
         lounge: false
       }, { validators: targetSelectedValidator }),
@@ -202,7 +202,7 @@ export class WriteComponent implements OnInit {
     return {
       userRef: this.goodsService.getUserRef(user.id),
       groupRef: this.goodsService.getGroupRef(group.id),
-      post: {
+      market: {
         group: form.get('post.group').value,
         lounge: form.get('post.lounge').value,
       },

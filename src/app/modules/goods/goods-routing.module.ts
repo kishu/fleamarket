@@ -15,7 +15,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: ':goodsBy/goods/:id',
+    path: ':market/goods/:id',
     canActivate: [AuthGuard],
     resolve: { loginInfo: LoginInfoResolver },
     component: DetailComponent

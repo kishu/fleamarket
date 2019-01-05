@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {map, pluck, tap} from 'rxjs/operators';
-import { GoodsBy } from '../../../shared/models';
+import { Market } from '../../../shared/models';
 
 @Component({
   selector: 'app-detail',
@@ -10,25 +10,24 @@ import { GoodsBy } from '../../../shared/models';
 })
 export class DetailComponent implements OnInit {
   group: string;
-  goodsBy: GoodsBy;
+  market: Market;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router
   ) {
     const { user, group } = this.route.snapshot.data.loginInfo;
-    console.log(group);
 
     this.route.params.pipe(
-      pluck('goodsBy'),
-      map((goodsBy: string) => goodsBy.toUpperCase()),
-      tap(goodsBy => {
-        this.goodsBy = <GoodsBy>goodsBy;
-        switch (goodsBy) {
-          case GoodsBy.Group:
+      pluck('market'),
+      map((market: string) => market.toUpperCase()),
+      tap(market => {
+        this.market = <Market>market;
+        switch (market) {
+          case Market.Group:
             this.group = group.name;
             break;
-          case GoodsBy.Lounge:
+          case Market.Lounge:
             this.group = '2nd Lounge';
             break;
         }

@@ -4,7 +4,7 @@ export class Goods {
   id?: string;
   userRef: firestore.DocumentReference;
   groupRef: firestore.DocumentReference;
-  post: {
+  market: {
     group: boolean;
     lounge: boolean;
   };

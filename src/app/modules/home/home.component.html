@@ -189,8 +189,8 @@
       <div class="group">
         <h1><span>네이버웹툰</span><span>2nd Lounge</span></h1>
         <h1 class="clone">
-          <span (click)="showGoodsBy('GROUP')" [ngClass]="{ on: goodsBy === 'GROUP' }">네이버웹툰</span>
-          <span (click)="showGoodsBy('LOUNGE')" [ngClass]="{ on: goodsBy === 'LOUNGE' }">2nd Lounge</span>
+          <span (click)="showGoodsBy('GROUP')" [ngClass]="{ on: market === 'GROUP' }">네이버웹툰</span>
+          <span (click)="showGoodsBy('LOUNGE')" [ngClass]="{ on: market === 'LOUNGE' }">2nd Lounge</span>
         </h1>
       </div>
       <!--<div class="group">
@@ -234,7 +234,7 @@
       <ul class="large_list" id="goods_list">
         <li *ngFor="let goods of goods$ | async">
           <div [ngClass]="{'item': true, 'soldout': goods.soldout}">
-            <a [routerLink]="['/', goodsBy.toLowerCase(), 'goods', goods.id]">
+            <a [routerLink]="['/', market.toLowerCase(), 'goods', goods.id]">
               <div class="goods_thumb"
                    [ngStyle]="{'background-image': 'url(assets/img/dark.png), url(' + goods.images[0].url + ')'}">
                 <dl class="feed">

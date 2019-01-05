@@ -33,7 +33,7 @@ export class GoodsService {
   getGoodsByGroup(groupRef: firestore.DocumentReference) {
     return this.afs.collection('goods', ref => {
       return ref.where('groupRef', '==',  groupRef)
-        .where('post.group', '==', true)
+        .where('market.group', '==', true)
         .orderBy('updated', 'desc');
     }).snapshotChanges().pipe(
       first(),
@@ -50,7 +50,7 @@ export class GoodsService {
 
   getGoodsByLounge() {
     return this.afs.collection('goods', ref => {
-      return ref.where('post.lounge', '==', true)
+      return ref.where('market.lounge', '==', true)
         .orderBy('updated', 'desc');
     }).snapshotChanges().pipe(
       first(),
