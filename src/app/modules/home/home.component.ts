@@ -64,8 +64,8 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  showGoodsBy(market: Market) {
-    switch (market) {
+  showGoodsBy(market: string) {
+    switch (market as Market) {
       case Market.Group:
         this.router.navigate(['/group']);
         break;
