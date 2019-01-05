@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SpinnerService } from './spinner.service';
-import { filter } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-modal',
+  selector: 'app-spinner',
   templateUrl: './spinner.component.html',
   styleUrls: ['./spinner.component.css']
 })
