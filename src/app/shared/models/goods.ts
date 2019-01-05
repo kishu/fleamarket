@@ -9,7 +9,7 @@ export class Goods {
     lounge: boolean;
   };
   images: [{
-    public_id: string;
+    id: string;
     url: string;
   }];
   category: string;

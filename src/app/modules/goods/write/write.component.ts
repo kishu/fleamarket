@@ -187,7 +187,7 @@ export class WriteComponent implements OnInit {
       map(responses => {
         return responses.map(response => {
           return {
-            public_id: response.body.public_id,
+            id: response.body.public_id,
             url: response.body.url
           };
         });
