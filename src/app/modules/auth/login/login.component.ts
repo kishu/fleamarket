@@ -1,6 +1,9 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../core/http';
+import { fromPromise } from 'rxjs/internal-compatibility';
+import { switchMap, pluck } from 'rxjs/operators';
+import { AuthService, UserService } from '../../../core/http';
+import { User } from '../../../shared/models';
 
 @Component({
   selector: 'app-login',
@@ -12,21 +15,26 @@ export class LoginComponent implements OnInit {
   constructor(
     private ngZone: NgZone,
     private router: Router,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private userService: UserService) { }
 
   ngOnInit() {
   }
 
   onLogin(target: string) {
-    this.authService
-      .login(target)
-      .then(this.success, this.error);
+    fromPromise(this.authService.login(target)).pipe(
+      pluck('user'),
+      switchMap((user: User) => this.userService.getUser(user.uid)),
+    ).subscribe(this.success, this.error);
   }
 
-  success = () => {
+  success = (user) => {
     this.ngZone
-      .run(() => this.router.navigate(['/auth']))
-      .then();
+      .run(() => {
+        (user) ?
+          this.router.navigate(['/']) :
+          this.router.navigate(['auth']);
+      });
   }
 
   error = (e) => {
