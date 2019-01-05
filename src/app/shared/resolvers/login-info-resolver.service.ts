@@ -17,9 +17,7 @@ export class LoginInfoResolver implements Resolve<LoginInfo> {
     return Observable.create(observer => {
       this.authService.loginUserInfo.pipe(
         first(),
-        switchMap(afUser => {
-          return this.userService.getUser(afUser.uid);
-        }),
+        switchMap(afUser => this.userService.getUser(afUser.uid)),
         first(),
         switchMap(user => {
           const groupRef = user.groupRef as firestore.DocumentReference;
