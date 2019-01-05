@@ -17,6 +17,11 @@ export enum GroupType {
   Apt = 'Apt'
 }
 
+export const enum GoodsBy {
+  Group = 'GROUP',
+  Lounge = 'LOUNGE'
+}
+
 export class Group {
   id?: string;
   type: string;   // 'corp', 'apt', 'school' ...

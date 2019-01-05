@@ -8,11 +8,13 @@ import { TargetSelectedValidatorDirective } from './target-selected-validator.di
 import { GoodsRoutingModule } from './goods-routing.module';
 import { WriteComponent } from './write/write.component';
 import { FileUploadService } from '../../core/http/file-upload.service';
+import { DetailComponent } from './detail/detail.component';
 
 @NgModule({
   declarations: [
     TargetSelectedValidatorDirective,
-    WriteComponent
+    WriteComponent,
+    DetailComponent
   ],
   imports: [
     CommonModule,

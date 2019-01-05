@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../../shared/guards';
 import { LoginInfoResolver } from '../../shared/resolvers';
 import { WriteComponent } from './write/write.component';
+import { DetailComponent } from './detail/detail.component';
 
 const routes: Routes = [
   {
@@ -10,9 +11,15 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     resolve: { loginInfo: LoginInfoResolver },
     children: [
-      {path: 'write', component: WriteComponent},
+      {path: 'write', component: WriteComponent}
     ]
   },
+  {
+    path: ':goodsBy/goods/:id',
+    canActivate: [AuthGuard],
+    resolve: { loginInfo: LoginInfoResolver },
+    component: DetailComponent
+  }
 ];
 
 @NgModule({
