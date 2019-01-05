@@ -10,7 +10,9 @@ const routes: Routes = [
     path: '', canActivate: [AuthGuard],
     resolve: { loginInfo: LoginInfoResolver },
     children: [
-      {path: '', component: HomeComponent},
+      { path: '', component: HomeComponent },
+      { path: 'home', component: HomeComponent },
+      { path: 'home/:goodsBy', component: HomeComponent }
     ]
   },
   { path: 'intro', component: IntroComponent }

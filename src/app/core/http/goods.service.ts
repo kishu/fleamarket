@@ -33,7 +33,25 @@ export class GoodsService {
   getGoodsByGroup(groupRef: firestore.DocumentReference) {
     return this.afs.collection('goods', ref => {
       return ref.where('groupRef', '==',  groupRef)
-        .orderBy('created', 'desc');
+        .where('post.group', '==', true)
+        .orderBy('updated', 'desc');
+    }).snapshotChanges().pipe(
+      first(),
+      map(goodsList => {
+        return goodsList.map(goods => {
+          return {
+            id: goods.payload.doc.id,
+            ...goods.payload.doc.data()
+          } as Goods;
+        });
+      })
+    );
+  }
+
+  getGoodsByLounge() {
+    return this.afs.collection('goods', ref => {
+      return ref.where('post.lounge', '==', true)
+        .orderBy('updated', 'desc');
     }).snapshotChanges().pipe(
       first(),
       map(goodsList => {

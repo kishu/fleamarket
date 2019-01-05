@@ -188,7 +188,10 @@
       </a>
       <div class="group">
         <h1><span>네이버웹툰</span><span>2nd Lounge</span></h1>
-        <h1 class="clone"><span class="on">네이버웹툰</span><span>2nd Lounge</span></h1>
+        <h1 class="clone">
+          <span (click)="showGoodsBy('GROUP')" [ngClass]="{ on: goodsBy === 'GROUP' }">네이버웹툰</span>
+          <span (click)="showGoodsBy('LOUNGE')" [ngClass]="{ on: goodsBy === 'LOUNGE' }">2nd Lounge</span>
+        </h1>
       </div>
       <!--<div class="group">
         <h1><span>SeoulSGS 한국원자력</span><span>2ndMarket</span></h1>

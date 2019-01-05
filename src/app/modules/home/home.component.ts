@@ -1,10 +1,16 @@
 import * as $ from 'jquery';
 import 'slick-carousel';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GoodsService } from '../../core/http';
 import { Goods } from '../../shared/models';
-import {Observable} from 'rxjs';
+import {merge, Observable} from 'rxjs';
+import {filter, map, pluck, switchMap, switchMapTo, tap} from 'rxjs/operators';
+
+const enum GoodsBy {
+  Group = 'GROUP',
+  Lounge = 'LOUNGE'
+}
 
 @Component({
   selector: 'app-home',
@@ -14,11 +20,13 @@ import {Observable} from 'rxjs';
 export class HomeComponent implements OnInit {
   userName: string;
   groupName: string;
+  goodsBy: GoodsBy;
 
   goods$: Observable<Goods[]>;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private goodsService: GoodsService) {
 
     const { user, group } = this.route.snapshot.data.loginInfo;
@@ -27,7 +35,20 @@ export class HomeComponent implements OnInit {
 
     // console.log(user);
 
-    this.goods$ = this.goodsService.getGoodsByGroup(user.groupRef);
+    this.goods$ = this.route.params.pipe(
+      pluck('goodsBy'),
+      map((goodsBy: string) => goodsBy && goodsBy.toUpperCase()),
+      switchMap(goodsBy => {
+        switch (goodsBy) {
+          case GoodsBy.Lounge:
+            this.goodsBy = GoodsBy.Lounge;
+            return this.goodsService.getGoodsByLounge();
+          default:
+            this.goodsBy = GoodsBy.Group;
+            return this.goodsService.getGoodsByGroup(user.groupRef);
+        }
+      })
+    );
   }
 
   ngOnInit() {
@@ -45,4 +66,14 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  showGoodsBy(goodsBy: GoodsBy) {
+    switch (goodsBy) {
+      case GoodsBy.Group:
+        this.router.navigate(['/home']);
+        break;
+      case GoodsBy.Lounge:
+        this.router.navigate(['/home', goodsBy.toLowerCase()]);
+        break;
+    }
+  }
 }
