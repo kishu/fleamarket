@@ -8,10 +8,7 @@ const routes: Routes = [
   {
     path: '', canActivate: [AuthGuard],
     resolve: { loginInfo: LoginInfoResolver },
-    children: [
-      { path: '', redirectTo: '/group', pathMatch: 'full' },
-      { path: ':market', component: HomeComponent }
-    ]
+    component: HomeComponent
   }
 ];
 

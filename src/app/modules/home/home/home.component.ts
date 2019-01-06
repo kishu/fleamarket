@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GoodsService } from '../../../core/http';
 import { Goods, Market } from '../../../shared/models';
 import { Observable} from 'rxjs';
-import { map, pluck, switchMap, tap} from 'rxjs/operators';
+import {map, pluck, switchMap, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -24,15 +24,15 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private cd: ChangeDetectorRef,
     private goodsService: GoodsService) {
-console.log('home component');
     const { user, group } = this.route.snapshot.data.loginInfo;
     this.userName = user.displayName;
     this.groupName = group.name;
 
     // console.log(user);
 
-    this.goods$ = this.route.params.pipe(
+    this.goods$ = this.route.queryParams.pipe(
       pluck('market'),
+      map(market => (!market) ? 'group' : market),
       map((market: string) => market && market.toUpperCase()),
       tap(market => {
         this.market = <Market>market;
@@ -67,10 +67,10 @@ console.log('home component');
   showGoodsBy(market: string) {
     switch (market as Market) {
       case Market.Group:
-        this.router.navigate(['/group']);
+        this.router.navigate(['/'], { queryParams: { market: 'group' } });
         break;
       case Market.Lounge:
-        this.router.navigate(['/lounge']);
+        this.router.navigate(['/'], { queryParams: { market: 'lounge' } });
         break;
     }
   }
