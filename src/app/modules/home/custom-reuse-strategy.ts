@@ -1,36 +1,46 @@
 import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy } from '@angular/router';
 
 export class CustomReuseStrategy implements RouteReuseStrategy {
-  private storedHandle: DetachedRouteHandle;
+  private storedHandle: DetachedRouteHandle = null;
 
   constructor() { }
 
   shouldDetach(route: ActivatedRouteSnapshot): boolean {
-    return route.routeConfig.path === '';
+    console.debug('shouldDetach',
+      route && JSON.stringify(route.routeConfig.path),
+      route && route.routeConfig.path === '');
+    return route && route.routeConfig.path === '';
   }
 
   store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {
-    this.storedHandle = (route.routeConfig.path === '') ? handle : null;
+    console.debug('store',
+      route && JSON.stringify(route.routeConfig.path),
+      handle);
+    this.storedHandle = handle;
   }
 
   shouldAttach(route: ActivatedRouteSnapshot): boolean {
-    if (route.routeConfig.path === '' && this.storedHandle) {
-      return true;
-    } else {
-      return false;
-    }
+    console.debug('shouldAttach',
+      route && JSON.stringify(route.routeConfig.path),
+      route && route.routeConfig.path === '' && !!this.storedHandle);
+    return route && route.routeConfig.path === '' && !!this.storedHandle;
   }
 
   retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
-    if (route.routeConfig.path === '' && this.storedHandle) {
-      console.log('retrieve', this.storedHandle);
-      return this.storedHandle;
-    } else {
-      return null;
-    }
+    console.debug('retrieve',
+      route && route.routeConfig && JSON.stringify(route.routeConfig.path),
+      this.storedHandle);
+    return this.storedHandle;
   }
 
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+    if ( (future && future.routeConfig && curr && curr.routeConfig) &&
+      (curr.routeConfig.path !== ':market/goods/:goodsId') &&
+      (future.routeConfig.path === '') ) {
+      console.debug('shouldReuseRoute', 'set null');
+      this.storedHandle = null;
+    }
+
     return future.routeConfig === curr.routeConfig;
   }
 
