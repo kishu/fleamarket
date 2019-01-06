@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private cd: ChangeDetectorRef,
     private goodsService: GoodsService) {
-
+console.log('home component');
     const { user, group } = this.route.snapshot.data.loginInfo;
     this.userName = user.displayName;
     this.groupName = group.name;
