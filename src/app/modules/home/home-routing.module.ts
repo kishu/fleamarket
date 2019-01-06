@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './shared/guards';
-import { LoginInfoResolver } from './shared/resolvers';
-import { IntroComponent } from './modules/intro/intro.component';
-import { HomeComponent } from './modules/home/home/home.component';
+import { AuthGuard } from '../../shared/guards';
+import {LoginInfoResolver} from '../../shared/resolvers';
+import {HomeComponent} from './home/home.component';
 
 const routes: Routes = [
   {
@@ -13,12 +12,11 @@ const routes: Routes = [
       { path: '', redirectTo: '/group', pathMatch: 'full' },
       { path: ':market', component: HomeComponent }
     ]
-  },
-  { path: 'intro', component: IntroComponent }
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class HomeRoutingModule { }

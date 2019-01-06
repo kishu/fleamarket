@@ -2,8 +2,8 @@ import * as $ from 'jquery';
 import 'slick-carousel';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GoodsService } from '../../core/http';
-import { Goods, Market } from '../../shared/models';
+import { GoodsService } from '../../../core/http';
+import { Goods, Market } from '../../../shared/models';
 import { Observable} from 'rxjs';
 import { map, pluck, switchMap, tap} from 'rxjs/operators';
 

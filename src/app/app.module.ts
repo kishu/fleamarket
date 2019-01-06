@@ -8,6 +8,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 // applications modules
 import { SharedModule } from './shared/shared.module';
+import { HomeModule } from './modules/home/home.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { GoodsModule } from './modules/goods/goods.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,7 +18,6 @@ import { LoginInfoResolver } from './shared/resolvers';
 // components
 import { AppComponent } from './app.component';
 import { IntroComponent } from './modules/intro/intro.component';
-import { HomeComponent } from './modules/home/home.component';
 // environment
 import { environment } from '../environments/environment';
 
@@ -29,8 +29,7 @@ import { SpinnerComponent } from './modules/spinner/spinner.component';
   declarations: [
     AppComponent,
     SpinnerComponent,
-    IntroComponent,
-    HomeComponent
+    IntroComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +39,7 @@ import { SpinnerComponent } from './modules/spinner/spinner.component';
     AngularFirestoreModule,
     AngularFireStorageModule,
     SharedModule,
+    HomeModule,
     AuthModule,
     GoodsModule,
     AppRoutingModule
@@ -48,7 +48,7 @@ import { SpinnerComponent } from './modules/spinner/spinner.component';
     AuthGuard,
     LoginInfoResolver,
     PersistanceService,
-    SpinnerService,
+    SpinnerService
   ],
   bootstrap: [AppComponent]
 })
