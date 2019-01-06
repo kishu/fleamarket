@@ -186,10 +186,7 @@ export class WriteComponent implements OnInit {
     return forkJoin(response$).pipe(
       map(responses => {
         return responses.map(response => {
-          return {
-            id: response.body.public_id,
-            url: response.body.url
-          };
+          return `${response.body.public_id}.${response.body.format}`;
         });
       })
     );

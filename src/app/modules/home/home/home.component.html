@@ -236,7 +236,7 @@
           <div [ngClass]="{'item': true, 'soldout': goods.soldout}">
             <a [routerLink]="['/',  market.toLowerCase(), 'goods', goods.id]">
               <div class="goods_thumb"
-                   [ngStyle]="{'background-image': 'url(assets/img/dark.png), url(' + goods.images[0].url + ')'}">
+                   [ngStyle]="{'background-image': 'url(assets/img/dark.png), url(' + imageURL + '/w_800,c_limit/' + goods.images[0] + ')'}">
                 <dl class="feed">
                   <dt class="like"></dt>
                   <dd>99</dd>

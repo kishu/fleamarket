@@ -6,6 +6,7 @@ import { GoodsService } from '../../../core/http';
 import { Goods, Market } from '../../../shared/models';
 import { Observable} from 'rxjs';
 import {map, pluck, switchMap, tap} from 'rxjs/operators';
+import { environment } from '../../../../environments/environment'
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ export class HomeComponent implements OnInit {
   userName: string;
   groupName: string;
   market =  Market.Group;
+  imageURL = environment.cloudinary.imageURL;
 
   goods$: Observable<Goods[]>;
 

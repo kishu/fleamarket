@@ -7,6 +7,7 @@ import {map, pluck, tap} from 'rxjs/operators';
 import {Goods, Market, User} from '../../../shared/models';
 import {GoodsService} from '../../../core/http';
 import {Observable} from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-detail',
@@ -17,6 +18,7 @@ export class DetailComponent implements OnInit {
   group: string;
   market: Market;
   goods: Goods;
+  imageURL = environment.cloudinary.imageURL;
   user$: Observable<User>;
 
   constructor(
