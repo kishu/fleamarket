@@ -14,11 +14,16 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
   }
 
   shouldAttach(route: ActivatedRouteSnapshot): boolean {
-    return false;
+    if (route.routeConfig.path === '' && this.storedHandle) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
     if (route.routeConfig.path === '' && this.storedHandle) {
+      console.log('retrieve', this.storedHandle);
       return this.storedHandle;
     } else {
       return null;
