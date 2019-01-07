@@ -13,18 +13,19 @@ export class AuthService {
   constructor(private afAuth: AngularFireAuth) { }
 
   get loginUserInfo(): Observable<AFSimpleUser | null> {
-    const user$ = this.afAuth.user.pipe(
-      filter(afUser => !!afUser),
-      map(({ uid, displayName, photoURL }) => {
-        return { uid, displayName, photoURL };
+    return this.afAuth.user.pipe(
+      map(afUser => {
+        if (afUser) {
+          return {
+            uid: afUser.uid,
+            displayName: afUser.displayName,
+            photoURL: afUser.photoURL
+          };
+        } else {
+          return null;
+        }
       })
     );
-
-    const noUser$ = this.afAuth.user.pipe(
-      filter(afUser => !afUser)
-    );
-
-    return merge(user$, noUser$);
   }
 
   login(target: string) {
