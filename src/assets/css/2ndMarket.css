@@ -2,12 +2,14 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin');
 
 html {
-  background-color: #f3f3f3;
+  /*background-color: #f3f3f3;*/
+  background-color: #fff;
   font-size: 10px;
 }
 
 body {
-  background-color: #ccc2c2;
+  /*background-color: #ccc2c2;*/
+  background-color: #fff;
   font-size: 14px;
   line-height: 1.3;
   font-family: Lato, 'Helvetica Neue', sans-serif;

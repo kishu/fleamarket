@@ -3,10 +3,10 @@ import 'slick-carousel';
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {map, pluck, tap} from 'rxjs/operators';
-import {Goods, Market, User} from '../../../shared/models';
-import {GoodsService} from '../../../core/http';
-import {Observable} from 'rxjs';
+import { map, pluck, tap} from 'rxjs/operators';
+import { Goods, Market, User } from '../../../shared/models';
+import { AuthService, GoodsService } from '../../../core/http';
+import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -24,9 +24,10 @@ export class DetailComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private authService: AuthService,
     private goodsService: GoodsService
   ) {
-    const { user, group } = this.route.snapshot.data.loginInfo;
+    const group = this.authService.group;
     this.goods = this.route.snapshot.data.goods;
     this.user$ = this.goodsService.getGoodsUser(this.goods.userRef);
 

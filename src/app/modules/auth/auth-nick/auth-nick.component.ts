@@ -1,4 +1,4 @@
-import {Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
@@ -44,7 +44,7 @@ export class AuthNickComponent implements OnInit {
     if (!this.submitting) {
       this.submitting = true;
 
-      this.authService.loginUserInfo.pipe(
+      this.authService.afSimpleUser.pipe(
         switchMap(afUser => {
           const user: User = {
             groupRef: this.authData.group.id,

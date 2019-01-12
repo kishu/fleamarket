@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 // firebase modules
 import { AngularFireModule } from '@angular/fire';
@@ -14,7 +14,7 @@ import { GoodsModule } from './modules/goods/goods.module';
 import { AppRoutingModule } from './app-routing.module';
 // providers
 import { AuthGuard } from './shared/guards';
-import { LoginInfoResolver } from './shared/resolvers';
+import { AuthService } from './core/http';
 // components
 import { AppComponent } from './app.component';
 import { IntroComponent } from './modules/intro/intro.component';
@@ -24,6 +24,10 @@ import { environment } from '../environments/environment';
 import { PersistanceService } from './shared/services';
 import { SpinnerService } from './modules/spinner/spinner.service';
 import { SpinnerComponent } from './modules/spinner/spinner.component';
+
+function resolveAuthInfo(authService: AuthService) {
+  return () => authService.resolveAuthInfo().toPromise();
+}
 
 @NgModule({
   declarations: [
@@ -46,9 +50,11 @@ import { SpinnerComponent } from './modules/spinner/spinner.component';
   ],
   providers: [
     AuthGuard,
-    LoginInfoResolver,
+    AuthService,
     PersistanceService,
-    SpinnerService
+    SpinnerService,
+    { provide: APP_INITIALIZER, useFactory: resolveAuthInfo, deps: [AuthService], multi: true },
+
   ],
   bootstrap: [AppComponent]
 })

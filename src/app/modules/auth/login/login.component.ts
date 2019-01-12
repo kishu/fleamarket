@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
       .run(() => {
         (user) ?
           this.router.navigate(['/']) :
-          this.router.navigate(['auth']);
+          this.router.navigate(['/auth']);
       });
   }
 

@@ -2,11 +2,12 @@ import * as $ from 'jquery';
 import 'slick-carousel';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GoodsService } from '../../../core/http';
+import { AuthService, GoodsService } from '../../../core/http';
 import { Goods, Market } from '../../../shared/models';
 import { Observable} from 'rxjs';
 import {map, pluck, switchMap, tap} from 'rxjs/operators';
-import { environment } from '../../../../environments/environment'
+import { environment } from '../../../../environments/environment';
+import {firestore} from 'firebase';
 
 @Component({
   selector: 'app-home',
@@ -25,12 +26,11 @@ export class HomeComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private cd: ChangeDetectorRef,
+    private authService: AuthService,
     private goodsService: GoodsService) {
-    const { user, group } = this.route.snapshot.data.loginInfo;
+    const user = this.authService.user;
     this.userName = user.displayName;
-    this.groupName = group.name;
-
-    // console.log(user);
+    this.groupName = this.authService.group.name;
 
     this.goods$ = this.route.queryParams.pipe(
       pluck('market'),
@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
           case Market.Lounge:
             return this.goodsService.getGoodsByLounge();
           default:
-            return this.goodsService.getGoodsByGroup(user.groupRef);
+            return this.goodsService.getGoodsByGroup(user.groupRef as firestore.DocumentReference);
         }
       })
     );

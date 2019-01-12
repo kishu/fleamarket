@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { forkJoin, Observable, of } from 'rxjs';
-import { first, map, switchMap } from 'rxjs/operators';
+import { DocumentReference } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { first, map } from 'rxjs/operators';
 import { AuthService, UserService, GoodsService } from '../../core/http';
 import { Market } from '../../shared/models';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,24 +20,21 @@ export class GoodsGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.authService.loginUserInfo.pipe(
+    const userGroupRef = this.authService.user.groupRef as DocumentReference;
+    const goodsId = next.paramMap.get('goodsId');
+    const market = next.paramMap.get('market').toUpperCase();
+
+    return this.goodsService.getGoods(goodsId).pipe(
       first(),
-      switchMap(user => this.userService.getUser(user.uid)),
-      first(),
-      switchMap(user => {
-        const goodsId = next.paramMap.get('goodsId');
-        return forkJoin(of(user), this.goodsService.getGoods(goodsId));
-      }),
-      first(),
-      map(([user, goods]) => {
-        const market = next.paramMap.get('market').toUpperCase();
+      map(goods => {
         switch (market) {
           case Market.Group:
-            return !!(goods.groupRef.id === user.groupRef.id && goods.market.group);
+            return !!(goods.groupRef.id === userGroupRef.id && goods.market.group);
           case Market.Lounge:
             return goods.market.lounge;
         }
       })
     );
   }
+
 }
