@@ -25,7 +25,7 @@ import { PersistanceService } from './shared/services';
 import { SpinnerService } from './modules/spinner/spinner.service';
 import { SpinnerComponent } from './modules/spinner/spinner.component';
 
-function resolveAuthInfo(authService: AuthService) {
+export function resolveAuthInfo(authService: AuthService) {
   return () => authService.resolveAuthInfo().toPromise();
 }
 
