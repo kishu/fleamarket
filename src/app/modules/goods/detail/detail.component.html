@@ -27,7 +27,7 @@
     <div class="goods_info_area margin1">
       <dl class="goods_price">
         <dt>판매가</dt>
-        <dd><strong>{{ goods.price }}</strong>원</dd>
+        <dd><strong>{{ goods.price | number:'2.' }}</strong>원</dd>
       </dl>
       <dl class="goods_info">
         <dt>사용기간</dt>
@@ -39,7 +39,7 @@
       </dl>
       <dl class="goods_info2">
         <dt>기부금</dt>
-        <dd>{{ goods.donation }}</dd>
+        <dd>&nbsp;{{ goods.donation | number:'2.' }}</dd>
       </dl>
     </div>
     <div class="goods_detail">
