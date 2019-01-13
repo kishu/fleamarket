@@ -28,7 +28,7 @@ export class DetailComponent implements OnInit {
     private goodsService: GoodsService
   ) {
     const group = this.authService.group;
-    this.goods = this.route.snapshot.data.goods;
+    this.goods = this.goodsService.selectedGoods;
     this.user$ = this.goodsService.getGoodsUser(this.goods.userRef);
 
     this.route.params.pipe(

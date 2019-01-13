@@ -234,7 +234,8 @@
       <ul class="large_list" id="goods_list">
         <li *ngFor="let goods of goods$ | async">
           <div [ngClass]="{'item': true, 'soldout': goods.soldout}">
-            <a [routerLink]="['/',  market.toLowerCase(), 'goods', goods.id]">
+            <a [routerLink]="['/',  market.toLowerCase(), 'goods', goods.id]"
+              (click)="onClickGoods(goods)">
               <div class="goods_thumb"
                    [ngStyle]="{'background-image': 'url(assets/img/dark.png), url(' + imageURL + '/w_800,c_limit/' + goods.images[0] + ')'}">
                 <dl class="feed">

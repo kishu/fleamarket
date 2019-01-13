@@ -66,6 +66,10 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  onClickGoods(goods: Goods) {
+    this.goodsService.selectedGoods = goods;
+  }
+
   showGoodsBy(market: string) {
     switch (market as Market) {
       case Market.Group:

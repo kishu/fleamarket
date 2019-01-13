@@ -11,10 +11,14 @@ import { Goods, Group, User } from '../../shared/models';
 })
 export class GoodsService {
   private goodsCollection: AngularFirestoreCollection<Goods>;
+  private _selectedGoods: Goods;
 
   constructor(private afs: AngularFirestore) {
     this.goodsCollection = afs.collection<Goods>('goods');
   }
+
+  get selectedGoods() { return this._selectedGoods; }
+  set selectedGoods(goods: Goods) { this._selectedGoods = goods; }
 
   getUserRef(userId): firestore.DocumentReference {
     return this.afs.collection('users').doc<User>(userId).ref;
