@@ -3,9 +3,9 @@ import { DecimalPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { targetSelectedValidator } from '../target-selected-validator.directive';
-import { FileUploadService, GoodsService } from '../../../core/http';
+import { AuthService, FileUploadService, GoodsService} from '../../../core/http';
 import { SpinnerService } from '../../spinner/spinner.service';
 import { Goods, ImageFile } from '../../../shared/models';
 
@@ -40,13 +40,12 @@ export class WriteComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private decimalPipe: DecimalPipe,
+    private authService: AuthService,
     private fileUploadService: FileUploadService,
     private goodsService: GoodsService,
     private spinnerService: SpinnerService) {
 
-    const { group } = this.route.snapshot.data.loginInfo;
-    this.groupName = group.name;
-
+    this.groupName = this.authService.group.name;
     this.buildWriteForm();
   }
 
