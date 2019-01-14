@@ -1,12 +1,13 @@
 import * as $ from 'jquery';
 import 'slick-carousel';
 
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, pluck, tap} from 'rxjs/operators';
-import { Goods, Market, User } from '../../../shared/models';
-import { AuthService, GoodsService } from '../../../core/http';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { map, pluck, tap} from 'rxjs/operators';
+import { AuthService, CommentService, GoodsService } from '../../../core/http';
+import { Comment, CommentWrite, Goods, Market, User } from '../../../shared/models';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -20,13 +21,25 @@ export class DetailComponent implements OnInit {
   goods: Goods;
   imageURL = environment.cloudinary.imageURL;
   user$: Observable<User>;
+  commentForm: FormGroup;
+  submitting = false;
+  comments$: Observable<Comment[]>;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private fb: FormBuilder,
     private authService: AuthService,
+    private commentService: CommentService,
     private goodsService: GoodsService
   ) {
+    this.commentForm = this.fb.group({
+      body: [
+        '',
+        [ Validators.required,  Validators.minLength(1), Validators.maxLength(501) ]
+      ]
+    });
+
     const group = this.authService.group;
     this.goods = this.goodsService.selectedGoods;
     this.user$ = this.goodsService.getGoodsUser(this.goods.userRef);
@@ -46,6 +59,8 @@ export class DetailComponent implements OnInit {
         }
       })
     ).subscribe();
+
+    this.comments$ = this.commentService.getCommentsByGoods(this.goods.id);
   }
 
   ngOnInit() {
@@ -55,6 +70,34 @@ export class DetailComponent implements OnInit {
         dots: true
       });
     });
+  }
+
+  onCommentSubmit() {
+    if (!this.submitting) {
+      this.submitting = true;
+
+      const comment: CommentWrite = {
+        userId: this.authService.user.id,
+        goodsId: this.goods.id,
+        parentId: null,
+        displayName: this.authService.user.displayName,
+        body: this.commentForm.get('body').value
+      };
+      this.commentService.addComment(comment)
+        .subscribe(this.successSubmitComment, this.errorSubmitComment);
+
+      this.commentForm.get('body').setValue('');
+    }
+  }
+
+  protected successSubmitComment = () => {
+    this.submitting = false;
+  }
+
+  protected errorSubmitComment = (e) => {
+    console.error(e);
+    alert(e);
+    this.submitting = false;
   }
 
 }

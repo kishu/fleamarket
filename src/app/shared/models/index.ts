@@ -30,7 +30,7 @@ export class Group {
 }
 
 export class User {
-  uid?: string;
+  id?: string;
   groupRef: firestore.DocumentReference | string;
   email: string;
   displayName: string;
@@ -45,5 +45,6 @@ export class AFSimpleUser {
 
 export * from './goods';
 export * from './image-file';
+export * from './comment';
 
 

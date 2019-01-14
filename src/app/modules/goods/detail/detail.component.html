@@ -93,106 +93,20 @@
       </li>
     </ul>
   </div>
-  <div class="comment">
+  <div *ngIf="(comments$ | async) as comments" class="comment">
     <div class="comment_header">
-      <h4>댓글 <strong>5</strong>개</h4>
+      <ng-container *ngIf="comments.length > 0; then commentsTmpl else noCommentsTmpl"></ng-container>
+      <ng-template #commentsTmpl><h4>댓글 <strong>{{ comments.length }}</strong>개</h4></ng-template>
+      <ng-template #noCommentsTmpl><h4>첫 댓글을 입력해 보세요!</h4></ng-template>
     </div>
     <ul class="comment_list">
-      <li>
+      <!--<li *ngFor="let comment of comments$ | async">-->
+      <li *ngFor="let comment of comments">
         <div class="comment_item">
           <span class="comment_thumb" style="background-image:url(assets/img/author.png);"></span>
           <div class="comment_content">
-            <strong>9층의 유라센세</strong><br>
-            <p>저 사고 싶어요. 기다리던 제품이에요!!</p>
-          </div>
-          <div class="comment_function">
-            <a href="#">수정</a> &middot; <a href="#">삭제</a> &middot; <a href="#">댓글쓰기</a> &middot; <span class="created">방금 전</span>
-          </div>
-        </div>
-        <ul class="comment_list">
-          <li>
-            <div class="comment_item">
-              <span class="comment_thumb" style="background-image:url(assets/img/author2.png);"></span>
-              <div class="comment_content">
-                <strong>우염한 죠스타</strong>
-                <p>안팔아요.</p>
-              </div>
-              <div class="comment_function">
-                <a href="#">수정</a> &middot; <a href="#">삭제</a> &middot; <a href="#">댓글쓰기</a> &middot; <span class="created">방금 전</span>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="comment_item">
-              <span class="comment_thumb" style="background-image:url(assets/img/author.png);"></span>
-              <div class="comment_content">
-                <strong>9층의 유라센세</strong>
-                <p>제발요~ 제가 정말정말 사고 싶어서 그래요. 저한테 파시면 3대가 복 받으실 거에요. 저한테 팔아주세요.</p>
-              </div>
-              <div class="comment_function">
-                <a href="#">수정</a> &middot; <a href="#">삭제</a> &middot; <a href="#">댓글쓰기</a> &middot; <span class="created">방금 전</span>
-              </div>
-            </div>
-            <!--<div class="comment_form">-->
-              <!--<textarea class="textarea"></textarea>-->
-              <!--<a href="#" class="button disabled" style="margin-left:33px;">입력</a>-->
-              <!--<input type="checkbox" id="secret"> <label class="secret" for="secret">비밀댓글</label>-->
-            <!--</div>-->
-          </li>
-          <li>
-            <div class="comment_item">
-              <span class="comment_thumb" style="background-image:url(assets/img/author2.png);"></span>
-              <div class="comment_content">
-                <strong>우염한 죠스타</strong>
-                <p>그렇다면 팔게요! 복 안들어오기만 해봐라.</p>
-              </div>
-              <div class="comment_function">
-                <a href="#">수정</a> &middot; <a href="#">삭제</a> &middot; <a href="#">댓글쓰기</a> &middot; <span class="created">방금 전</span>
-              </div>
-            </div>
-            <!--<div class="comment_form">-->
-              <!--<textarea class="textarea"></textarea>-->
-              <!--<a href="#" class="button disabled">입력</a>-->
-            <!--</div>-->
-          </li>
-        </ul>
-        <div class="comment_form">
-          <textarea class="textarea"></textarea>
-          <a href="#" class="button disabled">입력</a>
-        </div>
-      </li>
-      <li>
-        <div class="comment_item">
-          <span class="comment_thumb" style="background-image:url(assets/img/author.png);"></span>
-          <div class="comment_content">
-            <strong>진격의 코드밀리</strong><br>
-            <p>제가 천원 더해서 살께요. 저에게 파세여. 우염우염</p>
-          </div>
-          <div class="comment_function">
-            <a href="#">수정</a> &middot; <a href="#">삭제</a> &middot; <a href="#">댓글쓰기</a> &middot; <span class="created">방금 전</span>
-          </div>
-        </div>
-        <ul class="comment_list">
-          <li>
-            <div class="comment_item">
-              <span class="comment_thumb" style="background-image:url(assets/img/author2.png);"></span>
-              <div class="comment_content">
-                <strong>우염한 죠스타</strong>
-                <p>콜~!!</p>
-              </div>
-              <div class="comment_function">
-                <a href="#">수정</a> &middot; <a href="#">삭제</a> &middot; <a href="#">댓글쓰기</a> &middot; <span class="created">방금 전</span>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <div class="comment_item">
-          <span class="comment_thumb" style="background-image:url(assets/img/author.png);"></span>
-          <div class="comment_content">
-            <strong>9층의 유라센세</strong><br>
-            <p>와떠 ;;;</p>
+            <strong>{{ comment.displayName }}</strong><br>
+            <p>{{ comment.body }}</p>
           </div>
           <div class="comment_function">
             <a href="#">수정</a> &middot; <a href="#">삭제</a> &middot; <a href="#">댓글쓰기</a> &middot; <span class="created">방금 전</span>
@@ -200,5 +114,14 @@
         </div>
       </li>
     </ul>
+    <div class="comment_form">
+      <form [formGroup]="commentForm" (ngSubmit)="onCommentSubmit()">
+        <textarea name="body" formControlName="body"
+                  maxlength="500" class="textarea"></textarea>
+        <button type="submit"
+                [disabled]="commentForm.invalid"
+                [ngClass]="{ button: true, disabled: commentForm.invalid }">입력</button>
+      </form>
+    </div>
   </div>
 </div>
