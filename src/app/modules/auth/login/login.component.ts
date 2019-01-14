@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   onLogin(target: string) {
     fromPromise(this.authService.login(target)).pipe(
       pluck('user'),
-      switchMap((user: User) => this.userService.getUser(user.uid)),
+      switchMap((user: User) => this.userService.getUser(user.id)),
     ).subscribe(this.success, this.error);
   }
 
