@@ -193,7 +193,8 @@ export class WriteComponent implements OnInit {
 
   protected getGoods(images): Goods {
     const form = this.writeForm;
-    const { user, group } = this.route.snapshot.data.loginInfo;
+    const user = this.authService.user;
+    const group = this.authService.group;
 
     return {
       userRef: this.goodsService.getUserRef(user.id),
