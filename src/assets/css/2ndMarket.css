@@ -1471,3 +1471,21 @@ li .comment_form {
     width: 25%;
   }
 }
+
+
+
+/*
+
+ */
+
+.spinner_wrap {
+  z-index: 40;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%)
+}
+
+.spinner_inner {
+  text-align: center;
+}

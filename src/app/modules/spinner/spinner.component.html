@@ -1,4 +1,6 @@
-<div [ngClass]="{ 'dimmed': show }"></div>
-<div *ngIf="show" class="loader-wrap">
-  <div class="loader">Loading...</div>
+<div *ngIf="show" class="dimmed"></div>
+<div *ngIf="show" class="spinner_wrap">
+  <div class="spinner_inner">
+    <img src="assets/img/Ellipsis-2.4s-120px.svg" alt="로딩중...">
+  </div>
 </div>
