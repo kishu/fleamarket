@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import 'firebase/firestore';
+import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { first, map } from 'rxjs/operators';
@@ -20,29 +20,29 @@ export class GoodsService {
   get selectedGoods() { return this._selectedGoods; }
   set selectedGoods(goods: Goods) { this._selectedGoods = goods; }
 
-  getUserRef(userId): firestore.DocumentReference {
+  getUserRef(userId): firebase.firestore.DocumentReference {
     return this.afs.collection('users').doc<User>(userId).ref;
   }
 
-  getGroupRef(groupId): firestore.DocumentReference {
+  getGroupRef(groupId): firebase.firestore.DocumentReference {
     return this.afs.collection('groups').doc<Group>(groupId).ref;
   }
 
-  getGoodsUser(userRef: firestore.DocumentReference): Observable<User | any> {
+  getGoodsUser(userRef: firebase.firestore.DocumentReference): Observable<User | any> {
     return fromPromise(userRef.get()).pipe(
       map(user => ({ id: user.id, ...user.data() }))
     );
   }
 
-  getServerTimeStamp(): firestore.FieldValue {
-    return firestore.FieldValue.serverTimestamp();
+  getServerTimeStamp(): firebase.firestore.FieldValue {
+    return firebase.firestore.FieldValue.serverTimestamp();
   }
 
   addGoods(goods: Goods) {
     return this.goodsCollection.add(goods);
   }
 
-  getGoodsByGroup(groupRef: firestore.DocumentReference) {
+  getGoodsByGroup(groupRef: firebase.firestore.DocumentReference) {
     return this.afs.collection('goods', ref => {
       return ref.where('groupRef', '==',  groupRef)
         .where('market.group', '==', true)

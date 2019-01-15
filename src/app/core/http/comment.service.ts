@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import 'firebase/firestore';
+import * as firebase from 'firebase/app';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
@@ -24,8 +24,8 @@ export class CommentService {
         this.afs.collection('comments').doc<Comment>(commentWrite.parentId).ref : null,
       body: commentWrite.body,
       displayName: commentWrite.displayName,
-      created: firestore.FieldValue.serverTimestamp(),
-      updated: firestore.FieldValue.serverTimestamp()
+      created: firebase.firestore.FieldValue.serverTimestamp(),
+      updated: firebase.firestore.FieldValue.serverTimestamp()
     };
 
     // todo return must be observable but promise
