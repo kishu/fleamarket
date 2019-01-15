@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { firestore } from 'firebase';
+import 'firebase/firestore';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';

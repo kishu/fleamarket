@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { firestore } from 'firebase';
+import 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { first, map } from 'rxjs/operators';
