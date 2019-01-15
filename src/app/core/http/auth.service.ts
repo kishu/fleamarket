@@ -109,15 +109,15 @@ export class AuthService {
     return this.afAuth.auth.signOut();
   }
 
-  updateDisplayName(displayName: string) {
-    return this.afAuth.user.pipe(
-      switchMap(user => {
-        return user.updateProfile({
-          displayName,
-          photoURL: user.photoURL
-        });
-      })
-    );
-  }
+  // updateDisplayName(displayName: string) {
+  //   return this.afAuth.user.pipe(
+  //     switchMap(user => {
+  //       return user.updateProfile({
+  //         displayName,
+  //         photoURL: user.photoURL
+  //       });
+  //     })
+  //   );
+  // }
 
 }

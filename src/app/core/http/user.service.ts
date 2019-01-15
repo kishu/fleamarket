@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { merge } from 'rxjs';
-import { filter, first, map, mapTo } from 'rxjs/operators';
+import { Observable} from 'rxjs';
+import { first, map } from 'rxjs/operators';
 import { User, Group } from '../../shared/models';
 
 @Injectable({
@@ -14,26 +14,21 @@ export class UserService {
     this.usersCollection = afs.collection<User>('users');
   }
 
-  getUser(uid) {
-    const user$ = this.afs.doc<User>(`users/${uid}`)
-      .snapshotChanges().pipe(first());
-
-    const noUser$ = user$.pipe(
-      filter(user => !user.payload.exists),
-      mapTo(null)
-    );
-
-    const existUser$ = user$.pipe(
-      filter(user => user.payload.exists),
-      map(user => {
-        return {
-          id: user.payload.id,
-          ...user.payload.data()
-        };
-      })
-    );
-
-    return merge(noUser$, existUser$);
+  getUser(uid): Observable<User> | null {
+    return this.afs.doc<User>(`users/${uid}`)
+      .snapshotChanges().pipe(
+        first(),
+        map(user => {
+          if (user.payload.exists) {
+            return {
+              id: user.payload.id,
+              ...user.payload.data()
+            } as User;
+          } else {
+            return null;
+          }
+        })
+      );
   }
 
   setUser(uid: string, user: User) {

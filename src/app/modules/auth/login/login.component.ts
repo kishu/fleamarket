@@ -1,9 +1,11 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
+import * as firebase from 'firebase/app';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { switchMap, pluck } from 'rxjs/operators';
 import { AuthService, UserService } from '../../../core/http';
-import { User } from '../../../shared/models';
+import { SpinnerService } from '../../spinner/spinner.service';
+
 
 @Component({
   selector: 'app-login',
@@ -16,15 +18,17 @@ export class LoginComponent implements OnInit {
     private ngZone: NgZone,
     private router: Router,
     private authService: AuthService,
-    private userService: UserService) { }
+    private userService: UserService,
+    private spinnerService: SpinnerService) { }
 
   ngOnInit() {
   }
 
   onLogin(target: string) {
+    this.spinnerService.show(true);
     fromPromise(this.authService.login(target)).pipe(
       pluck('user'),
-      switchMap((user: User) => this.userService.getUser(user.id)),
+      switchMap((user: firebase.UserInfo) => this.userService.getUser(user.uid)),
     ).subscribe(this.success, this.error);
   }
 
@@ -34,12 +38,14 @@ export class LoginComponent implements OnInit {
         (user) ?
           this.router.navigate(['/']) :
           this.router.navigate(['/auth']);
+        this.spinnerService.show(false);
       });
   }
 
   error = (e) => {
     console.error(e);
     alert(e.message);
+    this.spinnerService.show(false);
   }
 
   onLogout() {

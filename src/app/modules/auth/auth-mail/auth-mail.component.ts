@@ -2,9 +2,9 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { Observable } from 'rxjs';
-import { Group, GroupType } from '../../../shared/models';
-import { AuthData } from '../../../shared/models';
 import { AuthService, GroupService } from '../../../core/http';
+import { SpinnerService } from '../../spinner/spinner.service';
+import { AuthData, Group, GroupType } from '../../../shared/models';
 
 @Component({
   selector: 'app-auth-mail',
@@ -22,7 +22,8 @@ export class AuthMailComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private groupService: GroupService,
-    private fns: AngularFireFunctions) {
+    private fns: AngularFireFunctions,
+    private spinnerService: SpinnerService) {
     this.mailForm = this.fb.group({
       account: [
         '',
@@ -55,6 +56,7 @@ export class AuthMailComponent implements OnInit {
 
   onSubmit() {
     if (!this.submitting) {
+      this.spinnerService.show(true);
       this.submitting = true;
       const sendAuthMail = this.fns.httpsCallable('sendAuthMail');
 
@@ -68,8 +70,6 @@ export class AuthMailComponent implements OnInit {
   }
 
   protected success = () => {
-    this.submitting = false;
-
     const authData: AuthData = {
       email: this.email,
       group: this.group.value,
@@ -77,12 +77,18 @@ export class AuthMailComponent implements OnInit {
     };
 
     this.submitted.emit(authData);
-    alert('인증 메일을 발송했습니다');
+
+    this.spinnerService.show(false);
+    this.submitting = false;
+
+    setTimeout(() => alert('인증 메일을 발송했습니다'), 0);
   }
 
   protected error = (e) => {
     console.error(e);
     alert(`인증 메일 발송하지 못했습니다.\n${e.message}`);
+
+    this.spinnerService.show(false);
     this.submitting = false;
   }
 
