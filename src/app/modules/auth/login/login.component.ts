@@ -35,10 +35,15 @@ export class LoginComponent implements OnInit {
   success = (user) => {
     this.ngZone
       .run(() => {
-        (user) ?
-          this.router.navigate(['/']) :
+        if (user) {
+          this.authService.resolveAuthInfo().subscribe(() => {
+            this.router.navigate(['/']);
+            this.spinnerService.show(false);
+          });
+        } else {
           this.router.navigate(['/auth']);
-        this.spinnerService.show(false);
+          this.spinnerService.show(false);
+        }
       });
   }
 
