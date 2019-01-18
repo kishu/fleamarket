@@ -104,7 +104,7 @@ p {
   text-overflow: ellipsis;
 }
 
-.m-pikabu-nav-toggle {
+.menu-toggle {
   overflow: hidden;
   position: absolute;
   z-index: 1;
@@ -115,19 +115,6 @@ p {
   background: url(../img/hamburger.png) no-repeat 0 0;
   background-size: 45px 42px;
   color: rgba(0,0,0,0);
-}
-
-.m-pikabu-sidebar {
-  padding-right: 1px;
-  background-color: #fff;
-}
-
-.m-pikabu-overlay {
-  background-color: rgba(0,0,0,0.5);
-  background-image: url(../img/close.png);
-  background-repeat: no-repeat;
-  background-position: 15px 15px;
-  background-size: 20px 20px;
 }
 
 .group {
@@ -319,6 +306,7 @@ nav.sorting .category a.on {
 
 .write {
   position: fixed;
+  z-index: 50;
   left: 11px;
   bottom: 11px;
   width: 50px;
@@ -1475,7 +1463,7 @@ li .comment_form {
 
 
 /*
-
+spinner
  */
 
 .spinner_wrap {
@@ -1488,4 +1476,49 @@ li .comment_form {
 
 .spinner_inner {
   text-align: center;
+}
+
+/*
+slideout
+ */
+body {
+  width: 100% ;
+  height: 100%;
+}
+.slideout-menu {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 256px;
+  min-height: 100vh;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  z-index: 0;
+  display: none;
+}
+
+.slideout-menu-left {
+  left: 0;
+}
+
+.slideout-menu-right {
+  right: 0;
+}
+
+.slideout-panel {
+  position: relative;
+  z-index: 1;
+  will-change: transform;
+  background-color: #FFF; /* A background-color is required */
+  min-height: 100vh;
+}
+
+.slideout-open,
+.slideout-open body,
+.slideout-open .slideout-panel {
+  overflow: hidden;
+}
+
+.slideout-open .slideout-menu {
+  display: block;
 }

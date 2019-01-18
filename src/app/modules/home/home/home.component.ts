@@ -1,3 +1,6 @@
+import * as $ from 'jquery';
+import Slideout from 'slideout';
+import 'slick-carousel';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firestore } from 'firebase';
@@ -6,9 +9,6 @@ import { Goods, Market } from '../../../shared/models';
 import { Observable} from 'rxjs';
 import { map, pluck, switchMap, tap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
-
-declare var $: any;
-declare var Pikabu: any;
 
 @Component({
   selector: 'app-home',
@@ -54,7 +54,18 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     $(document).ready(function() {
-      const pikabu = new Pikabu();
+      const slideout = new Slideout({
+        'panel': document.getElementById('panel'),
+        'menu': document.getElementById('menu'),
+        'padding': 256,
+        'tolerance': 70
+      });
+
+      // Toggle button
+      document.querySelector('.menu-toggle').addEventListener('click', function() {
+        slideout.toggle();
+      });
+
       $('.welcome .button').on('click', function(e) {
         e.preventDefault();
         $('.welcome').hide();

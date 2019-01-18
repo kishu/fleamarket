@@ -30,6 +30,7 @@
     "jquery": "^3.3.1",
     "rxjs": "~6.3.3",
     "slick-carousel": "^1.8.1",
+    "slideout": "^1.0.1",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
   },
