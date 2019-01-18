@@ -1,6 +1,3 @@
-import * as $ from 'jquery';
-import 'slick-carousel';
-
 import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -9,6 +6,8 @@ import { map, pluck, tap} from 'rxjs/operators';
 import { AuthService, CommentService, GoodsService } from '../../../core/http';
 import { Comment, CommentWrite, Goods, Market, User } from '../../../shared/models';
 import { environment } from '../../../../environments/environment';
+
+declare var $: any;
 
 @Component({
   selector: 'app-detail',

@@ -1,7 +1,7 @@
-import * as $ from 'jquery';
-import 'slick-carousel';
 import { Component, OnInit } from '@angular/core';
 import { PersistanceService } from '../../shared/services';
+
+declare var $: any;
 
 @Component({
   selector: 'app-intro',
