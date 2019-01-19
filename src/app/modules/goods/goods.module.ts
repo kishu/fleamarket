@@ -8,7 +8,6 @@ import { WriteComponent } from './write/write.component';
 import { FileUploadService } from '../../core/http';
 import { DetailComponent } from './detail/detail.component';
 
-
 @NgModule({
   declarations: [
     TargetSelectedValidatorDirective,

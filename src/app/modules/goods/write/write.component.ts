@@ -5,9 +5,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { targetSelectedValidator } from '../target-selected-validator.directive';
-import { AuthService, FileUploadService, GoodsService} from '../../../core/http';
+import { AuthService, FileUploadService, GoodsService } from '../../../core/http';
 import { SpinnerService } from '../../spinner/spinner.service';
-import { Goods, ImageFile } from '../../../shared/models';
+import { CloudinaryPreset, Goods, ImageFile } from '../../../shared/models';
 
 enum ImageType {
   Front = 'FRONT',
@@ -170,7 +170,7 @@ export class WriteComponent implements OnInit {
 
     const progress$ = [];
     const response$ = [];
-    const statusList = this.fileUploadService.upload(files);
+    const statusList = this.fileUploadService.upload(files, CloudinaryPreset.goods);
 
     for (const key of Object.keys(statusList)) {
       progress$.push(statusList[key].progress);
