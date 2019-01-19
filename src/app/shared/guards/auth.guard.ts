@@ -20,19 +20,25 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     return forkJoin(this.authService.afUser, of(this.authService.user)).pipe(
       switchMap(([afUser, user]) => {
-        if (!afUser && !user) {
-          const viewIntro = this.persistanceService.get('viewIntro');
-          if (!viewIntro) {
-            this.router.navigate(['intro']);
-          } else if (!afUser) {
-            this.router.navigate(['login']);
-          } else {
-            this.router.navigate(['auth']);
-          }
+        // 인트로를 안본 경우 -> 무조건
+        const viewIntro = this.persistanceService.get('viewIntro');
+
+        if (!viewIntro) {
+          this.router.navigate(['intro']);
           return of(false);
-        } else {
-          return of(true);
         }
+
+        if (!afUser && !user) {
+          this.router.navigate(['login']);
+          return of(false);
+        }
+
+        if (afUser && !user) {
+          this.router.navigate(['auth']);
+          return of(false);
+        }
+
+        return of(true);
       })
     );
   }
