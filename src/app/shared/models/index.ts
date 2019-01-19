@@ -17,6 +17,11 @@ export enum GroupType {
   Apt = 'Apt'
 }
 
+export enum CloudinaryPreset {
+  goods = 'GOODS',
+  profile = 'PROFILE'
+}
+
 export const enum Market {
   Group = 'GROUP',
   Lounge = 'LOUNGE'
@@ -29,18 +34,27 @@ export class Group {
   domain?: string;
 }
 
+export class AFSimpleUser {
+  uid: string;
+  displayName: string;
+  photoURL: string;
+}
+
 export class User {
   id?: string;
   groupRef: firestore.DocumentReference | string;
   email: string;
   displayName: string;
+  desc: string;
   photoURL: string;
+  notice: boolean;
 }
 
-export class AFSimpleUser {
-  uid: string;
-  displayName: string;
+export class UserPreference {
   photoURL: string;
+  displayName: string;
+  desc: string;
+  notice: boolean;
 }
 
 export * from './goods';

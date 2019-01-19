@@ -1,0 +1,54 @@
+<div class="wrap sub form">
+  <header>
+    <h2>내정보 설정</h2>
+    <a routerLink="/" class="back">이전</a>
+  </header>
+  <section>
+    <form [formGroup]="preferenceForm" (ngSubmit)="onSubmit()">
+      <div class="profile_border margin2">
+        <!--<ng-container *ngIf="imageFile; then image; else noImage"></ng-container>-->
+        <!--<ng-template #image><div class="profile_thumb" [style.backgroundImage]="'url(' + imageFile.dataURL + ')'"></div></ng-template>-->
+        <!--<ng-template #noImage><div class="profile_thumb" style="background-image: url(assets/img/author.png);"></div></ng-template>-->
+        <div class="profile_thumb" [style.backgroundImage]="'url(' + photoURL + ')'"></div>
+        <div class="profile_camera"></div>
+        <input type="file"
+               accept="image/gif, image/jpeg, image/png"
+               (change)="onChangeImage($event)">
+      </div>
+      <div class="table margin2">
+        <div class="td">
+          <input type="text"
+                 name="displayName" formControlName="displayName"
+                 maxlength="20" placeholder="이름을 입력하세요" class="input">
+          <div *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)" class="explain">
+            <span *ngIf="displayName.errors.required" class="explain small">이름을 입력하세요.</span>
+          </div>
+        </div>
+      </div>
+      <p class="explain small">그룹 내 다른 사용자에게 보여지는 정보입니다.</p>
+      <div class="table margin2">
+        <div class="td">
+          <input type="text"
+                 name="desc" formControlName="desc"
+                 maxlenth="100" placeholder="자기소개" class="input">
+        </div>
+      </div>
+      <p class="explain small">연락처, 메신저 ID 등 연락 가능한 방법을 적어주세요.</p>
+      <div class="table margin5">
+        <div class="td">
+          <h3>내 상품 알림</h3>
+          <p class="explain small">내 상품에 대한 좋아요, 댓글 알림을 받습니다.</p>
+        </div>
+        <div class="td">
+          <div class="switch">
+            <input type="checkbox" id="c1"
+              name="notice" formControlName="notice">
+            <label for="c1"><span></span></label>
+          </div>
+        </div>
+      </div>
+      <button type="submit" [disabled]="preferenceForm.invalid" class="button margin5">변경</button>
+      <button type="button" class="button margin2 temp">로그아웃</button>
+    </form>
+  </section>
+</div>

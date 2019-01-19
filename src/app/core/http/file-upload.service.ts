@@ -1,19 +1,29 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpEventType, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Subject } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpEventType, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
+import {Subject} from 'rxjs';
+import {CloudinaryPreset} from '../../shared/models';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileUploadService {
   private uploadURL = environment.cloudinary.uploadURL;
-  private preset = environment.cloudinary.preset;
 
   constructor(private http: HttpClient) { }
 
-  upload(files: File[]) {
+  upload(files: File[], preset: CloudinaryPreset) {
     const status = {};
+    let upload_preset;
+
+    switch (preset) {
+      case CloudinaryPreset.goods:
+        upload_preset = environment.cloudinary.preset.goods;
+        break;
+      case CloudinaryPreset.profile:
+        upload_preset = environment.cloudinary.preset.profile;
+        break;
+    }
 
     const headers = new HttpHeaders({
       'X-Requested-With': 'XMLHttpRequest'
@@ -26,7 +36,7 @@ export class FileUploadService {
 
     files.forEach(file => {
       const fd = new FormData();
-      fd.set('upload_preset', this.preset);
+      fd.set('upload_preset', upload_preset);
       fd.set('file', file);
 
       const req = new HttpRequest(

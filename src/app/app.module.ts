@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {APP_INITIALIZER, NgModule} from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 // firebase modules
 import { AngularFireModule } from '@angular/fire';
@@ -11,6 +11,7 @@ import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './modules/home/home.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { GoodsModule } from './modules/goods/goods.module';
+import { PreferenceModule } from './modules/preference/preference.module';
 import { AppRoutingModule } from './app-routing.module';
 // providers
 import { AuthGuard } from './shared/guards';
@@ -46,6 +47,7 @@ export function resolveAuthInfo(authService: AuthService) {
     HomeModule,
     AuthModule,
     GoodsModule,
+    PreferenceModule,
     AppRoutingModule
   ],
   providers: [
