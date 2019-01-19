@@ -37,7 +37,6 @@ export class Group {
 export class AFSimpleUser {
   uid: string;
   displayName: string;
-  photoURL: string;
 }
 
 export class User {

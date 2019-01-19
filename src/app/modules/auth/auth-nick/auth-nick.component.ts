@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 import { AuthService, UserService } from '../../../core/http';
+import { SpinnerService } from '../../spinner/spinner.service';
 import { AuthData, User } from '../../../shared/models';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-auth-nick',
@@ -19,7 +21,8 @@ export class AuthNickComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private spinnerService: SpinnerService
   ) {
     this.nickForm = this.fb.group({
       nick: [
@@ -43,6 +46,7 @@ export class AuthNickComponent implements OnInit {
   onSubmit() {
     if (!this.submitting) {
       this.submitting = true;
+      this.spinnerService.show(true);
 
       this.authService.afSimpleUser.pipe(
         switchMap(afUser => {
@@ -50,7 +54,9 @@ export class AuthNickComponent implements OnInit {
             groupRef: this.authData.group.id,
             email: this.authData.email,
             displayName: this.nick.value,
-            photoURL: afUser.photoURL,
+            photoURL: environment.defaultPhotoURL,
+            notice: true,
+            desc: ''
           };
           return this.userService.setUser(afUser.uid, user);
         })
@@ -60,10 +66,12 @@ export class AuthNickComponent implements OnInit {
 
   success = () => {
     this.router.navigate(['/']);
+    this.spinnerService.show(false);
   }
 
   error = (e) => {
     console.error(e);
+    this.spinnerService.show(false);
     alert(e);
   }
 

@@ -6,10 +6,7 @@
   <section>
     <form [formGroup]="preferenceForm" (ngSubmit)="onSubmit()">
       <div class="profile_border margin2">
-        <!--<ng-container *ngIf="imageFile; then image; else noImage"></ng-container>-->
-        <!--<ng-template #image><div class="profile_thumb" [style.backgroundImage]="'url(' + imageFile.dataURL + ')'"></div></ng-template>-->
-        <!--<ng-template #noImage><div class="profile_thumb" style="background-image: url(assets/img/author.png);"></div></ng-template>-->
-        <div class="profile_thumb" [style.backgroundImage]="'url(' + photoURL + ')'"></div>
+        <div class="profile_thumb" [style.backgroundImage]="'url(' + imageURL + '/w_69,c_limit/' + photoURL  + ')'"></div>
         <div class="profile_camera"></div>
         <input type="file"
                accept="image/gif, image/jpeg, image/png"

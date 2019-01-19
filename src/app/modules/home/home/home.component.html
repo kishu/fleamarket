@@ -224,7 +224,7 @@
             </div>
             <div class="item_description">
               <div class="author">
-                <span class="author_thumb" style="background-image:url(assets/img/author.png);"></span>
+                <span class="author_thumb" [style.backgroundImage]="'url(' + imageURL + '/w_69,c_limit/' + goods.user.photoURL  + ')'"></span>
               </div>
               <div class="text">
                 <span class="name ellipsis">{{ goods.title }}</span>

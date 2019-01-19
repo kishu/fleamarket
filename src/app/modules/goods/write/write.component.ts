@@ -198,6 +198,10 @@ export class WriteComponent implements OnInit {
 
     return {
       userRef: this.goodsService.getUserRef(user.id),
+      user: {
+        displayName: this.authService.user.displayName,
+        photoURL: this.authService.user.photoURL
+      },
       groupRef: this.goodsService.getGroupRef(group.id),
       market: {
         group: form.get('market.group').value,

@@ -15,6 +15,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class UserComponent implements OnInit {
   preferenceForm: FormGroup;
+  imageURL = environment.cloudinary.imageURL;
   photoURL: string | ArrayBuffer;
   private submitting = false;
   private imageFile: ImageFile;
@@ -31,9 +32,7 @@ export class UserComponent implements OnInit {
     private spinnerService: SpinnerService
   ) {
     const user = this.authService.user;
-    this.photoURL = user.photoURL ?
-      `${environment.cloudinary.imageURL}/w_69,c_limit/${user.photoURL}` :
-      'assets/img/author.png';
+    this.photoURL = user.photoURL;
 
     this.preferenceForm = this.fb.group({
       displayName: [user.displayName || '', [Validators.required, Validators.minLength(1), Validators.maxLength(21)]],

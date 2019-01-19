@@ -3,6 +3,10 @@ import { firestore } from 'firebase';
 export class Goods {
   id?: string;
   userRef: firestore.DocumentReference;
+  user: {
+    displayName: string,
+    photoURL: string
+  };
   groupRef: firestore.DocumentReference;
   market: {
     group: boolean;

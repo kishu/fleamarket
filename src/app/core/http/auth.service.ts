@@ -37,7 +37,6 @@ export class AuthService {
         return of({
           uid: afUser.uid,
           displayName: afUser.displayName,
-          photoURL: afUser.photoURL
         });
       })
     );
@@ -54,37 +53,54 @@ export class AuthService {
   resolveAuthInfo() {
     const afUser$ = this.afAuth.user.pipe(first());
 
-    const user$ = afUser$.pipe(
-      switchMap((afUser) => {
-        if (afUser !== null) {
-          return this.afs.doc<User>(`users/${afUser.uid}`).snapshotChanges().pipe(
-            first(),
-            map(user => ({ id: user.payload.id, ...user.payload.data() }))
-          );
+    const user$ = id => {
+      return this.afs.doc<User>(`users/${id}`).snapshotChanges().pipe(
+        first(),
+        switchMap(user => {
+          if (user.payload.exists) {
+            return of({id: user.payload.id, ...user.payload.data()} as User);
+          } else {
+            return of(null);
+          }
+        })
+      );
+    };
+
+    const group$ = user => {
+      const groupRef = user.groupRef as DocumentReference;
+      return fromPromise(groupRef.get()).pipe(
+        first(),
+        switchMap(group => {
+          if (group.exists) {
+            return of({id: group.id, ...group.data()} as Group);
+          }
+        })
+      );
+    };
+
+    return afUser$.pipe(
+      switchMap(afUser => {
+        if (afUser) {
+          return user$(afUser.uid);
         } else {
           return of(null);
         }
-      })
-    );
-
-    const group$ = user$.pipe(
+      }),
       switchMap(user => {
-        if (user !== null ) {
-          const groupRef = user.groupRef as DocumentReference;
-          return fromPromise(groupRef.get()).pipe(
-            first(),
-            map(group => ({id: group.id, ...group.data()} as Group)),
-          );
+        if (user) {
+          this._user = user;
+          return group$(user);
         } else {
+          this._user = null;
           return of(null);
         }
-      })
-    );
-
-    return forkJoin(afUser$, user$, group$).pipe(
-      tap(([afUser, user, group]) => {
-        this._user = user;
-        this._group = group;
+      }),
+      tap(group => {
+        if (group) {
+          this._group = group;
+        } else {
+          this._group = null;
+        }
       })
     );
   }
