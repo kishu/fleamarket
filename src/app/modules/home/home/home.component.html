@@ -215,11 +215,11 @@
                  [ngStyle]="{'background-image': 'url(assets/img/dark.png), url(' + goods.images[0] + ')'}">
               <dl class="feed">
                 <dt class="like"></dt>
-                <dd>99</dd>
+                <dd>{{ goods.favoriteCnt }}</dd>
                 <dt class="comment"></dt>
-                <dd>999</dd>
+                <dd>{{ goods.commentCnt }}</dd>
                 <dt class="donate"></dt>
-                <dd>20%</dd>
+                <dd>{{ (goods.donation / goods.price) * 100 | number: '1.0-1' }}%</dd>
               </dl>
             </div>
             <div class="item_description">
