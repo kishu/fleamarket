@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, pluck, tap} from 'rxjs/operators';
 import { AuthService, CommentService, GoodsService } from '../../../core/http';
-import { Comment, CommentWrite, Goods, Market, User } from '../../../shared/models';
+import { Comment, Goods, Market, User } from '../../../shared/models';
 
 @Component({
   selector: 'app-detail',
@@ -83,15 +83,17 @@ export class DetailComponent implements OnInit {
     if (!this.submitting) {
       this.submitting = true;
 
-      const comment: CommentWrite = {
-        userId: this.authService.user.id,
-        goodsId: this.goods.id,
-        parentId: null,
+      const comment: Comment = {
+        userRef: this.commentService.getUserRef(this.authService.user.id),
+        goodsRef: this.commentService.getGoodsRef(this.goods.id),
+        parentRef: null,
         user: {
           displayName: this.authService.user.displayName,
           photoURL: this.authService.user.photoURL
         },
-        body: this.commentForm.get('body').value as string
+        body: this.commentForm.get('body').value as string,
+        created: this.commentService.getServerTimeStamp(),
+        updated: this.commentService.getServerTimeStamp()
       };
       this.commentService.addComment(comment)
         .subscribe(this.successSubmitComment, this.errorSubmitComment);

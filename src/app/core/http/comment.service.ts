@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { map } from 'rxjs/operators';
-import { Comment, CommentWrite, Goods, User } from '../../shared/models';
+import {Comment, Goods, User} from '../../shared/models';
 
 @Injectable({
   providedIn: 'root'
@@ -16,18 +16,7 @@ export class CommentService {
     this.commentCollection = afs.collection<Comment>('comments');
   }
 
-  addComment(commentWrite: CommentWrite) {
-    const comment: Comment = {
-      userRef: this.afs.collection('users').doc<User>(commentWrite.userId).ref,
-      user: commentWrite.user,
-      goodsRef: this.afs.collection('goods').doc<Goods>(commentWrite.goodsId).ref,
-      parentRef: commentWrite.parentId ?
-        this.afs.collection('comments').doc<Comment>(commentWrite.parentId).ref : null,
-      body: commentWrite.body,
-      created: firebase.firestore.FieldValue.serverTimestamp(),
-      updated: firebase.firestore.FieldValue.serverTimestamp()
-    };
-
+  addComment(comment: Comment) {
     // todo return must be observable but promise
     return fromPromise(this.commentCollection.add(comment));
   }
@@ -49,4 +38,17 @@ export class CommentService {
       })
     );
   }
+
+  getGoodsRef(goodsId): firebase.firestore.DocumentReference {
+    return this.afs.collection('goods').doc<Goods>(goodsId).ref;
+  }
+
+  getServerTimeStamp(): firebase.firestore.FieldValue {
+    return firebase.firestore.FieldValue.serverTimestamp();
+  }
+
+  getUserRef(userId): firebase.firestore.DocumentReference {
+    return this.afs.collection('users').doc<User>(userId).ref;
+  }
+
 }

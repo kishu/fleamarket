@@ -1,15 +1,5 @@
 import { firestore } from 'firebase';
 
-export class CommentWrite {
-  userId: string;
-  user: {
-    displayName: string;
-    photoURL: string;
-  };
-  goodsId: string;
-  parentId: string | null;
-  body: string;
-}
 export class Comment {
   id?: string;
   userRef: firestore.DocumentReference;
