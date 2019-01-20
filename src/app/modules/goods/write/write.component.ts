@@ -7,7 +7,8 @@ import { map, switchMap } from 'rxjs/operators';
 import { targetSelectedValidator } from '../target-selected-validator.directive';
 import { AuthService, FileUploadService, GoodsService } from '../../../core/http';
 import { SpinnerService } from '../../spinner/spinner.service';
-import { CloudinaryPreset, Goods, ImageFile } from '../../../shared/models';
+import { Goods, ImageFile } from '../../../shared/models';
+import { environment } from '../../../../environments/environment';
 
 enum ImageType {
   Front = 'FRONT',
@@ -29,6 +30,7 @@ export class WriteComponent implements OnInit {
   backImageFiles = new Map<number, ImageFile>();
 
   private submitting = false;
+  private readonly uploadPreset = environment.cloudinary.preset.goods;
 
   get market() { return this.writeForm.get('market'); }
   get title() { return this.writeForm.get('title'); }
@@ -170,7 +172,7 @@ export class WriteComponent implements OnInit {
 
     const progress$ = [];
     const response$ = [];
-    const statusList = this.fileUploadService.upload(files, CloudinaryPreset.goods);
+    const statusList = this.fileUploadService.upload(files, this.uploadPreset);
 
     for (const key of Object.keys(statusList)) {
       progress$.push(statusList[key].progress);
@@ -185,7 +187,7 @@ export class WriteComponent implements OnInit {
     return forkJoin(response$).pipe(
       map(responses => {
         return responses.map(response => {
-          return `${response.body.public_id}.${response.body.format}`;
+          return response.body.eager[0].url;
         });
       })
     );

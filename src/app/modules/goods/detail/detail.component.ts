@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 import { map, pluck, tap} from 'rxjs/operators';
 import { AuthService, CommentService, GoodsService } from '../../../core/http';
 import { Comment, CommentWrite, Goods, Market, User } from '../../../shared/models';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-detail',
@@ -18,7 +17,6 @@ export class DetailComponent implements OnInit {
   group: string;
   market: Market;
   goods: Goods;
-  imageURL = environment.cloudinary.imageURL;
   user$: Observable<User>;
   commentForm: FormGroup;
   submitting = false;

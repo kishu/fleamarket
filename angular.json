@@ -28,8 +28,8 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/slick-carousel/slick/slick.min.js",
-              "src/assets/js/jquery.uploadPreview.min.js",
-              "node_modules/slideout/dist/slideout.min.js"
+              "node_modules/slideout/dist/slideout.min.js",
+              "node_modules/jssha/externs/sha.js"
             ]
           },
           "configurations": {

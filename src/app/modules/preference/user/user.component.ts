@@ -5,7 +5,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { AuthService, FileUploadService, UserService } from '../../../core/http';
 import { SpinnerService } from '../../spinner/spinner.service';
-import { CloudinaryPreset, ImageFile, UserPreference } from '../../../shared/models';
+import { ImageFile, UserPreference } from '../../../shared/models';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -15,10 +15,11 @@ import { environment } from '../../../../environments/environment';
 })
 export class UserComponent implements OnInit {
   preferenceForm: FormGroup;
-  imageURL = environment.cloudinary.imageURL;
   photoURL: string | ArrayBuffer;
-  private submitting = false;
+
   private imageFile: ImageFile;
+  private submitting = false;
+  private uploadPreset = environment.cloudinary.preset.profile;
 
   get displayName() { return this.preferenceForm.get('displayName'); }
 
@@ -59,7 +60,7 @@ export class UserComponent implements OnInit {
 
     const progress$ = [];
     const response$ = [];
-    const statusList = this.fileUploadService.upload(files, CloudinaryPreset.profile);
+    const statusList = this.fileUploadService.upload(files, this.uploadPreset);
 
     for (const key of Object.keys(statusList)) {
       progress$.push(statusList[key].progress);
@@ -74,7 +75,7 @@ export class UserComponent implements OnInit {
     return forkJoin(response$).pipe(
       map(responses => {
         return responses.map(response => {
-          return `${response.body.public_id}.${response.body.format}`;
+          return response.body.eager[0].url;
         });
       })
     );

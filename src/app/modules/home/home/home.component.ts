@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
   userName: string;
   groupName: string;
   market =  Market.Group;
-  imageURL = environment.cloudinary.imageURL;
 
   goods$: Observable<Goods[]>;
 

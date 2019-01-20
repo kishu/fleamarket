@@ -212,7 +212,7 @@
           <a [routerLink]="['/',  market.toLowerCase(), 'goods', goods.id]"
             (click)="onClickGoods(goods)">
             <div class="goods_thumb"
-                 [ngStyle]="{'background-image': 'url(assets/img/dark.png), url(' + imageURL + '/w_720,c_limit/' + goods.images[0] + ')'}">
+                 [ngStyle]="{'background-image': 'url(assets/img/dark.png), url(' + goods.images[0] + ')'}">
               <dl class="feed">
                 <dt class="like"></dt>
                 <dd>99</dd>
@@ -224,7 +224,7 @@
             </div>
             <div class="item_description">
               <div class="author">
-                <span class="author_thumb" [style.backgroundImage]="'url(' + imageURL + '/w_69,c_limit/' + goods.user.photoURL  + ')'"></span>
+                <span class="author_thumb" [style.backgroundImage]="'url(' + goods.user.photoURL + ')'"></span>
               </div>
               <div class="text">
                 <span class="name ellipsis">{{ goods.title }}</span>

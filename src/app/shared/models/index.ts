@@ -17,11 +17,6 @@ export enum GroupType {
   Apt = 'Apt'
 }
 
-export enum CloudinaryPreset {
-  goods = 'GOODS',
-  profile = 'PROFILE'
-}
-
 export const enum Market {
   Group = 'GROUP',
   Lounge = 'LOUNGE'
