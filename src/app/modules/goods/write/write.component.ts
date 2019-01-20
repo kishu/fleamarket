@@ -77,7 +77,7 @@ export class WriteComponent implements OnInit {
       ],
       price: [
         '',
-        [ Validators.required, Validators.maxLength(13) ]
+        [ Validators.required, Validators.maxLength(15) ]
       ],
       delivery: this.fb.group({
         delivery: '직거래',
