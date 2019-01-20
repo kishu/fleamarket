@@ -20,6 +20,17 @@ export class GoodsService {
   get selectedGoods() { return this._selectedGoods; }
   set selectedGoods(goods: Goods) { this._selectedGoods = goods; }
 
+  incrementCommentCnt(id) {
+    const goodsRef = this.goodsCollection.doc(id).ref;
+
+    return this.afs.firestore.runTransaction(transaction => {
+      return transaction.get(goodsRef)
+        .then(goodsDoc => {
+          transaction.update(goodsRef, {commentCnt: goodsDoc.data().commentCnt + 1});
+        });
+    });
+  }
+
   getUserRef(userId): firebase.firestore.DocumentReference {
     return this.afs.collection('users').doc<User>(userId).ref;
   }

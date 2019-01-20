@@ -103,6 +103,7 @@ export class DetailComponent implements OnInit {
   }
 
   protected successSubmitComment = () => {
+    this.goodsService.incrementCommentCnt(this.goods.id);
     this.submitting = false;
   }
 
