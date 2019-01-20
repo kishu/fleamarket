@@ -1,7 +1,7 @@
 <div id="menu">
   <div class="profile">
-    <a href="my_info.html" class="thumb" style="background-image:url(assets/img/author.png);"></a>
-    <p class="profile_text">유경진 / UX디자인팀 / 미래에셋플레이스 8층</p>
+    <a href="my_info.html" class="thumb" [style.backgroundImage]="'url(' + userPhotoURL + ')'"></a>
+    <p class="profile_text">{{ userName }} / {{ userDesc }}</p>
   </div>
   <div class="my_menu">
     <a href="my_list.html">등록상품 <span class="new"></span></a>

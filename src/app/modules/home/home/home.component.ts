@@ -17,6 +17,9 @@ import { environment } from '../../../../environments/environment';
 })
 export class HomeComponent implements OnInit {
   userName: string;
+  userPhotoURL: string;
+  userDesc: string;
+
   groupName: string;
   market =  Market.Group;
 
@@ -29,7 +32,11 @@ export class HomeComponent implements OnInit {
     private authService: AuthService,
     private goodsService: GoodsService) {
     const user = this.authService.user;
+
     this.userName = user.displayName;
+    this.userPhotoURL = user.photoURL;
+    this.userDesc = user.desc;
+
     this.groupName = this.authService.group.name;
 
     this.goods$ = this.route.queryParams.pipe(
