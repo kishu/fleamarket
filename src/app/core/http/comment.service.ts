@@ -19,11 +19,11 @@ export class CommentService {
   addComment(commentWrite: CommentWrite) {
     const comment: Comment = {
       userRef: this.afs.collection('users').doc<User>(commentWrite.userId).ref,
+      user: commentWrite.user,
       goodsRef: this.afs.collection('goods').doc<Goods>(commentWrite.goodsId).ref,
       parentRef: commentWrite.parentId ?
         this.afs.collection('comments').doc<Comment>(commentWrite.parentId).ref : null,
       body: commentWrite.body,
-      displayName: commentWrite.displayName,
       created: firebase.firestore.FieldValue.serverTimestamp(),
       updated: firebase.firestore.FieldValue.serverTimestamp()
     };

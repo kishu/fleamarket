@@ -46,7 +46,7 @@
       <p>{{ goods.desc }}</p>
     </div>
     <div class="author_info margin3">
-      <span class="author_thumb" [style.backgroundImage]="'url(' + (user$ | async)?.photoURL + ')'"></span>
+      <span *ngIf="(user$ | async) as user" class="author_thumb" [style.backgroundImage]="'url(' + user.photoURL + ')'"></span>
       <p><strong>{{ (user$ | async)?.displayName }}</strong>님이 판매중입니다.</p>
       <div class="author_introduce">{{ (user$ | async)?.desc }}</div>
     </div>
@@ -103,9 +103,9 @@
       <!--<li *ngFor="let comment of comments$ | async">-->
       <li *ngFor="let comment of comments">
         <div class="comment_item">
-          <span class="comment_thumb" style="background-image:url(assets/img/author.png);"></span>
+          <span class="comment_thumb" [style.backgroundImage]="'url(' + comment.user.photoURL + ')'"></span>
           <div class="comment_content">
-            <strong>{{ comment.displayName }}</strong><br>
+            <strong>{{ comment.user.displayName }}</strong><br>
             <p>{{ comment.body }}</p>
           </div>
           <div class="comment_function">

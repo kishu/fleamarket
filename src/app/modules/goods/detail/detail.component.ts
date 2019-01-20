@@ -87,8 +87,11 @@ export class DetailComponent implements OnInit {
         userId: this.authService.user.id,
         goodsId: this.goods.id,
         parentId: null,
-        displayName: this.authService.user.displayName,
-        body: this.commentForm.get('body').value
+        user: {
+          displayName: this.authService.user.displayName,
+          photoURL: this.authService.user.photoURL
+        },
+        body: this.commentForm.get('body').value as string
       };
       this.commentService.addComment(comment)
         .subscribe(this.successSubmitComment, this.errorSubmitComment);
