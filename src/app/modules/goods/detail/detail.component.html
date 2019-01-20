@@ -46,9 +46,9 @@
       <p>{{ goods.desc }}</p>
     </div>
     <div class="author_info margin3">
-      <span class="author_thumb" style="background-image:url(assets/img/author2.png);"></span>
+      <span class="author_thumb" [style.backgroundImage]="'url(' + (user$ | async)?.photoURL + ')'"></span>
       <p><strong>{{ (user$ | async)?.displayName }}</strong>님이 판매중입니다.</p>
-      <div class="author_introduce">알파돔타4 9층 / 네이버 웹툰</div>
+      <div class="author_introduce">{{ (user$ | async)?.desc }}</div>
     </div>
   </section>
   <div class="other_goods">

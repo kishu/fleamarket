@@ -14,6 +14,10 @@ import { Comment, CommentWrite, Goods, Market, User } from '../../../shared/mode
   styleUrls: ['./detail.component.css']
 })
 export class DetailComponent implements OnInit {
+  userDisplayName: string;
+  userPhotoURL: string;
+  userDesc: string;
+
   group: string;
   market: Market;
   goods: Goods;
@@ -30,6 +34,13 @@ export class DetailComponent implements OnInit {
     private commentService: CommentService,
     private goodsService: GoodsService
   ) {
+    const user = this.authService.user;
+    const group = this.authService.group;
+
+    this.userDisplayName = user.displayName;
+    this.userPhotoURL = user.photoURL;
+    this.userDesc = user.desc;
+
     this.commentForm = this.fb.group({
       body: [
         '',
@@ -37,7 +48,6 @@ export class DetailComponent implements OnInit {
       ]
     });
 
-    const group = this.authService.group;
     this.goods = this.goodsService.selectedGoods;
     this.user$ = this.goodsService.getGoodsUser(this.goods.userRef);
 
