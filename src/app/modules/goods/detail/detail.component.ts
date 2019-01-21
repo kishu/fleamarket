@@ -17,6 +17,7 @@ export class DetailComponent implements OnInit {
   userDisplayName: string;
   userPhotoURL: string;
   userDesc: string;
+  isOwner = false;
 
   group: string;
   market: Market;
@@ -36,7 +37,10 @@ export class DetailComponent implements OnInit {
   ) {
     const user = this.authService.user;
     const group = this.authService.group;
+    this.goods = this.goodsService.selectedGoods;
+    this.user$ = this.goodsService.getGoodsUser(this.goods.userRef);
 
+    this.isOwner = (user.id === this.goods.userRef.id);
     this.userDisplayName = user.displayName;
     this.userPhotoURL = user.photoURL;
     this.userDesc = user.desc;
@@ -47,9 +51,6 @@ export class DetailComponent implements OnInit {
         [ Validators.required,  Validators.minLength(1), Validators.maxLength(501) ]
       ]
     });
-
-    this.goods = this.goodsService.selectedGoods;
-    this.user$ = this.goodsService.getGoodsUser(this.goods.userRef);
 
     this.route.params.pipe(
       pluck('market'),

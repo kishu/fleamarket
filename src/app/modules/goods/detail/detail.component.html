@@ -3,7 +3,7 @@
     <h2>상품 설명</h2>
     <a [routerLink]="['/']" [queryParams]="{ market: market.toLowerCase()}" class="back">{{ group }}</a>
 
-    <div class="sub_utility">
+    <div *ngIf="isOwner" class="sub_utility">
       <span class="goods_modify">수정</span>
       <select>
         <option>수정</option>
