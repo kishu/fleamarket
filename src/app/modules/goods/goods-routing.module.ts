@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../../shared/guards';
 import { GoodsGuard } from './goods.guard';
+import { GoodsAuthorityGuard } from './goods-authority-guard.service';
 import { WriteComponent } from './write/write.component';
 import { EditComponent } from './edit/edit.component';
 import { DetailComponent } from './detail/detail.component';
+
 
 const routes: Routes = [
   {
@@ -12,7 +14,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {path: 'write', component: WriteComponent},
-      {path: 'edit/:goodsId', component: EditComponent}
+      {path: 'edit/:goodsId', canActivate: [GoodsAuthorityGuard], component: EditComponent}
     ]
   },
   {
