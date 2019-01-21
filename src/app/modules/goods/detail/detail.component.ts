@@ -80,6 +80,14 @@ export class DetailComponent implements OnInit {
     });
   }
 
+  onMenuChange(menu: string) {
+    switch (menu) {
+      case 'edit':
+        this.router.navigate(['/goods/edit', this.goods.id]);
+        break;
+    }
+  }
+
   onCommentSubmit() {
     if (!this.submitting) {
       this.submitting = true;
