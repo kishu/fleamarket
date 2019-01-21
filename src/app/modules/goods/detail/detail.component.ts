@@ -17,7 +17,7 @@ export class DetailComponent implements OnInit {
   userDisplayName: string;
   userPhotoURL: string;
   userDesc: string;
-  isOwner = false;
+  authority = false;
 
   group: string;
   market: Market;
@@ -40,7 +40,7 @@ export class DetailComponent implements OnInit {
     this.goods = this.goodsService.selectedGoods;
     this.user$ = this.goodsService.getGoodsUser(this.goods.userRef);
 
-    this.isOwner = (user.id === this.goods.userRef.id);
+    this.authority = (user.id === this.goods.userRef.id);
     this.userDisplayName = user.displayName;
     this.userPhotoURL = user.photoURL;
     this.userDesc = user.desc;
