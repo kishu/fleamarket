@@ -15,7 +15,7 @@ export class Goods {
   images: [{
     id: string;
     url: string;
-  }];
+  }?];
   category: string;
   purchase: string;
   condition: string;

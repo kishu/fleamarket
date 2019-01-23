@@ -1,3 +1,336 @@
-<p>
-  edit works!
-</p>
+<div class="wrap sub form">
+  <header>
+    <h2>상품 {{ action }}</h2>
+    <a routerLink="/" class="back">{{ back }}</a>
+  </header>
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+    <section>
+      <h3>상품 등록 위치</h3>
+      <p class="explain">2nd Lounge를 선택하시면, 다른 그룹에도 상품을 판매할 수 있습니다.</p>
+      <div *ngIf="market.invalid && (market.dirty || market.touched)" class="explain">
+        <span *ngIf="market.errors.selected">상품 등록 위치를 선택하세요.</span>
+      </div>
+      <div formGroupName="market" class="table spacing fixed margin1">
+        <div class="td">
+          <input type="checkbox" id="group"
+                 formControlName="group"
+                 class="checkbox">
+          <label for="group" class="block center"><small>내 그룹</small><br><strong>{{ groupName }}</strong></label>
+        </div>
+        <div class="td">
+          <input type="checkbox" id="lounge"
+                 formControlName="lounge"
+                 class="checkbox">
+          <label for="lounge" class="block center"><small>공개 그룹</small><br><strong>2nd Lounge</strong></label>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h3>상품 이미지 등록</h3>
+      <p class="explain">상품의 상태를 알 수 있도록 여러장의 사진을 등록하는 것이 좋습니다.</p>
+      <div class="attach_file">
+        <div class="goods_thumb_area">
+          <div class="goods_thumb">
+            <div class="set_profile_thumb">상품 이미지</div>
+            <input type="file" multiple
+                   accept="image/gif, image/jpeg, image/png"
+                   (change)="onChangeImage($event)">
+          </div>
+        </div>
+        <div *ngFor="let imageFile of imageFiles | keyvalue" class="goods_thumb_area">
+          <div class="goods_thumb" [style.backgroundImage]="'url(' + imageFile.value.dataURL + ')'">
+            <div class="set_profile_thumb">{{ imageFile.key }}</div>
+            <a href="#" class="attach_delete">삭제</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section formGroupName="category">
+      <h3>카테고리 선택</h3>
+      <p class="explain">상품의 분류에 맞는 카테고리를 선택해 주세요.</p>
+      <div class="margin1 grid">
+        <span class="grid3">
+          <input type="radio" id="category1"
+                 name="category" formControlName="category"
+                 value="가전/디지털"
+                 class="radio">
+          <label for="category1" class="block center">
+            <img src="https://dummyimage.com/480/999/000.png&text=C1" width="48" height="48" alt="">
+            가전/디지털
+          </label>
+        </span>
+        <span class="grid3">
+          <input type="radio" id="category2"
+                 name="category" formControlName="category"
+                 value="생활용품"
+                 class="radio">
+          <label for="category2" class="block center">
+            <img src="https://dummyimage.com/480/999/000.png&text=C2" width="48" height="48" alt="">
+            생활용품
+          </label>
+        </span>
+        <span class="grid3">
+          <input type="radio" id="category3"
+                 name="category" formControlName="category"
+                 value="뷰티"
+                 class="radio">
+          <label for="category3" class="block center">
+            <img src="https://dummyimage.com/480/999/000.png&text=C3" width="48" height="48" alt="">
+            뷰티
+          </label>
+        </span>
+        <span class="grid3">
+          <input type="radio" id="category4"
+                 name="category" formControlName="category"
+                 value="홈데코"
+                 class="radio">
+          <label for="category4" class="block center">
+            <img src="https://dummyimage.com/480/999/000.png&text=C4" width="48" height="48" alt="">
+            홈데코
+          </label>
+        </span>
+        <span class="grid3">
+          <input type="radio" id="category5"
+                 name="category" formControlName="category"
+                 value="여성의류"
+                 class="radio">
+          <label for="category5" class="block center">
+            <img src="https://dummyimage.com/480/999/000.png&text=C5" width="48" height="48" alt="">
+            여성의류
+          </label>
+        </span>
+        <span class="grid3">
+          <input type="radio" id="category6"
+                 name="category" formControlName="category"
+                 value="남성의류"
+                 class="radio">
+          <label for="category6" class="block center">
+            <img src="https://dummyimage.com/480/999/000.png&text=C6" width="48" height="48" alt="">
+             남성의류
+          </label>
+        </span>
+        <span class="grid3">
+          <input type="radio" id="category7"
+                 name="category" formControlName="category"
+                 value="패션잡화"
+                 class="radio">
+          <label for="category7" class="block center">
+            <img src="https://dummyimage.com/480/999/000.png&text=C7" width="48" height="48" alt="">
+            패션잡화
+          </label>
+        </span>
+        <span class="grid3">
+          <input type="radio" id="category8"
+                 name="category" formControlName="category"
+                 value="명품/주얼리"
+                 class="radio">
+          <label for="category8" class="block center">
+            <img src="https://dummyimage.com/480/999/000.png&text=C8" width="48" height="48" alt="">
+            명품/주얼리
+          </label>
+        </span>
+        <span class="grid3">
+          <input type="radio" id="category9"
+                 name="category" formControlName="category"
+                 value="유아/출산"
+                 class="radio">
+          <label for="category9" class="block center">
+            <img src="https://dummyimage.com/480/999/000.png&text=C9" width="48" height="48" alt="">
+            유아/출산
+          </label>
+        </span>
+      </div>
+      <h3 class="margin2">자주 쓰는 카테고리</h3>
+      <p class="explain">최근 등록한 상품의 카테고리입니다.<br> 재사용 시 쉽고 빠르게 카테고리를 선택할 수 있습니다.</p>
+      <div class="margin1 grid">
+        <span class="grid3">
+          <input type="radio" id="recent1"
+                 name="recent" formControlName="recent"
+                 value="생활용품"
+                 class="radio">
+          <label for="recent1" class="block center">
+            <img src="https://dummyimage.com/480/999/000.png&text=C2" width="48" height="48" alt="">
+            생활용품
+          </label>
+        </span>
+        <span class="grid3">
+          <input type="radio" id="recent2"
+                 name="recent" formControlName="recent"
+                 value="홈데코"
+                 class="radio">
+          <label for="recent2" class="block center">
+            <img src="https://dummyimage.com/480/999/000.png&text=C4" width="48" height="48" alt="">
+            홈데코
+          </label>
+        </span>
+      </div>
+    </section>
+    <section>
+      <h3>구입시기</h3>
+      <div class="margin1 grid">
+        <span>
+          <input type="radio" id="purchase1"
+                 name="purchase" formControlName="purchase"
+                 value="알 수 없음"
+                 class="radio">
+          <label for="purchase1" class="block">알 수 없음</label>
+        </span>
+        <span>
+          <input type="radio" id="purchase2"
+                 name="purchase" formControlName="purchase"
+                 value="일주일 내"
+                 class="radio">
+          <label for="purchase2" class="block">일주일 내</label>
+        </span>
+        <span>
+          <input type="radio" id="purchase3"
+                 name="purchase" formControlName="purchase"
+                 value="한 달 이내"
+                 class="radio">
+          <label for="purchase3" class="block">한 달 이내</label>
+        </span>
+        <span>
+          <input type="radio" id="purchase4"
+                 name="purchase" formControlName="purchase"
+                 value="석 달 이내"
+                 class="radio">
+          <label for="purchase4" class="block">석 달 이내</label>
+        </span>
+        <span>
+          <input type="radio" id="purchase5"
+                 name="purchase" formControlName="purchase"
+                 value="일 년 이내"
+                 class="radio">
+          <label for="purchase5" class="block">일 년 이내</label>
+        </span>
+      </div>
+    </section>
+    <section>
+      <h3>상품 상태</h3>
+      <div class="margin1 grid">
+        <span>
+          <input type="radio" id="condition1"
+                 name="condition" formControlName="condition"
+                 value="미개봉"
+                 class="radio">
+          <label for="condition1" class="block center">미개봉</label>
+        </span>
+        <span>
+          <input type="radio" id="condition2"
+                 name="condition" formControlName="condition"
+                 value="사용감 있음"
+                 class="radio">
+          <label for="condition2" class="block center">사용감 있음</label>
+        </span>
+        <span>
+          <input type="radio" id="condition3"
+                 name="condition" formControlName="condition"
+                 value="하자 없는 거의 새 상품"
+                 class="radio">
+          <label for="condition3" class="block center">하자 없는 거의 새 상품</label>
+        </span>
+      </div>
+    </section>
+    <section>
+      <h3>등록 제목</h3>
+      <p class="explain">원하시는 제목을 30자 이내로 적어주세요.</p>
+      <div *ngIf="title.invalid && (title.dirty || title.touched)" class="explain">
+        <span *ngIf="title.errors.required">등록 제목을 입력하세요.</span>
+      </div>
+      <div class="table spacing margin1">
+        <div class="td">
+          <input type="text" id="title"
+                 name="title" formControlName="title"
+                 maxlength="30" placeholder="등록 제목 (30자 이내)"
+                 class="input">
+        </div>
+      </div>
+    </section>
+    <section>
+      <h3>상품 설명</h3>
+      <p class="explain">상품의 특징, 사용감 사이즈, 소재 등 상품의 정보를 상세히 적어주세요.</p>
+      <div *ngIf="desc.invalid && (desc.dirty || desc.touched)" class="explain">
+        <span *ngIf="desc.errors.required">상품 정보를 입력하세요.</span>
+      </div>
+      <div class="table spacing margin1">
+        <div class="td">
+          <textarea
+            cols="50" rows="10"
+            name="desc" formControlName="desc"
+            maxlength="200" placeholder="#해시태그를 입력하시면 검색이 더욱 잘 됩니다."
+            class="textarea"></textarea>
+          <!--<xmp class="clone"></xmp>-->
+        </div>
+      </div>
+    </section>
+    <section>
+      <h3>상품가격</h3>
+      <p class="explain">원하시는 가격을 적어주세요.</p>
+      <div *ngIf="price.invalid && (price.dirty || price.touched)" class="explain">
+        <span *ngIf="price.errors.required">상품 가격을 입력하세요.</span>
+      </div>
+      <div class="table spacing margin1">
+        <div class="td">
+          <input type="tel"
+                 name="price" formControlName="price"
+                 maxlength="12" placeholder="상품가격(원)"
+                 class="input">원
+        </div>
+      </div>
+    </section>
+    <section formGroupName="delivery">
+      <h3>거래방법</h3>
+      <p class="explain">원하시는 거래 방법을 선택해주세요.</p>
+      <div class="margin1 grid">
+        <span>
+          <input type="radio" id="delivery1"
+                 name="delivery" formControlName="delivery"
+                 value="직거래"
+                 class="radio">
+          <label for="delivery1" class="block">직거래</label>
+        </span>
+        <span>
+          <input type="radio" id="delivery2"
+                 name="delivery" formControlName="delivery"
+                 value="택배"
+                 class="radio">
+          <label for="delivery2" class="block">택배</label>
+        </span>
+      </div>
+      <div class="grid">
+          <span class="grid1">
+            <input type="text"
+                   name="etc" formControlName="etc"
+                   placeholder="기타 거래 가능한 방법을 적어주세요."
+                   class="input">
+          </span>
+      </div>
+    </section>
+    <section>
+      <h3>연락처 (선택사항)</h3>
+      <p class="explain">전화번호, 카카오톡ID, 이메일 등 연락 가능한 방법을 적어주세요.</p>
+      <div class="table spacing margin1">
+        <div class="td">
+          <input type="text"
+                 name="contact" formControlName="contact"
+                 maxlength="50"
+                 class="input">
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="table spacing">
+        <div class="td">
+          <a href="#" class="button cancel">취소</a>
+        </div>
+        <div class="td">
+        </div>
+        <div class="td">
+          <button type="submit"
+                  [disabled]="editForm.invalid"
+                  class="button">등록</button>
+        </div>
+      </div>
+    </section>
+  </form>
+</div>

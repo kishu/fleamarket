@@ -740,7 +740,7 @@ body {
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: cover;
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 
 .goods_thumb_area:nth-last-child(1) .goods_thumb {

@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
-import { Observable, of, forkJoin } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
-import { filter, first, map, switchMap, tap } from 'rxjs/operators';
+import { filter, first, switchMap, tap } from 'rxjs/operators';
+import { LoggedIn } from '../logged-in.service';
 import { AFSimpleUser, Group, User } from '../../shared/models';
 
 @Injectable({
@@ -15,6 +16,7 @@ export class AuthService {
   private _group: Group | null;
 
   constructor(
+    private loggedIn: LoggedIn,
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore) {
     this.afAuth.user.pipe(
@@ -89,17 +91,21 @@ export class AuthService {
       switchMap(user => {
         if (user) {
           this._user = user;
+          this.loggedIn.user = user;
           return group$(user);
         } else {
           this._user = null;
+          this.loggedIn.user = null;
           return of(null);
         }
       }),
       tap(group => {
         if (group) {
           this._group = group;
+          this.loggedIn.group = group;
         } else {
           this._group = null;
+          this.loggedIn.group = null;
         }
       })
     );
