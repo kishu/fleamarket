@@ -4,8 +4,8 @@ import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { map, pluck, tap} from 'rxjs/operators';
 import { AuthService, CommentService, GoodsService } from '../../../core/http';
+import { LoggedIn } from '../../../core/logged-in.service';
 import { Comment, Goods, Market, User } from '../../../shared/models';
 
 @Component({
@@ -14,36 +14,39 @@ import { Comment, Goods, Market, User } from '../../../shared/models';
   styleUrls: ['./detail.component.css']
 })
 export class DetailComponent implements OnInit {
-  userDisplayName: string;
-  userPhotoURL: string;
-  userDesc: string;
   authority = false;
-
   group: string;
   market: Market;
+  userDesc: string;
+  userDisplayName: string;
+  userPhotoURL: string;
+
+  commentForm: FormGroup;
+  comments$: Observable<Comment[]>;
   goods: Goods;
   user$: Observable<User>;
-  commentForm: FormGroup;
-  submitting = false;
-  comments$: Observable<Comment[]>;
+
+  private marketName: string;
+  private submitting = false;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder,
+    private loggedIn: LoggedIn,
     private authService: AuthService,
     private commentService: CommentService,
     private goodsService: GoodsService
   ) {
-    const user = this.authService.user;
-    const group = this.authService.group;
+    const user = this.loggedIn.user;
+
     this.goods = this.goodsService.selectedGoods;
     this.user$ = this.goodsService.getGoodsUser(this.goods.userRef);
 
     this.authority = (user.id === this.goods.userRef.id);
+    this.userDesc = user.desc;
     this.userDisplayName = user.displayName;
     this.userPhotoURL = user.photoURL;
-    this.userDesc = user.desc;
 
     this.commentForm = this.fb.group({
       body: [
@@ -51,22 +54,6 @@ export class DetailComponent implements OnInit {
         [ Validators.required,  Validators.minLength(1), Validators.maxLength(501) ]
       ]
     });
-
-    this.route.params.pipe(
-      pluck('market'),
-      map((market: string) => market.toUpperCase()),
-      tap(market => {
-        this.market = <Market>market;
-        switch (market) {
-          case Market.Group:
-            this.group = group.name;
-            break;
-          case Market.Lounge:
-            this.group = '2nd Lounge';
-            break;
-        }
-      })
-    ).subscribe();
 
     this.comments$ = this.commentService.getCommentsByGoods(this.goods.id);
   }
@@ -81,9 +68,10 @@ export class DetailComponent implements OnInit {
   }
 
   onMenuChange(menu: string) {
+    const marketName = this.route.snapshot.paramMap.get('market');
     switch (menu) {
       case 'edit':
-        this.router.navigate(['/goods/edit', this.goods.id]);
+        this.router.navigate(['/markets', marketName, 'goods', this.goods.id, 'edit']);
         break;
     }
   }
