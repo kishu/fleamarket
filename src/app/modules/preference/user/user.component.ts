@@ -86,7 +86,7 @@ export class UserComponent implements OnInit {
     const tmpImageFile = new ImageFile(file);
 
     tmpImageFile.readAsDataURL().then(() => {
-      this.photoURL = tmpImageFile.dataURL;
+      this.photoURL = tmpImageFile.url;
       this.imageFile = tmpImageFile;
     });
   }

@@ -18,7 +18,6 @@ export class GoodsService {
     private loggedIn: LoggedIn,
     private afs: AngularFirestore
   ) {
-    console.log('goods service', this.loggedIn.user);
     this.goodsCollection = afs.collection<Goods>('goods');
   }
 
@@ -28,6 +27,11 @@ export class GoodsService {
 
   addGoods(goods: Goods) {
     return this.goodsCollection.add(goods);
+  }
+
+  updateGoods(id: string, goods: Goods) {
+    delete goods.id;
+    return this.goodsCollection.doc(id).update(goods);
   }
 
   getGoods(id: string): Observable<Goods | null> {

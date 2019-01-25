@@ -60,7 +60,7 @@
         </div>
 
         <div *ngFor="let imageFile of sideImageFiles | keyvalue" class="goods_thumb_area">
-          <div class="goods_thumb" [style.backgroundImage]="'url(' + imageFile.value.dataURL + ')'">
+          <div class="goods_thumb" [style.backgroundImage]="'url(' + imageFile.value.url + ')'">
             <div class="set_profile_thumb">{{ imageFile.key }}</div>
             <a href="#" class="attach_delete">삭제</a>
           </div>
@@ -77,7 +77,7 @@
         </div>
 
         <div *ngFor="let imageFile of backImageFiles | keyvalue" class="goods_thumb_area">
-          <div class="goods_thumb" [style.backgroundImage]="'url(' + imageFile.value.dataURL + ')'">
+          <div class="goods_thumb" [style.backgroundImage]="'url(' + imageFile.value.url + ')'">
             <div class="set_profile_thumb">{{ imageFile.key }}</div>
             <a href="#" class="attach_delete">삭제</a>
           </div>

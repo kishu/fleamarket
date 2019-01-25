@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -18,6 +18,7 @@ import { environment } from '../../../../environments/environment';
 export class EditComponent implements OnInit {
   private submitting = false;
   private readonly uploadPreset = environment.cloudinary.preset.goods;
+  private readonly newGoods: boolean;
   private goods: Goods;
 
   action: string;
@@ -41,11 +42,11 @@ export class EditComponent implements OnInit {
     private fileUploadService: FileUploadService,
     private spinnerService: SpinnerService
   ) {
-    const goodsId = this.route.snapshot.params['goodsId'];
-    this.action = goodsId === 'new' ? '등록' : '수정';
-    this.back = goodsId === 'new' ? this.loggedIn.group.name : '돌아가기';
+    this.newGoods = ( this.route.snapshot.params['goodsId'] === 'new' );
+    this.action = this.newGoods ? '등록' : '수정';
+    this.back = this.newGoods ? this.loggedIn.group.name : '돌아가기';
     this.groupName = this.loggedIn.group.name;
-    this.goods = goodsId === 'new' ?
+    this.goods = this.newGoods ?
       this.goodsService.getNewGoods() :
       this.goodsService.getSelectedGoods();
     this.buildForm();
@@ -128,8 +129,17 @@ export class EditComponent implements OnInit {
       this.submitting = true;
       this.spinnerService.show(true);
       this.upload().pipe(
+        map(images => this.goods.images.concat(images)),
         map(images => Object.assign(this.goods, this.editForm.value, { images })),
-        switchMap(goods => this.goodsService.addGoods(goods))
+        switchMap(goods => {
+          let addOrUpdateGoods$;
+          if (this.newGoods) {
+            addOrUpdateGoods$ = this.goodsService.addGoods(goods);
+          } else {
+            addOrUpdateGoods$ = this.goodsService.updateGoods(goods.id, goods);
+          }
+          return addOrUpdateGoods$;
+        })
       ).subscribe(this.success, this.error);
     }
   }

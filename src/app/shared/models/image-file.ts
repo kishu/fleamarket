@@ -1,12 +1,12 @@
 export class ImageFile {
   private readonly _file: File;
-  private _dataURL: string | ArrayBuffer;
+  private _url: ArrayBuffer;
 
   get file() { return this._file; }
-  get dataURL() { return this._dataURL; }
+  get url() { return this._url; }
 
-  constructor(file: File) {
-    this._file = file;
+  constructor(source: File) {
+    this._file = source as File;
   }
 
   readAsDataURL() {
@@ -14,7 +14,7 @@ export class ImageFile {
       const reader = new FileReader();
 
       reader.addEventListener('load', () => {
-        this._dataURL = reader.result;
+        this._url = reader.result as ArrayBuffer;
         resolve();
       }, false);
 
