@@ -4,6 +4,7 @@ import 'slick-carousel';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firestore } from 'firebase';
+import { LoggedIn } from '../../../core/logged-in.service';
 import { AuthService, GoodsService } from '../../../core/http';
 import { Goods, Market } from '../../../shared/models';
 import { Observable} from 'rxjs';
@@ -22,6 +23,7 @@ export class HomeComponent implements OnInit {
 
   groupName: string;
   market =  Market.Group;
+  marketName: string;
 
   goods$: Observable<Goods[]>;
 
@@ -29,6 +31,7 @@ export class HomeComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private cd: ChangeDetectorRef,
+    private loggedIn: LoggedIn,
     private authService: AuthService,
     private goodsService: GoodsService) {
     const user = this.authService.user;
@@ -37,7 +40,8 @@ export class HomeComponent implements OnInit {
     this.userPhotoURL = user.photoURL;
     this.userDesc = user.desc;
 
-    this.groupName = this.authService.group.name;
+    this.groupName = this.loggedIn.group.name;
+    this.marketName = this.loggedIn.group.market;
 
     this.goods$ = this.route.queryParams.pipe(
       pluck('market'),
