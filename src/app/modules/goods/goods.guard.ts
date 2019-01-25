@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { DocumentReference } from '@angular/fire/firestore';
-import {Observable, of} from 'rxjs';
-import {first, map, tap} from 'rxjs/operators';
-import { AuthService, UserService, GoodsService } from '../../core/http';
-import {Goods, Market} from '../../shared/models';
+import { Observable, of } from 'rxjs';
+import { first, map, tap } from 'rxjs/operators';
+import { UserService, GoodsService } from '../../core/http';
+import { LoggedIn } from '../../core/logged-in.service';
+import { Goods } from '../../shared/models';
 
 
 @Injectable({
@@ -12,7 +13,7 @@ import {Goods, Market} from '../../shared/models';
 })
 export class GoodsGuard implements CanActivate {
   constructor(
-    private authService: AuthService,
+    private loggedIn: LoggedIn,
     private userService: UserService,
     private goodsService: GoodsService
     ) { }
@@ -20,31 +21,27 @@ export class GoodsGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    const userGroupRef = this.authService.user.groupRef as DocumentReference;
+    const userGroupRef: DocumentReference = this.loggedIn.user.groupRef;
     const goodsId = next.paramMap.get('goodsId');
-    const market = next.paramMap.get('market').toUpperCase();
-    let goods$: Observable<Goods>;
+    const market = next.paramMap.get('market').toLowerCase();
+    const selectedGoods = this.goodsService.selectedGoods;
 
-    if (this.goodsService.selectedGoods &&
-      this.goodsService.selectedGoods.id === goodsId) {
+    let goods$: Observable<Goods>;
+    if (selectedGoods && selectedGoods.id === goodsId) {
       goods$ = of(this.goodsService.selectedGoods);
     } else {
-      goods$ = this.goodsService.getGoods(goodsId);
+      goods$ = this.goodsService.getGoods(goodsId).pipe(
+        tap(goods => this.goodsService.selectedGoods = goods)
+      );
     }
 
     return goods$.pipe(
       first(),
-      tap(goods => {
-        if (!this.goodsService.selectedGoods) {
-          this.goodsService.selectedGoods = goods;
-        }
-      }),
       map(goods => {
-        switch (market) {
-          case Market.Group:
-            return !!(goods.groupRef.id === userGroupRef.id && goods.market.group);
-          case Market.Lounge:
-            return goods.market.lounge;
+        if (market === 'lounge') {
+          return true;
+        } else {
+          return !!(goods.groupRef.id === userGroupRef.id && goods.market.group);
         }
       })
     );

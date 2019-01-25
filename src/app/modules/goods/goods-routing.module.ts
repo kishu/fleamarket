@@ -10,19 +10,18 @@ import { DetailComponent } from './detail/detail.component';
 
 const routes: Routes = [
   {
-    path: 'goods',
+    path: 'markets/:market/goods',
     canActivate: [AuthGuard],
     children: [
-      {path: 'write', component: WriteComponent},
-      {path: 'edit/:goodsId', canActivate: [GoodsAuthorityGuard], component: EditComponent}
+      // {path: 'write', component: WriteComponent},
+      { path: ':goodsId', canActivate: [ GoodsGuard ], component: DetailComponent },
+      { path: ':goodsId/edit', canActivate: [ GoodsAuthorityGuard ], component: EditComponent }
     ]
-  },
-  {
-    path: ':market/goods/:goodsId',
-    canActivate: [AuthGuard, GoodsGuard],
-    component: DetailComponent
-  },
+  }
 ];
+
+// https://2ndmarket.co/market/webtoons/goods/
+// https://2ndmarket.co/market/lounge/goods/
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
