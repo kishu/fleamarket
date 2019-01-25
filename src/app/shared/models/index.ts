@@ -14,7 +14,7 @@ export interface LoginInfo {
 export enum GroupType {
   Corp = 'CORP',
   School = 'SCHOOL',
-  Apt = 'Apt'
+  Apt = 'APT'
 }
 
 export const enum Market {
@@ -24,9 +24,10 @@ export const enum Market {
 
 export class Group {
   id?: string;
-  type: string;   // 'corp', 'apt', 'school' ...
+  type: GroupType;   // 'corp', 'apt', 'school' ...
   name: string;
-  domain?: string;
+  market: string;
+  domain: string;
 }
 
 export class AFSimpleUser {
@@ -36,7 +37,7 @@ export class AFSimpleUser {
 
 export class User {
   id?: string;
-  groupRef: firestore.DocumentReference | string;
+  groupRef: firestore.DocumentReference;
   email: string;
   displayName: string;
   desc: string;
