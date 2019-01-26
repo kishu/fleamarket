@@ -1,5 +1,4 @@
 import * as $ from 'jquery';
-import Slideout from 'slideout';
 import 'slick-carousel';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -42,36 +41,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     $(document).ready(function() {
-      const slideout = new Slideout({
-        'panel': document.getElementById('main'),
-        'menu': document.getElementById('menu'),
-        'padding': 250,
-        'tolerance': 70,
-        'touch': false
-      });
-
-      function close(eve) {
-        eve.preventDefault();
-        slideout.close();
-      }
-
-      slideout
-        .on('beforeopen', function() {
-          this.panel.classList.add('panel-open');
-        })
-        .on('open', function() {
-          this.panel.addEventListener('click', close);
-        })
-        .on('beforeclose', function() {
-          this.panel.classList.remove('panel-open');
-          this.panel.removeEventListener('click', close);
-        });
-
-      // Toggle button
-      document.querySelector('.menu-toggle').addEventListener('click', function() {
-        slideout.open();
-      });
-
       $('.welcome .button').on('click', function(e) {
         e.preventDefault();
         $('.welcome').hide();

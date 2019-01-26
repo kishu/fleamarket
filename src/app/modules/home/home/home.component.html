@@ -1,241 +1,237 @@
-<div id="menu">
-  <div class="profile">
-    <a href="my_info.html" class="thumb" [style.backgroundImage]="'url(' + userPhotoURL + ')'"></a>
-    <p class="profile_text">{{ userName }} / {{ userDesc }}</p>
+<!--<div id="menu">-->
+  <!--<div class="profile">-->
+    <!--<a href="my_info.html" class="thumb" [style.backgroundImage]="'url(' + userPhotoURL + ')'"></a>-->
+    <!--<p class="profile_text">{{ userName }} / {{ userDesc }}</p>-->
+  <!--</div>-->
+  <!--<div class="my_menu">-->
+    <!--<a href="my_list.html">등록상품 <span class="new"></span></a>-->
+    <!--<a href="#">관심상품 <span class="new"></span></a>-->
+    <!--<a routerLink="/preference/user">설정</a>-->
+  <!--</div>-->
+  <!--<div class="recommand">-->
+    <!--<h4>추천 태그</h4>-->
+    <!--<div class="tags">-->
+      <!--<a href="#" class="tag">#자동차왁스</a>-->
+      <!--<a href="#" class="tag">#청바지</a>-->
+      <!--<a href="#" class="tag">#무선공유기</a>-->
+      <!--<a href="#" class="tag">#운동화</a>-->
+      <!--<a href="#" class="tag">#전기담요</a>-->
+    <!--</div>-->
+    <!--<h4>전체 카테고리</h4>-->
+    <!--<div class="grid">-->
+      <!--<span class="grid3">-->
+        <!--<a href="#" class="cate"><img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt=""> 가전/디지털</a>-->
+      <!--</span>-->
+      <!--<span class="grid3">-->
+        <!--<a href="#" class="cate"><img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt=""> 생활용품</a>-->
+      <!--</span>-->
+      <!--<span class="grid3">-->
+        <!--<a href="#" class="cate"><img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt=""> 뷰티</a>-->
+      <!--</span>-->
+      <!--<span class="grid3">-->
+        <!--<a href="#" class="cate"><img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt=""> 홈데코</a>-->
+      <!--</span>-->
+      <!--<span class="grid3">-->
+        <!--<a href="#" class="cate"><img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt=""> 여성의류</a>-->
+      <!--</span>-->
+      <!--<span class="grid3">-->
+        <!--<a href="#" class="cate"><img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt=""> 남성의류</a>-->
+      <!--</span>-->
+      <!--<span class="grid3">-->
+        <!--<a href="#" class="cate"><img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt=""> 패션잡화</a>-->
+      <!--</span>-->
+      <!--<span class="grid3">-->
+        <!--<a href="#" class="cate"><img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt=""> 명품/주얼리</a>-->
+      <!--</span>-->
+      <!--<span class="grid3">-->
+        <!--<a href="#" class="cate"><img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt=""> 유아/출산</a>-->
+      <!--</span>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div class="alarm">-->
+    <!--<div class="alarm_header">-->
+      <!--<h3>알림</h3>-->
+      <!--<a class="notice_link" href="#">공지사항</a>-->
+    <!--</div>-->
+    <!--<div class="alarm_body">-->
+      <!--<div class="alarm_nothing" style="display:none">-->
+        <!--알림이 없습니다.-->
+      <!--</div>-->
+      <!--<ul class="alarm_list">-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"><span class="new"></span></span>-->
+          <!--<p class="alarm_content"><strong>8층에 사는 유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong> 상품을 등록했습니다.</p>-->
+          <!--<span class="alarm_created">방금 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"><span class="new"></span></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">10초 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"><span class="new"></span></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">1분 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"><span class="new"></span></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">2분 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">1시간 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">1일 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">1일 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">1일 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">1일 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">1일 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">1일 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">1일 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">1일 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">1일 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">1일 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">1일 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">1일 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">1일 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">1일 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">1일 전</span>-->
+        <!--</li>-->
+        <!--<li class="alarm_item">-->
+          <!--<span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>-->
+          <!--<p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>-->
+          <!--<span class="alarm_created">1일 전</span>-->
+        <!--</li>-->
+      <!--</ul>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+<header>
+  <div class="group">
+    <h1><span>{{ groupName }}</span><span>2nd Lounge</span></h1>
+    <h1 class="clone">
+      <span (click)="showGoods('GROUP')" [ngClass]="{ on: !lounge }">네이버웹툰</span>
+      <span (click)="showGoodsByLounge('LOUNGE')" [ngClass]="{ on: lounge }">2nd Lounge</span>
+    </h1>
   </div>
-  <div class="my_menu">
-    <a href="my_list.html">등록상품 <span class="new"></span></a>
-    <a href="#">관심상품 <span class="new"></span></a>
-    <a routerLink="/preference/user">설정</a>
+</header>
+<nav>
+  <menu class="category">
+    <li><a href="#" class="on">All</a></li>
+    <li><a href="#">NEW</a></li>
+    <li><a href="#">BEST</a></li>
+    <li><a href="#">추천</a></li>
+    <li><a href="#">사담사담</a></li>
+  </menu>
+</nav>
+<section>
+  <div class="single-item">
+    <div><img src="assets/img/banner.png" width="100%" alt="" style="vertical-align:top;"></div>
+    <div><img src="assets/img/banner.png" width="100%" alt="" style="vertical-align:top;"></div>
+    <div><img src="assets/img/banner.png" width="100%" alt="" style="vertical-align:top;"></div>
+    <div><img src="assets/img/banner.png" width="100%" alt="" style="vertical-align:top;"></div>
+    <div><img src="assets/img/banner.png" width="100%" alt="" style="vertical-align:top;"></div>
   </div>
-  <div class="recommand">
-    <h4>추천 태그</h4>
-    <div class="tags">
-      <a href="#" class="tag">#자동차왁스</a>
-      <a href="#" class="tag">#청바지</a>
-      <a href="#" class="tag">#무선공유기</a>
-      <a href="#" class="tag">#운동화</a>
-      <a href="#" class="tag">#전기담요</a>
+  <nav class="sorting">
+    <input type="checkbox" id="c1">
+    <label for="c1">품절상품 제외</label>
+    <div class="view_option">
+      <button class="large" style="display: none"><span>크게보기</span></button>
+      <button class="small"><span>작게보기</span></button>
     </div>
-    <h4>전체 카테고리</h4>
-    <div class="grid">
-      <span class="grid3">
-        <a href="#" class="cate"><img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt=""> 가전/디지털</a>
-      </span>
-      <span class="grid3">
-        <a href="#" class="cate"><img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt=""> 생활용품</a>
-      </span>
-      <span class="grid3">
-        <a href="#" class="cate"><img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt=""> 뷰티</a>
-      </span>
-      <span class="grid3">
-        <a href="#" class="cate"><img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt=""> 홈데코</a>
-      </span>
-      <span class="grid3">
-        <a href="#" class="cate"><img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt=""> 여성의류</a>
-      </span>
-      <span class="grid3">
-        <a href="#" class="cate"><img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt=""> 남성의류</a>
-      </span>
-      <span class="grid3">
-        <a href="#" class="cate"><img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt=""> 패션잡화</a>
-      </span>
-      <span class="grid3">
-        <a href="#" class="cate"><img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt=""> 명품/주얼리</a>
-      </span>
-      <span class="grid3">
-        <a href="#" class="cate"><img src="https://dummyimage.com/480/999/000.png&text=category" width="48" height="48" alt=""> 유아/출산</a>
-      </span>
-    </div>
-  </div>
-  <div class="alarm">
-    <div class="alarm_header">
-      <h3>알림</h3>
-      <a class="notice_link" href="#">공지사항</a>
-    </div>
-    <div class="alarm_body">
-      <div class="alarm_nothing" style="display:none">
-        알림이 없습니다.
-      </div>
-      <ul class="alarm_list">
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"><span class="new"></span></span>
-          <p class="alarm_content"><strong>8층에 사는 유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong> 상품을 등록했습니다.</p>
-          <span class="alarm_created">방금 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"><span class="new"></span></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">10초 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"><span class="new"></span></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">1분 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"><span class="new"></span></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">2분 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">1시간 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">1일 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">1일 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">1일 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">1일 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">1일 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">1일 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">1일 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">1일 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">1일 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">1일 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">1일 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">1일 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">1일 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">1일 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">1일 전</span>
-        </li>
-        <li class="alarm_item">
-          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
-          <p class="alarm_content"><strong>유경진</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
-          <span class="alarm_created">1일 전</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-<div id="main" class="panel">
-  <header>
-    <a class="menu-toggle">
-      Left Menu
-    </a>
-    <div class="group">
-      <h1><span>{{ groupName }}</span><span>2nd Lounge</span></h1>
-      <h1 class="clone">
-        <span (click)="showGoods('GROUP')" [ngClass]="{ on: !lounge }">네이버웹툰</span>
-        <span (click)="showGoodsByLounge('LOUNGE')" [ngClass]="{ on: lounge }">2nd Lounge</span>
-      </h1>
-    </div>
-  </header>
-  <nav>
-    <menu class="category">
-      <li><a href="#" class="on">All</a></li>
-      <li><a href="#">NEW</a></li>
-      <li><a href="#">BEST</a></li>
-      <li><a href="#">추천</a></li>
-      <li><a href="#">사담사담</a></li>
-    </menu>
   </nav>
-  <section>
-    <div class="single-item">
-      <div><img src="assets/img/banner.png" width="100%" alt="" style="vertical-align:top;"></div>
-      <div><img src="assets/img/banner.png" width="100%" alt="" style="vertical-align:top;"></div>
-      <div><img src="assets/img/banner.png" width="100%" alt="" style="vertical-align:top;"></div>
-      <div><img src="assets/img/banner.png" width="100%" alt="" style="vertical-align:top;"></div>
-      <div><img src="assets/img/banner.png" width="100%" alt="" style="vertical-align:top;"></div>
-    </div>
-    <nav class="sorting">
-      <input type="checkbox" id="c1">
-      <label for="c1">품절상품 제외</label>
-      <div class="view_option">
-        <button class="large" style="display: none"><span>크게보기</span></button>
-        <button class="small"><span>작게보기</span></button>
+  <ul class="large_list" id="goods_list">
+    <li *ngFor="let goods of goods$ | async">
+      <div [ngClass]="{'item': true, 'soldout': goods.soldout}">
+        <a [routerLink]="['/markets',  market==='GROUP' ? marketName : 'lounge', 'goods', goods.id]"
+          (click)="onClickGoods(goods)">
+          <div class="goods_thumb"
+               [ngStyle]="{'background-image': 'url(assets/img/dark.png), url(' + goods.images[0] + ')'}">
+            <dl class="feed">
+              <dt class="like"></dt>
+              <dd>{{ goods.favoriteCnt }}</dd>
+              <dt class="comment"></dt>
+              <dd>{{ goods.commentCnt }}</dd>
+              <dt class="donate"></dt>
+              <dd>{{ (goods.donation / goods.price) * 100 | number: '1.0-1' }}%</dd>
+            </dl>
+          </div>
+          <div class="item_description">
+            <div class="author">
+              <span class="author_thumb" [style.backgroundImage]="'url(' + goods.user.photoURL + ')'"></span>
+            </div>
+            <div class="text">
+              <span class="name ellipsis">{{ goods.title }}</span>
+              <span class="price ellipsis">{{ goods.price | number: '2.' }}원</span>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="likeit"><span class="sr-only">좋아요</span></a>
       </div>
-    </nav>
-    <ul class="large_list" id="goods_list">
-      <li *ngFor="let goods of goods$ | async">
-        <div [ngClass]="{'item': true, 'soldout': goods.soldout}">
-          <a [routerLink]="['/markets',  market==='GROUP' ? marketName : 'lounge', 'goods', goods.id]"
-            (click)="onClickGoods(goods)">
-            <div class="goods_thumb"
-                 [ngStyle]="{'background-image': 'url(assets/img/dark.png), url(' + goods.images[0] + ')'}">
-              <dl class="feed">
-                <dt class="like"></dt>
-                <dd>{{ goods.favoriteCnt }}</dd>
-                <dt class="comment"></dt>
-                <dd>{{ goods.commentCnt }}</dd>
-                <dt class="donate"></dt>
-                <dd>{{ (goods.donation / goods.price) * 100 | number: '1.0-1' }}%</dd>
-              </dl>
-            </div>
-            <div class="item_description">
-              <div class="author">
-                <span class="author_thumb" [style.backgroundImage]="'url(' + goods.user.photoURL + ')'"></span>
-              </div>
-              <div class="text">
-                <span class="name ellipsis">{{ goods.title }}</span>
-                <span class="price ellipsis">{{ goods.price | number: '2.' }}원</span>
-              </div>
-            </div>
-          </a>
-          <a href="#" class="likeit"><span class="sr-only">좋아요</span></a>
-        </div>
-      </li>
-    </ul>
-  </section>
-</div>
+    </li>
+  </ul>
+</section>
 <a [routerLink]="['/markets', marketName, 'goods', 'new', 'edit']" class="write"></a>
 <a href="#" class="top"></a>
