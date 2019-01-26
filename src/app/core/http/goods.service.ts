@@ -113,9 +113,8 @@ export class GoodsService {
       price: 0,
       delivery: '직거래',
       contact: '',
-      donation: 0,
       commentCnt: 0,
-      favoriteCnt: 0,
+      interestCnt: 0,
       soldout: false,
       created: this.getServerTimeStamp(),
       updated: this.getServerTimeStamp()
