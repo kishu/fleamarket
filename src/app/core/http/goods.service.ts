@@ -47,15 +47,15 @@ export class GoodsService {
     );
   }
 
-  getGoodsByUser(id: string, lounge: boolean): Observable<Goods[]> {
+  getGoodsByUser(userRef: firebase.firestore.DocumentReference, list: string): Observable<Goods[]> {
     return this.afs.collection('goods', ref => {
-      let query = ref.where('userRef.id', '==',  id);
-      if (lounge) {
-        query = query.where('market.lounge', '==', true);
-      } else {
+      let query = ref.where('userRef', '==',  userRef);
+      if (list === 'group') {
         query = query.where('market.group', '==', true);
+      } else if (list === 'lounge') {
+        query = query.where('market.lounge', '==', true);
       }
-      return query.orderBy('updated', 'desc');
+      return query.orderBy('updated', 'desc').limit(30);
     }).snapshotChanges().pipe(
       first(),
       map(goodsList => {

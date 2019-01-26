@@ -29,7 +29,7 @@ const routes: Routes = [
     children: [
       { path: '', component: DetailComponent },
       { path: 'edit', canActivate: [ GoodsAuthorityGuard ], component: EditComponent }
-    ]
+    ],
   }
 ];
 

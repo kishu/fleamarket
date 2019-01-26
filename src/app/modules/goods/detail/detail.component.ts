@@ -1,12 +1,11 @@
-import * as $ from 'jquery';
-import 'slick-carousel';
 import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { pluck } from 'rxjs/operators';
 import { AuthService, CommentService, GoodsService } from '../../../core/http';
 import { LoggedIn } from '../../../core/logged-in.service';
-import { Comment, Goods, Market, User } from '../../../shared/models';
+import { Comment, Goods, User } from '../../../shared/models';
 
 @Component({
   selector: 'app-detail',
@@ -16,7 +15,8 @@ import { Comment, Goods, Market, User } from '../../../shared/models';
 export class DetailComponent implements OnInit {
   authority = false;
   group: string;
-  market: Market;
+  list: string;
+  moreImages: boolean;
   userDesc: string;
   userDisplayName: string;
   userPhotoURL: string;
@@ -24,7 +24,7 @@ export class DetailComponent implements OnInit {
   commentForm: FormGroup;
   comments$: Observable<Comment[]>;
   goods: Goods;
-  otherGoods: Goods[];
+  otherGoods$: Observable<Goods[]>;
   user$: Observable<User>;
 
   private submitting = false;
@@ -39,16 +39,22 @@ export class DetailComponent implements OnInit {
     private goodsService: GoodsService
   ) {
     const user = this.loggedIn.user;
+    this.list = route.snapshot.paramMap.get('list');
 
-    this.goods = this.goodsService.selectedGoods;
-    this.user$ = this.goodsService.getGoodsUser(this.goods.userRef);
-    this.otherGoods = this.goodsService.getGoodsByUser(this.goods.userRef.id);
-    this.comments$ = this.commentService.getCommentsByGoods(this.goods.id);
+    this.route.params.pipe(
+      pluck('goodsId')
+    ).subscribe(() => {
+      this.moreImages = false;
+      this.goods = this.goodsService.selectedGoods;
+      this.user$ = this.goodsService.getGoodsUser(this.goods.userRef);
+      this.otherGoods$ = this.goodsService.getGoodsByUser(this.goods.userRef, this.list);
+      this.comments$ = this.commentService.getCommentsByGoods(this.goods.id);
 
-    this.authority = (user.id === this.goods.userRef.id);
-    this.userDesc = user.desc;
-    this.userDisplayName = user.displayName;
-    this.userPhotoURL = user.photoURL;
+      this.authority = (user.id === this.goods.userRef.id);
+      this.userDesc = user.desc;
+      this.userDisplayName = user.displayName;
+      this.userPhotoURL = user.photoURL;
+    });
 
     this.commentForm = this.fb.group({
       body: [
@@ -56,17 +62,9 @@ export class DetailComponent implements OnInit {
         [ Validators.required,  Validators.minLength(1), Validators.maxLength(501) ]
       ]
     });
-
-
   }
 
   ngOnInit() {
-    $(document).ready(function() {
-      $('.single-item').slick({
-        arrows: false,
-        dots: true
-      });
-    });
   }
 
   onMenuChange(menu: string) {
@@ -75,6 +73,15 @@ export class DetailComponent implements OnInit {
         this.router.navigate(['/goods', this.goods.id, 'edit']);
         break;
     }
+  }
+
+  onClickMoreImages() {
+    this.moreImages = true;
+  }
+
+  onClickOtherGoods(goods: Goods) {
+    this.goodsService.selectedGoods = goods;
+    return false;
   }
 
   onCommentSubmit() {

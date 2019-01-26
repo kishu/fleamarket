@@ -15,9 +15,7 @@
     </div>
   </header>
   <div class="single-item">
-    <div *ngFor="let image of goods.images">
-      <img [src]="image" width="100%" alt="" style="vertical-align:top;">
-    </div>
+    <img [src]="goods.images[0]" width="100%" alt="" style="vertical-align:top;">
   </div>
   <section class="goods_section">
     <h3>
@@ -42,6 +40,14 @@
     <div class="goods_detail">
       <p [innerHTML]="goods.desc" style="white-space: pre-wrap"></p>
     </div>
+    <div *ngIf="goods.images.length > 1">
+      <button *ngIf="!moreImages" type="button" (click)="onClickMoreImages()">이미지 더보기</button>
+      <ng-container *ngIf="moreImages">
+        <div *ngFor="let image of goods.images.slice(1)">
+          <img [src]="image" width="100%" alt="" style="vertical-align:top;">
+        </div>
+      </ng-container>
+    </div>
     <div class="author_info margin3">
       <span *ngIf="(user$ | async) as user" class="author_thumb" [style.backgroundImage]="'url(' + user.photoURL + ')'"></span>
       <p><strong>{{ (user$ | async)?.displayName }}</strong>님이 판매중입니다.</p>
@@ -51,41 +57,13 @@
   <div class="other_goods">
     <h4><strong>{{ (user$ | async)?.displayName }}</strong>님의 다른 상품</h4>
     <ul class="other_goods_list">
-      <li>
+      <li *ngFor="let goods of otherGoods$ | async">
         <div class="other_goods_item">
-          <a href="view.html">
-            <div class="other_goods_thumb" style="background-image:url(assets/img/thumb.png);"></div>
+          <a [routerLink]="['/', list, 'goods', goods.id]" (click)="onClickOtherGoods(goods)">
+            <div class="other_goods_thumb" [style.backgroundImage]="'url(' + goods.images[0] +')'"></div>
           </a>
-          <span class="soldout type1"></span>
-        </div>
-      </li>
-      <li>
-        <div class="other_goods_item">
-          <a href="view.html">
-            <div class="other_goods_thumb" style="background-image:url(assets/img/thumb.png);"></div>
-          </a>
-          <span class="soldout type2"></span>
-        </div>
-      </li>
-      <li>
-        <div class="other_goods_item">
-          <a href="view.html">
-            <div class="other_goods_thumb" style="background-image:url(assets/img/dark.png),url(assets/img/thumb.png);"></div>
-          </a>
-        </div>
-      </li>
-      <li>
-        <div class="other_goods_item">
-          <a href="view.html">
-            <div class="other_goods_thumb" style="background-image:url(assets/img/thumb.png);"></div>
-          </a>
-        </div>
-      </li>
-      <li>
-        <div class="other_goods_item">
-          <a href="view.html">
-            <div class="other_goods_thumb" style="background-image:url(assets/img/thumb.png);"></div>
-          </a>
+          <!--<span class="soldout type1"></span>-->
+          <!--<span class="soldout type2"></span>-->
         </div>
       </li>
     </ul>
@@ -97,7 +75,6 @@
       <ng-template #noCommentsTmpl><h4>첫 댓글을 입력해 보세요!</h4></ng-template>
     </div>
     <ul class="comment_list">
-      <!--<li *ngFor="let comment of comments$ | async">-->
       <li *ngFor="let comment of comments">
         <div class="comment_item">
           <span class="comment_thumb" [style.backgroundImage]="'url(' + comment.user.photoURL + ')'"></span>
