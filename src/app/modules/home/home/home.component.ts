@@ -1,15 +1,13 @@
 import * as $ from 'jquery';
 import Slideout from 'slideout';
 import 'slick-carousel';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { firestore } from 'firebase';
 import { LoggedIn } from '../../../core/logged-in.service';
-import { AuthService, GoodsService } from '../../../core/http';
-import { Goods, Market } from '../../../shared/models';
+import { GoodsService } from '../../../core/http';
+import { Goods } from '../../../shared/models';
 import { Observable} from 'rxjs';
-import { map, pluck, switchMap, tap } from 'rxjs/operators';
-import { environment } from '../../../../environments/environment';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -17,46 +15,26 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  userName: string;
-  userPhotoURL: string;
-  userDesc: string;
-
   groupName: string;
-  market =  Market.Group;
-  marketName: string;
+  lounge = false;
 
   goods$: Observable<Goods[]>;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private cd: ChangeDetectorRef,
     private loggedIn: LoggedIn,
-    private authService: AuthService,
     private goodsService: GoodsService) {
-    const user = this.authService.user;
-
-    this.userName = user.displayName;
-    this.userPhotoURL = user.photoURL;
-    this.userDesc = user.desc;
-
     this.groupName = this.loggedIn.group.name;
-    this.marketName = this.loggedIn.group.market;
 
-    this.goods$ = this.route.queryParams.pipe(
-      pluck('market'),
-      map(market => (!market) ? 'group' : market),
-      map((market: string) => market && market.toUpperCase()),
-      tap(market => {
-        this.market = <Market>market;
-        this.cd.detectChanges();
-      }),
-      switchMap(market => {
-        switch (market) {
-          case Market.Lounge:
-            return this.goodsService.getGoodsByLounge();
-          default:
-            return this.goodsService.getGoodsByGroup(user.groupRef as firestore.DocumentReference);
+    this.goods$ = this.route.url.pipe(
+      switchMap(url => {
+        if (url.length === 0) {
+          this.lounge = false;
+          return this.goodsService.getGoodsByGroup(this.loggedIn.user.groupRef);
+        } else {
+          this.lounge = true;
+          return this.goodsService.getGoodsByLounge();
         }
       })
     );
@@ -111,14 +89,11 @@ export class HomeComponent implements OnInit {
     this.goodsService.selectedGoods = goods;
   }
 
-  showGoodsBy(market: string) {
-    switch (market as Market) {
-      case Market.Group:
-        this.router.navigate(['/'], { queryParams: { market: 'group' } });
-        break;
-      case Market.Lounge:
-        this.router.navigate(['/'], { queryParams: { market: 'lounge' } });
-        break;
-    }
+  showGoods() {
+    this.router.navigate(['/']);
+  }
+
+  showGoodsByLounge() {
+    this.router.navigate(['/lounge']);
   }
 }

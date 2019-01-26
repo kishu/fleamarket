@@ -175,8 +175,8 @@
     <div class="group">
       <h1><span>{{ groupName }}</span><span>2nd Lounge</span></h1>
       <h1 class="clone">
-        <span (click)="showGoodsBy('GROUP')" [ngClass]="{ on: market === 'GROUP' }">네이버웹툰</span>
-        <span (click)="showGoodsBy('LOUNGE')" [ngClass]="{ on: market === 'LOUNGE' }">2nd Lounge</span>
+        <span (click)="showGoods('GROUP')" [ngClass]="{ on: !lounge }">네이버웹툰</span>
+        <span (click)="showGoodsByLounge('LOUNGE')" [ngClass]="{ on: lounge }">2nd Lounge</span>
       </h1>
     </div>
   </header>
@@ -237,5 +237,5 @@
     </ul>
   </section>
 </div>
-<a routerLink="/goods/write" class="write"></a>
+<a [routerLink]="['/markets', marketName, 'goods', 'new', 'edit']" class="write"></a>
 <a href="#" class="top"></a>
