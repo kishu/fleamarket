@@ -109,7 +109,7 @@ export class GoodsService {
       condition: '미개봉',
       title: '',
       desc: '',
-      price: 0,
+      price: undefined,
       delivery: '직거래',
       contact: '',
       commentCnt: 0,
