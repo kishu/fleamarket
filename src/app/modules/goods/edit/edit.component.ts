@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
@@ -37,6 +38,7 @@ export class EditComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder,
+    private decimalPipe: DecimalPipe,
     private loggedIn: LoggedIn,
     private goodsService: GoodsService,
     private fileUploadService: FileUploadService,
@@ -75,6 +77,30 @@ export class EditComponent implements OnInit {
         ]
       }, { validators: Validators.required }),
       contact: [ goods.contact, Validators.maxLength(51) ]
+    });
+
+    this.editForm.get('price')
+      .valueChanges.subscribe(value => {
+      if (value) {
+        const noCommaValue = value.replace(/,/g, '');
+        const intValue = parseInt(noCommaValue, 10);
+        const result = noCommaValue ?
+          this.decimalPipe.transform(intValue, '1.0-0') : '';
+        this.editForm.get('price')
+          .setValue(result, { emitEvent: false });
+      }
+    });
+
+    this.editForm.get('delivery.delivery')
+      .valueChanges.subscribe(() => {
+      this.editForm.get('delivery.etc')
+        .setValue('', { emitEvent: false });
+    });
+
+    this.editForm.get('delivery.etc')
+      .valueChanges.subscribe(() => {
+      this.editForm.get('delivery.delivery')
+        .setValue('', { emitEvent: false });
     });
   }
 
