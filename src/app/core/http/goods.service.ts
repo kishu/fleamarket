@@ -105,7 +105,6 @@ export class GoodsService {
         lounge: false
       },
       images: [],
-      category: '가전/디지털',
       purchase: '알 수 없음',
       condition: '미개봉',
       title: '',

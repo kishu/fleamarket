@@ -62,10 +62,6 @@ export class EditComponent implements OnInit {
         group: goods.market.group,
         lounge: goods.market.lounge,
       }, { validators: targetSelectedValidator }),
-      category: this.fb.group({
-        category: goods.category,
-        recent: ''
-      }, { validators: Validators.required }),
       purchase: [ goods.purchase, Validators.required ],
       condition: [ goods.condition, Validators.required ],
       title: [ goods.title, [ Validators.required,  Validators.maxLength(31) ] ],
@@ -78,8 +74,7 @@ export class EditComponent implements OnInit {
           Validators.maxLength(51)
         ]
       }, { validators: Validators.required }),
-      contact: [ goods.contact, Validators.maxLength(51) ],
-      donation: [ goods.donation, Validators.required ]
+      contact: [ goods.contact, Validators.maxLength(51) ]
     });
   }
 

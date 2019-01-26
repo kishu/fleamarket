@@ -16,7 +16,6 @@ export class Goods {
     id: string;
     url: string;
   }?];
-  category: string;
   purchase: string;
   condition: string;
   title: string;
