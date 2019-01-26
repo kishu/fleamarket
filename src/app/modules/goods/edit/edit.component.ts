@@ -77,7 +77,7 @@ export class EditComponent implements OnInit {
       condition: [ goods.condition, Validators.required ],
       title: [ goods.title, [ Validators.required,  Validators.maxLength(31) ] ],
       desc: [ goods.desc, [ Validators.required,  Validators.maxLength(201) ] ],
-      price: [ goods.price, [ Validators.required, Validators.maxLength(15) ] ],
+      price: [ this.decimalPipe.transform(goods.price, '1.0-0'), [ Validators.required, Validators.maxLength(15) ] ],
       delivery: this.fb.group({
         delivery: delivery,
         etc: [ etc,  Validators.maxLength(51) ]
