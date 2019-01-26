@@ -20,11 +20,11 @@ export class EditComponent implements OnInit {
   private submitting = false;
   private readonly uploadPreset = environment.cloudinary.preset.goods;
   private readonly newGoods: boolean;
-  private goods: Goods;
 
-  action: string;
-  back: string;
-  groupName: string;
+  readonly action: string;
+  readonly back: string;
+  readonly goods: Goods;
+  readonly groupName: string;
 
   editForm: FormGroup;
   imageFiles = new Map<number, ImageFile>();
