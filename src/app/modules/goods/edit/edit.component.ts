@@ -59,6 +59,15 @@ export class EditComponent implements OnInit {
 
   buildForm() {
     const goods = this.goods;
+    let delivery = '';
+    let etc = '';
+
+    if (goods.delivery === '직거래' || goods.delivery === '택배') {
+      delivery = goods.delivery;
+    } else {
+      etc = goods.delivery;
+    }
+
     this.editForm = this.fb.group({
       market: this.fb.group({
         group: goods.market.group,
@@ -70,11 +79,8 @@ export class EditComponent implements OnInit {
       desc: [ goods.desc, [ Validators.required,  Validators.maxLength(201) ] ],
       price: [ goods.price, [ Validators.required, Validators.maxLength(15) ] ],
       delivery: this.fb.group({
-        delivery: goods.delivery,
-        etc: [
-          '',
-          Validators.maxLength(51)
-        ]
+        delivery: delivery,
+        etc: [ etc,  Validators.maxLength(51) ]
       }, { validators: Validators.required }),
       contact: [ goods.contact, Validators.maxLength(51) ]
     });
@@ -149,11 +155,15 @@ export class EditComponent implements OnInit {
     if (!this.submitting) {
       this.submitting = true;
       this.spinnerService.show(true);
+
+      const form = this.editForm;
+      const price = parseInt(form.get('price').value.replace(/,/g, ''), 10);
+      const delivery = form.get('delivery.delivery').value || form.get('delivery.etc').value;
+
       this.upload().pipe(
         map(images => this.goods.images.concat(images)),
         map(images => {
-          const price = parseInt(this.editForm.get('price').value.replace(/,/g, ''), 10);
-          return Object.assign(this.goods, this.editForm.value, { price }, { images });
+          return Object.assign(this.goods, this.editForm.value, { price, delivery }, { images });
         }),
         switchMap(goods => {
           let addOrUpdateGoods$;
