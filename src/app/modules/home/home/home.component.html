@@ -175,8 +175,8 @@
   <div class="group">
     <h1><span>{{ groupName }}</span><span>2nd Lounge</span></h1>
     <h1 class="clone">
-      <span (click)="showGoods()" [ngClass]="{ on: lounge === false }">{{ groupName }}</span>
-      <span (click)="showGoodsByLounge()" [ngClass]="{ on: lounge === true }">2nd Lounge</span>
+      <span (click)="showGoods()" [ngClass]="{ on: list === 'group' }">{{ groupName }}</span>
+      <span (click)="showGoodsByLounge()" [ngClass]="{ on: list === 'lounge' }">2nd Lounge</span>
     </h1>
   </div>
 
@@ -209,7 +209,7 @@
   <ul class="large_list" id="goods_list">
     <li *ngFor="let goods of goods$ | async">
       <div [ngClass]="{'item': true, 'soldout': goods.soldout}">
-        <a [routerLink]="['/goods', goods.id]"
+        <a [routerLink]="['/', list, 'goods', goods.id]"
           (click)="onClickGoods(goods)">
           <div class="goods_thumb"
                [ngStyle]="{'background-image': 'url(assets/img/dark.png), url(' + goods.images[0] + ')'}">

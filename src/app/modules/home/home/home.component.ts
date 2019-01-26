@@ -15,7 +15,7 @@ import { switchMap } from 'rxjs/operators';
 })
 export class HomeComponent implements OnInit {
   groupName: string;
-  lounge: boolean;
+  list: string;
 
   goods$: Observable<Goods[]>;
 
@@ -25,15 +25,17 @@ export class HomeComponent implements OnInit {
     private loggedIn: LoggedIn,
     private goodsService: GoodsService) {
     this.groupName = this.loggedIn.group.name;
-    this.lounge = this.route.snapshot.url.length !== 0;
+
+    const urlSegments = this.route.snapshot.url;
+    this.list = ( urlSegments.length === 0 ) ? 'group' : urlSegments[0].path;
 
     this.goods$ = this.route.url.pipe(
       switchMap(url => {
         if (url.length === 0) {
-          this.lounge = false;
+          this.list = 'group';
           return this.goodsService.getGoodsByGroup(this.loggedIn.user.groupRef);
         } else {
-          this.lounge = true;
+          this.list = url[0].path;
           return this.goodsService.getGoodsByLounge();
         }
       })

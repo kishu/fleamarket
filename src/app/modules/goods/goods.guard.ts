@@ -20,6 +20,7 @@ export class GoodsGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    const list = next.paramMap.get('list');
     const userGroupRef: DocumentReference = this.loggedIn.user.groupRef;
     const goodsId = next.paramMap.get('goodsId');
     const selectedGoods = this.goodsService.selectedGoods;
@@ -36,7 +37,7 @@ export class GoodsGuard implements CanActivate {
     return goods$.pipe(
       first(),
       map(goods => {
-        if (goods.market.lounge) {
+        if (list === 'lounge') {
           return true;
         } else {
           return !!(goods.groupRef.id === userGroupRef.id && goods.market.group);
