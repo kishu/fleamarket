@@ -14,6 +14,10 @@ export class UserService {
     this.usersCollection = afs.collection<User>('users');
   }
 
+  getGroupRef(id) {
+    return this.afs.collection('groups').doc<Group>(id).ref;
+  }
+
   getUser(uid): Observable<User> | null {
     return this.afs.doc<User>(`users/${uid}`)
       .snapshotChanges().pipe(
@@ -32,16 +36,11 @@ export class UserService {
   }
 
   setUser(uid: string, user: User) {
-    if (typeof user.groupRef === 'string') {
-      user.groupRef = this.afs.collection('groups').doc<Group>(user.groupRef).ref;
-    }
-
     return this.usersCollection.doc(uid).set(user);
   }
 
   updatePreference(id: string, preference: UserPreference) {
     return this.usersCollection.doc(id).update(preference);
-    // return this.afs.doc<User>(`users/${id}`).update(preference);
   }
 
 }

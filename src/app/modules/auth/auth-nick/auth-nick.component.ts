@@ -51,7 +51,7 @@ export class AuthNickComponent implements OnInit {
       this.authService.afSimpleUser.pipe(
         switchMap(afUser => {
           const user: User = {
-            groupRef: this.authData.group.id,
+            groupRef: this.userService.getGroupRef(this.authData.group.id),
             email: this.authData.email,
             displayName: this.nick.value,
             photoURL: environment.defaultPhotoURL,
