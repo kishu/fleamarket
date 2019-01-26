@@ -151,7 +151,10 @@ export class EditComponent implements OnInit {
       this.spinnerService.show(true);
       this.upload().pipe(
         map(images => this.goods.images.concat(images)),
-        map(images => Object.assign(this.goods, this.editForm.value, { images })),
+        map(images => {
+          const price = parseInt(this.editForm.get('price').value.replace(/,/g, ''), 10);
+          return Object.assign(this.goods, this.editForm.value, { price }, { images });
+        }),
         switchMap(goods => {
           let addOrUpdateGoods$;
           if (this.newGoods) {
