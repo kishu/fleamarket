@@ -15,7 +15,7 @@ import { switchMap } from 'rxjs/operators';
 })
 export class HomeComponent implements OnInit {
   groupName: string;
-  lounge = false;
+  lounge: boolean;
 
   goods$: Observable<Goods[]>;
 
@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
     private loggedIn: LoggedIn,
     private goodsService: GoodsService) {
     this.groupName = this.loggedIn.group.name;
+    this.lounge = this.route.snapshot.url.length !== 0;
 
     this.goods$ = this.route.url.pipe(
       switchMap(url => {
