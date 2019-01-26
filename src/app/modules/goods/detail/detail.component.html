@@ -38,10 +38,6 @@
         <dt>사용상태</dt>
         <dd>{{ goods.condition }}</dd>
       </dl>
-      <dl class="goods_info2">
-        <dt>기부금</dt>
-        <dd>&nbsp;{{ goods.donation | number:'2.' }}</dd>
-      </dl>
     </div>
     <div class="goods_detail">
       <p [innerHTML]="goods.desc" style="white-space: pre-wrap"></p>
