@@ -47,6 +47,28 @@ export class GoodsService {
     );
   }
 
+  getGoodsByUser(id: string, lounge: boolean): Observable<Goods[]> {
+    return this.afs.collection('goods', ref => {
+      let query = ref.where('userRef.id', '==',  id);
+      if (lounge) {
+        query = query.where('market.lounge', '==', true);
+      } else {
+        query = query.where('market.group', '==', true);
+      }
+      return query.orderBy('updated', 'desc');
+    }).snapshotChanges().pipe(
+      first(),
+      map(goodsList => {
+        return goodsList.map(goods => {
+          return {
+            id: goods.payload.doc.id,
+            ...goods.payload.doc.data()
+          } as Goods;
+        });
+      })
+    );
+  }
+
   getGoodsByGroup(groupRef: firebase.firestore.DocumentReference) {
     return this.afs.collection('goods', ref => {
       return ref.where('groupRef', '==',  groupRef)

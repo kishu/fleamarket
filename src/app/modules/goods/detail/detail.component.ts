@@ -24,6 +24,7 @@ export class DetailComponent implements OnInit {
   commentForm: FormGroup;
   comments$: Observable<Comment[]>;
   goods: Goods;
+  otherGoods: Goods[];
   user$: Observable<User>;
 
   private submitting = false;
@@ -41,6 +42,8 @@ export class DetailComponent implements OnInit {
 
     this.goods = this.goodsService.selectedGoods;
     this.user$ = this.goodsService.getGoodsUser(this.goods.userRef);
+    this.otherGoods = this.goodsService.getGoodsByUser(this.goods.userRef.id);
+    this.comments$ = this.commentService.getCommentsByGoods(this.goods.id);
 
     this.authority = (user.id === this.goods.userRef.id);
     this.userDesc = user.desc;
@@ -54,7 +57,7 @@ export class DetailComponent implements OnInit {
       ]
     });
 
-    this.comments$ = this.commentService.getCommentsByGoods(this.goods.id);
+
   }
 
   ngOnInit() {
