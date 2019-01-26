@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { LoggedIn } from '../../../core/logged-in.service';
 import { FileUploadService, GoodsService } from '../../../core/http';
@@ -112,6 +112,10 @@ export class EditComponent implements OnInit {
 
   protected upload(): Observable<any> {
     const files = [];
+
+    if (this.imageFiles.size === 0) {
+      return of([]);
+    }
 
     this.imageFiles.forEach(imageFile => {
       files.push(imageFile.file);
