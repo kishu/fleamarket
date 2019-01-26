@@ -644,10 +644,10 @@ nav.sorting .category a.on {
   position: absolute;
   right: 10px;
   top: 10px;
-  width: 24px;
-  height: 24px;
-  background: url(../img/likeit.png) no-repeat 50% 50%;
-  background-size: 24px 24px;
+  width: 32px;
+  height: 32px;
+  background: url(../img/like.png) no-repeat 50% 50%;
+  background-size: 32px 32px;
   vertical-align: top;
 }
 
