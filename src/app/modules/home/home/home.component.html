@@ -172,8 +172,8 @@
   <div class="group">
     <h1><span>{{ groupName }}</span><span>2nd Lounge</span></h1>
     <h1 class="clone">
-      <span (click)="showGoods('GROUP')" [ngClass]="{ on: !lounge }">네이버웹툰</span>
-      <span (click)="showGoodsByLounge('LOUNGE')" [ngClass]="{ on: lounge }">2nd Lounge</span>
+      <span (click)="showGoods()" [ngClass]="{ on: !lounge }">{{ groupName }}</span>
+      <span (click)="showGoodsByLounge()" [ngClass]="{ on: lounge }">2nd Lounge</span>
     </h1>
   </div>
 </header>
