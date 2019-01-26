@@ -26,7 +26,6 @@ export class DetailComponent implements OnInit {
   goods: Goods;
   user$: Observable<User>;
 
-  private marketName: string;
   private submitting = false;
 
   constructor(
