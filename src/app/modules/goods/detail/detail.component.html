@@ -6,7 +6,7 @@
     <div *ngIf="authority" class="sub_utility">
       <span class="goods_modify">수정</span>
       <select (change)="onMenuChange($event.target.value)">
-        <option disabled value></option>
+        <option disabled selected value>[선택]</option>
         <option value="edit">수정</option>
         <option value="delete">삭제</option>
         <option value="soldout">판매완료</option>

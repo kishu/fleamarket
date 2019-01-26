@@ -68,10 +68,9 @@ export class DetailComponent implements OnInit {
   }
 
   onMenuChange(menu: string) {
-    const marketName = this.route.snapshot.paramMap.get('market');
     switch (menu) {
       case 'edit':
-        this.router.navigate(['/markets', marketName, 'goods', this.goods.id, 'edit']);
+        this.router.navigate(['/goods', this.goods.id, 'edit']);
         break;
     }
   }
