@@ -45,7 +45,6 @@ export class DetailComponent implements OnInit {
     private goodsService: GoodsService,
     private interestService: InterestService
   ) {
-    console.log('detail constructor');
     const user = this.loggedIn.user;
     this.list = route.snapshot.paramMap.get('list');
 

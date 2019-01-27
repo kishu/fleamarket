@@ -31,7 +31,6 @@ export class GoodsService {
 
   updateGoods(id: string, goods: Goods) {
     delete goods.id;
-    console.log(id, goods);
     return this.goodsCollection.doc(id).update(goods);
   }
 

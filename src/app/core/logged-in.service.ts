@@ -16,9 +16,7 @@ export class LoggedIn {
   set user(user: User) { this._user = user; }
   set group(group: Group) { this._group = group; }
 
-  constructor(private afs: AngularFirestore) {
-    console.log('LoggedIn Constructor');
-  }
+  constructor(private afs: AngularFirestore) { }
 
   getUserRef(): firebase.firestore.DocumentReference {
     return this.afs.collection('users').doc<User>(this._user.id).ref;
