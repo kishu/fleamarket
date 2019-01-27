@@ -1,5 +1,3 @@
-import * as $ from 'jquery';
-import 'slick-carousel';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoggedIn } from '../../../core/logged-in.service';
@@ -44,18 +42,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    $(document).ready(function() {
-      $('.welcome .button').on('click', function(e) {
-        e.preventDefault();
-        $('.welcome').hide();
-        $('.dimmed').hide();
-      });
-
-      $('.single-item').slick({
-        arrows: false,
-        dots: true
-      });
-    });
   }
 
   interested(goods: Goods) {
