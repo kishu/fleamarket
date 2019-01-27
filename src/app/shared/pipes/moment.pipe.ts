@@ -6,7 +6,7 @@ import * as moment from 'moment';
 })
 export class MomentPipe implements PipeTransform {
   constructor() {
-    moment.updateLocale('en', {
+    moment.updateLocale('ko', {
       relativeTime : {
         past: '%s'
       } as any
