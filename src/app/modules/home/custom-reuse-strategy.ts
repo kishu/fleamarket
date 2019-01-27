@@ -5,6 +5,16 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
 
   constructor() { }
 
+  componentName(route: ActivatedRouteSnapshot): string | null {
+    if ( route &&
+      route.component &&
+      typeof route.component !== 'string') {
+      return route.component.name;
+    } else {
+      return null;
+    }
+  }
+
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
     // console.group('shouldReuseRoute');
     // console.log(future, curr);
@@ -28,33 +38,33 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     // }
     // console.log('return', route.routeConfig.path === '' && !!this.storedHandle);
     // console.groupEnd();
-    if ( route && route.component && route.component.name === 'HomeComponent' && !!this.storedHandle) {
-      // console.log('return', true);
-      // console.groupEnd();
-      return true;
-    } else {
-      // console.log('return', false);
-      // console.groupEnd();
-      return false;
-    }
+
+    // console.log('return', true);
+    // console.groupEnd();
+    // console.log('return', false);
+    // console.groupEnd();
+    return (this.componentName(route) === 'HomeComponent' && !!this.storedHandle);
+
   }
 
   retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
     // console.group('retrieve');
     // console.log(route);
-    if (route && route.component) {
-      // console.log('component', route.component.name as string);
-      // console.log('storedHandle', this.storedHandle);
-      if (route.component.name === 'HomeComponent' && this.storedHandle !== null) {
-        // console.log('return', this.storedHandle);
-        // console.groupEnd();
-        return this.storedHandle;
-      }
-    }
-    // console.log('return', null);
-    // console.groupEnd();
-    // return this.storedHandle;
-    return null;
+    // if (this.componentName(route) === 'HomeComponent' && this.storedHandle !== null) {
+    //   // console.log('component', route.component.name as string);
+    //   // console.log('storedHandle', this.storedHandle);
+    //   // console.log('return', this.storedHandle);
+    //   // console.groupEnd();
+    //   return this.storedHandle;
+    // } else {
+    //   // console.log('return', null);
+    //   // console.groupEnd();
+    //   // return this.storedHandle;
+    //   return null;
+    // }
+    return (this.componentName(route) === 'HomeComponent' && this.storedHandle !== null) ?
+      this.storedHandle :
+      null;
   }
 
   shouldDetach(route: ActivatedRouteSnapshot): boolean {
@@ -66,15 +76,17 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     // // }
     // console.log('return', (route && route.component && route.component.name === 'HomeComponent'));
 
-    if (route && route.component && route.component.name === 'HomeComponent') {
-      // console.log('return', true);
-      // console.groupEnd();
-      return true;
-    } else {
-      // console.log('return', false);
-      // console.groupEnd();
-      return false;
-    }
+    // if (route && route.component && route.component.name === 'HomeComponent') {
+    //   // console.log('return', true);
+    //   // console.groupEnd();
+    //   return true;
+    // } else {
+    //   // console.log('return', false);
+    //   // console.groupEnd();
+    //   return false;
+    // }
+
+    return (this.componentName(route) === 'HomeComponent');
   }
 
   store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {
@@ -86,7 +98,7 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     //   console.log('detachedRouteHandle', handle);
     // }
 
-    if (route && route.component && route.component.name === 'HomeComponent') {
+    if (this.componentName(route) === 'HomeComponent') {
       this.storedHandle = handle;
       // console.log('storedHandle', this.storedHandle);
     }
