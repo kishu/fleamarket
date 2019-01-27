@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { LoggedIn } from '../../../core/logged-in.service';
 import { InterestService, GoodsService } from '../../../core/http';
 import { Goods } from '../../../shared/models';
-import { Observable} from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   groupName: string;
   list: string;
 
+  private soldoutFilter$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   goods$: Observable<Goods[]>;
 
   constructor(
@@ -28,14 +29,14 @@ export class HomeComponent implements OnInit {
     const urlSegments = this.route.snapshot.url;
     this.list = ( urlSegments.length === 0 ) ? 'group' : urlSegments[0].path;
 
-    this.goods$ = this.route.url.pipe(
-      switchMap(url => {
+    this.goods$ = combineLatest(this.route.url, this.soldoutFilter$).pipe(
+      switchMap(([url, soldout]) => {
         if (url.length === 0) {
           this.list = 'group';
-          return this.goodsService.getGoodsByGroup(this.loggedIn.user.groupRef);
+          return this.goodsService.getGoodsByGroup(this.loggedIn.user.groupRef, soldout);
         } else {
           this.list = url[0].path;
-          return this.goodsService.getGoodsByLounge();
+          return this.goodsService.getGoodsByLounge(soldout);
         }
       })
     );
@@ -48,6 +49,10 @@ export class HomeComponent implements OnInit {
     return goods.interests.findIndex(
       item => this.loggedIn.getUserRef().isEqual(item)
     ) > -1;
+  }
+
+  onClickSoldoutFilter($event) {
+    this.soldoutFilter$.next(!$event.target.checked);
   }
 
   onClickInterest(goods: Goods) {
