@@ -86,7 +86,7 @@
             <p>{{ comment.body }}</p>
           </div>
           <div class="comment_function">
-            <a href="#">수정</a> &middot; <a href="#">삭제</a> &middot; <a href="#">댓글쓰기</a> &middot; <span class="created">방금 전</span>
+            <a href="#">삭제</a> &middot; <span class="created">{{ comment.created | fsTimestamp | moment }}</span>
           </div>
         </div>
       </li>
