@@ -141,6 +141,7 @@ export class GoodsService {
       contact: '',
       commentCnt: 0,
       interestCnt: 0,
+      interests: [],
       soldout: false,
       created: this.getServerTimeStamp(),
       updated: this.getServerTimeStamp()
