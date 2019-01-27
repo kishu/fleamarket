@@ -38,6 +38,7 @@ export class DetailComponent implements OnInit {
     private commentService: CommentService,
     private goodsService: GoodsService
   ) {
+    console.log('detail constructor');
     const user = this.loggedIn.user;
     this.list = route.snapshot.paramMap.get('list');
 
@@ -65,12 +66,13 @@ export class DetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('detail oninit');
   }
 
   onMenuChange(menu: string) {
     switch (menu) {
       case 'edit':
-        this.router.navigate(['/goods', this.goods.id, 'edit']);
+        this.router.navigate(['/', this.list, 'goods', this.goods.id, 'edit']);
         break;
     }
   }
