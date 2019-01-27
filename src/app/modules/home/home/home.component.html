@@ -215,7 +215,7 @@
                [ngStyle]="{'background-image': 'url(assets/img/dark.png), url(' + goods.images[0] + ')'}">
             <dl class="feed">
               <dt class="like"></dt>
-              <dd>{{ goods.favoriteCnt }}</dd>
+              <dd>{{ goods.interestCnt }}</dd>
               <dt class="comment"></dt>
               <dd>{{ goods.commentCnt }}</dd>
             </dl>
@@ -230,7 +230,7 @@
             </div>
           </div>
         </a>
-        <a href="#" class="likeit"><span class="sr-only">좋아요</span></a>
+        <button (click)="onClickInterest(goods)"class="likeit" style="border:0"><span class="sr-only">관심</span></button>
       </div>
     </li>
   </ul>

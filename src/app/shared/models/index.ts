@@ -22,6 +22,11 @@ export const enum Market {
   Lounge = 'LOUNGE'
 }
 
+export class Interest {
+  userRef: firestore.DocumentReference;
+  goodsRef: firestore.DocumentReference;
+}
+
 export class Group {
   id?: string;
   type: GroupType;   // 'corp', 'apt', 'school' ...

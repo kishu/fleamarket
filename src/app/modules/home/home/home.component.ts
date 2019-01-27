@@ -3,7 +3,7 @@ import 'slick-carousel';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoggedIn } from '../../../core/logged-in.service';
-import { GoodsService } from '../../../core/http';
+import { InterestService, GoodsService } from '../../../core/http';
 import { Goods } from '../../../shared/models';
 import { Observable} from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private loggedIn: LoggedIn,
+    private interestService: InterestService,
     private goodsService: GoodsService) {
     this.groupName = this.loggedIn.group.name;
 
@@ -55,6 +56,25 @@ export class HomeComponent implements OnInit {
         dots: true
       });
     });
+  }
+
+  onClickInterest(goods: Goods) {
+    const userRef = this.loggedIn.getUserRef();
+    const index = goods.interests.findIndex(item => userRef.isEqual(item));
+    const interest = {
+      userRef: userRef,
+      goodsRef: this.goodsService.getGoodsRef(goods.id)
+    };
+
+    if (index === -1) {
+      this.interestService.addInterest(interest).subscribe();
+      goods.interestCnt =  goods.interestCnt + 1;
+      goods.interests.push(userRef);
+    } else {
+      this.interestService.removeInterest(interest).subscribe();
+      goods.interestCnt =  goods.interestCnt - 1;
+      goods.interests.splice(index, 1);
+    }
   }
 
   onClickGoods(goods: Goods) {

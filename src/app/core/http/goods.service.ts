@@ -104,6 +104,10 @@ export class GoodsService {
     );
   }
 
+  getGoodsRef(goodsId: string) {
+    return this.afs.collection('goods').doc<Goods>(goodsId).ref;
+  }
+
   getGoodsUser(userRef: firebase.firestore.DocumentReference): Observable<User | any> {
     return fromPromise(userRef.get()).pipe(
       map(user => ({ id: user.id, ...user.data() }))

@@ -24,6 +24,7 @@ export class Goods {
   delivery: string;
   contact: string;
   commentCnt: number;
+  interests: [ firestore.DocumentReference? ];
   interestCnt: number;
   soldout: boolean;
   created: firestore.FieldValue | firestore.Timestamp;
