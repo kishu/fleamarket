@@ -21,6 +21,10 @@ export class CommentService {
     return fromPromise(this.commentCollection.add(comment));
   }
 
+  deleteComment(commentId: string) {
+    return this.commentCollection.doc(commentId).delete();
+  }
+
   getCommentsByGoods(goodsId: string): Observable<Comment[]> {
     const goodsRef = this.afs.collection('goods').doc<Goods>(goodsId).ref;
 

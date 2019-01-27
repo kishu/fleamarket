@@ -86,7 +86,10 @@
             <p>{{ comment.body }}</p>
           </div>
           <div class="comment_function">
-            <a href="#">삭제</a> &middot; <span class="created">{{ comment.created | fsTimestamp | moment }}</span>
+            <ng-container *ngIf="commentAuthority(comment)">
+              <button type="button" (click)="onClickDeleteComment(comment)" style="border:0">삭제</button>  &middot;
+            </ng-container>
+            <span class="created">{{ comment.created | fsTimestamp | moment }}</span>
           </div>
         </div>
       </li>

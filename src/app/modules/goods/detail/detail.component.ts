@@ -74,6 +74,10 @@ export class DetailComponent implements OnInit {
   ngOnInit() {
   }
 
+  commentAuthority(comment) {
+    return comment.userRef.isEqual(this.loggedIn.getUserRef());
+  }
+
   onMenuChange(menu: string) {
     switch (menu) {
       case 'edit':
@@ -126,6 +130,10 @@ export class DetailComponent implements OnInit {
   onClickOtherGoods(goods: Goods) {
     this.goodsService.selectedGoods = goods;
     return false;
+  }
+
+  onClickDeleteComment(comment: Comment) {
+    this.commentService.deleteComment(comment.id);
   }
 
   onCommentSubmit() {
