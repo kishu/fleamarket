@@ -19,7 +19,9 @@
   </div>
   <section class="goods_section">
     <h3>
-      <a href="#" class="likeit"><span class="sr-only">좋아요</span></a>
+      <button
+        (click)="onClickInterest()"
+        [ngClass]="{ 'likeit': true, 'on': interested }" style="border:0"><span class="sr-only">관심</span></button>
       {{ goods.title }}
     </h3>
     <span *ngIf="goods.soldout" class="soldout type1"></span>

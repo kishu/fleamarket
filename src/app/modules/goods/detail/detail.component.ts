@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
-import { AuthService, CommentService, GoodsService } from '../../../core/http';
+import { AuthService, CommentService, GoodsService, InterestService } from '../../../core/http';
 import { LoggedIn } from '../../../core/logged-in.service';
 import { Comment, Goods, User } from '../../../shared/models';
 
@@ -29,6 +29,12 @@ export class DetailComponent implements OnInit {
 
   private submitting = false;
 
+  get interested() {
+    return this.goods.interests.findIndex(
+      item => this.loggedIn.getUserRef().isEqual(item)
+    ) > -1;
+  }
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -36,7 +42,8 @@ export class DetailComponent implements OnInit {
     private loggedIn: LoggedIn,
     private authService: AuthService,
     private commentService: CommentService,
-    private goodsService: GoodsService
+    private goodsService: GoodsService,
+    private interestService: InterestService
   ) {
     console.log('detail constructor');
     const user = this.loggedIn.user;
@@ -74,6 +81,26 @@ export class DetailComponent implements OnInit {
       case 'edit':
         this.router.navigate(['/', this.list, 'goods', this.goods.id, 'edit']);
         break;
+    }
+  }
+
+  onClickInterest() {
+    const goods = this.goods;
+    const userRef = this.loggedIn.getUserRef();
+    const index = goods.interests.findIndex(item => userRef.isEqual(item));
+    const interest = {
+      userRef: userRef,
+      goodsRef: this.goodsService.getGoodsRef(goods.id)
+    };
+
+    if (index === -1) {
+      this.interestService.addInterest(interest).subscribe();
+      goods.interestCnt =  goods.interestCnt + 1;
+      goods.interests.push(userRef);
+    } else {
+      this.interestService.removeInterest(interest).subscribe();
+      goods.interestCnt =  goods.interestCnt - 1;
+      goods.interests.splice(index, 1);
     }
   }
 
