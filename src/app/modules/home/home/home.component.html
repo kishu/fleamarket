@@ -230,7 +230,8 @@
             </div>
           </div>
         </a>
-        <button (click)="onClickInterest(goods)"class="likeit" style="border:0"><span class="sr-only">관심</span></button>
+        <button (click)="onClickInterest(goods)"
+                [ngClass]="{ 'likeit': true, 'on': interested(goods) }" style="border:0"><span class="sr-only">관심</span></button>
       </div>
     </li>
   </ul>

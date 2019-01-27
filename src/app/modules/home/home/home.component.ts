@@ -58,6 +58,12 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  interested(goods: Goods) {
+    return goods.interests.findIndex(
+      item => this.loggedIn.getUserRef().isEqual(item)
+    ) > -1;
+  }
+
   onClickInterest(goods: Goods) {
     const userRef = this.loggedIn.getUserRef();
     const index = goods.interests.findIndex(item => userRef.isEqual(item));
