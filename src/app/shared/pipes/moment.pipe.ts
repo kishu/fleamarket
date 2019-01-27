@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import * as moment from 'moment'
+import * as moment from 'moment';
 
 @Pipe({
-  name: 'relativeDate'
+  name: 'moment'
 })
-export class RelativeDatePipe implements PipeTransform {
+export class MomentPipe implements PipeTransform {
   constructor() {
     moment.updateLocale('en', {
       relativeTime : {

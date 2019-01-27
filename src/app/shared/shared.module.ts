@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RelativeDatePipe } from './pipes/relative-date.pipe';
+import { MomentPipe } from './pipes/moment.pipe';
 import { FsTimestampPipe } from './pipes/fs-timestamp.pipe';
 
 @NgModule({
-  declarations: [RelativeDatePipe, FsTimestampPipe],
+  declarations: [MomentPipe, FsTimestampPipe],
   imports: [
     CommonModule
   ],
-  providers: []
+  providers: [],
+  exports: [
+    FsTimestampPipe,
+    MomentPipe
+  ]
 })
 export class SharedModule { }
