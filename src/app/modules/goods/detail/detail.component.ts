@@ -73,7 +73,6 @@ export class DetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('detail oninit');
   }
 
   onMenuChange(menu: string) {
@@ -82,6 +81,13 @@ export class DetailComponent implements OnInit {
         this.router.navigate(['/', this.list, 'goods', this.goods.id, 'edit']);
         break;
       case 'delete':
+        const answer = confirm('삭제한 상품은 복구할 수 없습니다. 삭제 할까요?');
+        if (answer) {
+         this.goodsService.deleteGoods(this.goods.id).then(() => {
+           const commands = this.list === 'lounge' ? ['/', this.list] : ['/'];
+          this.router.navigate(commands);
+         });
+        }
         break;
       case 'soldout':
         this.goodsService.updateSoldout(this.goods.id, true);

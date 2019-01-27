@@ -39,6 +39,10 @@ export class GoodsService {
     return this.goodsCollection.doc(id).update({ soldout });
   }
 
+  deleteGoods(id: string) {
+    return this.goodsCollection.doc(id).delete();
+  }
+
   getGoods(id: string): Observable<Goods | null> {
     return this.afs.doc<Goods>(`goods/${id}`).snapshotChanges().pipe(
       first(),
