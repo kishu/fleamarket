@@ -81,6 +81,16 @@ export class DetailComponent implements OnInit {
       case 'edit':
         this.router.navigate(['/', this.list, 'goods', this.goods.id, 'edit']);
         break;
+      case 'delete':
+        break;
+      case 'soldout':
+        this.goodsService.updateSoldout(this.goods.id, true);
+        this.goods.soldout = true;
+        break;
+      case 'onsale':
+        this.goodsService.updateSoldout(this.goods.id, false);
+        this.goods.soldout = false;
+        break;
     }
   }
 

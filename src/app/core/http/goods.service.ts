@@ -35,6 +35,10 @@ export class GoodsService {
     return this.goodsCollection.doc(id).update(goods);
   }
 
+  updateSoldout(id, soldout: boolean) {
+    return this.goodsCollection.doc(id).update({ soldout });
+  }
+
   getGoods(id: string): Observable<Goods | null> {
     return this.afs.doc<Goods>(`goods/${id}`).snapshotChanges().pipe(
       first(),
