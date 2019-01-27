@@ -4,6 +4,7 @@ import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { LoggedIn } from '../../../core/logged-in.service';
 import { InterestService, GoodsService } from '../../../core/http';
+import { PersistanceService } from '../../../shared/services';
 import { Goods } from '../../../shared/models';
 
 @Component({
@@ -14,29 +15,34 @@ import { Goods } from '../../../shared/models';
 export class HomeComponent implements OnInit {
   groupName: string;
   list: string;
+  soldoutFilter: boolean;
 
-  private soldoutFilter$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   goods$: Observable<Goods[]>;
+  private soldoutFilter$: BehaviorSubject<boolean>;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private loggedIn: LoggedIn,
     private interestService: InterestService,
-    private goodsService: GoodsService) {
-    this.groupName = this.loggedIn.group.name;
+    private goodsService: GoodsService,
+    private persistanceService: PersistanceService) {
 
+    this.groupName = this.loggedIn.group.name;
     const urlSegments = this.route.snapshot.url;
     this.list = ( urlSegments.length === 0 ) ? 'group' : urlSegments[0].path;
 
+    this.soldoutFilter = this.persistanceService.get('soldoutFilter') || false;
+    this.soldoutFilter$ = new BehaviorSubject(this.soldoutFilter);
+
     this.goods$ = combineLatest(this.route.url, this.soldoutFilter$).pipe(
-      switchMap(([url, soldout]) => {
+      switchMap(([url, soldoutFiter]) => {
         if (url.length === 0) {
           this.list = 'group';
-          return this.goodsService.getGoodsByGroup(this.loggedIn.user.groupRef, soldout);
+          return this.goodsService.getGoodsByGroup(this.loggedIn.user.groupRef, soldoutFiter);
         } else {
           this.list = url[0].path;
-          return this.goodsService.getGoodsByLounge(soldout);
+          return this.goodsService.getGoodsByLounge(soldoutFiter);
         }
       })
     );
@@ -52,7 +58,9 @@ export class HomeComponent implements OnInit {
   }
 
   onClickSoldoutFilter($event) {
-    this.soldoutFilter$.next(!$event.target.checked);
+    const soldoutFilter = $event.target.checked;
+    this.persistanceService.set('soldoutFilter', soldoutFilter);
+    this.soldoutFilter$.next(soldoutFilter);
   }
 
   onClickInterest(goods: Goods) {

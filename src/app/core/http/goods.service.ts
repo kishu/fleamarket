@@ -76,12 +76,12 @@ export class GoodsService {
     );
   }
 
-  getGoodsByGroup(groupRef: firebase.firestore.DocumentReference, soldout: boolean) {
+  getGoodsByGroup(groupRef: firebase.firestore.DocumentReference, soldoutFiter: boolean) {
     return this.afs.collection('goods', ref => {
       let query = ref as firebase.firestore.Query;
       query = query.where('groupRef', '==',  groupRef);
       query = query.where('market.group', '==', true);
-      if (!soldout) {
+      if (soldoutFiter) {
         query = query.where('soldout', '==', false);
       }
       query = query.orderBy('updated', 'desc');
@@ -99,11 +99,11 @@ export class GoodsService {
     );
   }
 
-  getGoodsByLounge(soldout: boolean) {
+  getGoodsByLounge(soldoutFiter: boolean) {
     return this.afs.collection('goods', ref => {
       let query = ref as firebase.firestore.Query;
       query = query.where('market.lounge', '==', true);
-      if (!soldout) {
+      if (soldoutFiter) {
         query = query.where('soldout', '==', false);
       }
       query = query.orderBy('updated', 'desc');

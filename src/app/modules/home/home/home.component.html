@@ -193,7 +193,9 @@
 <section>
 
   <nav class="sorting">
-    <input id="c1" type="checkbox" (change)="onClickSoldoutFilter($event)">
+    <input id="c1" type="checkbox"
+           [checked]="soldoutFilter"
+           (change)="onClickSoldoutFilter($event)">
     <label for="c1">&nbsp;품절상품 제외</label>
     <!--<div class="view_option">-->
       <!--<button class="large" style="display: none"><span>크게보기</span></button>-->
