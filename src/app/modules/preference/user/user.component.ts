@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { LoggedIn } from '../../../core/logged-in.service';
 import { AuthService, FileUploadService, UserService } from '../../../core/http';
 import { SpinnerService } from '../../spinner/spinner.service';
-import { ImageFile, UserPreference } from '../../../shared/models';
+import { ImageFile } from '../../../shared/models';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -27,6 +28,7 @@ export class UserComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
+    private loggedIn: LoggedIn,
     private authService: AuthService,
     private userService: UserService,
     private fileUploadService: FileUploadService,
@@ -43,16 +45,6 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
-  }
-
-  protected getUserPreference(image) {
-    const form = this.preferenceForm;
-    return {
-      photoURL: image,
-      displayName: form.get('displayName').value,
-      desc: form.get('desc').value,
-      notice: form.get('notice').value,
-    } as UserPreference;
   }
 
   protected upload(): Observable<any> {
@@ -100,12 +92,13 @@ export class UserComponent implements OnInit {
 
       if (this.imageFile) {
         this.upload().pipe(
-          map(images => this.getUserPreference(images[0])),
+          map(images => Object.assign({photoURL: images[0]}, this.preferenceForm.value)),
+          tap(preference => this.loggedIn.user = Object.assign(this.loggedIn.user, preference)),
           switchMap(preference => this.userService.updatePreference(id, preference))
         ).subscribe(this.success, this.error);
       } else {
-        const preference = this.getUserPreference(this.authService.user.photoURL);
-        this.userService.updatePreference(id, preference).then(this.success, this.error);
+        this.loggedIn.user = Object.assign(this.loggedIn.user, this.preferenceForm.value);
+        this.userService.updatePreference(id, this.preferenceForm.value).then(this.success, this.error);
       }
     }
   }
