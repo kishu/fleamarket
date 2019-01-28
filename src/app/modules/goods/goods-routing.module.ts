@@ -33,10 +33,10 @@ export function goodsMatcher(url: UrlSegment[]) {
 const routes: Routes = [
   {
     matcher: goodsMatcher,
-    canActivate: [AuthGuard, GoodsGuard],
+    canActivate: [AuthGuard],
     children: [
-      { path: '', component: DetailComponent },
-      { path: 'edit', canActivate: [ GoodsAuthorityGuard ], component: EditComponent }
+      { path: '', canActivate: [GoodsGuard], component: DetailComponent },
+      { path: 'edit', canActivate: [GoodsAuthorityGuard], component: EditComponent }
     ],
   }
 ];
