@@ -52,13 +52,13 @@
       </ng-container>
     </div>
     <div class="author_info margin3">
-      <span *ngIf="(user$ | async) as user" class="author_thumb" [style.backgroundImage]="'url(' + user.photoURL + ')'"></span>
-      <p><strong>{{ (user$ | async)?.displayName }}</strong>님이 판매중입니다.</p>
-      <div class="author_introduce">{{ (user$ | async)?.desc }}</div>
+      <span class="author_thumb" [style.backgroundImage]="'url(' + goods.user.photoURL + ')'"></span>
+      <p><strong>{{ goods.user.displayName }}</strong>님이 판매중입니다.</p>
+      <div class="author_introduce">{{ goods.user.desc }}</div>
     </div>
   </section>
   <div class="other_goods">
-    <h4><strong>{{ (user$ | async)?.displayName }}</strong>님의 다른 상품</h4>
+    <h4><strong>{{ goods.user.displayName }}</strong>님의 다른 상품</h4>
     <ul class="other_goods_list">
       <li *ngFor="let goods of otherGoods$ | async">
         <div class="other_goods_item">
