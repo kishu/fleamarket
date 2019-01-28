@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoggedIn } from '../../../core/logged-in.service';
 
 @Component({
   selector: 'app-notification',
@@ -6,8 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./notification.component.css']
 })
 export class NotificationComponent implements OnInit {
+  readonly user: any;
 
-  constructor() { }
+  constructor(
+    private loggedIn: LoggedIn,
+  ) {
+    const user = this.loggedIn.user;
+    this.user = {
+      photoURL: user.photoURL,
+      displayName: user.displayName,
+      desc: user.desc
+    };
+  }
 
   ngOnInit() {
   }

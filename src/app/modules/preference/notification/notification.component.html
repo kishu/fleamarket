@@ -1,3 +1,135 @@
-<p>
-  notification works!
-</p>
+<div class="wrap sub end">
+  <header>
+    <h2>마이페이지</h2>
+    <a routerLink="/" class="back">이전</a>
+  </header>
+
+  <div class="profile">
+    <a routerLink="/preference/user" class="thumb" [style.backgroundImage]="'url(' + user.photoURL + ')'"></a>
+    <p class="profile_text">{{ user.displayName }} / {{ user.desc}}</p>
+  </div>
+  <div class="my_menu">
+    <a href="my_list.html">등록상품 <span class="new"></span></a>
+    <a href="#">관심상품 <span class="new"></span></a>
+    <a routerLink="/preference/user">설정</a>
+  </div>
+
+  <div class="alarm">
+    <div class="alarm_header">
+      <h3>알림</h3>
+      <!-- <a class="notice_link" href="#">공지사항</a> -->
+    </div>
+    <div class="alarm_body">
+      <div class="alarm_nothing" style="display:none">
+        알림이 없습니다.
+      </div>
+      <ul class="alarm_list">
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"><span class="new"></span></span>
+          <p class="alarm_content"><strong>9층에 사는 죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong> 상품을 등록했습니다.</p>
+          <span class="alarm_created">방금 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"><span class="new"></span></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">10초 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"><span class="new"></span></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">1분 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"><span class="new"></span></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">2분 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">1시간 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">1일 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">1일 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">1일 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">1일 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">1일 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">1일 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">1일 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">1일 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">1일 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">1일 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">1일 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">1일 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">1일 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">1일 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">1일 전</span>
+        </li>
+        <li class="alarm_item">
+          <span class="alarm_thumb" style="background-image:url(assets/img/author.png);"></span>
+          <p class="alarm_content"><strong>죠스타</strong>님이 <strong>쓰다 남은 양초 3개</strong>에 댓글을 남겼습니다:<br> "냄새가 너무너무 좋으네요~!!"</p>
+          <span class="alarm_created">1일 전</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
