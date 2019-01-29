@@ -535,6 +535,7 @@ nav.sorting .category a.on {
   display: block;
   width: 100px;
   height: 100px;
+  height: 100px;
   margin: 0 auto 7px;
   background-image: url(../img/nothing.png);
   background-repeat: no-repeat;
@@ -626,8 +627,6 @@ nav.sorting .category a.on {
 .large_list .item {
   overflow: hidden;
   position: relative;
-  border: 1px solid #9b9493;
-  border-radius: 5px;
   background-color: #fff;
 }
 
@@ -635,7 +634,6 @@ nav.sorting .category a.on {
   display: block;
   width: 100%;
   padding-top: 60%;
-  border-radius: 3px;
   background-position: 50% 50%;
   background-size: cover;
 }
@@ -1472,11 +1470,34 @@ user menu
   overflow: hidden;
   position: absolute;
   z-index: 1;
-  left: 5%;
+  right: 5%;
   top: 29px;
-  width: 45px;
-  height: 42px;
-  background: url(../img/hamburger.png) no-repeat 0 0;
-  background-size: 45px 42px;
+  padding: 2px;
+}
+
+.user-profile {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: 50% 50%;
   color: rgba(0,0,0,0);
+}
+
+.user-menu .new {
+  position: absolute;
+  right: 0;
+  top: 0;
+  min-width: 20px;
+  border: 2px solid #000;
+  border-radius: 50%;
+  background-color: #dd4e52;
+  font-weight: bold;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 18px;
+  color: #fff;
+  text-align: center;
 }

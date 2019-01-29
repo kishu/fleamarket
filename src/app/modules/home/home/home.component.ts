@@ -13,6 +13,7 @@ import { Goods } from '../../../shared/models';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  userPhotoURL: string;
   groupName: string;
   list: string;
   soldoutFilter: boolean;
@@ -28,7 +29,9 @@ export class HomeComponent implements OnInit {
     private goodsService: GoodsService,
     private persistanceService: PersistanceService) {
 
+    this.userPhotoURL = this.loggedIn.user.photoURL;
     this.groupName = this.loggedIn.group.name;
+
     const urlSegments = this.route.snapshot.url;
     this.list = ( urlSegments.length === 0 ) ? 'group' : urlSegments[0].path;
 

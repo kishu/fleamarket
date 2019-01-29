@@ -1,7 +1,10 @@
 <header>
-  <a routerLink='/preference/notification' class="user-menu" data-role="right">
-    user menu
-  </a>
+  <div class="user-menu">
+    <a routerLink='/preference/notification' class="user-profile" [style.backgroundImage]="'url('+ userPhotoURL +')'">
+      user menu
+    </a>
+    <i class="new">N</i>
+  </div>
   <div class="group">
     <h1><span>{{ groupName }}</span><span>2nd Lounge</span></h1>
     <h1 class="clone">
