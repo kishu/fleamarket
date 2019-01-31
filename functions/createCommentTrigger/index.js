@@ -7,35 +7,53 @@ admin.firestore().settings({ timestampsInSnapshots: true });
 module.exports = functions.firestore
   .document('comments/{commentId}')
   .onCreate((comment, context) => {
-    const fromUserRef = comment.get('userRef');
-    const goodsRef = comment.get('goodsRef');
+    const parseNotification = (fromUser, toUser, goods) => {
+      return {
+        userRef: toUser.ref,
+        user: {
+          email: toUser.get('email'),
+          displayName: toUser.get('displayName'),
+          photoURL: toUser.get('photoURL')
+        },
+        fromUserRef: fromUser.ref,
+        fromUser: {
+          displayName: fromUser.get('displayName'),
+          photoURL: fromUser.get('photoURL')
+        },
+        goodsRef: goods.ref,
+        goods: {
+          title: goods.get('title'),
+          image: goods.get('images')[0]
+        },
+        comment: {
+          body: comment.get('body')
+        },
+        isRead: false,
+        created: comment.get('created')
+      };
+    };
 
-    const fromUserPromise = fromUserRef.get();
-    const goodsPromise = goodsRef.get();
+    let goods;
+    let fromUser;
+    let toUsers;
 
-    return Promise.all([fromUserPromise, goodsPromise]).then(([fromUser, goods]) => {
-      if (fromUserRef !== goods.userRef || true) {
-        return admin.firestore().collection('notifications').add({
-          userRef: goods.get('userRef'),
-          fromUserRef: fromUserRef,
-          fromUser: {
-            id: fromUser.id,
-            displayName: fromUser.get('displayName'),
-            photoURL: fromUser.get('photoURL')
-          },
-          goodsRef: goodsRef,
-          goods: {
-            id: goods.id,
-            title: goods.get('title'),
-            image: goods.get('images')[0]
-          },
-          comment: {
-            id: comment.id,
-            body: comment.get('body')
-          },
-          isRead: false,
-          created: comment.get('created')
+    return comment.get('userRef').get()
+      .then(u => fromUser = u)
+      .then(() => comment.get('goodsRef').get())
+      .then(g => goods = g)
+      .then(() => {
+        const userRefs = [goods.get('userRef')].concat(goods.get('interests'));
+        return Promise.all(userRefs.map(r => r.get()));
+      })
+      .then(u => toUsers = u)
+      .then(() => {
+        const batches = [];
+        const notificationCollection = admin.firestore().collection('notifications');
+        toUsers.forEach(toUser => {
+          if (toUser.get('notice') && toUser.id !== fromUser.id) {
+            batches.push(notificationCollection.add(parseNotification(fromUser, toUser, goods)));
+          }
         });
-      }
+        return Promise.all(batches);
+      });
     });
-  });
