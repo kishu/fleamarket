@@ -47,7 +47,7 @@ export class User {
   displayName: string;
   desc: string;
   photoURL: string;
-  notice: boolean;
+  notice: boolean; // todo rename notification
 }
 
 export class UserPreference {
@@ -55,6 +55,31 @@ export class UserPreference {
   displayName: string;
   desc: string;
   notice: boolean;
+}
+
+export class Notification {
+  id: string;
+  userRef: firestore.DocumentReference;
+  user: {
+    email: string,
+    displayName: string,
+    photoURL: string
+  };
+  fromUserRef: firestore.DocumentReference;
+  fromUser: {
+    displayName: string,
+    photoURL: string
+  };
+  goodsRef: firestore.DocumentReference;
+  goods: {
+    title: string
+    image: string
+  };
+  comment: {
+    body: string
+  };
+  isRead: boolean;
+  created: firestore.Timestamp;
 }
 
 export * from './goods';
