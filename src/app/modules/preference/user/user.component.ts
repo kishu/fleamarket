@@ -76,7 +76,7 @@ export class UserComponent implements OnInit {
   onChangeImage(e: any) {
     const file = e.target.files.item(0);
     const tmpImageFile = new ImageFile(file);
-
+    
     tmpImageFile.readAsDataURL().then(() => {
       this.photoURL = tmpImageFile.url;
       this.imageFile = tmpImageFile;
@@ -115,5 +115,4 @@ export class UserComponent implements OnInit {
     this.spinnerService.show(false);
     this.submitting = false;
   }
-
 }
