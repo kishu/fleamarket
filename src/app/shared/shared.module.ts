@@ -8,7 +8,6 @@ import { FsTimestampPipe } from './pipes/fs-timestamp.pipe';
   imports: [
     CommonModule
   ],
-  providers: [],
   exports: [
     FsTimestampPipe,
     MomentPipe

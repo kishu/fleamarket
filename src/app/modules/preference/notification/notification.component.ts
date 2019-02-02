@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LoggedIn } from '../../../core/logged-in.service';
 import { NotificationService } from '../../../core/http';
+import { LocationService } from '../../../shared/services';
 import { Notification } from '../../../shared/models';
 
 @Component({
@@ -15,6 +16,7 @@ export class NotificationComponent implements OnInit {
 
   constructor(
     private loggedIn: LoggedIn,
+    private locationService: LocationService,
     private notificationService: NotificationService
   ) {
     const user = this.loggedIn.user;
@@ -27,6 +29,11 @@ export class NotificationComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  goBack(e: any) {
+    e.preventDefault();
+    this.locationService.goBack();
   }
 
 }

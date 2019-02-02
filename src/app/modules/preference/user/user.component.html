@@ -1,7 +1,7 @@
 <div class="wrap sub form">
   <header>
     <h2>내정보 설정</h2>
-    <a routerLink="/" class="back">이전</a>
+    <a href="#" (click)="goBack($event)" class="back">돌아가기</a>
   </header>
   <section>
     <form [formGroup]="preferenceForm" (ngSubmit)="onSubmit()">

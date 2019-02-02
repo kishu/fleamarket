@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { LoggedIn } from '../../../core/logged-in.service';
+import { LocationService } from '../../../shared/services';
 import { FileUploadService, GoodsService } from '../../../core/http';
 import { SpinnerService } from '../../spinner/spinner.service';
 import { targetSelectedValidator } from '../target-selected-validator.directive';
@@ -40,6 +41,7 @@ export class EditComponent implements OnInit {
     private fb: FormBuilder,
     private decimalPipe: DecimalPipe,
     private loggedIn: LoggedIn,
+    private locationService: LocationService,
     private goodsService: GoodsService,
     private fileUploadService: FileUploadService,
     private spinnerService: SpinnerService
@@ -195,5 +197,10 @@ export class EditComponent implements OnInit {
 
     this.spinnerService.show(false);
     this.submitting = false;
+  }
+
+  goBack(e: any) {
+    e.preventDefault();
+    this.locationService.goBack();
   }
 }

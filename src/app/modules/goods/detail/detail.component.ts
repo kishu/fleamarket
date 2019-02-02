@@ -3,8 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
-import { AuthService, CommentService, GoodsService, InterestService } from '../../../core/http';
 import { LoggedIn } from '../../../core/logged-in.service';
+import { AuthService, CommentService, GoodsService, InterestService } from '../../../core/http';
+import { LocationService } from '../../../shared/services';
 import { Comment, Goods, User } from '../../../shared/models';
 
 @Component({
@@ -39,6 +40,7 @@ export class DetailComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder,
+    private locationService: LocationService,
     private loggedIn: LoggedIn,
     private authService: AuthService,
     private commentService: CommentService,
@@ -168,6 +170,11 @@ export class DetailComponent implements OnInit {
     console.error(e);
     alert(e);
     this.submitting = false;
+  }
+
+  goBack(e: any) {
+    e.preventDefault();
+    this.locationService.goBack(this.list);
   }
 
 }

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { LoggedIn } from '../../../core/logged-in.service';
+import { LocationService } from '../../../shared/services';
 import { AuthService, FileUploadService, UserService } from '../../../core/http';
 import { SpinnerService } from '../../spinner/spinner.service';
 import { ImageFile } from '../../../shared/models';
@@ -29,6 +30,7 @@ export class UserComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private loggedIn: LoggedIn,
+    private locationService: LocationService,
     private authService: AuthService,
     private userService: UserService,
     private fileUploadService: FileUploadService,
@@ -76,7 +78,7 @@ export class UserComponent implements OnInit {
   onChangeImage(e: any) {
     const file = e.target.files.item(0);
     const tmpImageFile = new ImageFile(file);
-    
+
     tmpImageFile.readAsDataURL().then(() => {
       this.photoURL = tmpImageFile.url;
       this.imageFile = tmpImageFile;
@@ -114,5 +116,10 @@ export class UserComponent implements OnInit {
 
     this.spinnerService.show(false);
     this.submitting = false;
+  }
+
+  goBack(e: any) {
+    e.preventDefault();
+    this.locationService.goBack();
   }
 }

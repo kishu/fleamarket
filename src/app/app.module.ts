@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 // firebase modules
 import { AngularFireModule } from '@angular/fire';
@@ -52,13 +53,14 @@ export function resolveAuthInfo(authService: AuthService) {
     AppRoutingModule
   ],
   providers: [
+    Location,
     LoggedIn,
     AuthGuard,
     AuthService,
     PersistanceService,
     SpinnerService,
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
     { provide: APP_INITIALIZER, useFactory: resolveAuthInfo, deps: [AuthService], multi: true },
-
   ],
   bootstrap: [AppComponent]
 })

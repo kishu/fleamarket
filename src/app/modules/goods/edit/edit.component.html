@@ -1,7 +1,7 @@
 <div class="wrap sub form">
   <header>
     <h2>상품 {{ action }}</h2>
-    <a routerLink="/" class="back">{{ back }}</a>
+    <a href="#" (click)="goBack($event)" class="back">돌아가기</a>
   </header>
   <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
     <section>
