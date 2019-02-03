@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
@@ -47,9 +47,24 @@ export class DetailComponent implements OnInit {
     private goodsService: GoodsService,
     private interestService: InterestService
   ) {
-    const user = this.loggedIn.user;
     this.list = route.snapshot.paramMap.get('list');
 
+    router.events.subscribe(e => {
+      if (e instanceof NavigationStart) {
+        this.goods = undefined;
+      }
+    });
+
+    this.commentForm = this.fb.group({
+      body: [
+        '',
+        [ Validators.required,  Validators.minLength(1), Validators.maxLength(501) ]
+      ]
+    });
+  }
+
+  ngOnInit() {
+    const user = this.loggedIn.user;
     this.route.params.pipe(
       pluck('goodsId')
     ).subscribe(() => {
@@ -63,17 +78,9 @@ export class DetailComponent implements OnInit {
       this.userDesc = user.desc;
       this.userDisplayName = user.displayName;
       this.userPhotoURL = user.photoURL;
-    });
 
-    this.commentForm = this.fb.group({
-      body: [
-        '',
-        [ Validators.required,  Validators.minLength(1), Validators.maxLength(501) ]
-      ]
+      window.setTimeout(() => window.scroll(0, 0), 0);
     });
-  }
-
-  ngOnInit() {
   }
 
   commentAuthority(comment) {
