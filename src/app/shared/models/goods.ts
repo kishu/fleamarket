@@ -5,7 +5,8 @@ export class Goods {
   userRef: firestore.DocumentReference;
   user: {
     displayName: string,
-    photoURL: string
+    photoURL: string,
+    desc: string,
   };
   groupRef: firestore.DocumentReference;
   market: {

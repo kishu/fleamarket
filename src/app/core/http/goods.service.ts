@@ -141,7 +141,8 @@ export class GoodsService {
       userRef: this.loggedIn.getUserRef(),
       user: {
         displayName: user.displayName,
-        photoURL: user.photoURL
+        photoURL: user.photoURL,
+        desc: user.desc
       },
       groupRef: user.groupRef,
       market: {
