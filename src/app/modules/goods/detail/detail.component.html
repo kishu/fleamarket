@@ -54,7 +54,7 @@
     <div class="author_info margin3">
       <span class="author_thumb" [style.backgroundImage]="'url(' + goods.user.photoURL + ')'"></span>
       <p><strong>{{ goods.user.displayName }}</strong>님이 판매중입니다.</p>
-      <div class="author_introduce">goods.user.desc</div>
+      <div class="author_introduce">{{ goods.user.desc }}</div>
     </div>
   </section>
   <div class="other_goods">
