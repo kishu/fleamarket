@@ -185,7 +185,13 @@ export class EditComponent implements OnInit {
   }
 
   success = () => {
-    this.router.navigate(['/']).then(() => {
+    let backUrl = '/';
+    const list = this.route.snapshot.paramMap.get('list');
+    if (list === 'lounge') {
+      backUrl = backUrl + '/lounge';
+    }
+
+    this.router.navigate([backUrl]).then(() => {
       this.spinnerService.show(false);
       this.submitting = false;
     });
