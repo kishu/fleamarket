@@ -47,4 +47,4 @@ Thumbs.db
 /src/environments/*
 
 # test script
-/script
+/@batch
