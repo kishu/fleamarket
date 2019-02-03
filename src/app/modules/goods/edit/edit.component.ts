@@ -157,6 +157,14 @@ export class EditComponent implements OnInit {
     }
   }
 
+  onDeleteImageUrlByIndex(i: number) {
+    this.goods.images.splice(i, 1);
+  }
+
+  onDeleteImageFileByKey(key: number) {
+    this.imageFiles.delete(key);
+  }
+
   onSubmit() {
     if (!this.submitting) {
       this.submitting = true;
