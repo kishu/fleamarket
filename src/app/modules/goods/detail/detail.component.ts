@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 import { LoggedIn } from '../../../core/logged-in.service';
 import { AuthService, CommentService, GoodsService, InterestService } from '../../../core/http';
@@ -13,7 +13,7 @@ import { Comment, Goods, User } from '../../../shared/models';
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.css']
 })
-export class DetailComponent implements OnInit {
+export class DetailComponent implements OnInit, OnDestroy {
   authority = false;
   group: string;
   list: string;
@@ -29,6 +29,7 @@ export class DetailComponent implements OnInit {
   user$: Observable<User>;
 
   private submitting = false;
+  protected routerEvetnSubscribtion: Subscription;
 
   get interested() {
     return this.goods.interests.findIndex(
@@ -49,7 +50,7 @@ export class DetailComponent implements OnInit {
   ) {
     this.list = route.snapshot.paramMap.get('list');
 
-    router.events.subscribe(e => {
+    this.routerEvetnSubscribtion = router.events.subscribe(e => {
       if (e instanceof NavigationStart) {
         this.goods = undefined;
       }
@@ -81,6 +82,10 @@ export class DetailComponent implements OnInit {
 
       window.setTimeout(() => window.scroll(0, 0), 0);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.routerEvetnSubscribtion.unsubscribe();
   }
 
   commentAuthority(comment) {

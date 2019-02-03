@@ -28,7 +28,9 @@ export class HomeComponent implements OnInit {
     private interestService: InterestService,
     private goodsService: GoodsService,
     private persistanceService: PersistanceService) {
+  }
 
+  ngOnInit() {
     this.userPhotoURL = this.loggedIn.user.photoURL;
     this.groupName = this.loggedIn.group.name;
 
@@ -49,9 +51,6 @@ export class HomeComponent implements OnInit {
         }
       })
     );
-  }
-
-  ngOnInit() {
   }
 
   interested(goods: Goods) {
