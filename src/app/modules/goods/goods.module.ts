@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from '../../shared/shared.module';
-import { TargetSelectedValidatorDirective } from './target-selected-validator.directive';
-import { GoodsRoutingModule } from './goods-routing.module';
-import { FileUploadService } from '../../core/http';
-import { DetailComponent } from './detail/detail.component';
-import { EditComponent } from './edit/edit.component';
+import { FileUploadService } from '@app/core/http';
+import { SharedModule } from '@app/shared/shared.module';
+import { GoodsRoutingModule } from '@app/modules/goods/goods-routing.module';
+import { DetailComponent } from '@app/modules/goods/detail/detail.component';
+import { EditComponent } from '@app/modules/goods/edit/edit.component';
+import { TargetSelectedValidatorDirective } from '@app/modules/goods/target-selected-validator.directive';
 
 @NgModule({
   declarations: [

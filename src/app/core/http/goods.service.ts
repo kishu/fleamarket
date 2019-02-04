@@ -4,8 +4,8 @@ import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { first, map } from 'rxjs/operators';
-import { LoggedIn } from '../logged-in.service';
-import { Goods, Group, User } from '../../shared/models';
+import { LoggedIn } from '@app/core/logged-in.service';
+import { Goods, Group, User } from '@app/shared/models';
 
 @Injectable({
   providedIn: 'root'

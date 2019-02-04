@@ -16,8 +16,8 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
   }
 
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-    // console.group('shouldReuseRoute');
-    // console.log(future, curr);
+    console.group('shouldReuseRoute');
+    console.log(future.routeConfig === curr.routeConfig, future, curr);
     // if (future && future.routeConfig) {
     //   console.log(JSON.stringify(future.routeConfig.path));
     // }
@@ -25,7 +25,7 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     //   console.log(JSON.stringify(curr.routeConfig.path));
     // }
     // console.log('return', future.routeConfig === curr.routeConfig);
-    // console.groupEnd();
+    console.groupEnd();
     return future.routeConfig === curr.routeConfig;
   }
 

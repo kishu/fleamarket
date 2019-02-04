@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Input, Output} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthData } from '../../../shared/models';
+import { AuthData } from '@app/shared/models';
 
 @Component({
   selector: 'app-auth-code',

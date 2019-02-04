@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LoggedIn } from '../../../core/logged-in.service';
-import { NotificationService } from '../../../core/http';
-import { LocationService } from '../../../shared/services';
-import { Notification } from '../../../shared/models';
+import { LoggedIn } from '@app/core/logged-in.service';
+import { NotificationService } from '@app/core/http';
+import { LocationService } from '@app/shared/services';
+import { Notification } from '@app/shared/models';
 
 @Component({
   selector: 'app-notification',

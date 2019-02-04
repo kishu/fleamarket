@@ -3,10 +3,10 @@ import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { pluck } from 'rxjs/operators';
-import { LoggedIn } from '../../../core/logged-in.service';
-import { AuthService, CommentService, GoodsService, InterestService } from '../../../core/http';
-import { LocationService } from '../../../shared/services';
-import { Comment, Goods, User } from '../../../shared/models';
+import { LoggedIn } from '@app/core/logged-in.service';
+import { AuthService, CommentService, GoodsService, InterestService } from '@app/core/http';
+import { LocationService } from '@app/shared/services';
+import { Comment, Goods, User } from '@app/shared/models';
 
 @Component({
   selector: 'app-detail',

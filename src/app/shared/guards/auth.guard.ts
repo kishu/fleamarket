@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { forkJoin, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { AuthService, UserService } from '../../core/http';
-import { PersistanceService } from '../services';
+import { AuthService, UserService } from '@app/core/http';
+import { PersistanceService } from '@app/shared/services';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private userSerice: UserService,
+    private userService: UserService,
     private persistanceService: PersistanceService ) { }
 
   canActivate(

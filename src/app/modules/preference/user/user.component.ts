@@ -3,12 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { LoggedIn } from '../../../core/logged-in.service';
-import { LocationService } from '../../../shared/services';
-import { AuthService, FileUploadService, UserService } from '../../../core/http';
-import { SpinnerService } from '../../spinner/spinner.service';
-import { ImageFile } from '../../../shared/models';
-import { environment } from '../../../../environments/environment';
+import { LoggedIn } from '@app/core/logged-in.service';
+import { LocationService } from '@app/shared/services';
+import { AuthService, FileUploadService, UserService } from '@app/core/http';
+import { SpinnerService } from '@app/modules/spinner/spinner.service';
+import { ImageFile } from '@app/shared/models';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-user',

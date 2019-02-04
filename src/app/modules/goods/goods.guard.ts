@@ -3,9 +3,9 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angul
 import { DocumentReference } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { first, map, tap } from 'rxjs/operators';
-import { UserService, GoodsService } from '../../core/http';
-import { LoggedIn } from '../../core/logged-in.service';
-import { Goods } from '../../shared/models';
+import { UserService, GoodsService } from '@app/core/http';
+import { LoggedIn } from '@app/core/logged-in.service';
+import { Goods } from '@app/shared/models';
 
 @Injectable({
   providedIn: 'root'

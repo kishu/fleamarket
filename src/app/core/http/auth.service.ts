@@ -5,8 +5,8 @@ import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { filter, first, switchMap, tap } from 'rxjs/operators';
-import { LoggedIn } from '../logged-in.service';
-import { AFSimpleUser, Group, User } from '../../shared/models';
+import { LoggedIn } from '@app/core/logged-in.service';
+import { AFSimpleUser, Group, User } from '@app/shared/models';
 
 @Injectable({
   providedIn: 'root'

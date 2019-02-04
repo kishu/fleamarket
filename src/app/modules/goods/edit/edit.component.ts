@@ -4,13 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { LoggedIn } from '../../../core/logged-in.service';
-import { LocationService } from '../../../shared/services';
-import { FileUploadService, GoodsService } from '../../../core/http';
-import { SpinnerService } from '../../spinner/spinner.service';
-import { targetSelectedValidator } from '../target-selected-validator.directive';
-import { Goods, ImageFile } from '../../../shared/models';
-import { environment } from '../../../../environments/environment';
+import { LoggedIn } from '@app/core/logged-in.service';
+import { Goods, ImageFile } from '@app/shared/models';
+import { FileUploadService, GoodsService } from '@app/core/http';
+import { LocationService } from '@app/shared/services';
+import { SpinnerService } from '@app/modules/spinner/spinner.service';
+import { targetSelectedValidator } from '@app/modules/goods/target-selected-validator.directive';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-edit',

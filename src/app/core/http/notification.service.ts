@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
-import { LoggedIn } from '../logged-in.service';
-import { Notification } from '../../shared/models';
+import { LoggedIn } from '@app/core/logged-in.service';
+import { Notification } from '@app/shared/models';
 
 @Injectable({
   providedIn: 'root'

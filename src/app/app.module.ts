@@ -8,25 +8,25 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 // applications modules
-import { SharedModule } from './shared/shared.module';
-import { HomeModule } from './modules/home/home.module';
-import { AuthModule } from './modules/auth/auth.module';
-import { GoodsModule } from './modules/goods/goods.module';
-import { PreferenceModule } from './modules/preference/preference.module';
-import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from '@app/shared/shared.module';
+import { HomeModule } from '@app/modules/home/home.module';
+import { AuthModule } from '@app/modules/auth/auth.module';
+import { GoodsModule } from '@app/modules/goods/goods.module';
+import { PreferenceModule } from '@app/modules/preference/preference.module';
+import { AppRoutingModule } from '@app/app-routing.module';
 // providers
-import { AuthGuard } from './shared/guards';
-import { AuthService } from './core/http';
-import { LoggedIn } from './core/logged-in.service';
+import { AuthGuard } from '@app/shared/guards';
+import { AuthService } from '@app/core/http';
+import { LoggedIn } from '@app/core/logged-in.service';
 // components
-import { AppComponent } from './app.component';
-import { IntroComponent } from './modules/intro/intro.component';
+import { AppComponent } from '@app/app.component';
+import { IntroComponent } from '@app/modules/intro/intro.component';
 // environment
-import { environment } from '../environments/environment';
+import { environment } from '@environments/environment';
 
-import { PersistanceService } from './shared/services';
-import { SpinnerService } from './modules/spinner/spinner.service';
-import { SpinnerComponent } from './modules/spinner/spinner.component';
+import { PersistanceService } from '@app/shared/services';
+import { SpinnerService } from '@app/modules/spinner/spinner.service';
+import { SpinnerComponent } from '@app/modules/spinner/spinner.component';
 
 export function resolveAuthInfo(authService: AuthService) {
   return () => authService.resolveAuthInfo().toPromise();

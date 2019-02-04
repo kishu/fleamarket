@@ -2,10 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
-import { AuthService, UserService } from '../../../core/http';
-import { SpinnerService } from '../../spinner/spinner.service';
-import { AuthData, User } from '../../../shared/models';
-import { environment } from '../../../../environments/environment';
+import { AuthService, UserService } from '@app/core/http';
+import { SpinnerService } from '@app/modules/spinner/spinner.service';
+import { AuthData, User } from '@app/shared/models';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-auth-nick',

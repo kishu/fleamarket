@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { switchMap, pluck } from 'rxjs/operators';
-import { AuthService, UserService } from '../../../core/http';
-import { SpinnerService } from '../../spinner/spinner.service';
+import { AuthService, UserService } from '@app/core/http';
+import { SpinnerService } from '@app/modules/spinner/spinner.service';
 
 
 @Component({

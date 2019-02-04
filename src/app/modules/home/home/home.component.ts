@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { LoggedIn } from '../../../core/logged-in.service';
-import { InterestService, GoodsService } from '../../../core/http';
-import { PersistanceService } from '../../../shared/services';
-import { Goods } from '../../../shared/models';
+import { LoggedIn } from '@app/core/logged-in.service';
+import { InterestService, GoodsService } from '@app/core/http';
+import { PersistanceService } from '@app/shared/services';
+import { Goods } from '@app/shared/models';
 
 @Component({
   selector: 'app-home',

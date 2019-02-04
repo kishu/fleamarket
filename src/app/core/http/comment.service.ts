@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { map } from 'rxjs/operators';
-import {Comment, Goods, User} from '../../shared/models';
+import {Comment, Goods, User} from '@app/shared/models';
 
 @Injectable({
   providedIn: 'root'

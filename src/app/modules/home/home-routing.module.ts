@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, UrlSegment } from '@angular/router';
-import { AuthGuard } from '../../shared/guards';
-import { HomeComponent } from './home/home.component';
+import { AuthGuard } from '@app/shared/guards';
+import { HomeComponent } from '@app/modules/home/home/home.component';
 
 export function homeMatcher(url: UrlSegment[]) {
   if (url.length === 0 || (url.length === 1 && url[0].path === 'lounge')) {
