@@ -7,9 +7,9 @@
   </div>
   <div class="group">
     <h1><span>{{ groupName }}</span><span>2nd Lounge</span></h1>
-    <h1 class="clone">
-      <span (click)="showGoods()" [ngClass]="{ on: list === 'group' }">{{ groupName }}</span>
-      <span (click)="showGoodsByLounge()" [ngClass]="{ on: list === 'lounge' }">2nd Lounge</span>
+    <h1 *ngIf="market" class="clone">
+      <span (click)="showGoods()" [ngClass]="{ on: market === 'group' }">{{ groupName }}</span>
+      <span (click)="showGoodsByLounge()" [ngClass]="{ on: market && market === 'lounge' }">2nd Lounge</span>
     </h1>
   </div>
 </header>
@@ -23,7 +23,7 @@
   <ul class="large_list" id="goods_list">
     <li *ngFor="let goods of goods$ | async">
       <div [ngClass]="{'item': true, 'soldout': goods.soldout}">
-        <a [routerLink]="['/', list, 'goods', goods.id]"
+        <a [routerLink]="['/', market, 'goods', goods.id]"
           (click)="onClickGoods(goods)">
           <div class="goods_thumb"
                [ngStyle]="{'background-image': 'url(assets/img/dark.png), url(' + goods.images[0] + ')'}">
@@ -50,5 +50,5 @@
     </li>
   </ul>
 </section>
-<a [routerLink]="['/', list, 'goods', 'new', 'edit']" class="write"></a>
+<a [routerLink]="['/', market, 'goods', 'new', 'edit']" class="write"></a>
 <a href="#" class="top"></a>

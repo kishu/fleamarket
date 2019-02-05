@@ -1,7 +1,7 @@
 <div *ngIf="goods" class="wrap sub end">
   <header>
     <h2>상품 설명</h2>
-    <!--<a [routerLink]="[this.list === 'lounge' ? '/' + this.list : '/' ]" class="back">홈</a>-->
+    <!--<a [routerLink]="[this.market === 'lounge' ? '/' + this.market : '/' ]" class="back">홈</a>-->
     <a href="#" (click)="goBack($event)" class="back">돌아가기</a>
     <div *ngIf="authority" class="sub_utility">
       <span class="goods_modify">수정</span>
@@ -62,7 +62,7 @@
     <ul class="other_goods_list">
       <li *ngFor="let goods of otherGoods$ | async">
         <div class="other_goods_item">
-          <a [routerLink]="['/', list, 'goods', goods.id]" (click)="onClickOtherGoods(goods)">
+          <a [routerLink]="['/', market, 'goods', goods.id]" (click)="onClickOtherGoods(goods)">
             <div class="other_goods_thumb" [style.backgroundImage]="'url(' + goods.images[0] +')'"></div>
           </a>
           <!--<span class="soldout type1"></span>-->

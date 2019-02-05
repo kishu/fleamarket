@@ -20,7 +20,7 @@ export class GoodsGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    const list = next.paramMap.get('list');
+    const list = next.paramMap.get('market');
     const userGroupRef: DocumentReference = this.loggedIn.user.groupRef;
     const goodsId = next.paramMap.get('goodsId');
     const selectedGoods = this.goodsService.selectedGoods;

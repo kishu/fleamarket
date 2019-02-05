@@ -59,7 +59,7 @@ export function resolveAuthInfo(authService: AuthService) {
     AuthService,
     PersistanceService,
     SpinnerService,
-    { provide: LocationStrategy, useClass: PathLocationStrategy },
+    // { provide: LocationStrategy, useClass: PathLocationStrategy },
     { provide: APP_INITIALIZER, useFactory: resolveAuthInfo, deps: [AuthService], multi: true },
   ],
   bootstrap: [AppComponent]

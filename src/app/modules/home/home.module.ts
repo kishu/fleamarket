@@ -14,7 +14,10 @@ import { HomeComponent } from '@app/modules/home/home/home.component';
     HomeRoutingModule
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: CustomReuseStrategy }
+    // { provide: RouteReuseStrategy, useClass: CustomReuseStrategy }
+  ],
+  exports: [
+    HomeComponent
   ]
 })
 export class HomeModule { }

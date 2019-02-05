@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
+import { ActivatedRoute, NavigationStart, RoutesRecognized, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { pluck } from 'rxjs/operators';
@@ -16,7 +16,7 @@ import { Comment, Goods, User } from '@app/shared/models';
 export class DetailComponent implements OnInit, OnDestroy {
   authority = false;
   group: string;
-  list: string;
+  market: string;
   moreImages: boolean;
   userDesc: string;
   userDisplayName: string;
@@ -48,11 +48,13 @@ export class DetailComponent implements OnInit, OnDestroy {
     private goodsService: GoodsService,
     private interestService: InterestService
   ) {
-    this.list = route.snapshot.paramMap.get('list');
+    this.market = route.snapshot.paramMap.get('market');
 
     this.routerEvetnSubscribtion = router.events.subscribe(e => {
       if (e instanceof NavigationStart) {
-        this.goods = undefined;
+        console.log('NavigationStart', this.route.snapshot.paramMap.get('goodsId'));
+      } else if (e instanceof RoutesRecognized) {
+        console.log('RoutesRecognized', this.route.snapshot.paramMap.get('goodsId'));
       }
     });
 
@@ -72,7 +74,7 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.moreImages = false;
       this.goods = this.goodsService.selectedGoods;
       this.user$ = this.goodsService.getGoodsUser(this.goods.userRef);
-      this.otherGoods$ = this.goodsService.getGoodsByUser(this.goods.userRef, this.list);
+      this.otherGoods$ = this.goodsService.getGoodsByUser(this.goods.userRef, this.market);
       this.comments$ = this.commentService.getCommentsByGoods(this.goods.id);
 
       this.authority = (user.id === this.goods.userRef.id);
@@ -80,7 +82,7 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.userDisplayName = user.displayName;
       this.userPhotoURL = user.photoURL;
 
-      window.setTimeout(() => window.scroll(0, 0), 0);
+      // window.setTimeout(() => window.scroll(0, 0), 0);
     });
   }
 
@@ -95,14 +97,13 @@ export class DetailComponent implements OnInit, OnDestroy {
   onMenuChange(menu: string) {
     switch (menu) {
       case 'edit':
-        this.router.navigate(['/', this.list, 'goods', this.goods.id, 'edit']);
+        this.router.navigate(['/', this.market, 'goods', this.goods.id, 'edit']);
         break;
       case 'delete':
         const answer = confirm('삭제한 상품은 복구할 수 없습니다. 삭제 할까요?');
         if (answer) {
          this.goodsService.deleteGoods(this.goods.id).then(() => {
-           const commands = this.list === 'lounge' ? ['/', this.list] : ['/'];
-          this.router.navigate(commands);
+          this.router.navigate(['/', this.market]);
          });
         }
         break;
@@ -186,7 +187,7 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   goBack(e: any) {
     e.preventDefault();
-    this.locationService.goBack(this.list);
+    this.locationService.goBack(this.market);
   }
 
 }

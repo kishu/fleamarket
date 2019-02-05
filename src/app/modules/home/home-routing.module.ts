@@ -4,8 +4,12 @@ import { AuthGuard } from '@app/shared/guards';
 import { HomeComponent } from '@app/modules/home/home/home.component';
 
 export function homeMatcher(url: UrlSegment[]) {
-  if (url.length === 0 || (url.length === 1 && url[0].path === 'lounge')) {
-    return {consumed: url};
+  if (url.length === 1 && (url[0].path === 'group' || url[0].path === 'lounge')) {
+    return {
+      consumed: url,
+      posParams: {
+        market: url[0],
+      }};
   } else {
     return null;
   }
@@ -17,6 +21,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     component: HomeComponent
   }
+
 ];
 
 @NgModule({

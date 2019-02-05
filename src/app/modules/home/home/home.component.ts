@@ -15,7 +15,7 @@ import { Goods } from '@app/shared/models';
 export class HomeComponent implements OnInit {
   userPhotoURL: string;
   groupName: string;
-  list: string;
+  market: string;
   soldoutFilter: boolean;
 
   goods$: Observable<Goods[]>;
@@ -28,29 +28,26 @@ export class HomeComponent implements OnInit {
     private interestService: InterestService,
     private goodsService: GoodsService,
     private persistanceService: PersistanceService) {
-  }
-
-  ngOnInit() {
+    this.market = this.route.snapshot.paramMap.get('market');
     this.userPhotoURL = this.loggedIn.user.photoURL;
     this.groupName = this.loggedIn.group.name;
-
-    const urlSegments = this.route.snapshot.url;
-    this.list = ( urlSegments.length === 0 ) ? 'group' : urlSegments[0].path;
 
     this.soldoutFilter = this.persistanceService.get('soldoutFilter') || false;
     this.soldoutFilter$ = new BehaviorSubject(this.soldoutFilter);
 
-    this.goods$ = combineLatest(this.route.url, this.soldoutFilter$).pipe(
-      switchMap(([url, soldoutFiter]) => {
-        if (url.length === 0) {
-          this.list = 'group';
-          return this.goodsService.getGoodsByGroup(this.loggedIn.user.groupRef, soldoutFiter);
-        } else {
-          this.list = url[0].path;
-          return this.goodsService.getGoodsByLounge(soldoutFiter);
+    this.goods$ = combineLatest(this.route.paramMap, this.soldoutFilter$).pipe(
+      switchMap(([paramMap, soldoutFilter]) => {
+        this.market = paramMap.get('market');
+        if (this.market === 'group') {
+          return this.goodsService.getGoodsByGroup(this.loggedIn.user.groupRef, soldoutFilter);
+        } else if (this.market === 'lounge') {
+          return this.goodsService.getGoodsByLounge(soldoutFilter);
         }
       })
     );
+  }
+
+  ngOnInit() {
   }
 
   interested(goods: Goods) {

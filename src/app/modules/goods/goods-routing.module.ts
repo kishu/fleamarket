@@ -6,22 +6,28 @@ import { GoodsAuthorityGuard } from '@app/modules/goods/goods-authority-guard.se
 import { EditComponent } from '@app/modules/goods/edit/edit.component';
 import { DetailComponent } from '@app/modules/goods/detail/detail.component';
 
-export function goodsMatcher(url: UrlSegment[]) {
-  if ((url.length === 3 || url.length === 4) &&
-    ( url[0].path === 'group' || url[0].path === 'lounge') &&
+export function goodsDetailMatcher(url: UrlSegment[]) {
+  if (url.length === 3 && ( url[0].path === 'group' || url[0].path === 'lounge') &&
     url[1].path === 'goods') {
-
-    let consumedUrl;
-    if (url.length === 4) {
-      consumedUrl = url.slice(0, 3);
-    } else {
-      consumedUrl = url;
-    }
-
     return {
-      consumed: consumedUrl,
+      consumed: url,
       posParams: {
-        list: url[0],
+        market: url[0],
+        goodsId: url[2]
+      }
+    };
+  } else {
+    return null;
+  }
+}
+
+export function goodsEditMatcher(url: UrlSegment[]) {
+  if (url.length === 4 && ( url[0].path === 'group' || url[0].path === 'lounge') &&
+    url[1].path === 'goods' && url[3].path === 'edit') {
+    return {
+      consumed: url,
+      posParams: {
+        market: url[0],
         goodsId: url[2]
       }
     };
@@ -32,12 +38,14 @@ export function goodsMatcher(url: UrlSegment[]) {
 
 const routes: Routes = [
   {
-    matcher: goodsMatcher,
-    canActivate: [AuthGuard],
-    children: [
-      { path: '', canActivate: [GoodsGuard], component: DetailComponent },
-      { path: 'edit', canActivate: [GoodsAuthorityGuard], component: EditComponent }
-    ],
+    matcher: goodsDetailMatcher,
+    canActivate: [AuthGuard, GoodsGuard],
+    component: DetailComponent
+  },
+  {
+    matcher: goodsEditMatcher,
+    canActivate: [AuthGuard, GoodsAuthorityGuard],
+    component: EditComponent
   }
 ];
 
