@@ -11,8 +11,11 @@ import { Goods, Group, User } from '@app/shared/models';
   providedIn: 'root'
 })
 export class GoodsService {
+  cachedGoods: Goods;
+  cachedGroupGoodsList: Goods[];
+  cachedLoungeGoodsList: Goods[];
+
   private goodsCollection: AngularFirestoreCollection<Goods>;
-  private _selectedGoods: Goods;
 
   constructor(
     private loggedIn: LoggedIn,
@@ -20,10 +23,6 @@ export class GoodsService {
   ) {
     this.goodsCollection = afs.collection<Goods>('goods');
   }
-
-  // todo remove
-  get selectedGoods() { return this._selectedGoods; }
-  set selectedGoods(goods: Goods) { this._selectedGoods = goods; }
 
   addGoods(goods: Goods) {
     return this.goodsCollection.add(goods);
@@ -167,7 +166,7 @@ export class GoodsService {
   }
 
   getSelectedGoods(): Goods {
-    return this._selectedGoods;
+    return this.cachedGoods;
   }
 
   getServerTimeStamp(): firebase.firestore.FieldValue {

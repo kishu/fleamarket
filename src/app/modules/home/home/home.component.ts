@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import { ViewportScroller } from '@angular/common';
+import { ActivatedRoute, Router, Scroll } from '@angular/router';
+import { BehaviorSubject, combineLatest, Observable, of, Subscription } from 'rxjs';
+import {filter, switchMap, tap } from 'rxjs/operators';
 import { LoggedIn } from '@app/core/logged-in.service';
 import { InterestService, GoodsService } from '@app/core/http';
 import { PersistanceService } from '@app/shared/services';
@@ -12,7 +13,7 @@ import { Goods } from '@app/shared/models';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   userPhotoURL: string;
   groupName: string;
   market: string;
@@ -20,6 +21,7 @@ export class HomeComponent implements OnInit {
 
   goods$: Observable<Goods[]>;
   private soldoutFilter$: BehaviorSubject<boolean>;
+  private routeEventSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,7 +29,9 @@ export class HomeComponent implements OnInit {
     private loggedIn: LoggedIn,
     private interestService: InterestService,
     private goodsService: GoodsService,
-    private persistanceService: PersistanceService) {
+    private persistanceService: PersistanceService,
+    private viewportScroller: ViewportScroller
+  ) {
     this.market = this.route.snapshot.paramMap.get('market');
     this.userPhotoURL = this.loggedIn.user.photoURL;
     this.groupName = this.loggedIn.group.name;
@@ -36,18 +40,61 @@ export class HomeComponent implements OnInit {
     this.soldoutFilter$ = new BehaviorSubject(this.soldoutFilter);
 
     this.goods$ = combineLatest(this.route.paramMap, this.soldoutFilter$).pipe(
+      tap(([paramMap]) => this.market = paramMap.get('market')),
       switchMap(([paramMap, soldoutFilter]) => {
-        this.market = paramMap.get('market');
         if (this.market === 'group') {
-          return this.goodsService.getGoodsByGroup(this.loggedIn.user.groupRef, soldoutFilter);
+          return this.getGoodsByGroup(soldoutFilter);
         } else if (this.market === 'lounge') {
-          return this.goodsService.getGoodsByLounge(soldoutFilter);
+          return this.getGoodsByLounge(soldoutFilter);
         }
       })
     );
+
+    this.restoreScrollPosition();
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy(): void {
+    this.routeEventSubscription.unsubscribe();
+  }
+
+  protected getGoodsByGroup(soldoutFilter: boolean): Observable<Goods[]> {
+    if (this.goodsService.cachedGroupGoodsList) {
+      return of(this.goodsService.cachedGroupGoodsList);
+    } else {
+      return this.goodsService.getGoodsByGroup(
+        this.loggedIn.user.groupRef, soldoutFilter
+      ).pipe(
+        tap(goodsList => this.goodsService.cachedGroupGoodsList = goodsList)
+      );
+    }
+  }
+
+  protected getGoodsByLounge(soldoutFilter: boolean): Observable<Goods[]> {
+    if (this.goodsService.cachedLoungeGoodsList) {
+      return of(this.goodsService.cachedLoungeGoodsList);
+    } else {
+      return this.goodsService.getGoodsByLounge(soldoutFilter)
+        .pipe(
+          tap(goodsList => this.goodsService.cachedLoungeGoodsList = goodsList)
+        );
+    }
+  }
+
+  protected restoreScrollPosition() {
+    this.routeEventSubscription = this.goods$.pipe(
+      switchMap(() => this.router.events),
+      filter(e => e instanceof Scroll),
+      tap((e: Scroll) => {
+        if (e.position) {
+          window.setTimeout(() => this.viewportScroller.scrollToPosition(e.position), 0);
+        } else {
+          this.viewportScroller.scrollToPosition([0, 0]);
+        }
+      })
+    ).subscribe();
   }
 
   interested(goods: Goods) {
@@ -82,14 +129,11 @@ export class HomeComponent implements OnInit {
   }
 
   onClickGoods(goods: Goods) {
-    this.goodsService.selectedGoods = goods;
+    this.goodsService.cachedGoods = goods;
   }
 
-  showGoods() {
-    this.router.navigate(['/']);
+  showGoodsBy(market: string) {
+    this.router.navigate(['/', market]);
   }
 
-  showGoodsByLounge() {
-    this.router.navigate(['/lounge']);
-  }
 }

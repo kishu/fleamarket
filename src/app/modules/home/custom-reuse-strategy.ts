@@ -6,9 +6,7 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
   constructor() { }
 
   componentName(route: ActivatedRouteSnapshot): string | null {
-    if ( route &&
-      route.component &&
-      typeof route.component !== 'string') {
+    if ( route && route.component && typeof route.component !== 'string') {
       return route.component.name;
     } else {
       return null;
@@ -17,7 +15,8 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
 
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
     console.group('shouldReuseRoute');
-    console.log(future.routeConfig === curr.routeConfig, future, curr);
+    console.log(future.routeConfig === curr.routeConfig);
+    console.log('future', future, 'curr', curr);
     // if (future && future.routeConfig) {
     //   console.log(JSON.stringify(future.routeConfig.path));
     // }

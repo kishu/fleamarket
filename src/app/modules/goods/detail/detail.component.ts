@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationStart, RoutesRecognized, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 import { LoggedIn } from '@app/core/logged-in.service';
 import { AuthService, CommentService, GoodsService, InterestService } from '@app/core/http';
@@ -13,7 +13,7 @@ import { Comment, Goods, User } from '@app/shared/models';
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.css']
 })
-export class DetailComponent implements OnInit, OnDestroy {
+export class DetailComponent implements OnInit {
   authority = false;
   group: string;
   market: string;
@@ -29,7 +29,6 @@ export class DetailComponent implements OnInit, OnDestroy {
   user$: Observable<User>;
 
   private submitting = false;
-  protected routerEvetnSubscribtion: Subscription;
 
   get interested() {
     return this.goods.interests.findIndex(
@@ -50,14 +49,6 @@ export class DetailComponent implements OnInit, OnDestroy {
   ) {
     this.market = route.snapshot.paramMap.get('market');
 
-    this.routerEvetnSubscribtion = router.events.subscribe(e => {
-      if (e instanceof NavigationStart) {
-        console.log('NavigationStart', this.route.snapshot.paramMap.get('goodsId'));
-      } else if (e instanceof RoutesRecognized) {
-        console.log('RoutesRecognized', this.route.snapshot.paramMap.get('goodsId'));
-      }
-    });
-
     this.commentForm = this.fb.group({
       body: [
         '',
@@ -72,7 +63,7 @@ export class DetailComponent implements OnInit, OnDestroy {
       pluck('goodsId')
     ).subscribe(() => {
       this.moreImages = false;
-      this.goods = this.goodsService.selectedGoods;
+      this.goods = this.goodsService.cachedGoods;
       this.user$ = this.goodsService.getGoodsUser(this.goods.userRef);
       this.otherGoods$ = this.goodsService.getGoodsByUser(this.goods.userRef, this.market);
       this.comments$ = this.commentService.getCommentsByGoods(this.goods.id);
@@ -81,13 +72,7 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.userDesc = user.desc;
       this.userDisplayName = user.displayName;
       this.userPhotoURL = user.photoURL;
-
-      // window.setTimeout(() => window.scroll(0, 0), 0);
     });
-  }
-
-  ngOnDestroy(): void {
-    this.routerEvetnSubscribtion.unsubscribe();
   }
 
   commentAuthority(comment) {
@@ -143,7 +128,7 @@ export class DetailComponent implements OnInit, OnDestroy {
   }
 
   onClickOtherGoods(goods: Goods) {
-    this.goodsService.selectedGoods = goods;
+    this.goodsService.cachedGoods = goods;
     return false;
   }
 

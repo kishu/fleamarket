@@ -23,7 +23,7 @@ export class GoodsAuthorityGuard implements CanActivate {
       return of(true);
     } else {
       return this.goodsService.getGoods(goodsId).pipe(
-        tap(g => this.goodsService.selectedGoods = g),
+        tap(g => this.goodsService.cachedGoods = g),
         map(g => user.id === g.userRef.id)
       );
     }

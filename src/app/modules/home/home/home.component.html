@@ -8,8 +8,8 @@
   <div class="group">
     <h1><span>{{ groupName }}</span><span>2nd Lounge</span></h1>
     <h1 *ngIf="market" class="clone">
-      <span (click)="showGoods()" [ngClass]="{ on: market === 'group' }">{{ groupName }}</span>
-      <span (click)="showGoodsByLounge()" [ngClass]="{ on: market && market === 'lounge' }">2nd Lounge</span>
+      <span (click)="showGoodsBy('group')" [ngClass]="{ on: market === 'group' }">{{ groupName }}</span>
+      <span (click)="showGoodsBy('lounge')" [ngClass]="{ on: market && market === 'lounge' }">2nd Lounge</span>
     </h1>
   </div>
 </header>

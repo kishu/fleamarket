@@ -23,14 +23,14 @@ export class GoodsGuard implements CanActivate {
     const list = next.paramMap.get('market');
     const userGroupRef: DocumentReference = this.loggedIn.user.groupRef;
     const goodsId = next.paramMap.get('goodsId');
-    const selectedGoods = this.goodsService.selectedGoods;
+    const selectedGoods = this.goodsService.cachedGoods;
 
     let goods$: Observable<Goods>;
     if (selectedGoods && selectedGoods.id === goodsId) {
-      goods$ = of(this.goodsService.selectedGoods);
+      goods$ = of(this.goodsService.cachedGoods);
     } else {
       goods$ = this.goodsService.getGoods(goodsId).pipe(
-        tap(goods => this.goodsService.selectedGoods = goods)
+        tap(goods => this.goodsService.cachedGoods = goods)
       );
     }
 
