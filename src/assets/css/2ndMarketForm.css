@@ -54,13 +54,29 @@ body {
   margin-top: 5px;
 }
 
+.form .has-valid {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.form .invalid-feedback {
+  position: absolute;
+  top: 100%;
+  margin-top: 5px;
+  font-size: 13px;
+  line-height: 16px;
+  color: #ef5359;
+  word-break: keep-all;
+  word-wrap: break-word;
+}
+
 .input-wrap {
   position: relative;
 }
 
 .input-wrap .floating {
   position: absolute;
-  right: 10px;
+  right: 12px;
   top: 50%;
   color: #999;
   transform: translateY(-50%);

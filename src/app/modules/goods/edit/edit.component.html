@@ -120,47 +120,56 @@
     <section>
       <h3>등록 제목</h3>
       <p class="explain">원하시는 제목을 30자 이내로 적어주세요.</p>
-      <div *ngIf="title.invalid && (title.dirty || title.touched)" class="explain">
-        <span *ngIf="title.errors.required">등록 제목을 입력하세요.</span>
-      </div>
-      <div class="table spacing margin1">
-        <div class="td">
-          <input type="text" id="title"
-                 name="title" formControlName="title"
-                 maxlength="30" placeholder="등록 제목 (30자 이내)"
-                 class="input">
+      <div class="has-valid margin1">
+        <div class="table">
+          <div class="td">
+            <input type="text" id="title"
+                   name="title" formControlName="title"
+                   maxlength="30" placeholder="등록 제목 (30자 이내)"
+                   class="input">
+          </div>
+        </div>
+        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="invalid-feedback">
+          <span *ngIf="title.errors.required">등록 제목을 입력하세요.</span>
         </div>
       </div>
     </section>
     <section>
       <h3>상품 설명</h3>
       <p class="explain">상품의 특징, 사용감 사이즈, 소재 등 상품의 정보를 상세히 적어주세요.</p>
-      <div *ngIf="desc.invalid && (desc.dirty || desc.touched)" class="explain">
-        <span *ngIf="desc.errors.required">상품 정보를 입력하세요.</span>
-      </div>
-      <div class="table spacing margin1">
-        <div class="td">
-          <textarea
-            cols="50" rows="10"
-            name="desc" formControlName="desc"
-            maxlength="200" placeholder="#해시태그를 입력하시면 검색이 더욱 잘 됩니다."
-            class="textarea"></textarea>
-          <!--<xmp class="clone"></xmp>-->
+      <div class="has-valid margin1">
+        <div class="table">
+          <div class="td">
+            <textarea
+              cols="50" rows="10"
+              name="desc" formControlName="desc"
+              maxlength="200" placeholder="#해시태그를 입력하시면 검색이 더욱 잘 됩니다."
+              class="textarea"></textarea>
+            <!--<xmp class="clone"></xmp>-->
+          </div>
+        </div>
+        <div *ngIf="desc.invalid && (desc.dirty || desc.touched)" class="invalid-feedback">
+          <span *ngIf="desc.errors.required">상품 정보를 입력하세요.</span>
         </div>
       </div>
     </section>
     <section>
       <h3>상품가격</h3>
       <p class="explain">원하시는 가격을 적어주세요.</p>
-      <div *ngIf="price.invalid && (price.dirty || price.touched)" class="explain">
-        <span *ngIf="price.errors.required">상품 가격을 입력하세요.</span>
-      </div>
-      <div class="table spacing margin1">
-        <div class="td">
-          <input type="tel"
-                 name="price" formControlName="price"
-                 maxlength="12" placeholder="상품가격(원)"
-                 class="input">원
+      <div class="has-valid margin1">
+        <div class="table">
+          <div class="td">
+            <div class="input-wrap">
+              <input type="tel"
+                    name="price" formControlName="price"
+                    maxlength="12" placeholder="상품가격"
+                    class="input">
+              <span class="floating">원</span>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="price.invalid && (price.dirty || price.touched)" class="invalid-feedback">
+          <span *ngIf="price.errors.required">상품 가격을 입력하세요.</span>
         </div>
       </div>
     </section>
@@ -208,8 +217,6 @@
       <div class="table spacing">
         <div class="td">
           <a href="#" class="button cancel">취소</a>
-        </div>
-        <div class="td">
         </div>
         <div class="td">
           <button type="submit"
