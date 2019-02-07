@@ -693,8 +693,8 @@ body {
   z-index: 2;
   right: -5px;
   top: -5px;
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  padding: 0;
   border: 2px solid #111;
   border-radius: 10px;
   background-color: #ef5359;
@@ -702,7 +702,8 @@ body {
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: 16px 16px;
-   color: rgba(0, 0, 0, 0);
+  line-height: 16px;
+  color: rgba(0, 0, 0, 0);
 }
 
 .attach_up {
@@ -744,7 +745,7 @@ body {
 }
 
 .goods_thumb_area + .goods_thumb_area {
-  margin-left: 5px;
+  margin-left: 10px;
 }
 
 .form .goods_thumb {
@@ -756,7 +757,7 @@ body {
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: cover;
-  /*overflow: hidden;*/
+  overflow: hidden;
 }
 
 .goods_thumb_area:nth-last-child(1) .goods_thumb {
@@ -820,12 +821,10 @@ body {
 
 .goods_thumb_area input {
   position: absolute;
-  left: 0;
   right: 0;
   top: 0;
   bottom: 0;
   z-index: 2;
-  border-radius: 50%;
   font-size: 100rem;
   opacity: 0;
 }
