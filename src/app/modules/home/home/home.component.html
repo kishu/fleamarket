@@ -20,7 +20,7 @@
            (change)="onClickSoldoutFilter($event)">
     <label for="c1">&nbsp;품절상품 제외</label>
   </nav>
-  <section class="list_nothing" *ngIf="!goods">
+  <section class="list_nothing" *ngIf="!goods$">
     <p>등록된 상품이 없습니다.</p>
   </section>
   <ul class="large_list" id="goods_list">
