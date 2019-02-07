@@ -44,12 +44,20 @@
       <p [innerHTML]="goods.desc" style="white-space: pre-wrap"></p>
     </div>
     <div *ngIf="goods.images.length > 1">
-      <button *ngIf="!moreImages" type="button" (click)="onClickMoreImages()">이미지 더보기</button>
+      <div class="more-thumbs">
+        <ng-container *ngIf="!moreImages">
+          <div *ngFor="let image of goods.images.slice(1)" [class]="'thumbs-' + (goods.images.length - 1)">
+            <div class="thumb-cover" [style.backgroundImage]="'url(' + image + ')'"></div>
+          </div>
+        </ng-container>
+      </div>
+      <button *ngIf="!moreImages" type="button" (click)="onClickMoreImages()">이미지 펼쳐보기</button>
       <ng-container *ngIf="moreImages">
         <div *ngFor="let image of goods.images.slice(1)">
-          <img [src]="image" width="100%" alt="" style="vertical-align:top;">
+          <img [src]="image" width="100%" alt="" style="border: 1px solid #fff; vertical-align:top;">
         </div>
       </ng-container>
+      <button *ngIf="moreImages" type="button" (click)="onClickMoreImages()">이미지 접기</button>
     </div>
     <div class="author_info margin3">
       <span class="author_thumb" [style.backgroundImage]="'url(' + goods.user.photoURL + ')'"></span>

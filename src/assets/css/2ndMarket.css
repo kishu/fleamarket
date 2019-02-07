@@ -1081,6 +1081,66 @@ nav.sorting .category a.on {
   color: #666;
 }
 
+.more-thumbs {
+  overflow: hidden;
+  margin: -1px;
+}
+
+.more-thumbs > div {
+  float: left;
+  position: relative;
+  border: 1px solid #fff;
+  box-sizing: border-box;
+}
+
+.thumb-cover {
+  padding-bottom: 100%;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.more-thumbs > div:nth-last-child(2n):nth-child(2n+1),
+.more-thumbs > div:nth-last-child(2n-1):nth-child(2n+2) {
+  width: 50%;
+}
+
+.more-thumbs > div:nth-last-child(3n):nth-child(3n+1) {
+  width: 100%;
+}
+
+.more-thumbs > div:nth-last-child(3n):nth-child(3n+1) .thumb-cover {
+  padding-bottom: 50%;
+}
+
+.more-thumbs > div:nth-last-child(3n-1):nth-child(3n+2),
+.more-thumbs > div:nth-last-child(3n-2):nth-child(3n+3) {
+  width: 50%;
+}
+
+.more-thumbs > div:nth-last-child(5n):nth-child(5n+1),
+.more-thumbs > div:nth-last-child(5n-1):nth-child(5n+2) {
+  width: 50%;
+}
+
+.more-thumbs > div:nth-last-child(5n-2):nth-child(5n+3),
+.more-thumbs > div:nth-last-child(5n-3):nth-child(5n+4),
+.more-thumbs > div:nth-last-child(5n-4):nth-child(5n+5) {
+  width: 33.333333%;
+}
+
+.more-thumbs > div:nth-last-child(7n):nth-child(7n+1),
+.more-thumbs > div:nth-last-child(7n-1):nth-child(7n+2),
+.more-thumbs > div:nth-last-child(7n-2):nth-child(7n+3) {
+  width: 33.333333%;
+}
+
+.more-thumbs > div:nth-last-child(7n-3):nth-child(7n+4),
+.more-thumbs > div:nth-last-child(7n-4):nth-child(7n+5),
+.more-thumbs > div:nth-last-child(7n-5):nth-child(7n+6),
+.more-thumbs > div:nth-last-child(7n-6):nth-child(7n+7) {
+  width: 25%;
+}
+
 .sub_utility {
   overflow: hidden;
   position: absolute;

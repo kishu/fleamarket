@@ -124,7 +124,7 @@ export class DetailComponent implements OnInit {
   }
 
   onClickMoreImages() {
-    this.moreImages = true;
+    this.moreImages = !this.moreImages;
   }
 
   onClickOtherGoods(goods: Goods) {
