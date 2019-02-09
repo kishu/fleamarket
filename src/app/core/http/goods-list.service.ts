@@ -27,7 +27,6 @@ export class GoodsListService {
       filter(goodsListfilter => !!goodsListfilter),
       tap(goodsListfilter => this.goodsListFilter = goodsListfilter),
       switchMap(goodsListFilter => {
-        console.log(goodsListFilter);
         if (goodsListFilter.market === 'group') {
           return this.getGoods$ByGroup(this.loggedIn.user.groupRef, goodsListFilter.exceptSoldOut);
         } else if (goodsListFilter.market === 'lounge') {
@@ -35,7 +34,6 @@ export class GoodsListService {
         }
       })
     ).subscribe(goodsList => {
-      console.log(goodsList);
       this.goodsList$.next(goodsList);
     });
   }
