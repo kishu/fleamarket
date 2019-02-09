@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { ViewportScroller } from '@angular/common';
 import { ActivatedRoute, Router, Scroll } from '@angular/router';
-import { BehaviorSubject, combineLatest, Observable, of, Subscription } from 'rxjs';
-import {filter, switchMap, tap } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { filter, switchMap, tap } from 'rxjs/operators';
 import { LoggedIn } from '@app/core/logged-in.service';
-import { InterestService, GoodsService } from '@app/core/http';
+import { InterestService, GoodsService, GoodsListService, GoodsListFilter } from '@app/core/http';
 import { PersistanceService } from '@app/shared/services';
 import { Goods } from '@app/shared/models';
 
@@ -17,10 +17,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   userPhotoURL: string;
   groupName: string;
   market: string;
-  soldoutFilter: boolean;
+  exceptSoldOut: boolean;
 
-  goods$: Observable<Goods[]>;
-  private soldoutFilter$: BehaviorSubject<boolean>;
+  goodsList$: Observable<Goods[]>;
   private routeEventSubscription: Subscription;
 
   constructor(
@@ -29,29 +28,23 @@ export class HomeComponent implements OnInit, OnDestroy {
     private loggedIn: LoggedIn,
     private interestService: InterestService,
     private goodsService: GoodsService,
+    private goodsListService: GoodsListService,
     private persistanceService: PersistanceService,
     private viewportScroller: ViewportScroller
   ) {
     this.market = this.route.snapshot.paramMap.get('market');
     this.userPhotoURL = this.loggedIn.user.photoURL;
     this.groupName = this.loggedIn.group.name;
+    this.goodsList$ = this.goodsListService.goodsList$;
 
-    this.soldoutFilter = this.persistanceService.get('soldoutFilter') || false;
-    this.soldoutFilter$ = new BehaviorSubject(this.soldoutFilter);
+    this.exceptSoldOut = this.persistanceService.get('exceptSoldOut') || false;
 
-    this.goods$ = combineLatest(this.route.paramMap, this.soldoutFilter$).pipe(
-      tap(([paramMap]) => this.market = paramMap.get('market')),
-      switchMap(([paramMap, soldoutFilter]) => {
-        if (this.market === 'group') {
-          return this.getGoodsByGroup(soldoutFilter);
-        } else if (this.market === 'lounge') {
-          return this.getGoodsByLounge(soldoutFilter);
-        }
-      })
-    );
-
-    this.restoreScrollPosition();
-  }
+    this.route.paramMap.subscribe(paramMap => {
+      this.market = paramMap.get('market');
+      this.goodsListService.updateGoodsListFilter(this.getGoodsListFilter());
+      this.restoreScrollPosition();
+    });
+   }
 
   ngOnInit() {
   }
@@ -60,31 +53,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.routeEventSubscription.unsubscribe();
   }
 
-  protected getGoodsByGroup(soldoutFilter: boolean): Observable<Goods[]> {
-    if (this.goodsService.cachedGroupGoodsList) {
-      return of(this.goodsService.cachedGroupGoodsList);
-    } else {
-      return this.goodsService.getGoodsByGroup(
-        this.loggedIn.user.groupRef, soldoutFilter
-      ).pipe(
-        tap(goodsList => this.goodsService.cachedGroupGoodsList = goodsList)
-      );
-    }
-  }
-
-  protected getGoodsByLounge(soldoutFilter: boolean): Observable<Goods[]> {
-    if (this.goodsService.cachedLoungeGoodsList) {
-      return of(this.goodsService.cachedLoungeGoodsList);
-    } else {
-      return this.goodsService.getGoodsByLounge(soldoutFilter)
-        .pipe(
-          tap(goodsList => this.goodsService.cachedLoungeGoodsList = goodsList)
-        );
-    }
+  getGoodsListFilter(): GoodsListFilter {
+    return {
+      market: this.market,
+      exceptSoldOut: this.exceptSoldOut
+    };
   }
 
   protected restoreScrollPosition() {
-    this.routeEventSubscription = this.goods$.pipe(
+    this.routeEventSubscription = this.goodsList$.pipe(
       switchMap(() => this.router.events),
       filter(e => e instanceof Scroll),
       tap((e: Scroll) => {
@@ -104,9 +81,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onClickSoldoutFilter($event) {
-    const soldoutFilter = $event.target.checked;
-    this.persistanceService.set('soldoutFilter', soldoutFilter);
-    this.soldoutFilter$.next(soldoutFilter);
+    this.exceptSoldOut = $event.target.checked;
+    this.persistanceService.set('exceptSoldOut', this.exceptSoldOut);
+    this.goodsListService.updateGoodsListFilter(this.getGoodsListFilter());
   }
 
   onClickInterest(goods: Goods) {
