@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import { ViewportScroller } from '@angular/common';
 import { ActivatedRoute, Router, Scroll } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { filter, switchMap, tap } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 import { LoggedIn } from '@app/core/logged-in.service';
 import { InterestService, GoodsService, GoodsListService, GoodsListFilter } from '@app/core/http';
 import { PersistanceService } from '@app/shared/services';
@@ -61,8 +61,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   protected restoreScrollPosition() {
-    this.routeEventSubscription = this.goodsList$.pipe(
-      switchMap(() => this.router.events),
+    this.routeEventSubscription = this.router.events.pipe(
       filter(e => e instanceof Scroll),
       tap((e: Scroll) => {
         if (e.position) {
