@@ -25,7 +25,7 @@
       <p>아직 {{ groupName }}에는 상품이 없습니다.</p>
     </section>
     <ul *ngIf="goodsList.length > 0" class="large_list" id="goods_list">
-      <li *ngFor="let goods of goodsList$ | async">
+      <li *ngFor="let goods of goodsList">
         <div [ngClass]="{'item': true, 'soldout': goods.soldOut}">
           <a [routerLink]="['/', market, 'goods', goods.id]"
             (click)="onClickGoods(goods)">

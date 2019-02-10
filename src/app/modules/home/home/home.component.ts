@@ -38,8 +38,8 @@ export class HomeComponent implements OnInit {
     this.groupName = this.loggedIn.group.name;
     this.market = this.route.snapshot.paramMap.get('market');
     this.exceptSoldOut$ = new BehaviorSubject(exceptSoldOut);
-    this.goodsList$ = this.goodsListService.getGoodsListBy(this.market, false);
-    // this.fetchGoodsList();
+
+    this.fetchGoodsList();
    }
 
   ngOnInit() {
