@@ -20,44 +20,40 @@
            (change)="onClickExceptSoldOut($event)">
     <label for="c1">&nbsp;품절상품 제외</label>
   </nav>
-  <!--<ng-container *ngIf="(goodsList$ | async)?.length > 0; then list; else empty">-->
-  <!--</ng-container>-->
-  <!--<ng-template #empty>-->
-    <!--<section class="list_nothing">-->
-      <!--<p>등록된 상품이 없습니다.</p>-->
-    <!--</section>-->
-  <!--</ng-template>-->
-  <!--<ng-template #list>-->
-    <ul class="large_list" id="goods_list">
-    <li *ngFor="let goods of goodsList$ | async">
-      <div [ngClass]="{'item': true, 'soldout': goods.soldout}">
-        <a [routerLink]="['/', market, 'goods', goods.id]"
-          (click)="onClickGoods(goods)">
-          <div class="goods_thumb"
-               [ngStyle]="{'background-image': 'url(assets/img/dark.png), url(' + goods.images[0] + ')'}">
-            <dl class="feed">
-              <dt class="like"></dt>
-              <dd>{{ goods.interestCnt }}</dd>
-              <dt class="comment"></dt>
-              <dd>{{ goods.commentCnt }}</dd>
-            </dl>
-          </div>
-          <div class="item_description">
-            <div class="author">
-              <span class="author_thumb" [style.backgroundImage]="'url(' + goods.user.photoURL + ')'"></span>
+  <ng-container *ngIf="(goodsList$ | async) as goodsList">
+    <section *ngIf="goodsList.length === 0" class="list_nothing">
+      <p>아직 {{ groupName }}에는 상품이 없습니다.</p>
+    </section>
+    <ul *ngIf="goodsList.length > 0" class="large_list" id="goods_list">
+      <li *ngFor="let goods of goodsList$ | async">
+        <div [ngClass]="{'item': true, 'soldout': goods.soldout}">
+          <a [routerLink]="['/', market, 'goods', goods.id]"
+            (click)="onClickGoods(goods)">
+            <div class="goods_thumb"
+                 [ngStyle]="{'background-image': 'url(assets/img/dark.png), url(' + goods.images[0] + ')'}">
+              <dl class="feed">
+                <dt class="like"></dt>
+                <dd>{{ goods.interestCnt }}</dd>
+                <dt class="comment"></dt>
+                <dd>{{ goods.commentCnt }}</dd>
+              </dl>
             </div>
-            <div class="text">
-              <span class="name ellipsis">{{ goods.title }}</span>
-              <span class="price ellipsis">{{ goods.price | number: '2.' }}원</span>
+            <div class="item_description">
+              <div class="author">
+                <span class="author_thumb" [style.backgroundImage]="'url(' + goods.user.photoURL + ')'"></span>
+              </div>
+              <div class="text">
+                <span class="name ellipsis">{{ goods.title }}</span>
+                <span class="price ellipsis">{{ goods.price | number: '2.' }}원</span>
+              </div>
             </div>
-          </div>
-        </a>
-        <button (click)="onClickInterest(goods)"
-                [ngClass]="{ 'likeit': true, 'on': interested(goods) }" style="border:0"><span class="sr-only">관심</span></button>
-      </div>
-    </li>
-  </ul>
-  <!--</ng-template>-->
+          </a>
+          <button (click)="onClickInterest(goods)"
+                  [ngClass]="{ 'likeit': true, 'on': interested(goods) }" style="border:0"><span class="sr-only">관심</span></button>
+        </div>
+      </li>
+    </ul>
+  </ng-container>
 </section>
 <a [routerLink]="['/', market, 'goods', 'new', 'edit']" class="write"></a>
 <a href="#" class="top"></a>
