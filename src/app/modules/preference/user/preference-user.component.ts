@@ -12,10 +12,10 @@ import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  templateUrl: './preference-user.component.html',
+  styleUrls: ['./preference-user.component.css']
 })
-export class UserComponent implements OnInit {
+export class PreferenceUserComponent implements OnInit {
   preferenceForm: FormGroup;
   photoURL: string | ArrayBuffer;
 

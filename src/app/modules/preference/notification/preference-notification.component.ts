@@ -7,10 +7,10 @@ import { Notification } from '@app/shared/models';
 
 @Component({
   selector: 'app-notification',
-  templateUrl: './notification.component.html',
-  styleUrls: ['./notification.component.css']
+  templateUrl: './preference-notification.component.html',
+  styleUrls: ['./preference-notification.component.css']
 })
-export class NotificationComponent implements OnInit {
+export class PreferenceNotificationComponent implements OnInit {
   readonly user: any;
   notifications$: Observable<Notification[]>;
 
