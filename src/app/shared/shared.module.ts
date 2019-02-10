@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MomentPipe } from '@app/shared/pipes/moment.pipe';
-import { FsTimestampPipe } from '@app/shared/pipes/fs-timestamp.pipe';
+import { FsTimestampPipe, MomentPipe } from '@app/shared/pipes';
 
 @NgModule({
   declarations: [MomentPipe, FsTimestampPipe],
