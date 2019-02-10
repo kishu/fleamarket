@@ -43,8 +43,8 @@ export class GoodsService {
     return this.goodsCollection.doc(id).update(goods);
   }
 
-  updateSoldout(id, soldout: boolean) {
-    return this.goodsCollection.doc(id).update({ soldout });
+  updateSoldOut(id, soldOut: boolean) {
+    return this.goodsCollection.doc(id).update({ soldOut });
   }
 
   incrementCommentCnt(goodsId) {
@@ -100,7 +100,7 @@ export class GoodsService {
       commentCnt: 0,
       interestCnt: 0,
       interests: [],
-      soldout: false,
+      soldOut: false,
       created: this.getServerTimeStamp(),
       updated: this.getServerTimeStamp()
     } as Goods;

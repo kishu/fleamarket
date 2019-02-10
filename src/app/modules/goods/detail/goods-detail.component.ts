@@ -93,13 +93,13 @@ export class GoodsDetailComponent implements OnInit {
          });
         }
         break;
-      case 'soldout':
-        this.goodsService.updateSoldout(this.goods.id, true);
-        this.goods.soldout = true;
+      case 'soldOut':
+        this.goodsService.updateSoldOut(this.goods.id, true);
+        this.goods.soldOut = true;
         break;
-      case 'onsale':
-        this.goodsService.updateSoldout(this.goods.id, false);
-        this.goods.soldout = false;
+      case 'onSale':
+        this.goodsService.updateSoldOut(this.goods.id, false);
+        this.goods.soldOut = false;
         break;
     }
   }

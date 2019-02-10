@@ -26,7 +26,7 @@
     </section>
     <ul *ngIf="goodsList.length > 0" class="large_list" id="goods_list">
       <li *ngFor="let goods of goodsList$ | async">
-        <div [ngClass]="{'item': true, 'soldout': goods.soldout}">
+        <div [ngClass]="{'item': true, 'soldout': goods.soldOut}">
           <a [routerLink]="['/', market, 'goods', goods.id]"
             (click)="onClickGoods(goods)">
             <div class="goods_thumb"

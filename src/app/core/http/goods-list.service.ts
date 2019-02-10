@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/firestore';
 import { first, map } from 'rxjs/operators';
 import { FirebaseUtilService, FirebaseQueryBuilderOptions } from '@app/shared/services';
 import { Goods } from '@app/core/models';
@@ -10,11 +10,14 @@ import { LoggedIn } from '@app/core/logged-in.service';
   providedIn: 'root'
 })
 export class GoodsListService {
+  private goodsCollection: AngularFirestoreCollection<Goods>;
 
   constructor(
     private afs: AngularFirestore,
     private loggedIn: LoggedIn
-  ) { }
+  ) {
+    this.goodsCollection = this.afs.collection<Goods>('goods');
+  }
 
   getGoodsListBy(market: string, exceptSoldOut: boolean): Observable<Goods[]> {
     if (market === 'group') {
@@ -29,7 +32,7 @@ export class GoodsListService {
       where: [
         ['groupRef', '==', groupRef],
         ['market.group', '==', true],
-        exceptSoldOut ? ['soldout', '==', false] : undefined
+        exceptSoldOut ? ['soldOut', '==', false] : undefined
       ],
       orderBy: [
         ['updated', 'desc']
@@ -42,7 +45,7 @@ export class GoodsListService {
     const options: FirebaseQueryBuilderOptions = {
       where: [
         ['market.lounge', '==', true],
-        exceptSoldOut ? ['soldout', '==', false] : undefined
+        exceptSoldOut ? ['soldOut', '==', false] : undefined
       ],
       orderBy: [
         ['updated', 'desc']

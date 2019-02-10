@@ -27,7 +27,7 @@ export class Goods {
   commentCnt: number;
   interests: [ firestore.DocumentReference? ];
   interestCnt: number;
-  soldout: boolean;
+  soldOut: boolean;
   created: firestore.FieldValue | firestore.Timestamp;
   updated: firestore.FieldValue | firestore.Timestamp;
 }
