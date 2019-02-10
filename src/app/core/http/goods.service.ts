@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { first, map } from 'rxjs/operators';
 import { LoggedIn } from '@app/core/logged-in.service';
-import { Goods, Group, User } from '@app/shared/models';
+import { Goods, User } from '@app/shared/models';
+
+import * as firebase from 'firebase/app';
+import FieldValue = firebase.firestore.FieldValue;
+import DocumentReference = firebase.firestore.DocumentReference;
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoodsService {
   cachedGoods: Goods;
-  cachedGroupGoodsList: Goods[];
-  cachedLoungeGoodsList: Goods[];
 
   private goodsCollection: AngularFirestoreCollection<Goods>;
 
@@ -28,6 +29,15 @@ export class GoodsService {
     return this.goodsCollection.add(goods);
   }
 
+  getGoods(id: string): Observable<Goods> {
+    return this.goodsCollection.doc(`goods/${id}`).snapshotChanges().pipe(
+      first(),
+      map(goods => {
+        return {id: goods.payload.id, ...goods.payload.data()} as Goods;
+      })
+    );
+  }
+
   updateGoods(id: string, goods: Goods) {
     delete goods.id;
     return this.goodsCollection.doc(id).update(goods);
@@ -37,101 +47,32 @@ export class GoodsService {
     return this.goodsCollection.doc(id).update({ soldout });
   }
 
+  incrementCommentCnt(goodsId) {
+    const goodsRef = this.getGoodsRef(goodsId);
+    return this.afs.firestore.runTransaction(transaction => {
+      return transaction.get(goodsRef)
+        .then(goodsDoc => {
+          let commentCnt = goodsDoc.data().commentCnt;
+          commentCnt = commentCnt + 1;
+          transaction.update(goodsRef, { commentCnt });
+        });
+    });
+  }
+
+  decrementCommentCnt(goodsId) {
+    const goodsRef = this.getGoodsRef(goodsId);
+    return this.afs.firestore.runTransaction(transaction => {
+      return transaction.get(goodsRef)
+        .then(goodsDoc => {
+          let commentCnt = goodsDoc.data().commentCnt;
+          commentCnt = commentCnt > 0 ? commentCnt - 1 : 0;
+          transaction.update(goodsRef, { commentCnt });
+        });
+    });
+  }
+
   deleteGoods(id: string) {
     return this.goodsCollection.doc(id).delete();
-  }
-
-  getGoods(id: string): Observable<Goods | null> {
-    return this.afs.doc<Goods>(`goods/${id}`).snapshotChanges().pipe(
-      first(),
-      map(goods => goods.payload.exists ? (
-          { id: goods.payload.id, ...goods.payload.data() } as Goods
-        ) : (
-          null
-        )
-      )
-    );
-  }
-
-  getGoodsByUser(userRef: firebase.firestore.DocumentReference, list: string): Observable<Goods[]> {
-    return this.afs.collection('goods', ref => {
-      let query = ref.where('userRef', '==',  userRef);
-      if (list === 'group') {
-        query = query.where('market.group', '==', true);
-      } else if (list === 'lounge') {
-        query = query.where('market.lounge', '==', true);
-      }
-      return query.orderBy('updated', 'desc').limit(30);
-    }).snapshotChanges().pipe(
-      first(),
-      map(goodsList => {
-        return goodsList.map(goods => {
-          return {
-            id: goods.payload.doc.id,
-            ...goods.payload.doc.data()
-          } as Goods;
-        });
-      })
-    );
-  }
-
-  getGoodsByGroup(groupRef: firebase.firestore.DocumentReference, soldoutFiter: boolean) {
-    return this.afs.collection('goods', ref => {
-      let query = ref as firebase.firestore.Query;
-      query = query.where('groupRef', '==',  groupRef);
-      query = query.where('market.group', '==', true);
-      if (soldoutFiter) {
-        query = query.where('soldout', '==', false);
-      }
-      query = query.orderBy('updated', 'desc');
-      return query;
-    }).snapshotChanges().pipe(
-      first(),
-      map(goodsList => {
-        return goodsList.map(goods => {
-          return {
-            id: goods.payload.doc.id,
-            ...goods.payload.doc.data()
-          } as Goods;
-        });
-      })
-    );
-  }
-
-  getGoodsByLounge(soldoutFiter: boolean) {
-    return this.afs.collection('goods', ref => {
-      let query = ref as firebase.firestore.Query;
-      query = query.where('market.lounge', '==', true);
-      if (soldoutFiter) {
-        query = query.where('soldout', '==', false);
-      }
-      query = query.orderBy('updated', 'desc');
-      return query;
-    }).snapshotChanges().pipe(
-      first(),
-      map(goodsList => {
-        return goodsList.map(goods => {
-          return {
-            id: goods.payload.doc.id,
-            ...goods.payload.doc.data()
-          } as Goods;
-        });
-      })
-    );
-  }
-
-  getGoodsRef(goodsId: string) {
-    return this.afs.collection('goods').doc<Goods>(goodsId).ref;
-  }
-
-  getGoodsUser(userRef: firebase.firestore.DocumentReference): Observable<User | any> {
-    return fromPromise(userRef.get()).pipe(
-      map(user => ({ id: user.id, ...user.data() }))
-    );
-  }
-
-  getGroupRef(groupId): firebase.firestore.DocumentReference {
-    return this.afs.collection('groups').doc<Group>(groupId).ref;
   }
 
   getNewGoods(): Goods {
@@ -169,22 +110,17 @@ export class GoodsService {
     return this.cachedGoods;
   }
 
-  getServerTimeStamp(): firebase.firestore.FieldValue {
-    return firebase.firestore.FieldValue.serverTimestamp();
+  getGoodsRef(goodsId: string) {
+    return this.goodsCollection.doc(goodsId).ref;
   }
 
-  getUserRef(userId): firebase.firestore.DocumentReference {
-    return this.afs.collection('users').doc<User>(userId).ref;
+  getGoodsUser(userRef: DocumentReference): Observable<User> {
+    return fromPromise(userRef.get()).pipe(
+      map(user => ({ id: user.id, ...user.data() } as User))
+    );
   }
 
-  incrementCommentCnt(id) {
-    const goodsRef = this.goodsCollection.doc(id).ref;
-
-    return this.afs.firestore.runTransaction(transaction => {
-      return transaction.get(goodsRef)
-        .then(goodsDoc => {
-          transaction.update(goodsRef, {commentCnt: goodsDoc.data().commentCnt + 1});
-        });
-    });
+  getServerTimeStamp(): FieldValue {
+    return FieldValue.serverTimestamp();
   }
 }
