@@ -18,8 +18,8 @@ export enum GroupType {
 }
 
 export const enum Market {
-  Group = 'GROUP',
-  Lounge = 'LOUNGE'
+  Group = 'group',
+  Lounge = 'lounge'
 }
 
 export class Interest {
@@ -70,7 +70,9 @@ export class Notification {
     title: string
     image: string
   };
+  commentRef: firestore.DocumentReference;
   comment: {
+    market: Market
     body: string
   };
   isRead: boolean;

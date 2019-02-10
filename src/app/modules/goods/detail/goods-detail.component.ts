@@ -6,7 +6,7 @@ import { pluck } from 'rxjs/operators';
 import { LoggedIn } from '@app/core/logged-in.service';
 import { AuthService, CommentService, GoodsService, GoodsListService, InterestService } from '@app/core/http';
 import { LocationService } from '@app/shared/services';
-import { Comment, Goods, User } from '@app/core/models';
+import { Comment, Goods, Market, User } from '@app/core/models';
 
 @Component({
   selector: 'app-detail',
@@ -148,9 +148,9 @@ export class GoodsDetailComponent implements OnInit {
       this.submitting = true;
 
       const comment: Comment = {
+        market: this.route.snapshot.paramMap.get('market') as Market,
         userRef: this.loggedIn.getUserRef(),
         goodsRef: this.commentService.getGoodsRef(this.goods.id),
-        parentRef: null,
         user: {
           displayName: this.loggedIn.user.displayName,
           photoURL: this.loggedIn.user.photoURL
