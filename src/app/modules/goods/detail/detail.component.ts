@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 import { LoggedIn } from '@app/core/logged-in.service';
-import { AuthService, CommentService, GoodsService, InterestService } from '@app/core/http';
+import { AuthService, CommentService, GoodsService, GoodsListService, InterestService } from '@app/core/http';
 import { LocationService } from '@app/shared/services';
 import { Comment, Goods, User } from '@app/shared/models';
 
@@ -45,6 +45,7 @@ export class DetailComponent implements OnInit {
     private authService: AuthService,
     private commentService: CommentService,
     private goodsService: GoodsService,
+    private goodsListService: GoodsListService,
     private interestService: InterestService
   ) {
     this.market = route.snapshot.paramMap.get('market');
@@ -65,7 +66,7 @@ export class DetailComponent implements OnInit {
       this.moreImages = false;
       this.goods = this.goodsService.cachedGoods;
       this.user$ = this.goodsService.getGoodsUser(this.goods.userRef);
-      this.otherGoods$ = this.goodsService.getGoodsByUser(this.goods.userRef, this.market);
+      this.otherGoods$ = this.goodsListService.getGoodsListByUser(this.goods.userRef, this.market);
       this.comments$ = this.commentService.getCommentsByGoods(this.goods.id);
 
       this.authority = (user.id === this.goods.userRef.id);
