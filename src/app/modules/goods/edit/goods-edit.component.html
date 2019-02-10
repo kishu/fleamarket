@@ -41,13 +41,14 @@
           <div class="goods_thumb" [style.backgroundImage]="'url(' + image + ')'">
             <div class="set_profile_thumb">{{ image }}</div>
           </div>
-          <button (click)="onDeleteImageUrlByIndex(i)" class="attach_delete">삭제</button>
+          <button type="button" (click)="onDeleteImageUrlByIndex(i)" class="attach_delete">삭제</button>
         </div>
         <div *ngFor="let imageFile of imageFiles | keyvalue" class="goods_thumb_area">
-          <div class="goods_thumb" [style.backgroundImage]="'url(' + imageFile.value.url + ')'">
+          <div data-rotate="0" class="goods_thumb rotate0" [style.backgroundImage]="'url(' + imageFile.value.url + ')'" #img>
             <div class="set_profile_thumb">{{ imageFile.key }}</div>
           </div>
-          <button (click)="onDeleteImageFileByKey(imageFile.key)" class="attach_delete">삭제</button>
+          <button type="button" (click)="onDeleteImageFileByKey(imageFile.key)" class="attach_delete">삭제</button>
+          <button type="button" (click)="onRotateImage($event, img)" class="attach_rotate">회전</button>
         </div>
       </div>
     </section>

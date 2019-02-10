@@ -705,6 +705,25 @@ body {
   color: rgba(0, 0, 0, 0);
 }
 
+.attach_rotate {
+  overflow: hidden;
+  position: absolute;
+  z-index: 2;
+  right: -5px;
+  bottom: -5px;
+  width: 20px;
+  padding: 0;
+  border: 2px solid #111;
+  border-radius: 10px;
+  background-color: #ef5359;
+  background-image: url(../img/icon_notice.png);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 16px 16px;
+  line-height: 16px;
+  color: rgba(0, 0, 0, 0);
+}
+
 .attach_up {
   /* overflow: hidden;
   position: absolute;

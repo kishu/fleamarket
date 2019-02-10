@@ -157,6 +157,18 @@ export class GoodsEditComponent implements OnInit {
     }
   }
 
+  onRotateImage(e: TouchEvent | MouseEvent, img: HTMLElement) {
+    const rotate = +img.dataset.rotate || 0;
+    let nextRotate = rotate + 90;
+    if (nextRotate >= 360) {
+      nextRotate = 0;
+    }
+
+    img.classList.remove(`rotate${rotate}`);
+    img.classList.add(`rotate${nextRotate}`);
+    img.dataset.rotate = nextRotate.toString();
+  }
+
   onDeleteImageUrlByIndex(i: number) {
     this.goods.images.splice(i, 1);
   }
