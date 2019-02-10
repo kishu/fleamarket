@@ -36,7 +36,7 @@ export class UserComponent implements OnInit {
     private fileUploadService: FileUploadService,
     private spinnerService: SpinnerService
   ) {
-    const user = this.authService.user;
+    const user = this.loggedIn.user;
     this.photoURL = user.photoURL;
 
     this.preferenceForm = this.fb.group({
@@ -90,7 +90,7 @@ export class UserComponent implements OnInit {
       this.submitting = true;
       this.spinnerService.show(true);
 
-      const id = this.authService.user.id;
+      const id = this.loggedIn.user.id;
 
       if (this.imageFile) {
         this.upload().pipe(

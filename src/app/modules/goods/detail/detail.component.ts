@@ -145,12 +145,12 @@ export class DetailComponent implements OnInit {
       this.submitting = true;
 
       const comment: Comment = {
-        userRef: this.commentService.getUserRef(this.authService.user.id),
+        userRef: this.loggedIn.getUserRef(),
         goodsRef: this.commentService.getGoodsRef(this.goods.id),
         parentRef: null,
         user: {
-          displayName: this.authService.user.displayName,
-          photoURL: this.authService.user.photoURL
+          displayName: this.loggedIn.user.displayName,
+          photoURL: this.loggedIn.user.photoURL
         },
         body: this.commentForm.get('body').value as string,
         created: this.commentService.getServerTimeStamp(),

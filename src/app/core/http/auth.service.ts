@@ -4,52 +4,24 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
-import { filter, first, switchMap, tap } from 'rxjs/operators';
+import { first, switchMap, tap } from 'rxjs/operators';
 import { LoggedIn } from '@app/core/logged-in.service';
-import { AFSimpleUser, Group, User } from '@app/shared/models';
+import { Group, User } from '@app/shared/models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private _user: User | null;
-  private _group: Group | null;
+  // private _user: User | null;
+  // private _group: Group | null;
 
   constructor(
     private loggedIn: LoggedIn,
     private afAuth: AngularFireAuth,
-    private afs: AngularFirestore) {
-    this.afAuth.user.pipe(
-      filter(afUser => !afUser)
-    ).subscribe(() => {
-      this._user = null;
-      this._group = null;
-    });
-  }
+    private afs: AngularFirestore) { }
 
   get afUser(): Observable<firebase.User> {
     return this.afAuth.user.pipe(first());
-  }
-
-  get afSimpleUser(): Observable<AFSimpleUser> {
-    return this.afAuth.user.pipe(
-      first(),
-      filter(afUser => !!afUser),
-      switchMap(afUser => {
-        return of({
-          uid: afUser.uid,
-          displayName: afUser.displayName,
-        });
-      })
-    );
-  }
-
-  get user(): User {
-    return this._user;
-  }
-
-  get group(): Group {
-    return this._group;
   }
 
   resolveAuthInfo() {
@@ -90,21 +62,17 @@ export class AuthService {
       }),
       switchMap(user => {
         if (user) {
-          this._user = user;
           this.loggedIn.user = user;
           return group$(user);
         } else {
-          this._user = null;
           this.loggedIn.user = null;
           return of(null);
         }
       }),
       tap(group => {
         if (group) {
-          this._group = group;
           this.loggedIn.group = group;
         } else {
-          this._group = null;
           this.loggedIn.group = null;
         }
       })
@@ -130,16 +98,5 @@ export class AuthService {
   logout() {
     return this.afAuth.auth.signOut();
   }
-
-  // updateDisplayName(displayName: string) {
-  //   return this.afAuth.user.pipe(
-  //     switchMap(user => {
-  //       return user.updateProfile({
-  //         displayName,
-  //         photoURL: user.photoURL
-  //       });
-  //     })
-  //   );
-  // }
 
 }

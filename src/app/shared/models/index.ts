@@ -35,11 +35,6 @@ export class Group {
   domain: string;
 }
 
-export class AFSimpleUser {
-  uid: string;
-  displayName: string;
-}
-
 export class User {
   id?: string;
   groupRef: firestore.DocumentReference;

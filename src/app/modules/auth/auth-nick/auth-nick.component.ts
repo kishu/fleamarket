@@ -2,7 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
-import { AuthService, UserService } from '@app/core/http';
+import { LoggedIn } from '@app/core/logged-in.service';
+import { UserService } from '@app/core/http';
 import { SpinnerService } from '@app/modules/spinner/spinner.service';
 import { AuthData, User } from '@app/shared/models';
 import { environment } from '@environments/environment';
@@ -20,7 +21,7 @@ export class AuthNickComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthService,
+    private loggdIn: LoggedIn,
     private userService: UserService,
     private spinnerService: SpinnerService
   ) {
@@ -48,19 +49,16 @@ export class AuthNickComponent implements OnInit {
       this.submitting = true;
       this.spinnerService.show(true);
 
-      this.authService.afSimpleUser.pipe(
-        switchMap(afUser => {
-          const user: User = {
-            groupRef: this.userService.getGroupRef(this.authData.group.id),
-            email: this.authData.email,
-            displayName: this.nick.value,
-            photoURL: environment.defaultPhotoURL,
-            notice: true,
-            desc: ''
-          };
-          return this.userService.setUser(afUser.uid, user);
-        })
-      ).subscribe(this.success, this.error);
+      const user: User = {
+        groupRef: this.userService.getGroupRef(this.authData.group.id),
+        email: this.authData.email,
+        displayName: this.nick.value,
+        photoURL: environment.defaultPhotoURL,
+        notice: true,
+        desc: ''
+      };
+
+      this.userService.setUser(this.loggdIn.user.id, user).subscribe(this.success, this.error);
     }
   }
 

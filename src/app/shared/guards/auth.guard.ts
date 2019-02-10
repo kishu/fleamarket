@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { forkJoin, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { LoggedIn } from '@app/core/logged-in.service';
 import { AuthService, UserService } from '@app/core/http';
 import { PersistanceService } from '@app/shared/services';
 
@@ -11,6 +12,7 @@ import { PersistanceService } from '@app/shared/services';
 export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
+    private loggedIn: LoggedIn,
     private authService: AuthService,
     private userService: UserService,
     private persistanceService: PersistanceService ) { }
@@ -18,7 +20,7 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return forkJoin(this.authService.afUser, of(this.authService.user)).pipe(
+    return forkJoin(this.authService.afUser, of(this.loggedIn.user)).pipe(
       switchMap(([afUser, user]) => {
         // 인트로를 안본 경우 -> 무조건
         const viewIntro = this.persistanceService.get('viewIntro');

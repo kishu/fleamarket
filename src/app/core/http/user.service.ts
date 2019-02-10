@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable} from 'rxjs';
+import { fromPromise } from 'rxjs/internal-compatibility';
 import { first, map } from 'rxjs/operators';
 import { User, Group, UserPreference } from '@app/shared/models';
 
@@ -36,7 +37,7 @@ export class UserService {
   }
 
   setUser(uid: string, user: User) {
-    return this.usersCollection.doc(uid).set(user);
+    return fromPromise(this.usersCollection.doc(uid).set(user));
   }
 
   updatePreference(id: string, preference: UserPreference) {
