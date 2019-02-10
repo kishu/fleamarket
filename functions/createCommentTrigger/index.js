@@ -25,7 +25,9 @@ module.exports = functions.firestore
           title: goods.get('title'),
           image: goods.get('images')[0]
         },
+        commentRef: comment.ref,
         comment: {
+          market: comment.get('market'),
           body: comment.get('body')
         },
         isRead: false,
