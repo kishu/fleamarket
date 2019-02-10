@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { Observable } from 'rxjs';
 import { AuthService, GroupService } from '@app/core/http';
-import { SpinnerService } from '@app/modules/spinner/spinner.service';
+import { SpinnerService } from '@app/shared/services/spinner.service';
 import { AuthData, Group, GroupType } from '@app/core/models';
 
 @Component({

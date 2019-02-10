@@ -4,7 +4,7 @@ import * as firebase from 'firebase/app';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { switchMap, pluck } from 'rxjs/operators';
 import { AuthService, UserService } from '@app/core/http';
-import { SpinnerService } from '@app/modules/spinner/spinner.service';
+import { SpinnerService } from '@app/shared/services/spinner.service';
 
 
 @Component({

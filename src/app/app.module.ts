@@ -20,13 +20,13 @@ import { AuthService } from '@app/core/http';
 import { LoggedIn } from '@app/core/logged-in.service';
 // components
 import { AppComponent } from '@app/app.component';
-import { IntroComponent } from '@app/modules/intro/intro.component';
+import { IntroComponent } from '@app/modules/home/intro/intro.component';
 // environment
 import { environment } from '@environments/environment';
 
 import { PersistenceService } from '@app/shared/services';
-import { SpinnerService } from '@app/modules/spinner/spinner.service';
-import { SpinnerComponent } from '@app/modules/spinner/spinner.component';
+import { SpinnerService } from '@app/shared/services/spinner.service';
+import { SpinnerComponent } from '@app/shared/components/spinner/spinner.component';
 
 export function resolveAuthInfo(authService: AuthService) {
   return () => authService.resolveAuthInfo().toPromise();
@@ -59,7 +59,6 @@ export function resolveAuthInfo(authService: AuthService) {
     AuthService,
     PersistenceService,
     SpinnerService,
-    // { provide: LocationStrategy, useClass: PathLocationStrategy },
     { provide: APP_INITIALIZER, useFactory: resolveAuthInfo, deps: [AuthService], multi: true },
   ],
   bootstrap: [AppComponent]

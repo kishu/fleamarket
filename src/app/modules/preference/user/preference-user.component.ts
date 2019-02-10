@@ -6,7 +6,7 @@ import { map, switchMap, tap } from 'rxjs/operators';
 import { LoggedIn } from '@app/core/logged-in.service';
 import { LocationService } from '@app/shared/services';
 import { AuthService, FileUploadService, UserService } from '@app/core/http';
-import { SpinnerService } from '@app/modules/spinner/spinner.service';
+import { SpinnerService } from '@app/shared/services/spinner.service';
 import { ImageFile } from '@app/core/models';
 import { environment } from '@environments/environment';
 
