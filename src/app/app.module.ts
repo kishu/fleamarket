@@ -20,7 +20,6 @@ import { AuthService } from '@app/core/http';
 import { LoggedIn } from '@app/core/logged-in.service';
 // components
 import { AppComponent } from '@app/app.component';
-import { IntroComponent } from '@app/modules/home/intro/intro.component';
 // environment
 import { environment } from '@environments/environment';
 
@@ -35,8 +34,7 @@ export function resolveAuthInfo(authService: AuthService) {
 @NgModule({
   declarations: [
     AppComponent,
-    SpinnerComponent,
-    IntroComponent
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
