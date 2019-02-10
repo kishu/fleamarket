@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import {  map } from 'rxjs/operators';
+import { FirebaseQueryBuilderOptions, FirebaseUtilService } from '@app/shared/services';
 import { LoggedIn } from '@app/core/logged-in.service';
 import { Notification } from '@app/core/models';
 
@@ -19,20 +20,18 @@ export class NotificationService {
   }
 
   getNotifications(): Observable<Notification[]> {
-    return this.afs.collection('notifications', ref => {
-      return ref.where('userRef', '==',  this.loggedIn.getUserRef())
-        .orderBy('created', 'desc')
-        .limit(150);
-    }).snapshotChanges().pipe(
-      first(),
-      map(notifications => {
-        return notifications.map(notification => {
-          return {
-            id: notification.payload.doc.id,
-            ...notification.payload.doc.data()
-          } as Notification;
-        });
-      })
-    );
+    const queryFn = (ref) => {
+      const options: FirebaseQueryBuilderOptions = {
+        where: [['userRef', '==',  this.loggedIn.getUserRef()]],
+        orderBy: [['created', 'desc']],
+        limit: 150
+      };
+      return FirebaseUtilService.buildQuery(ref, options);
+    };
+
+    return this.afs.collection('notifications', queryFn)
+      .snapshotChanges().pipe(
+        map(FirebaseUtilService.sirializeDocumentChangeActions)
+      );
   }
 }
