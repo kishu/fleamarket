@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { Location } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 // firebase modules
 import { AngularFireModule } from '@angular/fire';
@@ -43,6 +43,7 @@ export function resolveAuthInfo(authService: AuthService) {
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
+    AngularFirestoreModule.enablePersistence(),
     SharedModule,
     HomeModule,
     AuthModule,
