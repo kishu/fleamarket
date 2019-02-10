@@ -9,6 +9,7 @@ import WhereFilterOp = firebase.firestore.WhereFilterOp;
 export interface FirebaseQueryBuilderOptions {
   where?: [string, string, any][];
   orderBy?: [string, string][];
+  limit?: number;
 }
 
 @Injectable({
@@ -33,6 +34,10 @@ export class FirebaseUtilService {
       options.orderBy.forEach(orderBy => {
         query = query.orderBy(orderBy[0], orderBy[1] as OrderByDirection);
       });
+    }
+
+    if (options.limit) {
+      query = query.limit(options.limit);
     }
 
     return query;
