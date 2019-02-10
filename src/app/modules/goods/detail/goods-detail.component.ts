@@ -136,7 +136,10 @@ export class GoodsDetailComponent implements OnInit {
   onClickDeleteComment(comment: Comment) {
     const confirm = window.confirm('댓글을 삭제할까요?');
     if (confirm) {
-      this.commentService.deleteComment(comment.id);
+      this.commentService.deleteComment(comment.id)
+        .then(() => {
+          this.goodsService.decrementCommentCnt(this.goods.id);
+        });
     }
   }
 
