@@ -24,7 +24,7 @@ import { IntroComponent } from '@app/modules/intro/intro.component';
 // environment
 import { environment } from '@environments/environment';
 
-import { PersistanceService } from '@app/shared/services';
+import { PersistenceService } from '@app/shared/services';
 import { SpinnerService } from '@app/modules/spinner/spinner.service';
 import { SpinnerComponent } from '@app/modules/spinner/spinner.component';
 
@@ -57,7 +57,7 @@ export function resolveAuthInfo(authService: AuthService) {
     LoggedIn,
     AuthGuard,
     AuthService,
-    PersistanceService,
+    PersistenceService,
     SpinnerService,
     // { provide: LocationStrategy, useClass: PathLocationStrategy },
     { provide: APP_INITIALIZER, useFactory: resolveAuthInfo, deps: [AuthService], multi: true },

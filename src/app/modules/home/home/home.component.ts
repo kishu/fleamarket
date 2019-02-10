@@ -5,7 +5,7 @@ import { BehaviorSubject, combineLatest, Observable, } from 'rxjs';
 import { filter, first, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { LoggedIn } from '@app/core/logged-in.service';
 import { InterestService, GoodsService, GoodsListService } from '@app/core/http';
-import { PersistanceService } from '@app/shared/services';
+import { PersistenceService } from '@app/shared/services';
 import { Goods } from '@app/core/models';
 
 @Component({
@@ -29,10 +29,10 @@ export class HomeComponent implements OnInit {
     private interestService: InterestService,
     private goodsService: GoodsService,
     private goodsListService: GoodsListService,
-    private persistanceService: PersistanceService,
+    private persistenceService: PersistenceService,
     private viewportScroller: ViewportScroller
   ) {
-    const exceptSoldOut = this.persistanceService.get('exceptSoldOut') || false;
+    const exceptSoldOut = this.persistenceService.get('exceptSoldOut') || false;
 
     this.userPhotoURL = this.loggedIn.user.photoURL;
     this.groupName = this.loggedIn.group.name;
@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
       tap(([paramMap, exceptSoldOut]) => {
         this.market = paramMap.get('market');
         this.exceptSoldOut = exceptSoldOut;
-        this.persistanceService.set('exceptSoldOut', exceptSoldOut);
+        this.persistenceService.set('exceptSoldOut', exceptSoldOut);
       }),
       switchMap(() => {
         return this.goodsListService.getGoodsListBy(this.market, this.exceptSoldOut);

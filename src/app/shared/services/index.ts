@@ -1,3 +1,3 @@
 export * from './firebase-util.service';
 export * from './location.service';
-export * from './persistance.service';
+export * from './persistence.service';

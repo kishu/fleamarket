@@ -4,7 +4,7 @@ import { forkJoin, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { LoggedIn } from '@app/core/logged-in.service';
 import { AuthService, UserService } from '@app/core/http';
-import { PersistanceService } from '@app/shared/services';
+import { PersistenceService } from '@app/shared/services';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
     private loggedIn: LoggedIn,
     private authService: AuthService,
     private userService: UserService,
-    private persistanceService: PersistanceService ) { }
+    private persistenceService: PersistenceService ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
     return forkJoin(this.authService.afUser, of(this.loggedIn.user)).pipe(
       switchMap(([afUser, user]) => {
         // 인트로를 안본 경우 -> 무조건
-        const viewIntro = this.persistanceService.get('viewIntro');
+        const viewIntro = this.persistenceService.get('viewIntro');
 
         if (!viewIntro) {
           this.router.navigate(['intro']);

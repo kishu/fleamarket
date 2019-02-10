@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PersistanceService } from './persistance.service';
+import { PersistenceService } from './persistence.service';
 
-describe('PersistanceService', () => {
+describe('PersistenceService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: PersistanceService = TestBed.get(PersistanceService);
+    const service: PersistenceService = TestBed.get(PersistenceService);
     expect(service).toBeTruthy();
   });
 });
