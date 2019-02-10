@@ -39,6 +39,14 @@
         <dt>사용상태</dt>
         <dd>{{ goods.condition }}</dd>
       </dl>
+      <dl class="goods_info margin1">
+        <dt>거래방법</dt>
+        <dd>{{ goods.delivery }}</dd>
+      </dl>
+      <dl *ngIf="goods.contact" class="goods_info margin1">
+        <dt>연락처</dt>
+        <dd>{{ goods.contact }}</dd>
+      </dl>
     </div>
     <div class="goods_detail">
       <p [innerHTML]="goods.desc" style="white-space: pre-wrap"></p>
