@@ -30,7 +30,7 @@ export class GoodsService {
   }
 
   getGoods(id: string): Observable<Goods> {
-    return this.goodsCollection.doc(`goods/${id}`).snapshotChanges().pipe(
+    return this.goodsCollection.doc(id).snapshotChanges().pipe(
       first(),
       map(goods => {
         return {id: goods.payload.id, ...goods.payload.data()} as Goods;
