@@ -18,7 +18,7 @@
       </div>
       <ul class="alarm_list">
         <li *ngFor="let notification of notifications$ | async" class="alarm_item">
-          <a [routerLink]="['/goods', notification.goodsRef.id]" style="text-decoration: none">
+          <a [routerLink]="['/goods', notification.comment.market, notification.goodsRef.id]" style="text-decoration: none">
             <span class="alarm_thumb" [style.backgroundImage]="'url(' + notification.fromUser.photoURL + ')'"><span class="new"></span></span>
             <p class="alarm_content">
               <strong>{{ notification.fromUser.displayName }}</strong>님이
