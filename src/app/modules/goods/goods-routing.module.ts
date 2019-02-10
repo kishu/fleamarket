@@ -3,8 +3,8 @@ import { Routes, RouterModule, UrlSegment } from '@angular/router';
 import { AuthGuard } from '@app/shared/guards';
 import { GoodsGuard } from '@app/modules/goods/goods.guard';
 import { GoodsAuthorityGuard } from '@app/modules/goods/goods-authority-guard.service';
-import { EditComponent } from '@app/modules/goods/edit/edit.component';
-import { DetailComponent } from '@app/modules/goods/detail/detail.component';
+import { GoodsEditComponent } from '@app/modules/goods/edit/goods-edit.component';
+import { GoodsDetailComponent } from '@app/modules/goods/detail/goods-detail.component';
 
 export function goodsDetailMatcher(url: UrlSegment[]) {
   if (url.length === 3 && ( url[0].path === 'group' || url[0].path === 'lounge') &&
@@ -40,12 +40,12 @@ const routes: Routes = [
   {
     matcher: goodsDetailMatcher,
     canActivate: [AuthGuard, GoodsGuard],
-    component: DetailComponent
+    component: GoodsDetailComponent
   },
   {
     matcher: goodsEditMatcher,
     canActivate: [AuthGuard, GoodsAuthorityGuard],
-    component: EditComponent
+    component: GoodsEditComponent
   }
 ];
 

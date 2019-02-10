@@ -14,10 +14,10 @@ import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-edit',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css']
+  templateUrl: './goods-edit.component.html',
+  styleUrls: ['./goods-edit.component.css']
 })
-export class EditComponent implements OnInit {
+export class GoodsEditComponent implements OnInit {
   private submitting = false;
   private readonly uploadPreset = environment.cloudinary.preset.goods;
   private readonly newGoods: boolean;

@@ -10,10 +10,10 @@ import { Comment, Goods, User } from '@app/shared/models';
 
 @Component({
   selector: 'app-detail',
-  templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.css']
+  templateUrl: './goods-detail.component.html',
+  styleUrls: ['./goods-detail.component.css']
 })
-export class DetailComponent implements OnInit {
+export class GoodsDetailComponent implements OnInit {
   authority = false;
   group: string;
   market: string;
