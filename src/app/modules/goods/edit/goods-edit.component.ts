@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { LoggedIn } from '@app/core/logged-in.service';
-import { Goods, ImageFile } from '@app/shared/models';
+import { Goods, ImageFile } from '@app/core/models';
 import { FileUploadService, GoodsService } from '@app/core/http';
 import { LocationService } from '@app/shared/services';
 import { SpinnerService } from '@app/modules/spinner/spinner.service';

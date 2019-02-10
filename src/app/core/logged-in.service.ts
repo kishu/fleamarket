@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Group, User } from '@app/shared/models';
+import { Group, User } from '@app/core/models';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 

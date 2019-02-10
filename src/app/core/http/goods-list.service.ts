@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { first, map } from 'rxjs/operators';
 import { FirebaseUtilService, FirebaseQueryBuilderOptions } from '@app/shared/services';
-import { Goods } from '@app/shared/models';
+import { Goods } from '@app/core/models';
 import { Observable } from 'rxjs';
 import { LoggedIn } from '@app/core/logged-in.service';
 

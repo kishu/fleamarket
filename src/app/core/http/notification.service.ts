@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import { LoggedIn } from '@app/core/logged-in.service';
-import { Notification } from '@app/shared/models';
+import { Notification } from '@app/core/models';
 
 @Injectable({
   providedIn: 'root'

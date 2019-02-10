@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthData } from '@app/shared/models';
+import { AuthData } from '@app/core/models';
 
 enum Phase { mail, code, nick }
 

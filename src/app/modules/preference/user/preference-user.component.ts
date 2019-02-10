@@ -7,7 +7,7 @@ import { LoggedIn } from '@app/core/logged-in.service';
 import { LocationService } from '@app/shared/services';
 import { AuthService, FileUploadService, UserService } from '@app/core/http';
 import { SpinnerService } from '@app/modules/spinner/spinner.service';
-import { ImageFile } from '@app/shared/models';
+import { ImageFile } from '@app/core/models';
 import { environment } from '@environments/environment';
 
 @Component({

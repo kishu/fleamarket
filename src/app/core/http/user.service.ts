@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable} from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { first, map } from 'rxjs/operators';
-import { User, Group, UserPreference } from '@app/shared/models';
+import { User, Group, UserPreference } from '@app/core/models';
 
 @Injectable({
   providedIn: 'root'

@@ -6,7 +6,7 @@ import { filter, first, map, switchMap, tap, withLatestFrom } from 'rxjs/operato
 import { LoggedIn } from '@app/core/logged-in.service';
 import { InterestService, GoodsService, GoodsListService } from '@app/core/http';
 import { PersistanceService } from '@app/shared/services';
-import { Goods } from '@app/shared/models';
+import { Goods } from '@app/core/models';
 
 @Component({
   selector: 'app-home',

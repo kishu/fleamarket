@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { first, switchMap, tap } from 'rxjs/operators';
 import { LoggedIn } from '@app/core/logged-in.service';
-import { Group, User } from '@app/shared/models';
+import { Group, User } from '@app/core/models';
 
 @Injectable({
   providedIn: 'root'

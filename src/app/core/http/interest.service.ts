@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { filter, first, switchMap, tap } from 'rxjs/operators';
-import { Interest } from '@app/shared/models';
+import { Interest } from '@app/core/models';
 
 @Injectable({
   providedIn: 'root'

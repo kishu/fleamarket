@@ -6,7 +6,7 @@ import { pluck } from 'rxjs/operators';
 import { LoggedIn } from '@app/core/logged-in.service';
 import { AuthService, CommentService, GoodsService, GoodsListService, InterestService } from '@app/core/http';
 import { LocationService } from '@app/shared/services';
-import { Comment, Goods, User } from '@app/shared/models';
+import { Comment, Goods, User } from '@app/core/models';
 
 @Component({
   selector: 'app-detail',

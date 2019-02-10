@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { first, map } from 'rxjs/operators';
 import { LoggedIn } from '@app/core/logged-in.service';
-import { Goods, User } from '@app/shared/models';
+import { Goods, User } from '@app/core/models';
 
 import * as firebase from 'firebase/app';
 import FieldValue = firebase.firestore.FieldValue;

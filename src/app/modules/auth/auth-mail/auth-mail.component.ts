@@ -4,7 +4,7 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { Observable } from 'rxjs';
 import { AuthService, GroupService } from '@app/core/http';
 import { SpinnerService } from '@app/modules/spinner/spinner.service';
-import { AuthData, Group, GroupType } from '@app/shared/models';
+import { AuthData, Group, GroupType } from '@app/core/models';
 
 @Component({
   selector: 'app-auth-mail',

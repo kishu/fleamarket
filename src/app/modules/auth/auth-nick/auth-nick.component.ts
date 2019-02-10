@@ -5,7 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { LoggedIn } from '@app/core/logged-in.service';
 import { UserService } from '@app/core/http';
 import { SpinnerService } from '@app/modules/spinner/spinner.service';
-import { AuthData, User } from '@app/shared/models';
+import { AuthData, User } from '@app/core/models';
 import { environment } from '@environments/environment';
 
 @Component({
