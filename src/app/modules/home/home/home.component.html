@@ -7,7 +7,7 @@
   </div>
   <div class="group">
     <h1><span>{{ groupName }}</span><span>2nd Lounge</span></h1>
-    <h1 *ngIf="market" class="clone">
+    <h1 class="clone">
       <span (click)="showGoodsBy('group')" [ngClass]="{ on: market === 'group' }">{{ groupName }}</span>
       <span (click)="showGoodsBy('lounge')" [ngClass]="{ on: market === 'lounge' }">2nd Lounge</span>
     </h1>
@@ -17,13 +17,18 @@
   <nav class="sorting">
     <input id="c1" type="checkbox"
            [checked]="exceptSoldOut"
-           (change)="onClickSoldoutFilter($event)">
+           (change)="onClickExceptSoldOut($event)">
     <label for="c1">&nbsp;품절상품 제외</label>
   </nav>
-  <!--<section class="list_nothing" *ngIf="!goods$">-->
-    <!--<p>등록된 상품이 없습니다.</p>-->
-  <!--</section>-->
-  <ul class="large_list" id="goods_list">
+  <!--<ng-container *ngIf="(goodsList$ | async)?.length > 0; then list; else empty">-->
+  <!--</ng-container>-->
+  <!--<ng-template #empty>-->
+    <!--<section class="list_nothing">-->
+      <!--<p>등록된 상품이 없습니다.</p>-->
+    <!--</section>-->
+  <!--</ng-template>-->
+  <!--<ng-template #list>-->
+    <ul class="large_list" id="goods_list">
     <li *ngFor="let goods of goodsList$ | async">
       <div [ngClass]="{'item': true, 'soldout': goods.soldout}">
         <a [routerLink]="['/', market, 'goods', goods.id]"
@@ -52,6 +57,7 @@
       </div>
     </li>
   </ul>
+  <!--</ng-template>-->
 </section>
 <a [routerLink]="['/', market, 'goods', 'new', 'edit']" class="write"></a>
 <a href="#" class="top"></a>
