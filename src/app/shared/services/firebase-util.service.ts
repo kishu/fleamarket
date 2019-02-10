@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { DocumentChangeAction } from '@angular/fire/firestore';
 
 import * as firebase from 'firebase/app';
+import FieldValue = firebase.firestore.FieldValue;
 import OrderByDirection = firebase.firestore.OrderByDirection;
 import WhereFilterOp = firebase.firestore.WhereFilterOp;
 
@@ -22,7 +23,9 @@ export class FirebaseUtilService {
 
     if (options.where) {
       options.where.forEach(where => {
-        query = query.where(where[0], where[1] as WhereFilterOp, where[2]);
+        if (where) {
+          query = query.where(where[0], where[1] as WhereFilterOp, where[2]);
+        }
       });
     }
 
@@ -41,4 +44,9 @@ export class FirebaseUtilService {
       ...action.payload.doc.data()
     }));
   }
+
+  static getServerTimeStamp(): FieldValue {
+    return FieldValue.serverTimestamp();
+  }
+
 }
