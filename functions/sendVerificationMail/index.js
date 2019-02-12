@@ -12,7 +12,7 @@ module.exports = functions
   // .region('asia-northeast1')
   .https.onRequest((req, res) => {
     return cors(req, res, () => {
-      const {to, corpName, authCode} = req.body.data;
+      const {to, groupName, verificationCode} = req.body.data;
 
       const msg = {
         to,
@@ -21,7 +21,7 @@ module.exports = functions
           name: '세컨드마켓'
         },
         templateId: 'd-5bd40ca17da84a4b95fa1248aaf72ce0',
-        dynamic_template_data: {corpName, authCode}
+        dynamic_template_data: {groupName, verificationCode}
       };
 
       sgMail.send(msg).then(() => {

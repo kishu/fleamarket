@@ -1,6 +1,6 @@
 //const functions = require('firebase-functions');
 
-exports.sendAuthMail = require('./sendAuthMail');
+exports.sendVerificationMail = require('./sendVerificationMail');
 exports.createCommentTrigger = require('./createCommentTrigger');
 
 // // Create and Deploy Your First Cloud Functions
