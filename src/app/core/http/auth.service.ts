@@ -12,8 +12,6 @@ import { Group, User } from '@app/core/models';
   providedIn: 'root'
 })
 export class AuthService {
-  // private _user: User | null;
-  // private _group: Group | null;
 
   constructor(
     private loggedIn: LoggedIn,
@@ -79,7 +77,7 @@ export class AuthService {
     );
   }
 
-  login(target: string) {
+  signIn(target: string) {
     let provider;
 
     if (target === 'facebook') {
@@ -95,8 +93,10 @@ export class AuthService {
     return this.afAuth.auth.signInWithPopup(provider);
   }
 
-  logout() {
-    return this.afAuth.auth.signOut();
+  signOut() {
+    return this.afAuth.auth.signOut().then(
+      () => this.loggedIn.unsubscribe()
+    );
   }
 
 }

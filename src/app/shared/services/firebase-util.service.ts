@@ -50,6 +50,28 @@ export class FirebaseUtilService {
     }));
   }
 
+  static dispatchAction(action: any) {
+    if (action.payload.exists) {
+      return {
+        id: action.payload.id,
+        ...action.payload.data()
+      };
+    } else {
+      return null;
+    }
+  }
+
+  static dispatchSnapshot(snapshot: any) {
+    if (snapshot.exists) {
+      return {
+        id: snapshot.id,
+        ...snapshot.data()
+      };
+    } else {
+      return null;
+    }
+  }
+
   static getServerTimeStamp(): FieldValue {
     return FieldValue.serverTimestamp();
   }

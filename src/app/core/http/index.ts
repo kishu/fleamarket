@@ -7,3 +7,4 @@ export * from './group.service';
 export * from './interest.service';
 export * from './notification.service';
 export * from './user.service';
+export * from './verification.service';

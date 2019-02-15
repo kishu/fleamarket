@@ -12,9 +12,9 @@ export interface LoginInfo {
 }
 
 export enum GroupType {
-  Corp = 'CORP',
-  School = 'SCHOOL',
-  Apt = 'APT'
+  Corp = 'corp',
+  School = 'school',
+  Apt = 'atp'
 }
 
 export const enum Market {
@@ -31,7 +31,7 @@ export class Group {
   id?: string;
   type: GroupType;   // 'corp', 'apt', 'school' ...
   name: string;
-  market: string;
+  market: string; // todo remove
   domain: string;
 }
 
@@ -77,6 +77,14 @@ export class Notification {
   };
   isRead: boolean;
   created: firestore.Timestamp;
+}
+
+export class Verification {
+  id?: string;
+  groupRef: firestore.DocumentReference;
+  displayName: string;
+  email: string;
+  created: firestore.Timestamp | firestore.FieldValue;
 }
 
 export * from './goods';

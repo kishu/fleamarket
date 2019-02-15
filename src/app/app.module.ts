@@ -43,7 +43,7 @@ export function resolveAuthInfo(authService: AuthService) {
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
-    AngularFirestoreModule.enablePersistence(),
+    // AngularFirestoreModule.enablePersistence(),
     SharedModule,
     HomeModule,
     AuthModule,
