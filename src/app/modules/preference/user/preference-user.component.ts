@@ -93,11 +93,9 @@ export class PreferenceUserComponent implements OnInit {
       if (this.imageFile) {
         this.upload().pipe(
           map(images => Object.assign({photoURL: images[0]}, this.preferenceForm.value)),
-          tap(preference => this.auth.user = Object.assign(this.auth.user, preference)),
           switchMap(preference => this.userService.updatePreference(id, preference))
         ).subscribe(this.success, this.error);
       } else {
-        this.auth.user = Object.assign(this.auth.user, this.preferenceForm.value);
         this.userService.updatePreference(id, this.preferenceForm.value).then(this.success, this.error);
       }
     }
