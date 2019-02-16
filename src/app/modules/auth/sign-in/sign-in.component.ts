@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { first, map, switchMap, tap } from 'rxjs/operators';
 import { LoggedIn } from '@app/core/logged-in.service';
 import { AuthService, GroupService, UserService, VerificationService } from '@app/core/http';
 import { User, Verification } from '@app/core/models';
@@ -27,54 +28,46 @@ export class SignInComponent implements OnInit {
     private verificationService: VerificationService,
   ) {
     const token = route.snapshot.queryParamMap.get('token');
+    const isValidOf = (v) => {
+      const created = v.created as Timestamp;
+      const elapsed = (Date.now() - created.toMillis()) / 1000 / 60;
+      return of(elapsed <= 10);
+    };
     this.verificationService.get(token)
-      .subscribe(verification => {
-        if (verification) {
-          this.verification = verification;
-          const created = verification.created as Timestamp;
-          const elapsed = (Date.now() - created.toMillis()) / 1000 / 60;
-
-          if (elapsed > 10) {
-            this.router.navigate(['/verification']);
-          }
-        } else {
-          this.router.navigate(['/verification']);
-        }
-      });
+      .pipe(
+        tap(v => this.verification = v),
+        switchMap(v => v ? isValidOf(v) : of(false)))
+      .subscribe(b => !b && this.router.navigate(['/verification']));
   }
 
   ngOnInit() {
   }
 
   onClickSignIn(target: string) {
+    const verification = this.verification;
+
     this.authService.signIn(target).then((result) => {
       const uid = result.user.uid;
-      this.userService.getUser(result.user.uid)
-        .pipe(
-          switchMap(user => {
-            const verification = this.verification;
-            if (user) {
-              return this.userService.updateDisplayName(uid, verification.displayName).then(() => {
-                this.loggedIn.subscribe();
-                this.loggedIn.userSource.next(user.id);
-              });
-            } else {
-              const newUser = {
-                groupRef: verification.groupRef,
-                email: verification.email,
-                displayName: verification.displayName,
-                photoURL: environment.defaultPhotoURL,
-                notice: true,
-                desc: `세컨드마켓 ${verification.displayName}입니다!`
-              } as User;
-              return this.userService.setUser(uid, newUser).then(() => {
-                this.loggedIn.subscribe();
-                this.loggedIn.userSource.next(uid);
-              });
-            }
-          })
-        ).subscribe(() => {
+      const newUser = {
+        groupRef: verification.groupRef,
+        email: verification.email,
+        displayName: verification.displayName,
+        photoURL: environment.defaultPhotoURL,
+        notice: true,
+        desc: `세컨드마켓 ${verification.displayName}입니다!`
+      } as User;
+
+      this.userService.getUser(uid).pipe(
+        map(user => user ? user : newUser),
+        switchMap((user: User) =>
+          user.id ?
+            this.userService.updateDisplayName(user.id, verification.displayName) :
+            this.userService.setUser(uid, user)
+        )
+      ).subscribe(() => {
+        this.loggedIn.user$(uid).pipe(first()).subscribe((_) => {
           this.router.navigate(['/group']);
+        });
       });
     });
   }

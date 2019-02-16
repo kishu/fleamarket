@@ -107,7 +107,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
       const sendMail$ = sendMail({
         to: email,
         groupName: this.mailForm.get('group').value.name,
-        authCode: this.verificationCode
+        verificationCode: this.verificationCode
       });
 
       const verification = {
@@ -116,14 +116,14 @@ export class VerificationComponent implements OnInit, OnDestroy {
         email,
         created: FirebaseUtilService.getServerTimeStamp()
       } as Verification;
+
       const verification$ = this.verificationSerice.add(verification);
 
-      // return sendMail$.pipe(
-      return zip(of(true), verification$)
-        .subscribe(([, ref]) => {
+      return zip(sendMail$, verification$)
+        .subscribe(([, v]) => {
           this.submitting = false;
-          this.token = ref.id;
-          console.log(this.verificationCode, this.token);
+          this.token = v.id;
+          console.log(this.verificationCode);
           alert('인증 메일을 발송했습니다');
 
           this.mailSent = true;
@@ -149,9 +149,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
   }
 
   onClickSignOut() {
-    this.authService.signOut().then(
-      () => this.router.navigate(['/'])
-    );
+    this.authService.signOut();
   }
 
 }

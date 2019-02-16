@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable} from 'rxjs';
 import { first, map } from 'rxjs/operators';
-import { User, Group, UserPreference } from '@app/core/models';
+import { User, UserPreference } from '@app/core/models';
 import { FirebaseUtilService } from '@app/shared/services';
 
 @Injectable({
@@ -13,11 +13,6 @@ export class UserService {
 
   constructor(private afs: AngularFirestore) {
     this.usersCollection = afs.collection<User>('users');
-  }
-
-  // todo remove
-  getGroupRef(id) {
-    return this.afs.collection('groups').doc<Group>(id).ref;
   }
 
   getUser(uid): Observable<User | null> {

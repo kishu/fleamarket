@@ -95,7 +95,7 @@ export class AuthService {
 
   signOut() {
     return this.afAuth.auth.signOut().then(
-      () => this.loggedIn.unsubscribe()
+      () => this.loggedIn.user$(null).pipe(first())
     );
   }
 

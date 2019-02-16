@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
-import { first, map, tap } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { FirebaseUtilService } from '@app/shared/services';
 import { Verification } from '@app/core/models';
 
@@ -24,7 +24,6 @@ export class VerificationService {
     return this.afs.doc<Verification>(`verifications/${id}`)
       .snapshotChanges().pipe(
         first(),
-        tap(_ => console.log(_)),
         map(FirebaseUtilService.dispatchAction)
       );
   }
