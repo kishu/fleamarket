@@ -17,7 +17,7 @@ import { AppRoutingModule } from '@app/app-routing.module';
 // providers
 import { AuthGuard } from '@app/shared/guards';
 import { AuthService } from '@app/core/http';
-import { LoggedIn } from '@app/core/logged-in.service';
+import { SignInService } from '@app/core/sign-in.service';
 // components
 import { AppComponent } from '@app/app.component';
 // environment
@@ -53,7 +53,7 @@ export function resolveAuthInfo(authService: AuthService) {
   ],
   providers: [
     Location,
-    LoggedIn,
+    SignInService,
     AuthGuard,
     AuthService,
     PersistenceService,

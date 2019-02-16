@@ -5,7 +5,7 @@ import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { first, switchMap, tap } from 'rxjs/operators';
-import { LoggedIn } from '@app/core/logged-in.service';
+import { SignInService } from '@app/core/sign-in.service';
 import { Group, User } from '@app/core/models';
 
 @Injectable({
@@ -14,7 +14,7 @@ import { Group, User } from '@app/core/models';
 export class AuthService {
 
   constructor(
-    private loggedIn: LoggedIn,
+    private signIn: SignInService,
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore) { }
 
@@ -60,18 +60,18 @@ export class AuthService {
       }),
       switchMap(user => {
         if (user) {
-          this.loggedIn.user = user;
+          this.signIn.user = user;
           return group$(user);
         } else {
-          this.loggedIn.user = null;
+          this.signIn.user = null;
           return of(null);
         }
       }),
       tap(group => {
         if (group) {
-          this.loggedIn.group = group;
+          this.signIn.group = group;
         } else {
-          this.loggedIn.group = null;
+          this.signIn.group = null;
         }
       })
     );
@@ -95,7 +95,7 @@ export class AuthService {
 
   signOut() {
     return this.afAuth.auth.signOut().then(
-      () => this.loggedIn.user$(null).pipe(first())
+      () => this.signIn.user$(null).pipe(first())
     );
   }
 

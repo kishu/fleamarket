@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
-import { LoggedIn } from '@app/core/logged-in.service';
+import { SignInService } from '@app/core/sign-in.service';
 import { AuthService, CommentService, GoodsService, GoodsListService, InterestService } from '@app/core/http';
 import { LocationService } from '@app/shared/services';
 import { Comment, Goods, Market, User } from '@app/core/models';
@@ -32,7 +32,7 @@ export class GoodsDetailComponent implements OnInit {
 
   get interested() {
     return this.goods.interests.findIndex(
-      item => this.loggedIn.getUserRef().isEqual(item)
+      item => this.signIn.getUserRef().isEqual(item)
     ) > -1;
   }
 
@@ -41,7 +41,7 @@ export class GoodsDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private locationService: LocationService,
-    private loggedIn: LoggedIn,
+    private signIn: SignInService,
     private authService: AuthService,
     private commentService: CommentService,
     private goodsService: GoodsService,
@@ -59,7 +59,7 @@ export class GoodsDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    const user = this.loggedIn.user;
+    const user = this.signIn.user;
     this.route.params.pipe(
       pluck('goodsId')
     ).subscribe(() => {
@@ -77,7 +77,7 @@ export class GoodsDetailComponent implements OnInit {
   }
 
   commentAuthority(comment) {
-    return comment.userRef.isEqual(this.loggedIn.getUserRef());
+    return comment.userRef.isEqual(this.signIn.getUserRef());
   }
 
   onMenuChange(menu: string) {
@@ -106,7 +106,7 @@ export class GoodsDetailComponent implements OnInit {
 
   onClickInterest() {
     const goods = this.goods;
-    const userRef = this.loggedIn.getUserRef();
+    const userRef = this.signIn.getUserRef();
     const index = goods.interests.findIndex(item => userRef.isEqual(item));
     const interest = {
       userRef: userRef,
@@ -149,11 +149,11 @@ export class GoodsDetailComponent implements OnInit {
 
       const comment: Comment = {
         market: this.route.snapshot.paramMap.get('market') as Market,
-        userRef: this.loggedIn.getUserRef(),
+        userRef: this.signIn.getUserRef(),
         goodsRef: this.commentService.getGoodsRef(this.goods.id),
         user: {
-          displayName: this.loggedIn.user.displayName,
-          photoURL: this.loggedIn.user.photoURL
+          displayName: this.signIn.user.displayName,
+          photoURL: this.signIn.user.photoURL
         },
         body: this.commentForm.get('body').value as string,
         created: this.commentService.getServerTimeStamp(),

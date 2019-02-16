@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { LoggedIn } from '@app/core/logged-in.service';
+import { SignInService } from '@app/core/sign-in.service';
 import { LocationService } from '@app/shared/services';
 import { AuthService, FileUploadService, UserService } from '@app/core/http';
 import { SpinnerService } from '@app/shared/services/spinner.service';
@@ -29,14 +29,14 @@ export class PreferenceUserComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
-    private loggedIn: LoggedIn,
+    private signIn: SignInService,
     private locationService: LocationService,
     private authService: AuthService,
     private userService: UserService,
     private fileUploadService: FileUploadService,
     private spinnerService: SpinnerService
   ) {
-    const user = this.loggedIn.user;
+    const user = this.signIn.user;
     this.photoURL = user.photoURL;
 
     this.preferenceForm = this.fb.group({
@@ -90,16 +90,16 @@ export class PreferenceUserComponent implements OnInit {
       this.submitting = true;
       this.spinnerService.show(true);
 
-      const id = this.loggedIn.user.id;
+      const id = this.signIn.user.id;
 
       if (this.imageFile) {
         this.upload().pipe(
           map(images => Object.assign({photoURL: images[0]}, this.preferenceForm.value)),
-          tap(preference => this.loggedIn.user = Object.assign(this.loggedIn.user, preference)),
+          tap(preference => this.signIn.user = Object.assign(this.signIn.user, preference)),
           switchMap(preference => this.userService.updatePreference(id, preference))
         ).subscribe(this.success, this.error);
       } else {
-        this.loggedIn.user = Object.assign(this.loggedIn.user, this.preferenceForm.value);
+        this.signIn.user = Object.assign(this.signIn.user, this.preferenceForm.value);
         this.userService.updatePreference(id, this.preferenceForm.value).then(this.success, this.error);
       }
     }

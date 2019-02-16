@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable } from 'rxjs';
 import {  map } from 'rxjs/operators';
 import { FirebaseQueryBuilderOptions, FirebaseUtilService } from '@app/shared/services';
-import { LoggedIn } from '@app/core/logged-in.service';
+import { SignInService } from '@app/core/sign-in.service';
 import { Notification } from '@app/core/models';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class NotificationService {
 
   constructor(
     private afs: AngularFirestore,
-    private loggedIn: LoggedIn,
+    private signIn: SignInService,
     ) {
     this.notificationCollection = afs.collection<Notification>('notifications');
   }
@@ -22,7 +22,7 @@ export class NotificationService {
   getNotifications(): Observable<Notification[]> {
     const queryFn = (ref) => {
       const options: FirebaseQueryBuilderOptions = {
-        where: [['userRef', '==',  this.loggedIn.getUserRef()]],
+        where: [['userRef', '==',  this.signIn.getUserRef()]],
         orderBy: [['created', 'desc']],
         limit: 150
       };

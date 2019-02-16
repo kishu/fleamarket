@@ -4,7 +4,7 @@ import { DocumentReference } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { first, map, tap } from 'rxjs/operators';
 import { UserService, GoodsService } from '@app/core/http';
-import { LoggedIn } from '@app/core/logged-in.service';
+import { SignInService } from '@app/core/sign-in.service';
 import { Goods } from '@app/core/models';
 
 @Injectable({
@@ -12,7 +12,7 @@ import { Goods } from '@app/core/models';
 })
 export class GoodsGuard implements CanActivate {
   constructor(
-    private loggedIn: LoggedIn,
+    private signIn: SignInService,
     private userService: UserService,
     private goodsService: GoodsService
     ) { }
@@ -21,7 +21,7 @@ export class GoodsGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     const list = next.paramMap.get('market');
-    const userGroupRef: DocumentReference = this.loggedIn.user.groupRef;
+    const userGroupRef: DocumentReference = this.signIn.user.groupRef;
     const goodsId = next.paramMap.get('goodsId');
     const selectedGoods = this.goodsService.cachedGoods;
 

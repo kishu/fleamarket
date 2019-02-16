@@ -9,7 +9,7 @@ import { FirebaseUtilService } from '@app/shared/services';
 @Injectable({
   providedIn: 'root'
 })
-export class LoggedIn {
+export class SignInService {
   user: User;
   group: Group;
 

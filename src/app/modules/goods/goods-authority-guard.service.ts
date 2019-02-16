@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { LoggedIn } from '@app/core/logged-in.service';
+import { SignInService } from '@app/core/sign-in.service';
 import { GoodsService } from '@app/core/http';
 
 @Injectable({
@@ -10,13 +10,13 @@ import { GoodsService } from '@app/core/http';
 })
 export class GoodsAuthorityGuard implements CanActivate {
   constructor(
-    private loggedIn: LoggedIn,
+    private signIn: SignInService,
     private goodsService: GoodsService
   ) { }
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    const user = this.loggedIn.user;
+    const user = this.signIn.user;
     const goodsId = next.paramMap.get('goodsId');
 
     if (goodsId === 'new') {

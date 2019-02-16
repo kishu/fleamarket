@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { first, map, switchMap, tap } from 'rxjs/operators';
-import { LoggedIn } from '@app/core/logged-in.service';
+import { SignInService } from '@app/core/sign-in.service';
 import { AuthService, GroupService, UserService, VerificationService } from '@app/core/http';
 import { User, Verification } from '@app/core/models';
 import { environment } from '@environments/environment';
@@ -21,7 +21,7 @@ export class SignInComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private loggedIn: LoggedIn,
+    private signIn: SignInService,
     private authService: AuthService,
     private userService: UserService,
     private groupService: GroupService,
@@ -65,7 +65,7 @@ export class SignInComponent implements OnInit {
             this.userService.setUser(uid, user)
         )
       ).subscribe(() => {
-        this.loggedIn.user$(uid).pipe(first()).subscribe((_) => {
+        this.signIn.user$(uid).pipe(first()).subscribe((_) => {
           this.router.navigate(['/group']);
         });
       });

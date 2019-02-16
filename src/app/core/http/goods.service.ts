@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { first, map } from 'rxjs/operators';
-import { LoggedIn } from '@app/core/logged-in.service';
+import { SignInService } from '@app/core/sign-in.service';
 import { Goods, User } from '@app/core/models';
 
 import * as firebase from 'firebase/app';
@@ -19,7 +19,7 @@ export class GoodsService {
   private goodsCollection: AngularFirestoreCollection<Goods>;
 
   constructor(
-    private loggedIn: LoggedIn,
+    private signIn: SignInService,
     private afs: AngularFirestore
   ) {
     this.goodsCollection = afs.collection<Goods>('goods');
@@ -76,9 +76,9 @@ export class GoodsService {
   }
 
   getNewGoods(): Goods {
-    const user = this.loggedIn.user;
+    const user = this.signIn.user;
     return {
-      userRef: this.loggedIn.getUserRef(),
+      userRef: this.signIn.getUserRef(),
       user: {
         displayName: user.displayName,
         photoURL: user.photoURL,
