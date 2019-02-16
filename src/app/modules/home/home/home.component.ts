@@ -3,8 +3,7 @@ import { ViewportScroller } from '@angular/common';
 import { ActivatedRoute, Router, Scroll } from '@angular/router';
 import { BehaviorSubject, combineLatest, Observable, } from 'rxjs';
 import { filter, first, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
-import { SignInService } from '@app/core/sign-in.service';
-import { InterestService, GoodsService, GoodsListService } from '@app/core/http';
+import { AuthService, InterestService, GoodsService, GoodsListService } from '@app/core/http';
 import { PersistenceService } from '@app/shared/services';
 import { Goods } from '@app/core/models';
 
@@ -25,7 +24,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private signIn: SignInService,
+    private auth: AuthService,
     private interestService: InterestService,
     private goodsService: GoodsService,
     private goodsListService: GoodsListService,
@@ -34,8 +33,8 @@ export class HomeComponent implements OnInit {
   ) {
     const exceptSoldOut = this.persistenceService.get('exceptSoldOut') || false;
 
-    this.userPhotoURL = this.signIn.user.photoURL;
-    this.groupName = this.signIn.group.name;
+    this.userPhotoURL = this.auth.user.photoURL;
+    this.groupName = this.auth.group.name;
     this.market = this.route.snapshot.paramMap.get('market');
     this.exceptSoldOut$ = new BehaviorSubject(exceptSoldOut);
 
@@ -79,7 +78,7 @@ export class HomeComponent implements OnInit {
 
   interested(goods: Goods) {
     return goods.interests.findIndex(
-      item => this.signIn.getUserRef().isEqual(item)
+      item => this.auth.getUserRef().isEqual(item)
     ) > -1;
   }
 
@@ -88,7 +87,7 @@ export class HomeComponent implements OnInit {
   }
 
   onClickInterest(goods: Goods) {
-    const userRef = this.signIn.getUserRef();
+    const userRef = this.auth.getUserRef();
     const index = goods.interests.findIndex(item => userRef.isEqual(item));
     const interest = {
       userRef: userRef,

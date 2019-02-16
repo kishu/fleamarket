@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { forkJoin, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { SignInService } from '@app/core/sign-in.service';
 import { AuthService, UserService } from '@app/core/http';
 import { PersistenceService } from '@app/shared/services';
 
@@ -12,32 +11,25 @@ import { PersistenceService } from '@app/shared/services';
 export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
-    private signIn: SignInService,
-    private authService: AuthService,
+    private auth: AuthService,
     private userService: UserService,
     private persistenceService: PersistenceService ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return forkJoin(this.authService.afUser, of(this.signIn.user)).pipe(
-      switchMap(([afUser, user]) => {
-        // 인트로를 안본 경우 -> 무조건
-        const viewIntro = this.persistenceService.get('viewIntro');
 
-        if (!viewIntro) {
-          this.router.navigate(['intro']);
-          return of(false);
-        }
+    if (!this.persistenceService.get('viewIntro')) {
+      this.router.navigate(['intro']);
+      return false;
+    }
 
-        if (!afUser) {
-          this.router.navigate(['verification']);
-          return of(false);
-        }
+    if (!this.auth.user) {
+      this.router.navigate(['verification']);
+      return false;
+    }
 
-        return of(true);
-      })
-    );
+    return true;
   }
 
 }

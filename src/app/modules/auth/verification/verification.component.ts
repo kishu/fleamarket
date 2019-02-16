@@ -123,7 +123,6 @@ export class VerificationComponent implements OnInit, OnDestroy {
         .subscribe(([, v]) => {
           this.submitting = false;
           this.token = v.id;
-          console.log(this.verificationCode);
           alert('인증 메일을 발송했습니다');
 
           this.mailSent = true;
@@ -132,6 +131,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
         },
         (err) => {
           alert(err.message);
+          this.submitting = false;
           this.spinnerService.show(false);
         }
       );

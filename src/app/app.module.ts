@@ -17,7 +17,6 @@ import { AppRoutingModule } from '@app/app-routing.module';
 // providers
 import { AuthGuard } from '@app/shared/guards';
 import { AuthService } from '@app/core/http';
-import { SignInService } from '@app/core/sign-in.service';
 // components
 import { AppComponent } from '@app/app.component';
 // environment
@@ -26,9 +25,16 @@ import { environment } from '@environments/environment';
 import { PersistenceService } from '@app/shared/services';
 import { SpinnerService } from '@app/shared/services/spinner.service';
 import { SpinnerComponent } from '@app/shared/components/spinner/spinner.component';
+import { first } from 'rxjs/operators';
 
-export function resolveAuthInfo(authService: AuthService) {
-  return () => authService.resolveAuthInfo().toPromise();
+export function signIn(auth: AuthService) {
+  return () => {
+    return new Promise((resolve, reject) => {
+      auth.signIn$.asObservable().pipe(first()).subscribe(
+        () => resolve()
+      );
+    });
+  };
 }
 
 @NgModule({
@@ -53,12 +59,11 @@ export function resolveAuthInfo(authService: AuthService) {
   ],
   providers: [
     Location,
-    SignInService,
     AuthGuard,
     AuthService,
     PersistenceService,
     SpinnerService,
-    { provide: APP_INITIALIZER, useFactory: resolveAuthInfo, deps: [AuthService], multi: true },
+    { provide: APP_INITIALIZER, useFactory: signIn, deps: [AuthService], multi: true },
   ],
   bootstrap: [AppComponent]
 })

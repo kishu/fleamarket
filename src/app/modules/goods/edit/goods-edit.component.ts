@@ -4,9 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { SignInService } from '@app/core/sign-in.service';
 import { Goods, ImageFile } from '@app/core/models';
-import { FileUploadService, GoodsService } from '@app/core/http';
+import { AuthService, FileUploadService, GoodsService } from '@app/core/http';
 import { LocationService } from '@app/shared/services';
 import { SpinnerService } from '@app/shared/services/spinner.service';
 import { targetSelectedValidator } from '@app/modules/goods/target-selected-validator.directive';
@@ -40,7 +39,7 @@ export class GoodsEditComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private decimalPipe: DecimalPipe,
-    private signIn: SignInService,
+    private auth: AuthService,
     private locationService: LocationService,
     private goodsService: GoodsService,
     private fileUploadService: FileUploadService,
@@ -48,8 +47,8 @@ export class GoodsEditComponent implements OnInit {
   ) {
     this.newGoods = ( this.route.snapshot.params['goodsId'] === 'new' );
     this.action = this.newGoods ? '등록' : '수정';
-    this.back = this.newGoods ? this.signIn.group.name : '돌아가기';
-    this.groupName = this.signIn.group.name;
+    this.back = this.newGoods ? this.auth.group.name : '돌아가기';
+    this.groupName = this.auth.group.name;
     this.goods = this.newGoods ?
       this.goodsService.getNewGoods() :
       this.goodsService.getSelectedGoods();

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SignInService } from '@app/core/sign-in.service';
-import { NotificationService } from '@app/core/http';
+import { AuthService, NotificationService } from '@app/core/http';
 import { LocationService } from '@app/shared/services';
 import { Notification } from '@app/core/models';
 
@@ -15,11 +14,11 @@ export class PreferenceNotificationComponent implements OnInit {
   notifications$: Observable<Notification[]>;
 
   constructor(
-    private signIn: SignInService,
+    private auth: AuthService,
     private locationService: LocationService,
     private notificationService: NotificationService
   ) {
-    const user = this.signIn.user;
+    const user = this.auth.user;
     this.user = {
       photoURL: user.photoURL,
       displayName: user.displayName,

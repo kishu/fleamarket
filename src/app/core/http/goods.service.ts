@@ -3,12 +3,13 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { first, map } from 'rxjs/operators';
-import { SignInService } from '@app/core/sign-in.service';
+import { AuthService } from '@app/core/http/auth.service';
 import { Goods, User } from '@app/core/models';
 
 import * as firebase from 'firebase/app';
 import FieldValue = firebase.firestore.FieldValue;
 import DocumentReference = firebase.firestore.DocumentReference;
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class GoodsService {
   private goodsCollection: AngularFirestoreCollection<Goods>;
 
   constructor(
-    private signIn: SignInService,
+    private auth: AuthService,
     private afs: AngularFirestore
   ) {
     this.goodsCollection = afs.collection<Goods>('goods');
@@ -76,9 +77,9 @@ export class GoodsService {
   }
 
   getNewGoods(): Goods {
-    const user = this.signIn.user;
+    const user = this.auth.user;
     return {
-      userRef: this.signIn.getUserRef(),
+      userRef: this.auth.getUserRef(),
       user: {
         displayName: user.displayName,
         photoURL: user.photoURL,

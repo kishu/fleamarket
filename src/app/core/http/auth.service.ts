@@ -1,79 +1,29 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
-import { Observable, of } from 'rxjs';
-import { fromPromise } from 'rxjs/internal-compatibility';
-import { first, switchMap, tap } from 'rxjs/operators';
-import { SignInService } from '@app/core/sign-in.service';
+import { AngularFirestore, } from '@angular/fire/firestore';
+import { of, Subject, Subscription, zip } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { Group, User } from '@app/core/models';
+import { FirebaseUtilService } from '@app/shared/services';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  user: User;
+  group: Group;
+  signIn$ = new Subject<boolean>();
+
+  private subscription: Subscription;
 
   constructor(
-    private signIn: SignInService,
     private afAuth: AngularFireAuth,
-    private afs: AngularFirestore) { }
-
-  get afUser(): Observable<firebase.User> {
-    return this.afAuth.user.pipe(first());
-  }
-
-  resolveAuthInfo() {
-    const afUser$ = this.afAuth.user.pipe(first());
-
-    const user$ = id => {
-      return this.afs.doc<User>(`users/${id}`).snapshotChanges().pipe(
-        first(),
-        switchMap(user => {
-          if (user.payload.exists) {
-            return of({id: user.payload.id, ...user.payload.data()} as User);
-          } else {
-            return of(null);
-          }
-        })
-      );
-    };
-
-    const group$ = user => {
-      const groupRef = user.groupRef as DocumentReference;
-      return fromPromise(groupRef.get()).pipe(
-        first(),
-        switchMap(group => {
-          if (group.exists) {
-            return of({id: group.id, ...group.data()} as Group);
-          }
-        })
-      );
-    };
-
-    return afUser$.pipe(
-      switchMap(afUser => {
-        if (afUser) {
-          return user$(afUser.uid);
-        } else {
-          return of(null);
-        }
-      }),
-      switchMap(user => {
-        if (user) {
-          this.signIn.user = user;
-          return group$(user);
-        } else {
-          this.signIn.user = null;
-          return of(null);
-        }
-      }),
-      tap(group => {
-        if (group) {
-          this.signIn.group = group;
-        } else {
-          this.signIn.group = null;
-        }
-      })
+    private afs: AngularFirestore) {
+    this.afAuth.user.subscribe(user =>
+      user ?
+        this.subscribeUser(user.uid) :
+        this.unSubscribeUser()
     );
   }
 
@@ -94,9 +44,48 @@ export class AuthService {
   }
 
   signOut() {
-    return this.afAuth.auth.signOut().then(
-      () => this.signIn.user$(null).pipe(first())
+    return this.afAuth.auth.signOut();
+  }
+
+  signInUser$(id: string) {
+    const user$ = () => {
+      return this.afs.doc(`users/${id}`).snapshotChanges()
+        .pipe(map(FirebaseUtilService.dispatchAction));
+    };
+
+    const group$ = (user: User) => {
+      return user.groupRef.get()
+        .then(FirebaseUtilService.dispatchSnapshot);
+    };
+
+    return user$().pipe(
+      switchMap((user: User) => zip(of(user), group$(user))),
+      tap(([user, group]) => {
+        this.user = user;
+        this.group = group;
+      })
     );
+  }
+
+  subscribeUser(id: string) {
+    this.subscription = this.signInUser$(id).subscribe(
+      () => this.signIn$.next(true)
+    );
+  }
+
+  unSubscribeUser() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    this.user = null;
+    this.group = null;
+    this.signIn$.next(false);
+  }
+
+  // todo remove
+  getUserRef(): firebase.firestore.DocumentReference {
+    return this.afs.collection('users').doc<User>(this.user.id).ref;
   }
 
 }

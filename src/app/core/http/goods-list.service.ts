@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
+import { AuthService } from '@app/core/http/auth.service';
 import { FirebaseUtilService, FirebaseQueryBuilderOptions } from '@app/shared/services';
 import { Goods } from '@app/core/models';
-import { Observable } from 'rxjs';
-import { SignInService } from '@app/core/sign-in.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +14,14 @@ export class GoodsListService {
 
   constructor(
     private afs: AngularFirestore,
-    private signIn: SignInService
+    private auth: AuthService,
   ) {
     this.goodsCollection = this.afs.collection<Goods>('goods');
   }
 
   getGoodsListBy(market: string, exceptSoldOut: boolean): Observable<Goods[]> {
     if (market === 'group') {
-      return this.getGoodsListByGroup(this.signIn.user.groupRef, exceptSoldOut);
+      return this.getGoodsListByGroup(this.auth.user.groupRef, exceptSoldOut);
     } else if (market === 'lounge') {
       return this.getGoodsListByLounge(exceptSoldOut);
     }
