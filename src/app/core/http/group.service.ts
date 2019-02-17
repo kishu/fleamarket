@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
+import { FirebaseUtilService } from '@app/shared/services';
 import { Group, GroupType } from '@app/core/models';
 
-import { FirebaseUtilService } from '@app/shared/services';
 import * as firebase from 'firebase/app';
 import DocumentReference = firebase.firestore.DocumentReference;
 
@@ -14,13 +14,16 @@ import DocumentReference = firebase.firestore.DocumentReference;
 export class GroupService {
   private groupCollection: AngularFirestoreCollection<Group>;
 
-  constructor(private readonly afs: AngularFirestore) {
+  constructor(
+    private readonly afs: AngularFirestore,
+    private firebaseUtilService: FirebaseUtilService
+  ) {
     this.groupCollection = afs.collection<Group>('groups');
   }
 
   getGroupsByType(type: GroupType): Observable<Group[]> {
     const queryFn = (ref) => {
-      return FirebaseUtilService.buildQuery(ref, {
+      return this.firebaseUtilService.buildQuery(ref, {
         where: [['type', '==', type]],
         orderBy: [['name', 'asc']]
       });
@@ -28,7 +31,7 @@ export class GroupService {
 
     return this.afs.collection('groups', queryFn).snapshotChanges().pipe(
       first(),
-      map(FirebaseUtilService.sirializeDocumentChangeActions)
+      map(this.firebaseUtilService.sirializeDocumentChangeActions)
     );
   }
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AuthService } from '@app/core/http/auth.service';
 import { FirebaseUtilService, FirebaseQueryBuilderOptions } from '@app/shared/services';
 import { Goods } from '@app/core/models';
@@ -15,6 +15,7 @@ export class GoodsListService {
   constructor(
     private afs: AngularFirestore,
     private auth: AuthService,
+    private firebaseUtilService: FirebaseUtilService
   ) {
     this.goodsCollection = this.afs.collection<Goods>('goods');
   }
@@ -55,13 +56,9 @@ export class GoodsListService {
   }
 
   getGoodsList(options: FirebaseQueryBuilderOptions): Observable<Goods[]> {
-    return this.afs.collection(
-      'goods',
-      ref => FirebaseUtilService.buildQuery(ref, options)
-    ).snapshotChanges().pipe(
-      first(),
-      map(FirebaseUtilService.sirializeDocumentChangeActions)
-    );
+    const queryFn = ref => this.firebaseUtilService.buildQuery(ref, options);
+    return this.afs.collection('goods', queryFn).get()
+      .pipe(map(this.firebaseUtilService.dispatchQuerySnapshot));
   }
 
   getGoodsListByUser(userRef: DocumentReference, market: string): Observable<Goods[]> {

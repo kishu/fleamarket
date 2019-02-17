@@ -49,7 +49,7 @@ export function signIn(auth: AuthService) {
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
-    AngularFirestoreModule.enablePersistence(),
+    // AngularFirestoreModule.enablePersistence(),
     SharedModule,
     HomeModule,
     AuthModule,

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { tap, catchError, switchMap } from 'rxjs/operators';
 import { AuthService, GroupService, UserService, VerificationService } from '@app/core/http';
 import { SpinnerService } from '@app/shared/services/spinner.service';
-import { forkJoin, Observable, of, zip } from 'rxjs';
+import { Observable, zip } from 'rxjs';
 import { Group, GroupType, Verification } from '@app/core/models';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AngularFireFunctions } from '@angular/fire/functions';
@@ -38,6 +38,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
     private groupService: GroupService,
     private userService: UserService,
     private verificationSerice: VerificationService,
+    private firebaseUtilService: FirebaseUtilService,
     private spinnerService: SpinnerService
   ) {
     this.remainTime = VerificationComponent.TIME_LIMIT;
@@ -114,7 +115,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
         groupRef: this.groupService.getRef(group.id),
         displayName,
         email,
-        created: FirebaseUtilService.getServerTimeStamp()
+        created: this.firebaseUtilService.getServerTimeStamp()
       } as Verification;
 
       const verification$ = this.verificationSerice.add(verification);

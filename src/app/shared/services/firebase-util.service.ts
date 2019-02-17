@@ -20,7 +20,7 @@ export class FirebaseUtilService {
 
   constructor() { }
 
-  static buildQuery(ref: firebase.firestore.Query, options: FirebaseQueryBuilderOptions) {
+  buildQuery(ref: firebase.firestore.Query, options: FirebaseQueryBuilderOptions) {
     let query = ref as firebase.firestore.Query;
 
     if (options.where) {
@@ -44,14 +44,14 @@ export class FirebaseUtilService {
     return query;
   }
 
-  static sirializeDocumentChangeActions(actions: DocumentChangeAction<any>[]) {
-    return actions.map(action => ({
-      id: action.payload.doc.id,
-      ...action.payload.doc.data()
-    }));
-  }
+    sirializeDocumentChangeActions(actions: DocumentChangeAction<any>[]) {
+      return actions.map(action => ({
+        id: action.payload.doc.id,
+        ...action.payload.doc.data()
+      }));
+    }
 
-  static dispatchAction(action: any) {
+  dispatchAction(action: any) {
     if (action.payload.exists) {
       return {
         id: action.payload.id,
@@ -62,11 +62,11 @@ export class FirebaseUtilService {
     }
   }
 
-  static dispatchQuerySnapshot(querySnapshot: QuerySnapshot) {
-    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  dispatchQuerySnapshot(querySnapshot: QuerySnapshot) {
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as any));
   }
 
-  static dispatchSnapshot(snapshot: any) {
+  dispatchSnapshot(snapshot: any) {
     if (snapshot.exists) {
       return {
         id: snapshot.id,
@@ -77,7 +77,7 @@ export class FirebaseUtilService {
     }
   }
 
-  static getServerTimeStamp(): FieldValue {
+  getServerTimeStamp(): FieldValue {
     return FieldValue.serverTimestamp();
   }
 

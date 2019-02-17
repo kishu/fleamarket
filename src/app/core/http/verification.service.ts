@@ -12,7 +12,10 @@ import { Verification } from '@app/core/models';
 export class VerificationService {
   private collection: AngularFirestoreCollection<Verification>;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(
+    private afs: AngularFirestore,
+    private firebaseUtilService: FirebaseUtilService
+  ) {
     this.collection = this.afs.collection<Verification>('verifications');
   }
 
@@ -24,7 +27,7 @@ export class VerificationService {
     return this.afs.doc<Verification>(`verifications/${id}`)
       .snapshotChanges().pipe(
         first(),
-        map(FirebaseUtilService.dispatchAction)
+        map(this.firebaseUtilService.dispatchAction)
       );
   }
 

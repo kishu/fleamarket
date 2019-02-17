@@ -18,8 +18,10 @@ export class AuthService {
   private subscription: Subscription;
 
   constructor(
+    private afs: AngularFirestore,
     private afAuth: AngularFireAuth,
-    private afs: AngularFirestore) {
+    private firebaseUtilService: FirebaseUtilService,
+    ) {
     this.afAuth.user.subscribe(user =>
       user ?
         this.subscribeUser(user.uid) :
@@ -50,12 +52,12 @@ export class AuthService {
   signInUser$(id: string) {
     const user$ = () => {
       return this.afs.doc(`users/${id}`).snapshotChanges()
-        .pipe(map(FirebaseUtilService.dispatchAction));
+        .pipe(map(this.firebaseUtilService.dispatchAction));
     };
 
     const group$ = (user: User) => {
       return user.groupRef.get()
-        .then(FirebaseUtilService.dispatchSnapshot);
+        .then(this.firebaseUtilService.dispatchSnapshot);
     };
 
     return user$().pipe(

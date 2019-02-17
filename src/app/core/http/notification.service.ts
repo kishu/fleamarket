@@ -15,6 +15,7 @@ export class NotificationService {
   constructor(
     private afs: AngularFirestore,
     private auth: AuthService,
+    private firebaseUtilService: FirebaseUtilService
     ) {
     this.notificationCollection = afs.collection<Notification>('notifications');
   }
@@ -26,12 +27,12 @@ export class NotificationService {
         orderBy: [['created', 'desc']],
         limit: 150
       };
-      return FirebaseUtilService.buildQuery(ref, options);
+      return this.firebaseUtilService.buildQuery(ref, options);
     };
 
     return this.afs.collection('notifications', queryFn)
       .snapshotChanges().pipe(
-        map(FirebaseUtilService.sirializeDocumentChangeActions)
+        map(this.firebaseUtilService.sirializeDocumentChangeActions)
       );
   }
 }

@@ -11,7 +11,10 @@ import { FirebaseUtilService } from '@app/shared/services';
 export class UserService {
   private usersCollection: AngularFirestoreCollection<User>;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(
+    private afs: AngularFirestore,
+    private firebaseUtilService: FirebaseUtilService
+  ) {
     this.usersCollection = afs.collection<User>('users');
   }
 
@@ -19,7 +22,7 @@ export class UserService {
     return this.afs.doc<User>(`users/${uid}`)
       .snapshotChanges().pipe(
         first(),
-        map(FirebaseUtilService.dispatchAction)
+        map(this.firebaseUtilService.dispatchAction)
       );
   }
 
