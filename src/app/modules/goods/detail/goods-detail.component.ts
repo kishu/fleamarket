@@ -107,17 +107,16 @@ export class GoodsDetailComponent implements OnInit {
     const userRef = this.auth.getUserRef();
     const index = goods.interests.findIndex(item => userRef.isEqual(item));
     const interest = {
+      market: this.market,
       userRef: userRef,
       goodsRef: this.goodsService.getGoodsRef(goods.id)
     };
 
     if (index === -1) {
       this.interestService.addInterest(interest).subscribe();
-      goods.interestCnt =  goods.interestCnt + 1;
       goods.interests.push(userRef);
     } else {
       this.interestService.removeInterest(interest).subscribe();
-      goods.interestCnt =  goods.interestCnt - 1;
       goods.interests.splice(index, 1);
     }
   }

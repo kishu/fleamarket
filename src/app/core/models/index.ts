@@ -25,6 +25,7 @@ export const enum Market {
 export class Interest {
   userRef: firestore.DocumentReference;
   goodsRef: firestore.DocumentReference;
+  market: string;
 }
 
 export class Group {

@@ -5,7 +5,7 @@ import { BehaviorSubject, combineLatest, Observable, } from 'rxjs';
 import { filter, first, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { AuthService, InterestService, GoodsService, GoodsListService } from '@app/core/http';
 import { PersistenceService } from '@app/shared/services';
-import { Goods } from '@app/core/models';
+import { Goods, Interest } from '@app/core/models';
 
 @Component({
   selector: 'app-home',
@@ -87,20 +87,19 @@ export class HomeComponent implements OnInit {
   }
 
   onClickInterest(goods: Goods) {
-    const userRef = this.auth.getUserRef();
-    const index = goods.interests.findIndex(item => userRef.isEqual(item));
-    const interest = {
-      userRef: userRef,
-      goodsRef: this.goodsService.getGoodsRef(goods.id)
+    const userRef = this.auth.userRef;
+    const index = goods.interests.findIndex(user => userRef.isEqual(user));
+    const interest: Interest = {
+      userRef,
+      goodsRef: this.goodsService.getGoodsRef(goods.id),
+      market: this.market
     };
 
     if (index === -1) {
       this.interestService.addInterest(interest).subscribe();
-      goods.interestCnt =  goods.interestCnt + 1;
       goods.interests.push(userRef);
     } else {
       this.interestService.removeInterest(interest).subscribe();
-      goods.interestCnt =  goods.interestCnt - 1;
       goods.interests.splice(index, 1);
     }
   }
