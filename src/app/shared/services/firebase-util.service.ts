@@ -5,6 +5,7 @@ import * as firebase from 'firebase/app';
 import FieldValue = firebase.firestore.FieldValue;
 import OrderByDirection = firebase.firestore.OrderByDirection;
 import WhereFilterOp = firebase.firestore.WhereFilterOp;
+import QuerySnapshot = firebase.firestore.QuerySnapshot;
 
 export interface FirebaseQueryBuilderOptions {
   where?: [string, string, any][];
@@ -59,6 +60,10 @@ export class FirebaseUtilService {
     } else {
       return null;
     }
+  }
+
+  static dispatchQuerySnapshot(querySnapshot: QuerySnapshot) {
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   }
 
   static dispatchSnapshot(snapshot: any) {
