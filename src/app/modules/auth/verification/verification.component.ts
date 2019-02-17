@@ -149,7 +149,9 @@ export class VerificationComponent implements OnInit, OnDestroy {
   }
 
   onClickSignOut() {
-    this.authService.signOut();
+    this.authService.signOut().then(
+      () => alert('logout')
+    );
   }
 
 }
