@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import * as firebase from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, } from '@angular/fire/firestore';
 import { of, Subject, Subscription, zip } from 'rxjs';
@@ -7,11 +6,15 @@ import { map, switchMap, tap } from 'rxjs/operators';
 import { Group, User } from '@app/core/models';
 import { FirebaseUtilService } from '@app/shared/services';
 
+import * as firebase from 'firebase/app';
+import DocumentReference = firebase.firestore.DocumentReference;
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   user: User;
+  userRef: DocumentReference
   group: Group;
   signIn$ = new Subject<boolean>();
 
@@ -64,6 +67,7 @@ export class AuthService {
       switchMap((user: User) => zip(of(user), group$(user))),
       tap(([user, group]) => {
         this.user = user;
+        this.userRef = this.afs.doc(`users/${user.id}`).ref;
         this.group = group;
       })
     );
