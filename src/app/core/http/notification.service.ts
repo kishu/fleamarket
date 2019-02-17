@@ -22,24 +22,10 @@ export class NotificationService {
 
   getNotifications(): Observable<Notification[]> {
     const queryFn = (ref) => ref
-    // .where('userRef', '==', this.auth.userRef)
+      .where('userRef', '==', this.auth.userRef)
       .orderBy('created', 'desc');
 
     return this.afs.collection('notifications', queryFn).get()
       .pipe(map(this.firebaseUtilService.dispatchQuerySnapshot));
-
-    //   const queryFn = (ref) => {
-    //     const options: FirebaseQueryBuilderOptions = {
-    //       where: [['userRef', '==',  this.auth.getUserRef()]],
-    //       orderBy: [['created', 'desc']],
-    //       limit: 150
-    //     };
-    //     return this.firebaseUtilService.buildQuery(ref, options);
-    //   };
-    //
-    //   return this.afs.collection('notifications', queryFn)
-    //     .snapshotChanges().pipe(
-    //       map(this.firebaseUtilService.sirializeDocumentChangeActions)
-    //     );
   }
 }
