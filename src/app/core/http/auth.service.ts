@@ -14,7 +14,7 @@ import DocumentReference = firebase.firestore.DocumentReference;
 })
 export class AuthService {
   user: User;
-  userRef: DocumentReference
+  userRef: DocumentReference;
   group: Group;
   signIn$ = new Subject<boolean>();
 

@@ -18,12 +18,12 @@
       </div>
       <ul class="alarm_list" *ngIf="notifications.length > 0">
         <li *ngFor="let notification of notifications" class="alarm_item">
-          <a [routerLink]="['/goods', notification.comment.market, notification.goodsRef.id]" style="text-decoration: none">
-            <span class="alarm_thumb" [style.backgroundImage]="'url(' + notification.fromUser.photoURL + ')'"><span class="new"></span></span>
+          <a [routerLink]="['/', notification.market, 'goods', notification.goodsRef.id]" style="text-decoration: none">
+            <span class="alarm_thumb" [style.backgroundImage]="'url(' + notification.image + ')'"><span class="new"></span></span>
             <p class="alarm_content">
-              <strong>{{ notification.fromUser.displayName }}</strong>님이
-              <strong>{{ notification.goods.title }}</strong>에 댓글을 남겼습니다:<br>
-              {{ notification.comment.body }}
+              <strong>{{ notification.fromUserDisplayName }}</strong>님이
+              <strong>{{ notification.goodsTitle }}</strong>에 댓글을 남겼습니다:<br>
+              {{ notification.body }}
             </p>
             <span class="alarm_created">{{ notification.created | fsTimestamp | moment }}</span>
           </a>
