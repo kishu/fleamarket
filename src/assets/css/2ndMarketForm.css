@@ -330,6 +330,22 @@ body {
   color: #666;
 }
 
+.button.facebook {
+  background-color: #4167b1;
+  background-image: url(../img/bi-facebook.png);
+  background-repeat: no-repeat;
+  background-position: 13px 50%;
+  background-size: auto 22px;
+}
+
+.button.google {
+  background-color: #4284f4;
+  background-image: url(../img/bi-google.png);
+  background-repeat: no-repeat;
+  background-position: 13px 50%;
+  background-size: auto 22px;
+}
+
 .comment_form .textarea {
   padding: 0;
   font-size: 14px;
