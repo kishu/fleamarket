@@ -331,6 +331,7 @@ body {
 }
 
 .button.facebook {
+  border-color: #4167b1;
   background-color: #4167b1;
   background-image: url(../img/bi-facebook.png);
   background-repeat: no-repeat;
@@ -339,6 +340,7 @@ body {
 }
 
 .button.google {
+  border-color: #4284f4;
   background-color: #4284f4;
   background-image: url(../img/bi-google.png);
   background-repeat: no-repeat;
@@ -824,7 +826,7 @@ body {
   top: 0;
   bottom: 0;
   padding-top: 60%;
-  line-height: 20px;
+  line-height: 24px;
   text-align: center;
   color: #666;
   z-index: 2;
