@@ -13,7 +13,7 @@ import Timestamp = firebase.firestore.Timestamp;
 @Component({
   selector: 'app-signin',
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.css']
+  styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent implements OnInit {
   private verification: Verification;

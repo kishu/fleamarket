@@ -4,7 +4,7 @@ import { SpinnerService } from '@app/shared/services';
 @Component({
   selector: 'app-spinner',
   templateUrl: './spinner.component.html',
-  styleUrls: ['./spinner.component.css']
+  styleUrls: ['./spinner.component.scss']
 })
 export class SpinnerComponent implements OnInit {
   show: boolean;

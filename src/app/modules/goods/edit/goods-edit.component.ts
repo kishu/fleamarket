@@ -14,7 +14,7 @@ import { environment } from '@environments/environment';
 @Component({
   selector: 'app-edit',
   templateUrl: './goods-edit.component.html',
-  styleUrls: ['./goods-edit.component.css']
+  styleUrls: ['./goods-edit.component.scss']
 })
 export class GoodsEditComponent implements OnInit {
   private submitting = false;

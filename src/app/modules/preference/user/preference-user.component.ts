@@ -12,7 +12,7 @@ import { environment } from '@environments/environment';
 @Component({
   selector: 'app-user',
   templateUrl: './preference-user.component.html',
-  styleUrls: ['./preference-user.component.css']
+  styleUrls: ['./preference-user.component.scss']
 })
 export class PreferenceUserComponent implements OnInit {
   preferenceForm: FormGroup;

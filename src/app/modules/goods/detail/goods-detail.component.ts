@@ -10,7 +10,7 @@ import { Comment, Goods, Market, User } from '@app/core/models';
 @Component({
   selector: 'app-detail',
   templateUrl: './goods-detail.component.html',
-  styleUrls: ['./goods-detail.component.css']
+  styleUrls: ['./goods-detail.component.scss']
 })
 export class GoodsDetailComponent implements OnInit {
   authority = false;

@@ -7,7 +7,7 @@ import { Notification } from '@app/core/models';
 @Component({
   selector: 'app-notification',
   templateUrl: './preference-notification.component.html',
-  styleUrls: ['./preference-notification.component.css']
+  styleUrls: ['./preference-notification.component.scss']
 })
 export class PreferenceNotificationComponent implements OnInit {
   readonly user: any;
