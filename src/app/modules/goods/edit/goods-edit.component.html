@@ -29,14 +29,6 @@
       <h3>상품 이미지 등록</h3>
       <p class="explain">상품의 상태를 알 수 있도록 여러장의 사진을 등록하는 것이 좋습니다.</p>
       <div class="attach_file">
-        <div class="goods_thumb_area">
-          <div class="goods_thumb">
-            <div class="set_profile_thumb">상품 이미지</div>
-            <input type="file" multiple
-                   accept="image/gif, image/jpeg, image/png"
-                   (change)="onChangeImage($event)">
-          </div>
-        </div>
         <div *ngFor="let image of goods.images; index as i" class="goods_thumb_area">
           <div class="goods_thumb" [style.backgroundImage]="'url(' + image + ')'">
             <div class="set_profile_thumb">{{ image }}</div>
@@ -49,6 +41,14 @@
           </div>
           <button type="button" (click)="onDeleteImageFileByKey(imageFile.key)" class="attach_delete">삭제</button>
           <button type="button" (click)="onRotateImage($event, img)" class="attach_rotate">회전</button>
+        </div>
+        <div class="goods_thumb_area">
+          <div class="goods_thumb">
+            <div class="set_profile_thumb"><small>상품 이미지</small></div>
+            <input type="file" multiple
+                   accept="image/gif, image/jpeg, image/png"
+                   (change)="onChangeImage($event)">
+          </div>
         </div>
       </div>
     </section>

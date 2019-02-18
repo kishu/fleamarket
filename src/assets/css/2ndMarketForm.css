@@ -697,7 +697,7 @@ body {
 .attach_file {
   overflow-x: auto;
   margin: 0 -15px;
-  padding: 10px 15px 5px;
+  padding: 5px 10px;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
 }
@@ -725,19 +725,19 @@ body {
   overflow: hidden;
   position: absolute;
   z-index: 2;
-  right: -5px;
-  bottom: -5px;
-  width: 20px;
-  padding: 0;
-  border: 2px solid #111;
-  border-radius: 10px;
-  background-color: #ef5359;
-  background-image: url(../img/icon_notice.png);
+  left: 50%;
+  top: 50%;
+  width: 40%;
+  height: 40%;
+  border: 0;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.3);
+  background-image: url(../img/icon-rotate.png);
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  background-size: 16px 16px;
-  line-height: 16px;
-  color: rgba(0, 0, 0, 0);
+  background-size: 80% 80%;
+  color: rgba(0, 0, 0 ,0);
+  -webkit-transform: translateX(-50%) translateY(-50%);
 }
 
 .attach_up {
@@ -771,26 +771,23 @@ body {
 }
 
 .goods_thumb_area {
-  display: inline-block;
-  /* overflow: hidden; */
+  float: left;
   position: relative;
-  width: 160px;
+  width: 33.333333%;
+  padding: 5px;
   vertical-align: top;
-}
-
-.goods_thumb_area + .goods_thumb_area {
-  margin-left: 10px;
+  box-sizing: border-box;
 }
 
 .form .goods_thumb {
   position: relative;
   z-index: 1;
-  padding-top: 56.25%;
+  padding-top: 100%;
   border-radius: 5px;
   background-color: #fff;
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  background-size: cover;
+  background-size: contain;
   overflow: hidden;
 }
 
@@ -811,7 +808,7 @@ body {
   top: 0;
   bottom: 0;
   border: 2px solid #999;
-  border-radius: 4px;
+  border-radius: 5px;
   content: '';
 }
 
@@ -826,8 +823,8 @@ body {
   right: 0;
   top: 0;
   bottom: 0;
-  padding-top: 40px;
-  line-height: 50px;
+  padding-top: 60%;
+  line-height: 20px;
   text-align: center;
   color: #666;
   z-index: 2;
@@ -838,7 +835,7 @@ body {
   left: 0;
   right: 0;
   /* top: 0; */
-  bottom: 38px;
+  bottom: 40%;
   width: 32px;
   height: 32px;
   margin: auto;
