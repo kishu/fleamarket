@@ -76,6 +76,7 @@ export class SignInComponent implements OnInit {
 
     const error = (err) => {
       alert(err.message);
+      this.spinnerService.show(false);
     };
 
     this.auth.signIn(target).then(signIn, error);
