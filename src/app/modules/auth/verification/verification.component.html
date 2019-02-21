@@ -39,20 +39,6 @@
         </div>
       </ng-container>
 
-      <div class="table margin1">
-        <input type="text"
-               name="displayName" formControlName="displayName"
-               required="required" minlength="2" maxlength="30"
-               placeholder="닉네임" class="input">
-      </div>
-
-      <ng-container *ngIf="mailForm.get('displayName') as displayName">
-        <div *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)" class="explain">
-          <span *ngIf="displayName.errors['required']">이메일 계정을 입력하세요.</span>
-          <span *ngIf="displayName.errors['minlength']">2자 이상 입력하세요.</span>
-        </div>
-      </ng-container>
-
       <button type="submit"
         [disabled]="mailForm.invalid"
         class="button margin2 verification">메일 인증하기</button>

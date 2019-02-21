@@ -98,7 +98,6 @@ export class Notification2 {
 export class Verification {
   id?: string;
   groupRef: firestore.DocumentReference;
-  displayName: string;
   email: string;
   created: firestore.Timestamp | firestore.FieldValue;
 }

@@ -2,7 +2,7 @@
   <header>
     <h2>소셜 로그인</h2>
   </header>
-  <section class="email">
+  <section *ngIf="!socialSignIn" class="email">
     <div class="join_thumb join"></div>
     <p class="explain center">세컨마켓은 소셜 로그인 후 이용하실 수 있습니다.</p>
 
@@ -21,5 +21,32 @@
     <div class="margin1">
       <button type="button" class="button" (click)="onClickSignIn('naver')">네이버(예정)</button>
     </div>
+  </section>
+
+  <section *ngIf="socialSignIn" class="verification">
+    <h3>닉네임 입력</h3>
+    <p class="explain">
+      세컨드마켓에서 사용할 닉네임을 입력해 주세요.
+    </p>
+
+    <form [formGroup]="displayNameForm" (ngSubmit)="onSubmitSignIn()" class="form margin3">
+      <div class="table margin1">
+        <input type="text"
+               name="displayName" formControlName="displayName"
+               required="required" minlength="2" maxlength="30"
+               placeholder="닉네임" class="input">
+      </div>
+
+      <ng-container *ngIf="displayNameForm.get('displayName') as displayName">
+        <div *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)" class="explain">
+          <span *ngIf="displayName.errors['required']">이메일 계정을 입력하세요.</span>
+          <span *ngIf="displayName.errors['minlength']">2자 이상 입력하세요.</span>
+        </div>
+      </ng-container>
+
+      <button type="submit"
+              [disabled]="displayNameForm.invalid"
+              class="button margin2 verification">확인</button>
+    </form>
   </section>
 </div>

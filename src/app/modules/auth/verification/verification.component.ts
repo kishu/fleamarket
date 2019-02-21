@@ -30,7 +30,6 @@ export class VerificationComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private ngZone: NgZone,
     private fns: AngularFireFunctions,
     private router: Router,
     private authService: AuthService,
@@ -99,7 +98,6 @@ export class VerificationComponent implements OnInit, OnDestroy {
       this.verificationCode = (Math.floor(1000 + Math.random() * 9000)).toString();
 
       const account = this.mailForm.get('account').value;
-      const displayName = this.mailForm.get('displayName').value;
       const group = this.mailForm.get('group').value;
       const email = `${account}@${group.domain}`;
 
@@ -112,7 +110,6 @@ export class VerificationComponent implements OnInit, OnDestroy {
 
       const verification = {
         groupRef: this.groupService.getRef(group.id),
-        displayName,
         email,
         created: this.firebaseUtilService.getServerTimeStamp()
       } as Verification;
