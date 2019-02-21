@@ -145,6 +145,24 @@ export class GoodsEditComponent implements OnInit {
     );
   }
 
+  onChangeGroup(e: any) {
+    const market = this.editForm.get('market').value;
+    const checked = e.target.checked;
+
+    if (!market.lounge && !checked) {
+      this.editForm.get('market').patchValue({group: true});
+    }
+  }
+
+  onChangeLounge(e: any) {
+    const market = this.editForm.get('market').value;
+    const checked = e.target.checked;
+
+    if (!market.group && !checked) {
+      this.editForm.get('market').patchValue({lounge: true});
+    }
+  }
+
   onChangeImage(e: any) {
     const files = e.target.files;
     for (let i = 0; i < files.length; i++) {

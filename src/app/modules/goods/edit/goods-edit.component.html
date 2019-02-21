@@ -14,12 +14,14 @@
         <div class="td">
           <input type="checkbox" id="group"
                  formControlName="group"
+                 (change)="onChangeGroup($event)"
                  class="checkbox">
           <label for="group" class="block center"><small>내 그룹</small><br><strong>{{ groupName }}</strong></label>
         </div>
         <div class="td">
           <input type="checkbox" id="lounge"
                  formControlName="lounge"
+                 (change)="onChangeLounge($event)"
                  class="checkbox">
           <label for="lounge" class="block center"><small>공개 그룹</small><br><strong>2nd Lounge</strong></label>
         </div>
