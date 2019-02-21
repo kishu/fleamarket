@@ -34,11 +34,11 @@ module.exports = functions.firestore
 
       const notificationToGoodsUser = [buildNotification(fromUser, goods.userRef, goods, comment.get('market'))];
       const notificationsToInterestedUser = interests
-        .filter(interest => interest.userRef.id !== fromUserRef.id)
         .map(interest => buildNotification(fromUser, interest.userRef, goods, interest.market));
 
       const notificationCollection = admin.firestore().collection('notifications');
       const batches = notificationToGoodsUser.concat(notificationsToInterestedUser)
+        .filter(notification => fromUserRef.id !== notification.toUserRef.id)
         .map(notification => notificationCollection.add(notification));
 
       return Promise.all(batches);
