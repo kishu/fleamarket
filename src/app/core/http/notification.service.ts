@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import {  map } from 'rxjs/operators';
-import { FirebaseQueryBuilderOptions, FirebaseUtilService } from '@app/shared/services';
+import { map } from 'rxjs/operators';
+import { FirebaseUtilService } from '@app/shared/services';
 import { AuthService } from './auth.service';
 import { Notification } from '@app/core/models';
 
@@ -22,7 +22,7 @@ export class NotificationService {
 
   getNotifications(): Observable<Notification[]> {
     const queryFn = (ref) => ref
-      .where('userRef', '==', this.auth.userRef)
+      .where('toUserRef', '==', this.auth.userRef)
       .orderBy('created', 'desc');
 
     return this.afs.collection('notifications', queryFn).get()
