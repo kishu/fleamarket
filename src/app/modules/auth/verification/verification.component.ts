@@ -1,6 +1,5 @@
-import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { tap, catchError, switchMap } from 'rxjs/operators';
 import { AuthService, GroupService, UserService, VerificationService } from '@app/core/http';
 import { SpinnerService } from '@app/shared/services/spinner.service';
 import { Observable, zip } from 'rxjs';
@@ -42,6 +41,8 @@ export class VerificationComponent implements OnInit, OnDestroy {
     private spinnerService: SpinnerService
   ) {
     this.remainTime = VerificationComponent.TIME_LIMIT;
+    this.groups$ = this.groupService.getGroupsByType(GroupType.Corp);
+
     this.mailForm = this.fb.group({
       account: '',
       group: undefined,
@@ -65,9 +66,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
     return `${minStr}:${secStr}`;
   }
 
-  ngOnInit() {
-    this.groups$ = this.groupService.getGroupsByType(GroupType.Corp);
-  }
+  ngOnInit() { }
 
   ngOnDestroy(): void {
     window.clearInterval(this.timerInterval);
