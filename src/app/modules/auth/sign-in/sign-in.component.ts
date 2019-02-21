@@ -17,11 +17,10 @@ import Timestamp = firebase.firestore.Timestamp;
   styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent implements OnInit {
-  private verification: Verification;
   displayNameForm: FormGroup;
-
+  socialSignIn = false;
+  private verification: Verification;
   private user: User;
-  private socialSignIn = false;
 
   constructor(
     private fb: FormBuilder,
