@@ -1,4 +1,116 @@
 {
-  "indexes": [],
+  "indexes": [
+    {
+      "collectionGroup": "comments",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "goodsRef", "order": "ASCENDING" },
+        { "fieldPath": "updated", "order": "ASCENDING"}
+      ]
+    },
+    {
+      "collectionGroup": "goods",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "groupRef", "order": "ASCENDING" },
+        { "fieldPath": "market.group", "order": "ASCENDING" },
+        { "fieldPath": "updated", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "groups",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "type", "order": "ASCENDING" },
+        { "fieldPath": "name", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "interests",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userRef", "order": "ASCENDING" },
+        { "fieldPath": "goodsRef", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "goods",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userRef", "order": "ASCENDING" },
+        { "fieldPath": "market.lounge", "order": "ASCENDING" },
+        { "fieldPath": "updated", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "goods",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userRef", "order": "ASCENDING" },
+        { "fieldPath": "updated", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "comments",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "goodsRef", "order": "ASCENDING" },
+        { "fieldPath": "created", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "goods",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "market.group", "order": "ASCENDING" },
+        { "fieldPath": "groupRef", "order": "ASCENDING" },
+        { "fieldPath": "soldOut", "order": "ASCENDING" },
+        { "fieldPath": "updated", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "goods",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userRef", "order": "ASCENDING" },
+        { "fieldPath": "market.group", "order": "ASCENDING" },
+        { "fieldPath": "updated", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "goods",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "market.group", "order": "ASCENDING" },
+        { "fieldPath": "groupRef", "order": "ASCENDING" },
+        { "fieldPath": "updated", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "goods",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "market.lounge", "order": "ASCENDING" },
+        { "fieldPath": "soldOut", "order": "ASCENDING" },
+        { "fieldPath": "updated", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "goods",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "market.lounge", "order": "ASCENDING" },
+        { "fieldPath": "updated", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "notifications",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "toUserRef", "order": "ASCENDING" },
+        { "fieldPath": "created", "order": "DESCENDING" }
+      ]
+    }
+  ],
   "fieldOverrides": []
 }
