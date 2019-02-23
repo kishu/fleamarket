@@ -4,7 +4,8 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { map } from 'rxjs/operators';
-import {Comment, Goods, User} from '@app/core/models';
+import { Dispatcher } from '@app/shared/utils/snapshot-dispatcher';
+import { Comment, Goods, User } from '@app/core/models';
 
 @Injectable({
   providedIn: 'root'
@@ -26,20 +27,17 @@ export class CommentService {
   }
 
   getCommentsByGoods(goodsId: string): Observable<Comment[]> {
-    const goodsRef = this.afs.collection('goods').doc<Goods>(goodsId).ref;
+    const goodsRef = this.afs.doc(`goods/${goodsId}`).ref;
+    const queryFn = (ref) => (
+      ref.where('goodsRef', '==', goodsRef)
+        .orderBy('created', 'asc')
+    );
 
-    return this.afs.collection('comments', ref => {
-      return ref.where('goodsRef', '==',  goodsRef)
-        .orderBy('updated', 'asc');
-    }).snapshotChanges().pipe(
-      map(comments => {
-        return comments.map(comment => {
-          return {
-            id: comment.payload.doc.id,
-            ...comment.payload.doc.data()
-          } as Comment;
-        });
-      })
+    return (
+      this.afs
+        .collection('comments', queryFn)
+        .snapshotChanges()
+        .pipe(map(Dispatcher.documentChangeAction))
     );
   }
 
