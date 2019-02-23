@@ -46,5 +46,5 @@ Thumbs.db
 # environments
 /src/environments/*
 
-# test script
-/@batch
+# admin script
+/@admin
