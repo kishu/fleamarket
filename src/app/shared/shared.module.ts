@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FsTimestampPipe, MomentPipe } from '@app/shared/pipes';
+import { FsTimestampPipe, DistanceInWordsToNowPipe } from '@app/shared/pipes';
 
 @NgModule({
-  declarations: [MomentPipe, FsTimestampPipe],
+  declarations: [DistanceInWordsToNowPipe, FsTimestampPipe],
   imports: [
     CommonModule
   ],
   exports: [
     FsTimestampPipe,
-    MomentPipe
+    DistanceInWordsToNowPipe
   ]
 })
 export class SharedModule { }

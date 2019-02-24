@@ -101,7 +101,7 @@
             <ng-container *ngIf="commentAuthority(comment)">
               <button type="button" (click)="onClickDeleteComment(comment)" style="border:0">삭제</button>  &middot;
             </ng-container>
-            <span class="created">{{ comment.created | fsTimestamp | moment }}</span>
+            <span class="created">{{ comment.created | fsTimestamp | distanceInWordsToNow }}</span>
           </div>
         </div>
       </li>
