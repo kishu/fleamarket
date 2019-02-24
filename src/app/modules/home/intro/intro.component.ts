@@ -1,7 +1,6 @@
-import * as $ from 'jquery';
-import 'slick-carousel';
+import { tns } from 'tiny-slider/src/tiny-slider';
 import { Component, OnInit } from '@angular/core';
-import { PersistenceService } from '../../../shared/services';
+import { PersistenceService } from '@app/shared/services';
 
 @Component({
   selector: 'app-intro',
@@ -13,12 +12,17 @@ export class IntroComponent implements OnInit {
   constructor(private persistenceService: PersistenceService ) { }
 
   ngOnInit() {
-    $(document).ready(function() {
-      $('.intro').slick({
-        infinite: false,
-        arrows: true,
-        dots: false
-      });
+    const slider = tns({
+      loop: false,
+      nav: false,
+      controlsPosition: 'bottom',
+      prevButton: false
+    } as any);
+
+    slider.events.on('transitionEnd', (info: any) => {
+      if (info.displayIndex  === info.slideCount ) {
+        info.controlsContainer.style.display = 'none';
+      }
     });
   }
 
