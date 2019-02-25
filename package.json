@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build -c staging --stats-json --delete-output-path",
-    "build:prod": "ng build -c production --stats-json --delete-output-path",
+    "build": "ng build -c staging --delete-output-path",
+    "build:prod": "ng build -c production --delete-output-path",
     "deploy": "npm run build && firebase use dev && firebase deploy --only hosting",
     "deploy:prod": "npm run build:prod && firebase use prod && firebase deploy --only hosting",
     "test": "ng test",

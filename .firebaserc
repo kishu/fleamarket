@@ -1,6 +1,6 @@
 {
   "projects": {
-    "dev": "second-market-dev",
-    "prod": "second-market"
+    "dev": "2ndmarket-dev",
+    "prod": "2ndmarket-prod"
   }
 }
