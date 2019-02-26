@@ -12,8 +12,8 @@
     ],
     "rewrites": [
       {
-        "source": "/privacy.html",
-        "destination": "privacy.html"
+        "source": "/policy.html",
+        "destination": "policy.html"
       },
       {
         "source": "**",

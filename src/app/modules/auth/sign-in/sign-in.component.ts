@@ -56,7 +56,8 @@ export class SignInComponent implements OnInit {
     this.spinnerService.show(true);
     const verification = this.verification;
 
-    const createNewUser = (displayName) => ({
+    const createNewUser = (id, displayName) => ({
+      id,
       groupRef: verification.groupRef,
       email: verification.email,
       displayName,
@@ -74,7 +75,7 @@ export class SignInComponent implements OnInit {
             this.user = user;
             this.displayNameForm.get('displayName').setValue(user.displayName);
           } else {
-            this.user = createNewUser(afUser.user.displayName);
+            this.user = createNewUser(uid, afUser.user.displayName);
             this.displayNameForm.get('displayName').setValue(afUser.user.displayName);
           }
           this.spinnerService.show(false);
