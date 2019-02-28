@@ -6,7 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireFunctionsModule } from '@angular/fire/functions';
+import { FunctionsRegionToken } from '@angular/fire/functions';
 // applications modules
 import { SharedModule } from '@app/shared/shared.module';
 import { HomeModule } from '@app/modules/home/home.module';
@@ -48,7 +49,7 @@ export function signIn(auth: AuthService) {
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    AngularFireStorageModule,
+    AngularFireFunctionsModule,
     // AngularFirestoreModule.enablePersistence(),
     SharedModule,
     HomeModule,
@@ -63,6 +64,7 @@ export function signIn(auth: AuthService) {
     AuthService,
     PersistenceService,
     SpinnerService,
+    { provide: FunctionsRegionToken, useValue: 'asia-northeast1'},
     { provide: APP_INITIALIZER, useFactory: signIn, deps: [AuthService], multi: true },
   ],
   bootstrap: [AppComponent]
