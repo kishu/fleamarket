@@ -3,9 +3,9 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 admin.firestore().settings({ timestampsInSnapshots: true });
 
-exports.sendVerificationMail = require('./sendVerificationMail');
-exports.createCommentTrigger = require('./createCommentTrigger');
-exports.createNotificationTrigger = require('./createNotificationTrigger');
+exports.sendVerificationMail = require('./src/sendVerificationMail');
+exports.createCommentTrigger = require('./src/createCommentTrigger');
+exports.createNotificationTrigger = require('./src/createNotificationTrigger');
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions

@@ -1,7 +1,9 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
-module.exports = functions.firestore
+module.exports = functions
+  .region('asia-northeast1')
+  .firestore
   .document('comments/{commentId}')
   .onCreate((comment, context) => {
     const fromUserRef = comment.get('userRef');

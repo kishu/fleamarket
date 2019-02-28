@@ -6,10 +6,11 @@ const functions = require('firebase-functions');
 const sgMail = require('@sendgrid/mail');
 
 const SENDGRID_API_KEY = functions.config().sendgrid.key;
+const TEMPLATE_ID = functions.config().sendgrid.template.verification;
 sgMail.setApiKey(SENDGRID_API_KEY);
 
 module.exports = functions
-  // .region('asia-northeast1')
+  .region('asia-northeast1')
   .https.onRequest((req, res) => {
     return cors(req, res, () => {
       const {to, groupName, verificationCode} = req.body.data;
@@ -20,7 +21,7 @@ module.exports = functions
           email: 'auth@2ndmarket.co',
           name: '세컨드마켓'
         },
-        templateId: 'd-5bd40ca17da84a4b95fa1248aaf72ce0',
+        templateId: TEMPLATE_ID,
         dynamic_template_data: {groupName, verificationCode}
       };
 
