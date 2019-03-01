@@ -1,24 +1,19 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, DocumentReference, QueryFn } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from '@app/core/http/auth.service';
-import { FirebaseUtilService, FirebaseQueryBuilderOptions } from '@app/shared/services';
 import { Goods } from '@app/core/models';
+import { Dispatcher } from '@app/shared/utils/snapshot-dispatcher';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoodsListService {
-  private goodsCollection: AngularFirestoreCollection<Goods>;
-
   constructor(
     private afs: AngularFirestore,
-    private auth: AuthService,
-    private firebaseUtilService: FirebaseUtilService
-  ) {
-    this.goodsCollection = this.afs.collection<Goods>('goods');
-  }
+    private auth: AuthService
+  ) { }
 
   getGoodsListBy(market: string, exceptSoldOut: boolean): Observable<Goods[]> {
     if (market === 'group') {
@@ -29,49 +24,45 @@ export class GoodsListService {
   }
 
   getGoodsListByGroup(groupRef: DocumentReference, exceptSoldOut: boolean): Observable<Goods[]> {
-    const options: FirebaseQueryBuilderOptions = {
-      where: [
-        ['groupRef', '==', groupRef],
-        ['market.group', '==', true],
-        exceptSoldOut ? ['soldOut', '==', false] : undefined
-      ],
-      orderBy: [
-        ['updated', 'desc']
-      ]
+    const queryFn = (ref) => {
+      let query = ref
+        .where('groupRef', '==', groupRef)
+        .where('market.group', '==', true)
+        .orderBy('updated', 'desc');
+      if (exceptSoldOut) {
+        query = query.where('soldOut', '==', false);
+      }
+      return query;
     };
-    return this.getGoodsList(options);
+    return this.getGoodsList(queryFn);
   }
 
   getGoodsListByLounge(exceptSoldOut: boolean): Observable<Goods[]> {
-    const options: FirebaseQueryBuilderOptions = {
-      where: [
-        ['market.lounge', '==', true],
-        exceptSoldOut ? ['soldOut', '==', false] : undefined
-      ],
-      orderBy: [
-        ['updated', 'desc']
-      ]
+    const queryFn = (ref) => {
+      let query = ref
+        .where('market.lounge', '==', true)
+        .orderBy('updated', 'desc');
+      if (exceptSoldOut) {
+        query = query.where('soldOut', '==', false);
+      }
+      return query;
     };
-    return this.getGoodsList(options);
-  }
-
-  getGoodsList(options: FirebaseQueryBuilderOptions): Observable<Goods[]> {
-    const queryFn = ref => this.firebaseUtilService.buildQuery(ref, options);
-    return this.afs.collection('goods', queryFn).get()
-      .pipe(map(this.firebaseUtilService.dispatchQuerySnapshot));
+    return this.getGoodsList(queryFn);
   }
 
   getGoodsListByUser(userRef: DocumentReference, market: string): Observable<Goods[]> {
-    const options: FirebaseQueryBuilderOptions = {
-      where: [
-        ['userRef', '==', userRef],
-        [`market.${market}`, '==', true]
-      ],
-      orderBy: [
-        ['updated', 'desc']
-      ]
-    };
-    return this.getGoodsList(options);
+    const queryFn = (ref) => (
+      ref
+        .where('userRef', '==', userRef)
+        .where(`market.${market}`, '==', true)
+        .orderBy('updated', 'desc')
+    );
+    return this.getGoodsList(queryFn);
+  }
+
+  getGoodsList(queryFn: QueryFn): Observable<Goods[]> {
+    return this.afs.collection('goods', queryFn).get()
+      .pipe(map(Dispatcher.querySnapshot));
   }
 
 }
