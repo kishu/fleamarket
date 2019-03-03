@@ -45,6 +45,7 @@ export class HomeComponent implements OnInit {
           window.setTimeout(() => {
             this.viewportScroller.scrollToPosition(e.position);
           }, 0);
+          scroll$.next(null);
         }
       }),
       map(([goodsList]) => goodsList),
