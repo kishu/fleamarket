@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import { ViewportScroller } from '@angular/common';
 import { ActivatedRoute, Router, Scroll } from '@angular/router';
-import { BehaviorSubject, combineLatest, Observable, } from 'rxjs';
-import { filter, first, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { firestore } from 'firebase';
+import { BehaviorSubject, Observable, } from 'rxjs';
+import { filter, first, map, tap, withLatestFrom } from 'rxjs/operators';
 import { AuthService, InterestService, GoodsService, GoodsListService } from '@app/core/http';
 import { PersistenceService } from '@app/shared/services';
-import { Goods, Interest } from '@app/core/models';
+import { Goods, Interest, Market } from '@app/core/models';
 
 @Component({
   selector: 'app-home',
@@ -17,9 +18,8 @@ export class HomeComponent implements OnInit {
   groupName: string;
   market: string;
   exceptSoldOut: boolean;
-
   goodsList$: Observable<Goods[]>;
-  exceptSoldOut$: BehaviorSubject<boolean>;
+  private submitting = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,51 +29,45 @@ export class HomeComponent implements OnInit {
     private goodsService: GoodsService,
     private goodsListService: GoodsListService,
     private persistenceService: PersistenceService,
-    private viewportScroller: ViewportScroller
+    private viewportScroller: ViewportScroller,
+    private goodsList2Service: GoodsListService
   ) {
-    const exceptSoldOut = this.persistenceService.get('exceptSoldOut') || false;
-
+    this.exceptSoldOut = this.persistenceService.get('exceptSoldOut') || false;
     this.userPhotoURL = this.auth.user.photoURL;
     this.groupName = this.auth.group.name;
-    this.market = this.route.snapshot.paramMap.get('market');
-    this.exceptSoldOut$ = new BehaviorSubject(exceptSoldOut);
 
-    this.fetchGoodsList();
+    const scroll$ = new BehaviorSubject<Scroll | null>(null);
+
+    this.goodsList$ = this.goodsList2Service.goodsList$.pipe(
+      withLatestFrom(scroll$),
+      tap(([, e]: [any, Scroll]) => {
+        if (e !== null) {
+          window.setTimeout(() => {
+            this.viewportScroller.scrollToPosition(e.position);
+          }, 0);
+        }
+      }),
+      map(([goodsList]) => goodsList),
+      tap(() => this.submitting = false)
+    );
+
+    this.router.events.pipe(
+      filter( e => e !== null),
+      filter(e => e instanceof Scroll),
+      first(),
+      filter((e: Scroll) => e.position !== null && e.position[1] > 0),
+    ).subscribe((e: Scroll) => scroll$.next(e));
+
+    this.route.paramMap.subscribe(paramMap => {
+      this.market = paramMap.get('market');
+      goodsList2Service.query$.next({
+        market: this.market as Market,
+        exceptSoldOut: this.exceptSoldOut
+      });
+    });
    }
 
   ngOnInit() {
-  }
-
-  fetchGoodsList() {
-    const subject = new BehaviorSubject<Scroll | null>(null);
-
-    this.router.events.pipe(
-      filter(e => e instanceof Scroll),
-      first(),
-      tap((e: Scroll) => subject.next(e))
-    ).subscribe();
-
-    this.goodsList$ = combineLatest(this.route.paramMap, this.exceptSoldOut$).pipe(
-      tap(([paramMap, exceptSoldOut]) => {
-        this.market = paramMap.get('market');
-        this.exceptSoldOut = exceptSoldOut;
-        this.persistenceService.set('exceptSoldOut', exceptSoldOut);
-      }),
-      switchMap(() => {
-        return this.goodsListService.getGoodsListBy(this.market, this.exceptSoldOut);
-      }),
-      withLatestFrom(subject),
-      tap(([_, e]) => {
-        if (e && e.position) {
-          this.viewportScroller.scrollToPosition(e.position);
-          window.setTimeout(() => this.viewportScroller.scrollToPosition(e.position), 0);
-          subject.next(null);
-        } else {
-          this.viewportScroller.scrollToPosition([0, 0]);
-        }
-      }),
-      map(([goodsList]) => goodsList)
-    );
   }
 
   interested(goods: Goods) {
@@ -82,8 +76,16 @@ export class HomeComponent implements OnInit {
     ) > -1;
   }
 
-  onClickExceptSoldOut($event) {
-    this.exceptSoldOut$.next($event.target.checked);
+  onClickExceptSoldOut(checked) {
+    if (!this.submitting) {
+      this.submitting = true;
+      this.exceptSoldOut = checked;
+      this.persistenceService.set('exceptSoldOut', checked);
+      this.goodsList2Service.query$.next({
+        market: this.market as Market,
+        exceptSoldOut: checked
+      });
+    }
   }
 
   onClickInterest(goods: Goods) {
@@ -101,6 +103,13 @@ export class HomeComponent implements OnInit {
     } else {
       this.interestService.removeInterest(interest).subscribe();
       goods.interests.splice(index, 1);
+    }
+  }
+
+  onClickMore(startAfter: firestore.Timestamp) {
+    if (!this.submitting) {
+      this.submitting = true;
+      this.goodsList2Service.more$.next(startAfter);
     }
   }
 
