@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { LocationService } from '@app/shared/services';
 import { AuthService, FileUploadService, UserService } from '@app/core/http';
 import { SpinnerService } from '@app/shared/services/spinner.service';
@@ -40,7 +40,10 @@ export class PreferenceUserComponent implements OnInit {
     this.preferenceForm = this.fb.group({
       displayName: [user.displayName || '', [Validators.required, Validators.minLength(1), Validators.maxLength(21)]],
       desc: [user.desc || '', Validators.maxLength(101)],
-      notice: [user.notice, Validators.required]
+      notification: this.fb.group({
+        goods: user.notification.goods,
+        interest: user.notification.interest
+      })
     });
   }
 

@@ -43,7 +43,10 @@ export class User {
   displayName: string;
   desc: string;
   photoURL: string;
-  notice: boolean; // todo rename notification
+  notification: {
+    goods: boolean,
+    interest: boolean
+  }
 }
 
 export class UserPreference {

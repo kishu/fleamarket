@@ -62,7 +62,10 @@ export class SignInComponent implements OnInit {
       email: verification.email,
       displayName,
       photoURL: environment.defaultPhotoURL,
-      notice: true,
+      notification: {
+        goods: true,
+        interest: true
+      },
       desc: `세컨드마켓 ${displayName}입니다!`
     } as User);
 

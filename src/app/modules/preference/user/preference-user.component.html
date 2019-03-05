@@ -31,19 +31,35 @@
         </div>
       </div>
       <p class="explain small">연락처, 메신저 ID 등 연락 가능한 방법을 적어주세요.</p>
-      <div class="table margin5">
-        <div class="td">
-          <h3>내 상품 알림</h3>
-          <p class="explain small">내 상품에 대한 좋아요, 댓글 알림을 받습니다.</p>
-        </div>
-        <div class="td">
-          <div class="switch">
-            <input type="checkbox" id="c1"
-              name="notice" formControlName="notice">
-            <label for="c1"><span></span></label>
+      <ng-container formGroupName="notification">
+        <div class="table margin5">
+          <div class="td">
+            <h3>내 상품 알림</h3>
+            <p class="explain small">내 상품에 댓글 알림을 받습니다.</p>
+          </div>
+          <div class="td">
+            <div class="switch">
+              <input type="checkbox" id="notification.goods"
+                name="notice" formControlName="goods">
+              <label for="notification.goods"><span></span></label>
+            </div>
           </div>
         </div>
-      </div>
+        <div class="hr margin1"></div>
+        <div class="table margin2">
+          <div class="td">
+            <h3>관심 상품 알림</h3>
+            <p class="explain small">관심 상품에 대한 댓글 알림을 받습니다.</p>
+          </div>
+          <div class="td">
+            <div class="switch">
+              <input type="checkbox" id="notification.interest"
+                     name="notice" formControlName="interest">
+              <label for="notification.interest"><span></span></label>
+            </div>
+          </div>
+        </div>
+      </ng-container>
       <button type="submit" [disabled]="preferenceForm.invalid" class="button margin5">변경</button>
       <button type="button" class="button margin2 temp">로그아웃</button>
     </form>
