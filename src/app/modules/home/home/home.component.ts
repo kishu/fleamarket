@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
       filter( e => e !== null),
       filter(e => e instanceof Scroll),
       first(),
-      filter((e: Scroll) => e.position !== null && e.position[1] > 0),
+      filter((e: Scroll) => e.position && e.position[1] > 0),
     ).subscribe((e: Scroll) => scroll$.next(e));
 
     this.route.paramMap.subscribe(paramMap => {
