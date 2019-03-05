@@ -1,4 +1,4 @@
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, GroupService, UserService, VerificationService } from '@app/core/http';
 import { SpinnerService } from '@app/shared/services/spinner.service';
@@ -143,12 +143,6 @@ export class VerificationComponent implements OnInit, OnDestroy {
     } else {
       alert('인증코드가 맞지 않습니다. 다시 입력해 주세요.');
     }
-  }
-
-  onClickSignOut() {
-    this.authService.signOut().then(
-      () => alert('logout')
-    );
   }
 
 }

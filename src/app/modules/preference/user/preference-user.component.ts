@@ -29,12 +29,12 @@ export class PreferenceUserComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private locationService: LocationService,
-    private auth: AuthService,
+    private authService: AuthService,
     private userService: UserService,
     private fileUploadService: FileUploadService,
     private spinnerService: SpinnerService
   ) {
-    const user = this.auth.user;
+    const user = this.authService.user;
     this.photoURL = user.photoURL;
 
     this.preferenceForm = this.fb.group({
@@ -91,7 +91,7 @@ export class PreferenceUserComponent implements OnInit {
       this.submitting = true;
       this.spinnerService.show(true);
 
-      const id = this.auth.user.id;
+      const id = this.authService.user.id;
 
       if (this.imageFile) {
         this.upload().pipe(
@@ -102,6 +102,12 @@ export class PreferenceUserComponent implements OnInit {
         this.userService.updatePreference(id, this.preferenceForm.value).then(this.success, this.error);
       }
     }
+  }
+
+  onClickSignOut() {
+    this.authService.signOut().then(
+      () => this.router.navigate(['/verification'])
+    );
   }
 
   protected success = () => {

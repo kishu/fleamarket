@@ -43,10 +43,6 @@
         [disabled]="mailForm.invalid"
         class="button margin2 verification">메일 인증하기</button>
     </form>
-
-    <div class="margin3">
-      <button type="button" (click)="onClickSignOut()">로그아웃 테스트</button>
-    </div>
   </section>
 
   <section *ngIf="mailSent" class="verification">
