@@ -90,7 +90,7 @@
       <ng-template #noCommentsTmpl><h4>첫 댓글을 입력해 보세요!</h4></ng-template>
     </div>
     <ul class="comment_list">
-      <li *ngFor="let comment of comments">
+      <li *ngFor="let comment of comments" [attr.data-id]="comment.id">
         <div class="comment_item">
           <span class="comment_thumb" [style.backgroundImage]="'url(' + comment.user.photoURL + ')'"></span>
           <div class="comment_content">

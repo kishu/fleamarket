@@ -56,41 +56,19 @@ export class UserPreference {
 export class Notification {
   id?: string;
   fromUserRef: firestore.DocumentReference;
+  fromUser: {
+    photoURL: string;
+    displayName: string;
+  };
   toUserRef: firestore.DocumentReference;
-  targetRef: firestore.DocumentReference;
-  image: string;
-  fromUserDisplayName: string;
-  goodsTitle: string;
+  goodsRef: firestore.DocumentReference;
+  goods: {
+    image: string;
+    title: string;
+  };
   type: string;
   body: string;
   market: string;
-  isRead: boolean;
-  created: firestore.Timestamp;
-}
-
-export class Notification2 {
-  id: string;
-  userRef: firestore.DocumentReference;
-  user: {
-    email: string,
-    displayName: string,
-    photoURL: string
-  };
-  fromUserRef: firestore.DocumentReference;
-  fromUser: {
-    displayName: string,
-    photoURL: string
-  };
-  goodsRef: firestore.DocumentReference;
-  goods: {
-    title: string
-    image: string
-  };
-  commentRef: firestore.DocumentReference;
-  comment: {
-    market: Market
-    body: string
-  };
   isRead: boolean;
   created: firestore.Timestamp;
 }
