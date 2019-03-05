@@ -1,49 +1,53 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
+const buildNotification = (fromUser, toUser, goods, comment) => ({
+  fromUserRef: admin.firestore().doc(`users/${fromUser.id}`),
+  fromUser: {
+    photoURL: fromUser.photoURL,
+    displayName: fromUser.displayName
+  },
+  toUserRef: admin.firestore().doc(`users/${toUser.id}`),
+  goodsRef: admin.firestore().doc(`goods/${goods.id}`),
+  goods: {
+    image: goods.images[0],
+    title: goods.title
+  },
+  type: 'comment',
+  body: comment.body,
+  market: comment.market,
+  isRead: false,
+  created: admin.firestore.FieldValue.serverTimestamp()
+});
+
 module.exports = functions
-  .region('asia-northeast1')
+  .region('us-central1')
   .firestore
   .document('comments/{commentId}')
   .onCreate((comment, context) => {
-    const fromUserRef = comment.get('userRef');
-    const goodsRef = comment.get('goodsRef');
-    const interests = admin.firestore().collection('interests')
-      .where('goodsRef', '==', comment.get('goodsRef'));
+    return Promise
+      .all([
+        comment,
+        comment.get('userRef').get(),
+        comment.get('goodsRef').get(),
+        admin.firestore().collection('interests')
+          .where('goodsRef', '==', comment.get('goodsRef')).get()
+      ])
+      .then(results => {
+        const comment = Object.assign({ id: results[0].ref.id }, results[0].data());
+        const fromUser = Object.assign({ id: results[1].ref.id }, results[1].data());
+        const goods = Object.assign({ id: results[2].ref.id }, results[2].data());
+        const interests = results[3].docs.map(i => (Object.assign({ id: i.ref.id }, i.data())));
 
-    const buildNotification = (fromUser, toUserRef, goods, market) => ({
-      fromUserRef: fromUserRef,
-      toUserRef: toUserRef,
-      goodsRef: goodsRef,
-      image: fromUser.photoURL,
-      fromUserDisplayName: fromUser.displayName,
-      goodsTitle: goods.title,
-      type: 'comment',
-      body: comment.get('body'),
-      market,
-      isRead: false,
-      created: admin.firestore.FieldValue.serverTimestamp()
-    });
+        const toGoodsUser = [buildNotification(fromUser, goods.userRef, goods, comment)]
+          .filter(n => n.fromUserRef.id !== n.toUserRef.id);
+        const toInterestUsers = interests
+          .filter(i => i.userRef.id !== goods.userRef.id)
+          .map(i => buildNotification(fromUser, i.userRef, goods, comment));
+        const batches = toGoodsUser.concat(toInterestUsers)
+          .map(n => admin.firestore().collection('notifications').add(n));
 
-    return Promise.all([
-      fromUserRef.get(),
-      goodsRef.get(),
-      interests.get()
-    ]).then(results => {
-      const fromUser = results[0].data();
-      const goods = results[1].data();
-      const interests = results[2].docs.map(doc => doc.data());
-
-      const notificationToGoodsUser = [buildNotification(fromUser, goods.userRef, goods, comment.get('market'))];
-      const notificationsToInterestedUser = interests
-        .map(interest => buildNotification(fromUser, interest.userRef, goods, interest.market));
-
-      const notificationCollection = admin.firestore().collection('notifications');
-      const batches = notificationToGoodsUser.concat(notificationsToInterestedUser)
-        .filter(notification => fromUserRef.id !== notification.toUserRef.id)
-        .map(notification => notificationCollection.add(notification));
-
-      return Promise.all(batches);
-    });
+        return Promise.all(batches);
+      });
 
   });

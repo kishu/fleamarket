@@ -10,7 +10,7 @@ const TEMPLATE_ID = functions.config().sendgrid.template.verification;
 sgMail.setApiKey(SENDGRID_API_KEY);
 
 module.exports = functions
-  .region('asia-northeast1')
+  .region('us-central1')
   .https.onRequest((req, res) => {
     return cors(req, res, () => {
       const {to, groupName, verificationCode} = req.body.data;
