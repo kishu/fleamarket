@@ -64,7 +64,7 @@ export function signIn(auth: AuthService) {
     AuthService,
     PersistenceService,
     SpinnerService,
-    { provide: FunctionsRegionToken, useValue: 'asia-northeast1'},
+    { provide: FunctionsRegionToken, useValue: environment.firebase.functionsRegion},
     { provide: APP_INITIALIZER, useFactory: signIn, deps: [AuthService], multi: true },
   ],
   bootstrap: [AppComponent]
