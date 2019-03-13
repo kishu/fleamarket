@@ -1452,6 +1452,7 @@ li li .comment_thumb {
 
 .comment_content p {
   margin-top: 2px;
+  word-break: break-all;
 }
 
 .comment_form {
