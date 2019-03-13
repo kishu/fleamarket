@@ -2,7 +2,6 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin');
 
 html {
-  background-color: #f3f3f3;
   font-size: 10px;
 }
 
@@ -15,9 +14,7 @@ body {
 header {
   position: relative;
   z-index: 1;
-  padding: 30px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  background-color: #32333d;
+  padding: 14px 60px 14px 14px;
 }
 
 menu, ul {
@@ -44,9 +41,16 @@ button {
   display: inline-block;
 }
 
+section.main {
+  padding-bottom: 20px;
+}
+
 .sub {
-  background-color: #fff;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.end {
+  padding-top: 47px;
 }
 
 .wrap .margin1 {
@@ -71,16 +75,43 @@ button {
 
 .sub header {
   padding: 0;
-  border: 0;
+}
+
+.end header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+
+.sub header:before {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.2);
+  content: '';
+}
+
+.end header:after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 1px;
+  margin-top: 1px;
+  background-color: rgba(0, 0, 0, 0.05);
+  content: '';
 }
 
 .sub header h2 {
   overflow: hidden;
   margin: 0;
-  padding: 12px 40px;
-  font-size: 16px;
-  line-height: 20px;
-  color: #fff;
+  padding: 13px 40px 12px;
+  background-color: #fff;
+  font-size: 18px;
+  line-height: 22px;
   text-align: center;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -88,19 +119,19 @@ button {
 
 .sub header .back {
   position: absolute;
-  left: 7px;
+  left: 14px;
   top: 7px;
   max-width: 80px;
-  height: 30px;
-  padding-left: 30px;
+  height: 33px;
+  padding-left: 23px;
   padding-right: 5px;
-  background-image: url(../img/back.png);
+  background-image: url(../img/icon-back.png);
   background-repeat: no-repeat;
   background-position: 0 50%;
-  background-size: 30px 30px;
+  background-size: 14px 23px;
   font-size: 13px;
-  line-height: 30px;
-  color: #fff;
+  line-height: 33px;
+  color: #32333d;
   text-decoration: none;
   overflow: hidden;
   white-space: nowrap;
@@ -123,72 +154,28 @@ button {
 .group {
   position: relative;
   margin-right: 30px;
-  padding: 3px 30px;
-  text-align: center;
-}
-
-.group + .group {
-  margin-top: 10px;
 }
 
 .group h1 {
+  margin: 0;
+  padding-top: 10px;
+  line-height: 30px;
+}
+
+.group h1 a {
+  display: inline-block;
+  margin-right: 10px;
   font-size: 16px;
-  line-height: 34px;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-}
-
-.group h1:not(.clone) {
-  display: inline-block;
-  margin: 0;
-  border-radius: 18px;
-  background-image: url(../img/bg_gradation.png);
-  background-repeat: repeat-x;
-  background-position: 50% 50%;
-  background-size: 1px 40px;
-  color: #5c5156;
-  box-shadow: inset 0 1px 0 0 #040404;
-}
-
-.group h1 span {
-  display: inline-block;
-  padding: 0 18px;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.75);
-}
-
-.group h1 span + span {
-  margin-left: -10px;
-}
-
-.group h1.clone {
-  /*display: none;*/
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: 0;
-  color: #fff;
-}
-
-.group h1.clone span {
-  display: inline-block;
-  padding: 0 15px;
-  border: 3px solid #000;
-  border-radius: 20px;
-  background-color: #ef484e;
-  vertical-align: top;
-  opacity: 0;
-  box-shadow: inset 0 0 2px 0 rgba(250,247,195,0.55);
-  text-shadow: -1px -1px 0 rgba(0,0,0,0.75);
+  line-height: 24px;
+  color: #c3c3c3;
+  vertical-align: bottom;
   transition-duration: 0.2s;
 }
 
-.group h1.clone span.on {
-  opacity: 1;
-}
-
-.group h1.clone:before {
-
+.group h1 a.on {
+  font-size: 24px;
+  line-height: 24px;
+  color: #161616;
 }
 
 nav {
@@ -197,7 +184,6 @@ nav {
   position: relative;
   margin-top: -1px;
   padding-top: 1px;
-  background-color: #32333d;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -269,15 +255,13 @@ nav.sorting {
   overflow: hidden;
   margin-top: 0;
   margin-bottom: -5px;
-  padding-top: 0;
-  padding-right: 8px;
-  background-color: #f3f3f3;
-  line-height: 40px;
-  text-align: right;
+  padding: 0 14px;
+  font-size: 12px;
+  line-height: 20px;
 }
 
 nav.sorting input {
-  margin: -1px 0 1px;
+  margin: -1px 0 1px 3px;
   vertical-align: middle;
 }
 
@@ -341,9 +325,7 @@ nav.sorting .category a.on {
 .profile {
   overflow: hidden;
   padding: 26px 0 17px;
-  border-bottom: 1px solid #272830;
-  background-color: #32333d;
-  color: #999;
+  border-bottom: 1px solid #eee;
   text-align: center;
 }
 
@@ -352,23 +334,62 @@ nav.sorting .category a.on {
   width: 80%;
   max-width: 300px;
   margin: 10px auto 0;
-  font-size: 12px;
-  font-size: 1.2rem;
-  line-height: 16px;
-  line-height: 1.6rem;
+  font-size: 14px;
+  line-height: 18px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .thumb {
   display: block;
-  width: 50px;
-  height: 50px;
+  position: relative;
+  width: 64px;
+  height: 64px;
   margin: 0 auto;
   border-radius: 50%;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: cover;
+}
+
+.setting {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 24px;
+  height: 24px;
+  background-image: url(../img/settings.svg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  content: '';
+}
+
+.toggle-button {
+  position: relative;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.toggle-button:before {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 1px;
+  margin: auto;
+  background-color: #eee;
+  content: '';
+}
+
+.toggle-button button {
+  position: relative;
+  padding: 3px 10px;
+  border: 0;
+  background-color: #fff;
+  font-size: 12px;
+  line-height: 18px;
+  color: #999;
 }
 
 .my_menu {
@@ -540,6 +561,7 @@ nav.sorting .category a.on {
   height: 100px;
   height: 100px;
   margin: 0 auto 7px;
+  border-radius: 50%;
   background-image: url(../img/nothing.png);
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -618,12 +640,11 @@ nav.sorting .category a.on {
 
 .large_list {
   list-style-type: none;
-  padding: 3px;
-  background-color: #f3f3f3;
+  padding: 7px;
 }
 
 .large_list li {
-  padding: 3px;
+  padding: 7px;
   box-sizing: border-box;
 }
 
@@ -672,7 +693,6 @@ nav.sorting .category a.on {
   left: 0;
   right: 0;
   top: 55%;
-  font-weight: bold;
   text-align: center;
   text-shadow: 0 0 3px rgba(0,0,0,1);
   z-index: 2;
@@ -841,7 +861,6 @@ nav.sorting .category a.on {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  vertical-align: top;
   background-position: 50% 50%;
   background-size: cover;
 }
@@ -851,41 +870,42 @@ nav.sorting .category a.on {
 }
 
 .feed {
-  position: absolute;
-  right: 8px;
-  bottom: 9px;
-  margin: 0;
+  margin: 10px 0 5px;
   white-space: nowrap;
 }
 
 .feed dt {
   display: inline-block;
-  width: 21px;
-  height: 21px;
-  margin-left: 5px;
-  margin-right: -2px;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-size: 21px 21px;
-  vertical-align: top;
 }
 
 .feed dd {
   display: inline-block;
-  margin: 0;
-  font-size: 12px;
+  margin: 0 10px 0 0;
+  font-size: 14px;
   line-height: 21px;
-  color: #fff;
-  text-shadow: 0 0 2px rgba(0,0,0,0.75);
   vertical-align: top;
 }
 
 .feed .like {
-  background-image: url(../img/like.png);
+  width: 24px;
+  height: 21px;
+  margin-right: 3px;
+  background-image: url(../img/icon-interest.png);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 24px 19px;
+  vertical-align: top;
 }
 
 .feed .comment {
-  background-image: url(../img/comment.png);
+  width: 21px;
+  height: 21px;
+  margin-right: 3px;
+  background-image: url(../img/icon-comment.png);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 21px 21px;
+  vertical-align: top;
 }
 
 .feed .donate {
@@ -1539,37 +1559,31 @@ user menu
   overflow: hidden;
   position: absolute;
   z-index: 1;
-  right: 5%;
-  top: 25px;
-  padding: 3px;
+  right: 10px;
+  top: 14px;
 }
 
 .user-profile {
   display: block;
-  width: 40px;
-  height: 40px;
-  border: 2px solid #fff;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   background-size: cover;
   background-position: 50% 50%;
   color: rgba(0,0,0,0);
-  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.5);
 }
 
 .user-menu .new {
   position: absolute;
-  right: 0;
-  top: 0;
-  min-width: 16px;
-  border: 2px solid #000;
+  right: 2px;
+  top: 3px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background-color: #dd4e52;
-  font-weight: bold;
-  font-style: normal;
-  font-size: 10px;
-  line-height: 16px;
-  color: #fff;
-  text-align: center;
+  background-color: #dd4e51;
+  color: transparent;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .rotate0 {

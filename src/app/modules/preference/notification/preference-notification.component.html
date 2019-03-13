@@ -1,10 +1,12 @@
-<div class="wrap sub end">
+<div class="wrap sub">
   <header>
     <h2>마이페이지</h2>
     <a href="#" (click)="goBack($event)" class="back">돌아가기</a>
   </header>
   <div class="profile">
-    <a routerLink="/preference/user" class="thumb" [style.backgroundImage]="'url(' + user.photoURL + ')'"></a>
+    <a routerLink="/preference/user" class="thumb" [style.backgroundImage]="'url(' + user.photoURL + ')'">
+      <span class="setting"></span>
+    </a>
     <p class="profile_text">{{ user.displayName }} / {{ user.desc}}</p>
   </div>
   <div class="alarm">

@@ -1,43 +1,40 @@
-<header>
+<header class="main">
   <div class="user-menu">
     <a routerLink='/preference/notification' class="user-profile" [style.backgroundImage]="'url('+ userPhotoURL +')'">
       user menu
     </a>
-    <i class="new">N</i>
+    <i class="new">NEW</i>
   </div>
   <div class="group">
-    <h1><span>{{ groupName }}</span><span>2nd Lounge</span></h1>
     <h1 class="clone">
-      <span (click)="showGoodsBy('group')" [ngClass]="{ on: market === 'group' }">{{ groupName }}</span>
-      <span (click)="showGoodsBy('lounge')" [ngClass]="{ on: market === 'lounge' }">2nd Lounge</span>
+      <a (click)="showGoodsBy('group')" [ngClass]="{ on: market === 'group' }">{{ groupName }}</a>
+      <a (click)="showGoodsBy('lounge')" [ngClass]="{ on: market === 'lounge' }">2nd Lounge</a>
     </h1>
   </div>
 </header>
-<section>
+<section class="main">
   <nav class="sorting">
+    <label for="c1">품절상품 제외</label>
     <input id="c1" type="checkbox"
            [checked]="exceptSoldOut"
            (change)="onClickExceptSoldOut($event.target.checked)">
-    <label for="c1">&nbsp;품절상품 제외</label>
   </nav>
   <ng-container *ngIf="(goodsList$ | async) as goodsList">
     <section *ngIf="goodsList.length === 0" class="list_nothing">
       <p>아직 {{ groupName }}에는 상품이 없습니다.</p>
     </section>
-    <section *ngIf="goodsList.length > 0">
-      <ul class="large_list" id="goods_list">
-        <li *ngFor="let goods of goodsList">
-          <div [ngClass]="{'item': true, 'soldout': goods.soldOut}">
-            <a [routerLink]="['/', market, 'goods', goods.id]"
-              (click)="onClickGoods(goods)">
-              <div class="goods_thumb"
-                   [ngStyle]="{'background-image': 'url(assets/img/dark.png), url(' + goods.images[0] + ')'}">
-                <dl class="feed">
-                  <dt class="like"></dt>
-                  <dd>{{ goods.interests.length }}</dd>
-                  <dt class="comment"></dt>
-                  <dd>{{ goods.commentCnt }}</dd>
-                </dl>
+    <ul *ngIf="goodsList.length > 0" class="large_list" id="goods_list">
+      <li *ngFor="let goods of goodsList">
+        <div class="item">
+          <a [routerLink]="['/', market, 'goods', goods.id]"
+            (click)="onClickGoods(goods)">
+            <div class="goods_thumb"
+                 [ngStyle]="{'background-image': 'url(assets/img/dark.png), url(' + goods.images[0] + ')'}">
+            </div>
+            <div class="item_description"
+                 [ngClass]="{'soldout': goods.soldOut}">
+              <div class="author">
+                <span class="author_thumb" [style.backgroundImage]="'url(' + goods.user.photoURL + ')'"></span>
               </div>
               <div class="item_description">
                 <div class="author">
@@ -48,14 +45,22 @@
                   <span class="price ellipsis">{{ goods.price | number: '2.' }}원</span>
                 </div>
               </div>
-            </a>
-            <button (click)="onClickInterest(goods)"
-                    [ngClass]="{ 'likeit': true, 'on': interested(goods) }" style="border:0"><span class="sr-only">관심</span></button>
-          </div>
-        </li>
-      </ul>
-      <button type="button" (click)="onClickMore(goodsList[goodsList.length -1].updated)" style="width:100%;height:34px;margin-bottom:12px">더보기</button>
-    </section>
+            </div>
+            <dl class="feed">
+              <dt class="like"></dt>
+              <dd>{{ goods.interests.length }}</dd>
+              <dt class="comment"></dt>
+              <dd>{{ goods.commentCnt }}</dd>
+            </dl>
+          </a>
+          <button (click)="onClickInterest(goods)"
+                  [ngClass]="{ 'likeit': true, 'on': interested(goods) }" style="border:0"><span class="sr-only">관심</span></button>
+        </div>
+      </li>
+    </ul>
+    <div class="toggle-button">
+      <button type="button" (click)="onClickMore(goodsList[goodsList.length -1].updated)">더보기</button>
+    </div>
   </ng-container>
 </section>
 <a [routerLink]="['/', market, 'goods', 'new', 'edit']" class="write"></a>
