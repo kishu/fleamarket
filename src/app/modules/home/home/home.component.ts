@@ -29,8 +29,7 @@ export class HomeComponent implements OnInit {
     private goodsService: GoodsService,
     private goodsListService: GoodsListService,
     private persistenceService: PersistenceService,
-    private viewportScroller: ViewportScroller,
-    private goodsList2Service: GoodsListService
+    private viewportScroller: ViewportScroller
   ) {
     this.exceptSoldOut = this.persistenceService.get('exceptSoldOut') || false;
     this.userPhotoURL = this.auth.user.photoURL;
@@ -38,7 +37,7 @@ export class HomeComponent implements OnInit {
 
     const scroll$ = new BehaviorSubject<Scroll | null>(null);
 
-    this.goodsList$ = this.goodsList2Service.goodsList$.pipe(
+    this.goodsList$ = this.goodsListService.goodsList$.pipe(
       withLatestFrom(scroll$),
       tap(([, e]: [any, Scroll]) => {
         if (e !== null) {
@@ -61,7 +60,7 @@ export class HomeComponent implements OnInit {
 
     this.route.paramMap.subscribe(paramMap => {
       this.market = paramMap.get('market');
-      goodsList2Service.query$.next({
+      goodsListService.query$.next({
         market: this.market as Market,
         exceptSoldOut: this.exceptSoldOut
       });
@@ -82,7 +81,7 @@ export class HomeComponent implements OnInit {
       this.submitting = true;
       this.exceptSoldOut = checked;
       this.persistenceService.set('exceptSoldOut', checked);
-      this.goodsList2Service.query$.next({
+      this.goodsListService.query$.next({
         market: this.market as Market,
         exceptSoldOut: checked
       });
@@ -110,7 +109,7 @@ export class HomeComponent implements OnInit {
   onClickMore(startAfter: firestore.Timestamp) {
     if (!this.submitting) {
       this.submitting = true;
-      this.goodsList2Service.more$.next(startAfter);
+      this.goodsListService.more$.next(startAfter);
     }
   }
 
