@@ -56,7 +56,7 @@
 
     <form [formGroup]="codeForm" (ngSubmit)="onSubmitVerificationCode()" class="form margin3">
       <div class="input-wrap">
-        <input type="text"
+        <input type="tel"
                name="code" formControlName="code"
                required="true" minlength="4" maxlength="4"
                placeholder="인증코드" class="input">
