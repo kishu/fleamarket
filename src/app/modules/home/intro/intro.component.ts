@@ -1,6 +1,6 @@
 import { tns } from 'tiny-slider/src/tiny-slider';
 import { Component, OnInit } from '@angular/core';
-import { PersistenceService } from '@app/shared/services';
+import { HtmlClassService, PersistenceService } from '@app/shared/services';
 
 @Component({
   selector: 'app-intro',
@@ -9,9 +9,13 @@ import { PersistenceService } from '@app/shared/services';
 })
 export class IntroComponent implements OnInit {
 
-  constructor(private persistenceService: PersistenceService ) { }
+  constructor(
+    private persistenceService: PersistenceService,
+    private htmlClassService: HtmlClassService
+  ) { }
 
   ngOnInit() {
+    this.htmlClassService.set('intro');
     const slider = tns({
       loop: false,
       nav: false,

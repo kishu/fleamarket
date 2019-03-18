@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService, NotificationService } from '@app/core/http';
-import { LocationService } from '@app/shared/services';
+import { HtmlClassService, LocationService } from '@app/shared/services';
 import { Notification } from '@app/core/models';
 
 @Component({
@@ -16,7 +16,8 @@ export class PreferenceNotificationComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private locationService: LocationService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private htmlClassService: HtmlClassService
   ) {
     const user = this.auth.user;
     this.user = {
@@ -28,6 +29,7 @@ export class PreferenceNotificationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.htmlClassService.set('preference-notification');
   }
 
   goBack(e: any) {

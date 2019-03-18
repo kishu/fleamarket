@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 import { AuthService, CommentService, GoodsService, GoodsListService, InterestService } from '@app/core/http';
-import { LocationService } from '@app/shared/services';
+import { HtmlClassService, LocationService } from '@app/shared/services';
 import { Comment, Goods, Market, User } from '@app/core/models';
 
 @Component({
@@ -44,7 +44,8 @@ export class GoodsDetailComponent implements OnInit {
     private commentService: CommentService,
     private goodsService: GoodsService,
     private goodsListService: GoodsListService,
-    private interestService: InterestService
+    private interestService: InterestService,
+    private htmlClasservice: HtmlClassService
   ) {
     this.market = route.snapshot.paramMap.get('market');
 
@@ -57,6 +58,7 @@ export class GoodsDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.htmlClasservice.set('goods-detail');
     const user = this.auth.user;
     this.route.params.pipe(
       pluck('goodsId')

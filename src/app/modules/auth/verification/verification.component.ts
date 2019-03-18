@@ -6,7 +6,7 @@ import { Observable, zip } from 'rxjs';
 import { Group, GroupType, Verification } from '@app/core/models';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { FirebaseUtilService } from '@app/shared/services';
+import { FirebaseUtilService, HtmlClassService } from '@app/shared/services';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +37,8 @@ export class VerificationComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private verificationSerice: VerificationService,
     private firebaseUtilService: FirebaseUtilService,
-    private spinnerService: SpinnerService
+    private spinnerService: SpinnerService,
+    private htmlClassService: HtmlClassService
   ) {
     this.remainTime = VerificationComponent.TIME_LIMIT;
     this.groups$ = this.groupService.getGroupsByType(GroupType.Corp);
@@ -65,7 +66,9 @@ export class VerificationComponent implements OnInit, OnDestroy {
     return `${minStr}:${secStr}`;
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.htmlClassService.set('auth-verification');
+  }
 
   ngOnDestroy(): void {
     window.clearInterval(this.timerInterval);

@@ -5,7 +5,7 @@ import { firestore } from 'firebase';
 import { BehaviorSubject, Observable, } from 'rxjs';
 import { filter, first, map, tap, withLatestFrom } from 'rxjs/operators';
 import { AuthService, InterestService, GoodsService, GoodsListService } from '@app/core/http';
-import { PersistenceService } from '@app/shared/services';
+import { HtmlClassService, PersistenceService } from '@app/shared/services';
 import { Goods, Interest, Market } from '@app/core/models';
 
 @Component({
@@ -29,7 +29,8 @@ export class HomeComponent implements OnInit {
     private goodsService: GoodsService,
     private goodsListService: GoodsListService,
     private persistenceService: PersistenceService,
-    private viewportScroller: ViewportScroller
+    private viewportScroller: ViewportScroller,
+    private htmlClassService: HtmlClassService
   ) {
     this.exceptSoldOut = this.persistenceService.get('exceptSoldOut') || false;
     this.userPhotoURL = this.auth.user.photoURL;
@@ -68,6 +69,7 @@ export class HomeComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.htmlClassService.set('home');
   }
 
   interested(goods: Goods) {

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { LocationService } from '@app/shared/services';
+import { HtmlClassService, LocationService } from '@app/shared/services';
 import { AuthService, FileUploadService, UserService } from '@app/core/http';
 import { SpinnerService } from '@app/shared/services/spinner.service';
 import { ImageFile } from '@app/core/models';
@@ -32,7 +32,8 @@ export class PreferenceUserComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private fileUploadService: FileUploadService,
-    private spinnerService: SpinnerService
+    private spinnerService: SpinnerService,
+    private htmlClassService: HtmlClassService
   ) {
     const user = this.authService.user;
     this.photoURL = user.photoURL;
@@ -48,6 +49,7 @@ export class PreferenceUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.htmlClassService.set('preference-user');
   }
 
   protected upload(): Observable<any> {

@@ -6,7 +6,7 @@ import { forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Goods, ImageFile } from '@app/core/models';
 import { AuthService, FileUploadService, GoodsService } from '@app/core/http';
-import { LocationService } from '@app/shared/services';
+import { HtmlClassService, LocationService } from '@app/shared/services';
 import { SpinnerService } from '@app/shared/services/spinner.service';
 import { targetSelectedValidator } from '@app/modules/goods/target-selected-validator.directive';
 import { environment } from '@environments/environment';
@@ -43,7 +43,8 @@ export class GoodsEditComponent implements OnInit {
     private locationService: LocationService,
     private goodsService: GoodsService,
     private fileUploadService: FileUploadService,
-    private spinnerService: SpinnerService
+    private spinnerService: SpinnerService,
+    private htmlClassService: HtmlClassService
   ) {
     this.newGoods = ( this.route.snapshot.params['goodsId'] === 'new' );
     this.action = this.newGoods ? '등록' : '수정';
@@ -56,6 +57,7 @@ export class GoodsEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.htmlClassService.set('goods-edit');
   }
 
   buildForm() {

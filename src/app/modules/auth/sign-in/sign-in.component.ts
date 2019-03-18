@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { first, switchMap, tap } from 'rxjs/operators';
 import { AuthService, GroupService, UserService, VerificationService } from '@app/core/http';
-import { SpinnerService } from '@app/shared/services';
+import { HtmlClassService, SpinnerService } from '@app/shared/services';
 import { User, Verification } from '@app/core/models';
 import { environment } from '@environments/environment';
 
@@ -30,7 +30,8 @@ export class SignInComponent implements OnInit {
     private userService: UserService,
     private groupService: GroupService,
     private verificationService: VerificationService,
-    private spinnerService: SpinnerService
+    private spinnerService: SpinnerService,
+    private htmlClassService: HtmlClassService
   ) {
     this.displayNameForm = this.fb.group({
       displayName: ''
@@ -50,6 +51,7 @@ export class SignInComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.htmlClassService.set('auth-sign-in');
   }
 
   onClickSignIn(target: string) {
