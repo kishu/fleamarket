@@ -46,7 +46,7 @@ export class User {
   notification: {
     goods: boolean,
     interest: boolean
-  }
+  };
 }
 
 export class UserPreference {
