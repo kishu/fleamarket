@@ -48,6 +48,16 @@ export class GoodsService {
     return this.goodsCollection.doc(id).update({ soldOut });
   }
 
+  updateUser(id: string, user: User) {
+    return this.goodsCollection.doc(id).update({
+      user: {
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        desc: user.desc
+      }
+    });
+  }
+
   incrementCommentCnt(goodsId) {
     const goodsRef = this.getGoodsRef(goodsId);
     return this.afs.firestore.runTransaction(transaction => {

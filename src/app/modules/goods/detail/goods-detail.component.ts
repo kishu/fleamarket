@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { pluck } from 'rxjs/operators';
+import { Observable, of, zip } from 'rxjs';
+import { filter, pluck, switchMap, tap } from 'rxjs/operators';
 import { AuthService, CommentService, GoodsService, GoodsListService, InterestService } from '@app/core/http';
 import { HtmlClassService, LocationService } from '@app/shared/services';
-import { Comment, Goods, Market, User } from '@app/core/models';
+import { Comment, Goods, Market } from '@app/core/models';
 
 @Component({
   selector: 'app-detail',
@@ -25,7 +25,6 @@ export class GoodsDetailComponent implements OnInit {
   comments$: Observable<Comment[]>;
   goods: Goods;
   otherGoods$: Observable<Goods[]>;
-  user$: Observable<User>;
 
   private submitting = false;
 
@@ -65,7 +64,6 @@ export class GoodsDetailComponent implements OnInit {
     ).subscribe(() => {
       this.moreImages = false;
       this.goods = this.goodsService.cachedGoods;
-      this.user$ = this.goodsService.getGoodsUser(this.goods.userRef);
       this.otherGoods$ = this.goodsListService.getGoodsListByUser(this.goods.userRef, this.market);
       this.comments$ = this.commentService.getCommentsByGoods(this.goods.id);
 
@@ -73,7 +71,30 @@ export class GoodsDetailComponent implements OnInit {
       this.userDesc = user.desc;
       this.userDisplayName = user.displayName;
       this.userPhotoURL = user.photoURL;
+
+      this.checkAndUpdateGoodsUser();
     });
+  }
+
+  checkAndUpdateGoodsUser() {
+    const goods = this.goods;
+    const user$ = this.goodsService.getGoodsUser(this.goods.userRef);
+
+    zip(user$, of(goods)).pipe(
+      filter(([u, g]) => (
+        u.displayName !== g.user.displayName ||
+        u.desc !== g.user.desc ||
+        u.photoURL !== g.user.photoURL
+      )),
+      tap(([u, g]) => {
+        g.user = {
+          displayName: u.displayName,
+          desc: u.desc,
+          photoURL: u.photoURL
+        };
+      }),
+      switchMap(([u, g]) => this.goodsService.updateUser(g.id, u)),
+    ).subscribe();
   }
 
   commentAuthority(comment) {
