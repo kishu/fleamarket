@@ -111,9 +111,12 @@
     <ul class="comment_list">
       <li *ngFor="let comment of comments" [attr.data-id]="comment.id" class="comment_item">
         <div>
-          <span class="comment_thumb" [ngClass]="{author: commentAuthority(comment)}" [style.backgroundImage]="'url(' + comment.user.photoURL + ')'"></span>
+          <span class="comment_thumb" [style.backgroundImage]="'url(' + comment.user.photoURL + ')'"></span>
           <div class="comment_content">
-            <strong class="nickname">{{ comment.user.displayName }}</strong>
+            <strong class="nickname">
+              {{ comment.user.displayName }}
+              <span *ngIf="comment.userRef.id === goods.userRef.id">판매자</span>
+            </strong>
             <p>{{ comment.body }}</p>
           </div>
           <div class="comment_function">
