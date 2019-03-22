@@ -45,7 +45,7 @@ export class GoodsDetailComponent implements OnInit {
     private goodsService: GoodsService,
     private goodsListService: GoodsListService,
     private interestService: InterestService,
-    private htmlClasservice: HtmlClassService
+    private htmlClassService: HtmlClassService
   ) {
     this.market = route.snapshot.paramMap.get('market');
 
@@ -58,7 +58,7 @@ export class GoodsDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.htmlClasservice.set('goods-detail');
+    this.htmlClassService.set('goods-detail');
     const user = this.auth.user;
     this.route.params.pipe(
       pluck('goodsId')
