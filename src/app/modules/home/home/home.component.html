@@ -62,7 +62,10 @@
             </dl>
             <dl class="tag">
               <dt>태그</dt>
-              <dd>새제품, 직거래</dd>
+              <dd>
+                <span *ngIf="goods.delivery === '직거래' || goods.delivery === '택배'">{{ goods.delivery }}</span>
+                <span *ngIf="goods.condition === '미개봉'">새상품</span>
+              </dd>
             </dl>
           </a>
           <button (click)="onClickInterest(goods)"

@@ -781,7 +781,7 @@ nav.sorting .category a.on {
   display: block;
   position: relative;
   width: 100%;
-  padding-top: 56.25%;
+  padding-top: 60%;
   border-radius: 5px;
   background-position: 50% 50%;
   background-size: cover;
@@ -881,6 +881,10 @@ nav.sorting .category a.on {
   font-size: 14px;
   line-height: 24px;
   vertical-align: top;
+}
+
+.large_list .tag dd span + span:before {
+  content: ', ';
 }
 
 .small_list {
