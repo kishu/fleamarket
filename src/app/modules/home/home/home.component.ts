@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   userPhotoURL: string;
   groupName: string;
   market: string;
+  sortOption: boolean;
   exceptSoldOut: boolean;
   goodsList$: Observable<Goods[]>;
   private submitting = false;
@@ -88,6 +89,7 @@ export class HomeComponent implements OnInit {
         exceptSoldOut: checked
       });
     }
+    this.sortOption = false;
   }
 
   onClickInterest(goods: Goods) {

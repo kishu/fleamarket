@@ -12,41 +12,45 @@
     <div class="margin1">
       <button type="button" class="button google" (click)="onClickSignIn('google')"><strong>google</strong> 로그인</button>
     </div>
-    <div class="margin1">
+    <!-- <div class="margin1">
       <button type="button" class="button" (click)="onClickSignIn('twitter')">트위터</button>
-    </div>
+    </div> -->
     <!-- <div class="margin1">
       <button type="button" class="button" (click)="onClickSignIn('github')">깃허브(예정)</button>
-    </div>
-    <div class="margin1">
+    </div> -->
+    <!-- <div class="margin1">
       <button type="button" class="button" (click)="onClickSignIn('naver')">네이버(예정)</button>
     </div> -->
   </section>
 
-  <section *ngIf="socialSignIn" class="verification">
-    <h3>닉네임 입력</h3>
-    <p class="explain">
-      세컨드마켓에서 사용할 닉네임을 입력해 주세요.
-    </p>
+  <form *ngIf="socialSignIn" [formGroup]="displayNameForm" (ngSubmit)="onSubmitSignIn()" class="form">
+    <section class="verification">
+      <h3>닉네임 입력</h3>
+      <p class="explain">
+        세컨드마켓에서 사용할 닉네임을 입력해 주세요.
+      </p>
 
-    <form [formGroup]="displayNameForm" (ngSubmit)="onSubmitSignIn()" class="form margin3">
-      <div class="table margin1">
-        <input type="text"
-               name="displayName" formControlName="displayName"
-               required="required" minlength="2" maxlength="30"
-               placeholder="닉네임" class="input">
-      </div>
-
-      <ng-container *ngIf="displayNameForm.get('displayName') as displayName">
-        <div *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)" class="explain">
-          <span *ngIf="displayName.errors['required']">이메일 계정을 입력하세요.</span>
-          <span *ngIf="displayName.errors['minlength']">2자 이상 입력하세요.</span>
+      <div class="has-valid margin3">
+        <div class="table">
+          <input type="text"
+                name="displayName" formControlName="displayName"
+                required="required" minlength="2" maxlength="20"
+                placeholder="닉네임" class="input">
         </div>
-      </ng-container>
 
+        <ng-container *ngIf="displayNameForm.get('displayName') as displayName">
+          <div *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)" class="invalid-feedback">
+            <span *ngIf="displayName.errors['required']">닉네임을 입력하세요.</span>
+            <span *ngIf="displayName.errors['minlength']">2자 이상 입력하세요.</span>
+          </div>
+        </ng-container>
+      </div>
+    </section>
+
+    <section>
       <button type="submit"
               [disabled]="displayNameForm.invalid"
-              class="button margin2 verification">확인</button>
-    </form>
-  </section>
+              class="button verification">확인</button>
+    </section>
+  </form>
 </div>

@@ -1,7 +1,9 @@
 <div class="wrap sub form">
   <header>
     <h2>상품 {{ action }}</h2>
-    <a href="#" (click)="goBack($event)" class="back">돌아가기</a>
+    <a href="#" (click)="goBack($event)" class="back">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M30.83 32.67l-9.17-9.17 9.17-9.17L28 11.5l-12 12 12 12z"/></svg>돌아가기
+    </a>
   </header>
   <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
     <section>
@@ -10,7 +12,7 @@
       <div *ngIf="market.invalid && (market.dirty || market.touched)" class="explain">
         <span *ngIf="market.errors.selected">상품 등록 위치를 선택하세요.</span>
       </div>
-      <div formGroupName="market" class="table spacing fixed margin1">
+      <div formGroupName="market" class="table spacing fixed margin2">
         <div class="td">
           <input type="checkbox" id="group"
                  formControlName="group"
@@ -102,21 +104,21 @@
                  name="condition" formControlName="condition"
                  value="미개봉"
                  class="radio">
-          <label for="condition1" class="block center">미개봉</label>
+          <label for="condition1" class="block">미개봉</label>
         </span>
         <span>
           <input type="radio" id="condition2"
                  name="condition" formControlName="condition"
                  value="사용감 있음"
                  class="radio">
-          <label for="condition2" class="block center">사용감 있음</label>
+          <label for="condition2" class="block">사용감 있음</label>
         </span>
         <span>
           <input type="radio" id="condition3"
                  name="condition" formControlName="condition"
                  value="하자 없는 거의 새 상품"
                  class="radio">
-          <label for="condition3" class="block center">하자 없는 거의 새 상품</label>
+          <label for="condition3" class="block">하자 없는 거의 새 상품</label>
         </span>
       </div>
     </section>

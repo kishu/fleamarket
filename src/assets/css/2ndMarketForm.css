@@ -8,22 +8,20 @@ body {
 }
 
 .form section {
-  padding: 20px 15px;
+  padding: 16px;
   background-color: #f3f3f3;
 }
 
 .form section + section {
-  margin-top: 4px;
+  border-top: 1px solid #e5e5e5;
 }
 
 .form h3 {
   margin-top: 0;
   margin-bottom: 0;
-/*  font-size: 16px;
-  line-height: 20px;*/
   font-weight: normal;
   font-size: 18px;
-  line-height: 22px;
+  line-height: 24px;
   color: #666;
 }
 
@@ -46,7 +44,7 @@ body {
 }
 
 .form h3 + .explain {
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .form .explain.small.small {
@@ -60,6 +58,7 @@ body {
 
 .form .invalid-feedback {
   position: absolute;
+  left: 5px;
   top: 100%;
   margin-top: 5px;
   font-size: 13px;
@@ -110,12 +109,12 @@ body {
 }
 
 .select_item1 a:active {
-  color: #ef484e;
+  color: #ef5359;
 }
 
 .select_item1 a:active:before {
   border-color: #000;
-  background-color: #ef484e;
+  background-color: #ef5359;
 }
 
 .select_item2 {
@@ -157,7 +156,7 @@ body {
 
 .select_item2 a.selected {
   border-color: #000;
-  background-color: #ef484e;
+  background-color: #ef5359;
   color: #fff;
 }
 
@@ -199,15 +198,22 @@ body {
 .textarea,
 .textarea + .clone {
   width: 100%;
-  padding: 9px 10px;
-  border: 2px solid #999;
-  border-radius: 4px;
+  padding: 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
   background-color: #fff;
   font-size: 14px;
   line-height: 18px;
   color: #666;
   box-sizing: border-box;
   -webkit-appearance: none;
+}
+
+.select:focus,
+.input:focus,
+.textarea:focus {
+  border-color: #ef5359;
+  outline: none;
 }
 
 .underline {
@@ -247,16 +253,6 @@ body {
   height: 58px;
 }
 
-/* .select:focus,
-.input:focus,
-.textarea:focus,
-.textarea + .clone, */
-.comment_form .textarea {
-  border: 1px solid;
-  border-color: #bfbfbf #f3f3f3 #f3f3f3 #bfbfbf;
-  border-radius: 3px;
-}
-
 .textarea:focus {
   height: 58px;
 }
@@ -285,7 +281,7 @@ body {
   width: 100%;
   padding: 10px 0;
   border: 1px solid #ef5359;
-  border-radius: 2px;
+  border-radius: 5px;
   background-color: #ef5359;
   font-size: 16px;
   line-height: 20px;
@@ -319,15 +315,14 @@ body {
 }
 
 .button.cancel {
-  border-color: #ccc;
-  background-color: #ccc;
-  color: #666;
+  border-color: #bbb;
+  background-color: #bbb;
+  color: #fff;
 }
 
 .button.cancel:active {
   border-color: #999;
   background-color: #999;
-  color: #666;
 }
 
 .button.facebook {
@@ -355,7 +350,7 @@ body {
 }
 
 .comment .button {
-  margin-top: 3px;
+  margin-top: 4px;
   padding: 10px 0;
   font-size: 14px;
   line-height: 18px;
@@ -372,11 +367,10 @@ body {
   display: inline-block;
   position: relative;
   margin-right: 5px;
-  /* margin-bottom: 10px; */
-  padding: 9px 15px;
+  padding: 9px 24px;
   border: 2px solid #ccc;
-  border-radius: 4px;
-  background-color: #ccc;
+  border-radius: 5px;
+  background-color: #fff;
   font-size: 13px;
   line-height: 18px;
   color: #666;
@@ -384,8 +378,13 @@ body {
 
 .radio:checked + label,
 .checkbox:checked + label {
+  padding-left: 32px;
+  padding-right: 16px;
   border-color: #ef5359;
-  background-color: #fff;
+  background-image: url(../img/baseline-check-24px.svg);
+  background-repeat: no-repeat;
+  background-position: 10px 50%;
+  background-size: 18px 18px;
   color: #ef5359;
 }
 
@@ -408,7 +407,7 @@ body {
   margin: 0 auto;
 }
 
-.radio:checked + label:after,
+/* .radio:checked + label:after,
 .checkbox:checked + label:after {
   position: absolute;
   right: -5px;
@@ -423,7 +422,7 @@ body {
   background-position: 50% 50%;
   background-size: 16px 16px;
   content: '';
-}
+} */
 
 .select_item3 {
   padding: 10px 0;
@@ -451,7 +450,7 @@ body {
 
 .select_item3 a.selected {
   border-radius: 2px;
-  background-color: #ef484e;
+  background-color: #ef5359;
 }
 
 .select_item3 a.selected span {
@@ -636,11 +635,9 @@ body {
 .profile_border {
   overflow: hidden;
   position: relative;
-  width: 69px;
-  height: 69px;
+  width: 96px;
+  height: 96px;
   margin: 0 auto;
-  padding: 7px;
-  background-image: url(../img/profile_border.png);
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: 100% 100%;
@@ -650,12 +647,12 @@ body {
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   background-image: url(../img/profile_camera.png);
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  background-size: 26px 26px;
+  background-size: 24px 24px;
 }
 
 .profile_thumb {
@@ -708,8 +705,8 @@ body {
   overflow: hidden;
   position: absolute;
   z-index: 2;
-  right: -5px;
-  top: -5px;
+  right: 0;
+  top: 0;
   width: 20px;
   padding: 0;
   border: 2px solid #111;
@@ -727,19 +724,21 @@ body {
   overflow: hidden;
   position: absolute;
   z-index: 2;
-  left: 50%;
-  top: 50%;
-  width: 40%;
-  height: 40%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 32px;
+  height: 32px;
+  margin: auto;
   border: 0;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.3);
-  background-image: url(../img/icon-rotate.png);
+  background-image: url(../img/baseline-rotate_right-24px.svg);
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  background-size: 80% 80%;
+  background-size: 24px 24px;
   color: rgba(0, 0, 0 ,0);
-  -webkit-transform: translateX(-50%) translateY(-50%);
 }
 
 .attach_up {
@@ -789,7 +788,7 @@ body {
   background-color: #fff;
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  background-size: contain;
+  background-size: cover;
   overflow: hidden;
 }
 
@@ -809,7 +808,7 @@ body {
   right: 0;
   top: 0;
   bottom: 0;
-  border: 2px solid #999;
+  border: 2px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   content: '';
 }
@@ -825,7 +824,7 @@ body {
   right: 0;
   top: 0;
   bottom: 0;
-  padding-top: 60%;
+  padding-top: 50%;
   line-height: 24px;
   text-align: center;
   color: #666;
@@ -836,15 +835,12 @@ body {
   position: absolute;
   left: 0;
   right: 0;
-  /* top: 0; */
-  bottom: 40%;
-  width: 32px;
-  height: 32px;
-  margin: auto;
-  border: 2px solid #999;
-  border-radius: 50%;
-  background: url(../img/icon_attachfile.png) no-repeat 50% 50%;
-  background-size: 20px 20px;
+  bottom: 50%;
+  width: 24px;
+  height: 24px;
+  margin: 0 auto -4px;
+  background: url(../img/baseline-photo_library-24px.svg) no-repeat 50% 50%;
+  background-size: 24px auto;
   content: '';
 }
 
@@ -860,4 +856,16 @@ body {
   z-index: 2;
   font-size: 100rem;
   opacity: 0;
+}
+
+.label-soldout {
+  display: inline-block;
+  margin: 2px 0 0;
+  padding: 0 5px;
+  border-radius: 3px;
+  background: #dd4e51;
+  font-size: 14px;
+  line-height: 20px;
+  vertical-align: top;
+  text-shadow: none;
 }

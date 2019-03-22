@@ -1,20 +1,15 @@
 <div class="wrap sub">
   <header>
-    <h2>마이페이지</h2>
-    <a href="#" (click)="goBack($event)" class="back">돌아가기</a>
-  </header>
-  <div class="profile">
-    <a routerLink="/preference/user" class="thumb" [style.backgroundImage]="'url(' + user.photoURL + ')'">
-      <span class="setting"></span>
+    <h2>알림</h2>
+    <a href="#" (click)="goBack($event)" class="back">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M30.83 32.67l-9.17-9.17 9.17-9.17L28 11.5l-12 12 12 12z"/></svg>돌아가기
     </a>
-    <p class="profile_text">{{ user.displayName }} / {{ user.desc}}</p>
-  </div>
-  <div class="alarm">
+  </header>
+  <div class="alarm" *ngIf="(notifications$ | async) as notifications">
     <div class="alarm_header">
-      <h3>알림</h3>
-      <!-- <a class="notice_link" href="#">공지사항</a> -->
+      <h3>새로운 알림 <span>{{notifications.length}}</span> 건</h3>
     </div>
-    <div class="alarm_body" *ngIf="(notifications$ | async) as notifications">
+    <div class="alarm_body">
       <div class="alarm_nothing" *ngIf="notifications.length === 0">
         알림이 없습니다.
       </div>
@@ -31,6 +26,9 @@
           </a>
         </li>
       </ul>
+    </div>
+    <div class="alarm_header">
+      <h3>읽은 알림 <span>10</span> 건</h3>
     </div>
   </div>
 </div>

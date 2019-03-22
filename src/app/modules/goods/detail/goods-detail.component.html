@@ -1,9 +1,15 @@
 <div *ngIf="goods" class="wrap sub end">
   <header>
-    <h2>상품 설명</h2>
-    <a href="#" (click)="goBack($event)" class="back">돌아가기</a>
+    <h1><a [routerLink]="['/', market]">2nd Market</a></h1>
+    <a href="#" (click)="goBack($event)" class="back">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M30.83 32.67l-9.17-9.17 9.17-9.17L28 11.5l-12 12 12 12z"/></svg>돌아가기
+    </a>
+    <button type="button" class="star" [ngClass]="{ on: interested }" (click)="onClickInterest()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M24 42.7l-2.9-2.63C10.8 30.72 4 24.55 4 17 4 10.83 8.83 6 15 6c3.48 0 6.82 1.62 9 4.17C26.18 7.62 29.52 6 33 6c6.17 0 11 4.83 11 11 0 7.55-6.8 13.72-17.1 23.07L24 42.7z"/></svg>
+    </button>
+    <!-- <a [routerLink]="['/', market]" class="home"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M20 40V28h8v12h10V24h6L24 6 4 24h6v16z"/></svg></a> -->
     <div *ngIf="authority" class="sub_utility">
-      <span class="goods_modify">수정</span>
+      <span class="goods_modify"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M38.86 25.95c.08-.64.14-1.29.14-1.95s-.06-1.31-.14-1.95l4.23-3.31c.38-.3.49-.84.24-1.28l-4-6.93c-.25-.43-.77-.61-1.22-.43l-4.98 2.01c-1.03-.79-2.16-1.46-3.38-1.97L29 4.84c-.09-.47-.5-.84-1-.84h-8c-.5 0-.91.37-.99.84l-.75 5.3c-1.22.51-2.35 1.17-3.38 1.97L9.9 10.1c-.45-.17-.97 0-1.22.43l-4 6.93c-.25.43-.14.97.24 1.28l4.22 3.31C9.06 22.69 9 23.34 9 24s.06 1.31.14 1.95l-4.22 3.31c-.38.3-.49.84-.24 1.28l4 6.93c.25.43.77.61 1.22.43l4.98-2.01c1.03.79 2.16 1.46 3.38 1.97l.75 5.3c.08.47.49.84.99.84h8c.5 0 .91-.37.99-.84l.75-5.3c1.22-.51 2.35-1.17 3.38-1.97l4.98 2.01c.45.17.97 0 1.22-.43l4-6.93c.25-.43.14-.97-.24-1.28l-4.22-3.31zM24 31c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg></span>
       <select (change)="onMenuChange($event.target.value)">
         <option disabled selected value>[선택]</option>
         <option value="edit">수정</option>
@@ -16,19 +22,22 @@
   <div class="single-item">
     <img [src]="goods.images[0]" width="100%" alt="" style="vertical-align:top;">
   </div>
-  <section class="goods_section">
-    <h3>
-      <button
+  <h3 class="goods-name">
+    <span class="goods-name-bg">
+      <!-- <button
         (click)="onClickInterest()"
-        [ngClass]="{ 'likeit': true, 'on': interested }" style="border:0"><span class="sr-only">관심</span></button>
+        [ngClass]="{ 'likeit': true, 'on': interested }" style="border:0"><span class="sr-only">관심</span></button> -->
       {{ goods.title }}
-    </h3>
+    </span>
     <span *ngIf="goods.soldOut" class="soldout type1"></span>
-    <div class="goods_info_area margin1">
-      <dl class="goods_price">
-        <dt>판매가</dt>
-        <dd><strong>{{ goods.price | number:'2.' }}</strong>원</dd>
-      </dl>
+  </h3>
+  <section class="goods_section">
+    <dl class="goods_price">
+      <dt>판매가</dt>
+      <dd><strong>{{ goods.price | number:'2.' }}</strong>원</dd>
+    </dl>
+
+    <div class="goods_info_area">
       <dl class="goods_info">
         <dt>사용기간</dt>
         <dd>{{ goods.purchase }}</dd>
@@ -37,75 +46,81 @@
         <dt>사용상태</dt>
         <dd>{{ goods.condition }}</dd>
       </dl>
-      <dl class="goods_info margin1">
+      <dl class="goods_info">
         <dt>거래방법</dt>
         <dd>{{ goods.delivery }}</dd>
       </dl>
-      <dl *ngIf="goods.contact" class="goods_info margin1">
+      <dl *ngIf="goods.contact" class="goods_info">
         <dt>연락처</dt>
         <dd>{{ goods.contact }}</dd>
       </dl>
     </div>
+
     <div class="goods_detail">
-      <p [innerHTML]="goods.desc" style="white-space: pre-wrap"></p>
+      <p [innerHTML]="goods.desc"></p>
     </div>
+
     <div *ngIf="goods.images.length > 1">
-      <div class="more-thumbs">
-        <ng-container *ngIf="!moreImages">
-          <div *ngFor="let image of goods.images.slice(1)" [class]="'thumbs-' + (goods.images.length - 1)">
-            <div class="thumb-cover" [style.backgroundImage]="'url(' + image + ')'"></div>
+      <div class="more-thumbs-wrap">
+        <div class="more-thumbs">
+          <ng-container *ngIf="!moreImages">
+            <div *ngFor="let image of goods.images" [class]="'thumbs-' + (goods.images.length - 1)">
+              <div class="thumb-cover" [style.backgroundImage]="'url(' + image + ')'"></div>
+            </div>
+          </ng-container>
+        </div>
+        <ng-container *ngIf="moreImages">
+          <div *ngFor="let image of goods.images" class="more-thumbs-full">
+            <img [src]="image" width="100%" alt="">
           </div>
         </ng-container>
       </div>
       <div class="toggle-button" *ngIf="!moreImages">
         <button type="button" (click)="onClickMoreImages()">이미지 펼쳐보기</button>
       </div>
-      <ng-container *ngIf="moreImages">
-        <div *ngFor="let image of goods.images.slice(1)">
-          <img [src]="image" width="100%" alt="" style="border: 1px solid #fff; vertical-align:top;">
-        </div>
-      </ng-container>
       <div class="toggle-button" *ngIf="moreImages">
         <button type="button" (click)="onClickMoreImages()">이미지 접기</button>
       </div>
     </div>
-    <div class="author_info margin3">
+    <div class="author_info">
       <span class="author_thumb" [style.backgroundImage]="'url(' + goods.user.photoURL + ')'"></span>
       <p><strong>{{ goods.user.displayName }}</strong>님이 판매중입니다.</p>
       <div class="author_introduce">{{ goods.user.desc }}</div>
+      <div class="other_goods">
+        <!-- <h4><strong>{{ goods.user.displayName }}</strong>님의 다른 상품</h4> -->
+        <ul class="other_goods_list">
+          <li *ngFor="let goods of otherGoods$ | async">
+            <div class="other_goods_item">
+              <a [routerLink]="['/', market, 'goods', goods.id]" (click)="onClickOtherGoods(goods)">
+                <div class="other_goods_thumb" [style.backgroundImage]="'url(' + goods.images[0] +')'"></div>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </section>
-  <div class="other_goods">
-    <h4><strong>{{ goods.user.displayName }}</strong>님의 다른 상품</h4>
-    <ul class="other_goods_list">
-      <li *ngFor="let goods of otherGoods$ | async">
-        <div class="other_goods_item">
-          <a [routerLink]="['/', market, 'goods', goods.id]" (click)="onClickOtherGoods(goods)">
-            <div class="other_goods_thumb" [style.backgroundImage]="'url(' + goods.images[0] +')'"></div>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
   <div *ngIf="(comments$ | async) as comments" class="comment">
     <div class="comment_header">
-      <ng-container *ngIf="comments.length > 0; then commentsTmpl else noCommentsTmpl"></ng-container>
-      <ng-template #commentsTmpl><h4>댓글 <strong>{{ comments.length }}</strong>개</h4></ng-template>
-      <ng-template #noCommentsTmpl><h4>첫 댓글을 입력해 보세요!</h4></ng-template>
+      <h4>댓글 <strong>{{ comments.length }}</strong>개</h4>
     </div>
+    <p *ngIf="comments.length === 0" class="comment-nothing">
+      아직 댓글이 없습니다.<br>
+      첫 댓글을 입력해 보세요!
+    </p>
     <ul class="comment_list">
-      <li *ngFor="let comment of comments" [attr.data-id]="comment.id">
-        <div class="comment_item">
-          <span class="comment_thumb" [style.backgroundImage]="'url(' + comment.user.photoURL + ')'"></span>
+      <li *ngFor="let comment of comments" [attr.data-id]="comment.id" class="comment_item">
+        <div>
+          <span class="comment_thumb" [ngClass]="{author: commentAuthority(comment)}" [style.backgroundImage]="'url(' + comment.user.photoURL + ')'"></span>
           <div class="comment_content">
-            <strong>{{ comment.user.displayName }}</strong><br>
+            <strong class="nickname">{{ comment.user.displayName }}</strong>
             <p>{{ comment.body }}</p>
           </div>
           <div class="comment_function">
             <ng-container *ngIf="commentAuthority(comment)">
               <button type="button" (click)="onClickDeleteComment(comment)" style="border:0">삭제</button>  &middot;
             </ng-container>
-            <span class="created">{{ comment.created | fsTimestamp | distanceInWordsToNow }}</span>
+            <span class="created">{{ comment.created | fsTimestamp | distanceInWordsToNow }} 전</span>
           </div>
         </div>
       </li>
@@ -116,7 +131,7 @@
                   maxlength="500" class="textarea"></textarea>
         <button type="submit"
                 [disabled]="commentForm.invalid"
-                [ngClass]="{ button: true, disabled: commentForm.invalid }">입력</button>
+                [ngClass]="{ button: true, disabled: commentForm.invalid }">댓글 입력</button>
       </form>
     </div>
   </div>
