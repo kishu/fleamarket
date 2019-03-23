@@ -1,18 +1,13 @@
 <header class="main">
   <div>
-    <h1>2nd Market</h1>
+    <h1>세컨드마켓</h1>
   </div>
-  <div class="user-menu">
-    <a routerLink="/preference/notification" class="user-alarm">
-      <!-- <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path fill="#010101" d="M24 44c2.21 0 4-1.79 4-4h-8c0 2.21 1.79 4 4 4zm12-12V22c0-6.15-3.27-11.28-9-12.64V8c0-1.66-1.34-3-3-3s-3 1.34-3 3v1.36c-5.73 1.36-9 6.49-9 12.64v10l-4 4v2h32v-2l-4-4z"/></svg> -->
-      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" class="new"><path fill="#010101" d="M24 44c2.21 0 4-1.79 4-4h-8c0 2.21 1.79 4 4 4zm12-12V22c0-6.15-3.27-11.28-9-12.64V8c0-1.66-1.34-3-3-3s-3 1.34-3 3v1.36c-5.73 1.36-9 6.49-9 12.64v10l-4 4v2h32v-2l-4-4z"/></svg>
-      <!-- <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" class="new"><path fill="#010101" d="M15.16 8.16L12.3 5.3C7.51 8.95 4.35 14.59 4.05 21h4c.31-5.3 3.04-9.94 7.11-12.84zM39.95 21h4c-.3-6.41-3.46-12.05-8.25-15.7l-2.85 2.85c4.06 2.91 6.79 7.55 7.1 12.85zM36 22c0-6.15-3.27-11.28-9-12.64V8c0-1.66-1.34-3-3-3s-3 1.34-3 3v1.36c-5.73 1.36-9 6.49-9 12.64v10l-4 4v2h32v-2l-4-4V22zM24 44c.28 0 .55-.03.81-.08 1.3-.27 2.37-1.17 2.88-2.36.2-.48.31-1 .31-1.56h-8c0 2.21 1.79 4 4 4z"/></svg> -->
-    </a>
-    <a routerLink="/preference/user" class="user-profile">
-      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M24 24c4.42 0 8-3.59 8-8 0-4.42-3.58-8-8-8s-8 3.58-8 8c0 4.41 3.58 8 8 8zm0 4c-5.33 0-16 2.67-16 8v4h32v-4c0-5.33-10.67-8-16-8z"/></svg>
-    </a>
-  </div>
-  <a [routerLink]="['/', market, 'goods', 'new', 'edit']" class="write"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M6 34.5V42h7.5l22.13-22.13-7.5-7.5L6 34.5zm35.41-20.41c.78-.78.78-2.05 0-2.83l-4.67-4.67c-.78-.78-2.05-.78-2.83 0l-3.66 3.66 7.5 7.5 3.66-3.66z"/></svg></a>
+  <a routerLink="/preference/notification" class="user-alarm">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" class="new"><path fill="#010101" d="M24 44c2.21 0 4-1.79 4-4h-8c0 2.21 1.79 4 4 4zm12-12V22c0-6.15-3.27-11.28-9-12.64V8c0-1.66-1.34-3-3-3s-3 1.34-3 3v1.36c-5.73 1.36-9 6.49-9 12.64v10l-4 4v2h32v-2l-4-4z"/></svg>
+  </a>
+  <a routerLink="/preference/user" class="user-profile">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M24 24c4.42 0 8-3.59 8-8 0-4.42-3.58-8-8-8s-8 3.58-8 8c0 4.41 3.58 8 8 8zm0 4c-5.33 0-16 2.67-16 8v4h32v-4c0-5.33-10.67-8-16-8z"/></svg>
+  </a>
 </header>
 <section class="main">
   <div class="group">
@@ -20,18 +15,12 @@
       <a (click)="showGoodsBy('group')" [ngClass]="{ on: market === 'group' }"><span>{{ groupName }}</span></a>
       <a (click)="showGoodsBy('lounge')" [ngClass]="{ on: market === 'lounge' }"><span>2nd Lounge</span></a>
     </h2>
-    <nav class="sorting">
+    <div class="sorting">
       <button type="button" class="on" (click)="sortOption = !sortOption">
         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M32 34.02V20h-4v14.02h-6L30 42l8-7.98h-6zM18 6l-8 7.98h6V28h4V13.98h6L18 6z"/></svg>
         <span>업데이트순{{ exceptSoldOut ? ', 품절제외' : '' }}</span>
       </button>
-      <div class="sort-layer" *ngIf="sortOption">
-        <a class="selected">업데이트순</a>
-        <a>가격높은순</a>
-        <a>가격낮은순</a>
-        <a [ngClass]="{ selected: exceptSoldOut }" (click)="onClickExceptSoldOut(!exceptSoldOut)">품절상품 제외</a>
-      </div>
-    </nav>
+    </div>
   </div>
   <ng-container *ngIf="(goodsList$ | async) as goodsList">
     <section *ngIf="goodsList.length === 0" class="list_nothing">
@@ -50,16 +39,10 @@
                   <span class="label-soldout" *ngIf="goods.soldOut">Sold out</span>
                   {{ goods.title }}
                 </div>
-                <div class="price">{{ goods.price | number: '2.' }} 원</div>
               </div>
+              <span class="author_thumb" [style.backgroundImage]="'url(' + goods.user.photoURL + ')'"></span>
             </div>
-            <span class="author_thumb" [style.backgroundImage]="'url(' + goods.user.photoURL + ')'"></span>
-            <dl class="feed">
-              <dt class="like"></dt>
-              <dd>{{ goods.interests.length }}</dd>
-              <dt class="comment"></dt>
-              <dd>{{ goods.commentCnt }}</dd>
-            </dl>
+            <div class="price">{{ goods.price | number: '2.' }} 원</div>
             <dl class="tag">
               <dt>태그</dt>
               <dd>
@@ -68,8 +51,18 @@
               </dd>
             </dl>
           </a>
-          <button (click)="onClickInterest(goods)"
-                  [ngClass]="{ 'likeit': true, 'on': interested(goods) }"><span class="sr-only">관심</span></button>
+          <dl class="feed">
+            <dt class="comment">
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M40 4H8C5.79 4 4 5.79 4 8v36l8-8h28c2.21 0 4-1.79 4-4V8c0-2.21-1.79-4-4-4z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M40 4H8C5.79 4 4 5.79 4 8v36l8-8h28c2.21 0 4-1.79 4-4V8c0-2.21-1.79-4-4-4z"/></svg>
+            </dt>
+            <dd>{{ goods.commentCnt }}</dd>
+            <dt class="like" (click)="onClickInterest(goods)" [ngClass]="{ 'on': interested(goods) }">
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M24 42.7l-2.9-2.63C10.8 30.72 4 24.55 4 17 4 10.83 8.83 6 15 6c3.48 0 6.82 1.62 9 4.17C26.18 7.62 29.52 6 33 6c6.17 0 11 4.83 11 11 0 7.55-6.8 13.72-17.1 23.07L24 42.7z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M24 42.7l-2.9-2.63C10.8 30.72 4 24.55 4 17 4 10.83 8.83 6 15 6c3.48 0 6.82 1.62 9 4.17C26.18 7.62 29.52 6 33 6c6.17 0 11 4.83 11 11 0 7.55-6.8 13.72-17.1 23.07L24 42.7z"/></svg>
+            </dt>
+            <dd (click)="onClickInterest(goods)">{{ goods.interests.length }}</dd>
+          </dl>
         </div>
       </li>
     </ul>
@@ -78,4 +71,30 @@
     </div>
   </ng-container>
 </section>
+
+<a [routerLink]="['/', market, 'goods', 'new', 'edit']" class="write"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M6 34.5V42h7.5l22.13-22.13-7.5-7.5L6 34.5zm35.41-20.41c.78-.78.78-2.05 0-2.83l-4.67-4.67c-.78-.78-2.05-.78-2.83 0l-3.66 3.66 7.5 7.5 3.66-3.66z"/></svg></a>
+
 <a href="#" class="top"></a>
+
+<div class="sort-layer-wrap" *ngIf="sortOption" (click)="sortOption = !sortOption">
+  <div class="sort-layer">
+    <div class="sort-group">
+      <a class="selected">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M18 32.34L9.66 24l-2.83 2.83L18 38l24-24-2.83-2.83z"/></svg>
+        업데이트순
+      </a>
+      <a>
+        가격높은순
+      </a>
+      <a>
+        가격낮은순
+      </a>
+    </div>
+    <div class="sort-group">
+      <a (click)="onClickExceptSoldOut(!exceptSoldOut)">
+        <svg *ngIf="exceptSoldOut" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M18 32.34L9.66 24l-2.83 2.83L18 38l24-24-2.83-2.83z"/></svg>
+        품절상품 제외
+      </a>
+    </div>
+  </div>
+</div>

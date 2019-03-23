@@ -18,7 +18,7 @@ svg {
 }
 
 path {
-  fill: #fff;
+  fill: #ef5259;
 }
 
 .auth-verification,
@@ -37,7 +37,7 @@ header {
   z-index: 20;
   padding: 8px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: #dd4e51;
+  background-color: rgba(255, 255, 255, 0.95);
   overflow: hidden;
 }
 
@@ -48,21 +48,25 @@ header h1 {
   font-weight: bold;
   font-size: 18px;
   line-height: 24px;
-  color: #fff;
+  color: #ef5259;
   text-align: center;
 }
 
 header h1 a {
-  color: #fff;
+  color: #ef5259;
   text-decoration: none;
 }
 
 .group {
   position: relative;
   z-index: 10;
+  overflow: hidden;
 }
 
 .group h2 {
+  float: left;
+  position: relative;
+  z-index: 5;
   margin: 0;
   margin-bottom: -16px;
   padding: 8px 16px;
@@ -211,7 +215,7 @@ section.main {
   font-weight: normal;
   font-size: 18px;
   line-height: 24px;
-  color: #fff;
+  color: #ef5259;
   text-align: center;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -221,12 +225,12 @@ section.main {
   position: absolute;
   left: 10px;
   top: 10px;
-  max-width: 80px;
+  max-width: 100px;
   height: 28px;
   padding-right: 8px;
   font-size: 13px;
   line-height: 28px;
-  color: #fff;
+  color: #ef5259;
   text-decoration: none;
   overflow: hidden;
   white-space: nowrap;
@@ -239,9 +243,26 @@ section.main {
   vertical-align: top;
 }
 
-.sub header .back path {
-  stroke: none;
-  fill: rgba(255, 255, 255, 1);
+.sub header .close {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  max-width: 100px;
+  height: 28px;
+  padding-right: 8px;
+  font-size: 13px;
+  line-height: 28px;
+  color: #ef5259;
+  text-decoration: none;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.sub header .close svg {
+  width: 28px;
+  height: 28px;
+  vertical-align: top;
 }
 
 .menu-toggle {
@@ -312,7 +333,7 @@ section.main {
   color: #fff;
 }
 
-nav.sorting {
+.sorting {
   position: absolute;
   right: 16px;
   top: 16px;
@@ -322,59 +343,87 @@ nav.sorting {
   text-align: right;
 }
 
-nav.sorting button {
+.sorting button {
   height: 24px;
-  padding: 0 8px 0 0;
+  padding: 0;
   border: 0;
   background-color: transparent;
   color: #666;
 }
 
-nav.sorting button svg {
+.sorting button svg {
   width: 24px;
   height: 24px;
   vertical-align: top;
 }
 
-nav.sorting button path {
+.sorting button path {
   fill: #666;
 }
 
-nav.sorting button.on {
+.sorting button.on {
   color: #ef5259;
 }
 
-nav.sorting .on path {
+.sorting .on path {
   fill: #ef5259;
+}
+
+.sort-layer-wrap {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 50;
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .sort-layer {
   position: absolute;
-  right: -8px;
-  top: 100%;
-  padding: 7px;
-  border: 1px solid #ef5259;
+  left: 0;
+  right: 0;
+  top: 50%;
+  width: 160px;
+  margin: 24px auto 0;
+  padding: 0 8px;
+  border: 2px solid #ef5259;
   border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.95);
+  transform: translateY(-50%);
+  box-shadow: 0 0 0 2px #fff;
 }
 
-nav.sorting .sort-layer a {
+.sort-layer .sort-group {
+  padding: 8px 0;
+}
+
+.sort-layer .sort-group +  .sort-group {
+  border-top: 1px solid #ef5259;
+}
+
+.sort-layer a {
   display: block;
-  padding: 0 8px;
+  position: relative;
+  padding: 8px 16px;
   border-radius: 2px;
+  font-size: 18px;
+  line-height: 24px;
   color: #ef5259;
   text-align: right;
   text-decoration: none;
   white-space: nowrap;
 }
 
-nav.sorting .sort-layer a.selected {
-  background-color: #ef5259;
-  color: #fff;
-}
-
-nav.sorting .sort-layer a + a {
-  margin-top: 2px;
+.sort-layer svg {
+  position: absolute;
+  left: 4px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 20px;
+  height: 20px;
 }
 
 .view_option {
@@ -385,28 +434,35 @@ nav.sorting .sort-layer a + a {
   /* background-color: #32333d; */
 }
 
-/* nav.sorting .category {
+/* .sorting .category {
   background-color: #e5e5e5;
 }
 
-nav.sorting .category a {
+.sorting .category a {
   padding: 10px 8px;
   color: #333;
   font-weight: bold;
 }
 
-nav.sorting .category a.on {
+.sorting .category a.on {
   color: #ef5259;
 } */
 
 .write {
-  position: absolute;
-  left: 12px;
-  top: 8px;
-  z-index: 50;
-  width: 28px;
-  height: 28px;
-  padding: 2px;
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  z-index: 30;
+  width: 24px;
+  height: 24px;
+  padding: 10px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background-color: #ef5259;
+}
+
+.write path {
+  fill: #fff;
 }
 
 .top {
@@ -495,15 +551,6 @@ nav.sorting .category a.on {
   font-size: 12px;
   line-height: 16px;
   color: #999;
-}
-
-.toggle-button .more-button {
-  width: 48px;
-  padding: 16px 0;
-  border-radius: 50%;
-  background-color: #ef5259;
-  color: #fff;
-  text-align: center;
 }
 
 .my_menu {
@@ -775,13 +822,14 @@ nav.sorting .category a.on {
 
 .large_list .item > a {
   display: block;
+  text-decoration: none;
 }
 
 .large_list .item .goods_thumb {
   display: block;
   position: relative;
   width: 100%;
-  padding-top: 60%;
+  padding-bottom: 64%;
   border-radius: 5px;
   background-position: 50% 50%;
   background-size: cover;
@@ -816,12 +864,8 @@ nav.sorting .category a.on {
 
 .large_list .author_thumb {
   position: absolute;
-  /* left: 16px;
-  bottom: 8px;
-  width: 62px;
-  height: 62px; */
   left: 8px;
-  bottom: 48px;
+  bottom: 8px;
   width: 46px;
   height: 46px;
   border: 1px solid #fff;
@@ -833,7 +877,7 @@ nav.sorting .category a.on {
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 8px 16px 8px 96px;
+  padding: 4px 8px 4px 72px;
   background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
   text-align: right;
@@ -841,14 +885,16 @@ nav.sorting .category a.on {
 }
 
 .large_list .text .name {
-  font-size: 20px;
+  font-size: 16px;
   line-height: 24px;
 }
 
-.large_list .text .price {
-  margin-top: 4px;
+.large_list .price {
+  padding: 4px 8px 8px;
   font-size: 16px;
+  color: #161616;
   line-height: 20px;
+  text-align: right;
 }
 
 .large_list .tag {
@@ -856,7 +902,7 @@ nav.sorting .category a.on {
   left: 0;
   bottom: 0;
   margin: 0;
-  padding: 8px 0;
+  padding: 2px 0 6px;
   color: #161616;
   white-space: nowrap;
 }
@@ -1005,46 +1051,82 @@ nav.sorting .category a.on {
 }
 
 .feed {
+  position: absolute;
+  right: 0;
+  top: 0;
   margin: 0;
-  padding: 8px 16px;
+  padding: 8px 12px;
   line-height: 24px;
-  color: #161616;
+  color: #fff;
   text-align: right;
   white-space: nowrap;
+  text-shadow: 0 0 1px #000;
 }
 
 .feed dt {
   display: inline-block;
+  position: relative;
   margin-left: 8px;
+}
+
+.feed dt path {
+  fill: #fff;
+}
+
+.feed dt svg:nth-child(1) path {
+  stroke: rgba(0, 0, 0, 0.3);
+  stroke-width: 6;
+  fill: rgba(0, 0, 0, 0.1);
+}
+
+.feed dt svg:nth-child(2) path {
+  stroke: rgba(255, 255, 255, 1);
+  stroke-width: 3;
+  fill: none;
+}
+
+.feed dt svg:nth-child(2) {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.feed dt.on svg:nth-child(1) path {
+  stroke: #fff;
+}
+
+.feed dt.on svg:nth-child(2) path {
+  stroke: none;
+  fill: #ef5259;
 }
 
 .feed dd {
   display: inline-block;
   margin: 0;
   font-size: 14px;
-  line-height: 21px;
+  line-height: 20px;
   vertical-align: top;
 }
 
 .feed .like {
-  width: 24px;
-  height: 21px;
+  width: 20px;
+  height: 20px;
   margin-right: 3px;
-  background-image: url(../img/icon-interest.png);
+  /* background-image: url(../img/icon-interest.png);
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  background-size: 24px 19px;
+  background-size: 24px 24px; */
   vertical-align: top;
 }
 
 .feed .comment {
-  width: 21px;
-  height: 21px;
+  width: 20px;
+  height: 20px;
   margin-right: 3px;
-  background-image: url(../img/icon-comment.png);
+  /* background-image: url(../img/icon-comment.png);
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  background-size: 21px 21px;
+  background-size: 24px 24px; */
   vertical-align: top;
 }
 
@@ -1175,16 +1257,25 @@ nav.sorting .category a.on {
   display: inline-block;
   margin-right: 8px;
   font-size: 14px;
-  line-height: 24px;
+  line-height: 22px;
   color: #ef5259;
+  vertical-align: bottom;
 }
 
 .end .goods_price dd {
   display: inline-block;
   margin: 0;
+  font-size: 17px;
+  line-height: 22px;
+  color: #333;
+  vertical-align: bottom;
+}
+
+.end .goods_price dd strong {
+  margin-right: 1px;
   font-size: 20px;
   line-height: 24px;
-  color: #333;
+  vertical-align: bottom;
 }
 
 .goods_info_area {
@@ -1327,21 +1418,18 @@ nav.sorting .category a.on {
   top: 8px;
   width: 32px;
   height: 32px;
-  padding: 2px;
+  padding: 4px;
   border: 0;
   background-color: transparent;
 }
 
 .star path {
-  /* opacity: 0.5; */
+  fill: #999;
 }
 
 .star.on path {
-  stroke: #fff;
-  stroke-width: 2px;
-  fill: #fc0;
+  fill: #ef5259;
 }
-
 
 .sub_utility {
   overflow: hidden;
@@ -1353,14 +1441,9 @@ nav.sorting .category a.on {
 .goods_modify {
   display: block;
   overflow: hidden;
-  width: 28px;
-  height: 28px;
-  padding: 2px;
-}
-
-.goods_modify path {
-  stroke: none;
-  fill: rgba(255, 255, 255, 1);
+  width: 24px;
+  height: 24px;
+  padding: 4px;
 }
 
 .goods_share {
@@ -1390,7 +1473,7 @@ nav.sorting .category a.on {
   margin-top: 40px;
   padding: 40px 0 16px;
   border-radius: 5px;
-  background-color: #c5a0d8;
+  background-color: #ef5259;
   font-size: 12px;
   line-height: 18px;
   color: #fff;
@@ -1725,56 +1808,27 @@ spinner
 /*
 user menu
 */
-.user-menu {
-  overflow: hidden;
-  position: fixed;
-  right: 0;
-  top: 0;
-  max-width: 448px;
-  margin: 0 auto;
-  padding: 8px 12px;
-  text-align: right;
-  z-index: 100;
-}
-
 .user-profile {
-  display: inline-block;
-  width: 28px;
-  height: 28px;
-  padding: 2px;
-  vertical-align: top;
-}
-
-.user-profile path {
-  stroke: none;
-  fill: rgba(255, 255, 255, 1);
+  position: absolute;
+  left: 12px;
+  top: 8px;
+  width: 24px;
+  height: 24px;
+  padding: 4px;
 }
 
 .user-alarm {
-  display: inline-block;
-  position: relative;
-  width: 28px;
-  height: 28px;
-  margin-right: 4px;
-  padding: 2px;
-  vertical-align: top;
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  width: 24px;
+  height: 24px;
+  padding: 4px;
 }
-
-.user-alarm path {
-  stroke: none;
-  fill: rgba(255, 255, 255, 1);
-}
-
 
 .user-alarm .new {
   animation: ring 3s 0.7s linear infinite;
   transform-origin: 50% 4px;
-}
-
-.user-alarm .new path {
-  stroke: #fff;
-  stroke-width: 2px;
-  fill: #fc0;
 }
 
 @-webkit-keyframes ring {

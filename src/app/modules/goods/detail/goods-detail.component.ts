@@ -16,6 +16,7 @@ export class GoodsDetailComponent implements OnInit {
   authority = false;
   group: string;
   market: string;
+  groupName: string;
   moreImages: boolean;
   userDesc: string;
   userDisplayName: string;
@@ -47,6 +48,7 @@ export class GoodsDetailComponent implements OnInit {
     private htmlClassService: HtmlClassService
   ) {
     this.market = route.snapshot.paramMap.get('market');
+    this.groupName = this.auth.group.name;
 
     this.commentForm = this.fb.group({
       body: [

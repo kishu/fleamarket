@@ -860,12 +860,12 @@ body {
 
 .label-soldout {
   display: inline-block;
-  margin: 2px 0 0;
+  margin: 3px 0 0;
   padding: 0 5px;
   border-radius: 3px;
   background: #dd4e51;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 12px;
+  line-height: 18px;
   vertical-align: top;
   text-shadow: none;
 }
