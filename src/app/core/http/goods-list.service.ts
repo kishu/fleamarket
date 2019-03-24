@@ -16,6 +16,7 @@ export interface GoodsListQuery {
   providedIn: 'root'
 })
 export class GoodsListService {
+  forceUpdate = false;
   goodsList$ = new BehaviorSubject<Goods[] | null>(null);
   more$ = new BehaviorSubject<firestore.Timestamp | null>(null);
 
@@ -30,9 +31,15 @@ export class GoodsListService {
   ) {
     this.query$.asObservable().pipe(
       pairwise(),
-      filter(([p, n]) => (p.market !== n.market) || (p.exceptSoldOut !== n.exceptSoldOut)),
+      filter(([p, n]) => (
+        this.forceUpdate ||
+        (p.market !== n.market) || (p.exceptSoldOut !== n.exceptSoldOut))
+      ),
       switchMap(([, n]) => this.getGoodsListBy(n.market, n.exceptSoldOut))
-    ).subscribe(goodsList => this.goodsList$.next(goodsList));
+    ).subscribe(goodsList => {
+      this.goodsList$.next(goodsList);
+      this.forceUpdate = false;
+    });
 
     this.more$.asObservable().pipe(
       filter(startAfter => startAfter !== null),
