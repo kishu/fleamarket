@@ -223,13 +223,13 @@ section.main {
 
 .sub header .back {
   position: absolute;
-  left: 10px;
-  top: 10px;
+  left: 8px;
+  top: 8px;
   max-width: 100px;
-  height: 28px;
-  padding-right: 8px;
+  height: 24px;
+  padding: 4px;
   font-size: 13px;
-  line-height: 28px;
+  line-height: 24px;
   color: #ef5259;
   text-decoration: none;
   overflow: hidden;
@@ -238,20 +238,20 @@ section.main {
 }
 
 .sub header .back svg {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   vertical-align: top;
 }
 
 .sub header .close {
   position: absolute;
-  left: 10px;
-  top: 10px;
+  left: 8px;
+  top: 8px;
   max-width: 100px;
-  height: 28px;
-  padding-right: 8px;
+  height: 24px;
+  padding: 4px;
   font-size: 13px;
-  line-height: 28px;
+  line-height: 24px;
   color: #ef5259;
   text-decoration: none;
   overflow: hidden;
@@ -260,8 +260,9 @@ section.main {
 }
 
 .sub header .close svg {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
+  margin: 2px;
   vertical-align: top;
 }
 
@@ -802,243 +803,6 @@ section.main {
   background-size: 320px auto;
   line-height: 24px;
   text-align: center;
-}
-
-.large_list {
-  list-style-type: none;
-  padding: 8px;
-}
-
-.large_list li {
-  padding: 8px;
-  box-sizing: border-box;
-}
-
-.large_list .item {
-  overflow: hidden;
-  position: relative;
-  background-color: #fff;
-}
-
-.large_list .item > a {
-  display: block;
-  text-decoration: none;
-}
-
-.large_list .item .goods_thumb {
-  display: block;
-  position: relative;
-  width: 100%;
-  padding-bottom: 64%;
-  border-radius: 5px;
-  background-position: 50% 50%;
-  background-size: cover;
-  overflow: hidden;
-}
-
-.large_list .item .goods_thumb.soldout:before {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  content: '';
-}
-
-.large_list .item .likeit {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 40px;
-  height: 40px;
-  border: 0;
-  background: url(../img/likeit.png) no-repeat 50% 50%;
-  background-size: 24px 24px;
-  vertical-align: top;
-}
-
-.large_list .item .likeit.on {
-  background-image: url(../img/likeit_on.png);
-}
-
-.large_list .author_thumb {
-  position: absolute;
-  left: 8px;
-  bottom: 8px;
-  width: 46px;
-  height: 46px;
-  border: 1px solid #fff;
-  z-index: 1;
-}
-
-.large_list .text {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 4px 8px 4px 72px;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: #fff;
-  text-align: right;
-  text-shadow: 0 0 1px rgba(0,0,0,1);
-}
-
-.large_list .text .name {
-  font-size: 16px;
-  line-height: 24px;
-}
-
-.large_list .price {
-  padding: 4px 8px 8px;
-  font-size: 16px;
-  color: #161616;
-  line-height: 20px;
-  text-align: right;
-}
-
-.large_list .tag {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  margin: 0;
-  padding: 2px 0 6px;
-  color: #161616;
-  white-space: nowrap;
-}
-
-.large_list .tag dt {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  margin-right: 4px;
-  background-image: url(../img/tag-svgrepo-com.svg);
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-size: 20px auto;
-  color: transparent;
-  overflow: hidden;
-  vertical-align: top;
-}
-
-.large_list .tag dd {
-  display: inline-block;
-  margin: 0;
-  font-size: 14px;
-  line-height: 24px;
-  vertical-align: top;
-}
-
-.large_list .tag dd span + span:before {
-  content: ', ';
-}
-
-.small_list {
-  overflow: hidden;
-  list-style-type: none;
-  padding: 3px;
-  background-color: #f3f3f3;
-}
-
-.small_list li {
-  float: left;
-  width: 50%;
-  padding: 3px;
-  box-sizing: border-box;
-}
-
-.small_list .item {
-  overflow: hidden;
-  position: relative;
-  padding: 1px;
-  /* border-radius: 5px; */
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.small_list .item a {
-  display: block;
-  position: relative;
-  background-color: #fff;
-  text-decoration: none;
-  color: #000;
-}
-
-.small_list .item .goods_thumb {
-  display: block;
-  position: relative;
-  width: 100%;
-  padding-top: 86%;
-  background-position: 50% 50%;
-  background-size: cover;
-}
-
-.small_list .item .likeit {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  width: 24px;
-  height: 24px;
-  background: url(../img/likeit.png) no-repeat 50% 50%;
-  background-size: 24px 24px;
-  vertical-align: top;
-}
-
-.small_list .item .likeit.on {
-  background-image: url(../img/likeit_on.png);
-}
-
-.small_list .item .likeit:after {
-  display: none;
-}
-
-.small_list .item_description {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-}
-
-.small_list .item_description .author {
-  display: table-cell;
-  width: 40px;
-  height: 40px;
-  padding: 10px 0 10px 10px;
-  text-align: right;
-  vertical-align: top;
-}
-
-.small_list .item_description .text {
-  display: table-cell;
-  padding: 13px 10px;
-  font-size: 13px;
-  vertical-align: top;
-}
-
-.small_list .item.soldout a:after {
-  position: absolute;
-  left: -1px;
-  right: -1px;
-  top: -1px;
-  bottom: -1px;
-  background-color: rgba(0, 0, 0, 0.5);
-  content: '';
-}
-
-.small_list .soldout .item_description .name {
-  color: #999;
-}
-
-.small_list .soldout .item_description .price {
-  display: none;
-}
-
-.small_list .soldout .item_description .text:after {
-  display: block;
-  height: 16px;
-  background-image: url(../img/soldout_ribbon_b.png);
-  background-repeat: no-repeat;
-  background-position: 0 50%;
-  background-size: auto 16px;
-  content: '';
 }
 
 .author_thumb {
@@ -1810,7 +1574,7 @@ user menu
 */
 .user-profile {
   position: absolute;
-  left: 12px;
+  right: 48px;
   top: 8px;
   width: 24px;
   height: 24px;
@@ -1824,6 +1588,37 @@ user menu
   width: 24px;
   height: 24px;
   padding: 4px;
+}
+
+.svg-lineType svg:nth-child(1) {
+  position: relative;
+}
+
+.svg-lineType svg:nth-child(2) {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 24px;
+  height: 24px;
+}
+
+.svg-lineType svg:nth-child(1) path {
+  stroke: rgba(0, 0, 0, 0.3);
+  stroke-width: 6;
+  fill: rgba(0, 0, 0, 0.3);
+}
+
+.svg-lineType svg:nth-child(2) path {
+  fill: #eee;
+}
+
+.svg-lineType.on svg:nth-child(1) path {
+  stroke: #ef5259;
+  fill: #ef5259;
+}
+
+.svg-lineType.on svg:nth-child(2) path {
+  fill: #fff;
 }
 
 .user-alarm .new {
