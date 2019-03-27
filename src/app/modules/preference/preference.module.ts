@@ -17,6 +17,10 @@ import { PreferenceUserComponent } from '@app/modules/preference/user/preference
     ReactiveFormsModule,
     SharedModule,
     PreferenceRoutingModule
+  ],
+  exports: [
+    PreferenceNotificationComponent,
+    PreferenceUserComponent
   ]
 })
 export class PreferenceModule { }

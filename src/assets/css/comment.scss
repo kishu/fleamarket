@@ -1,0 +1,158 @@
+.end .comment {
+  padding: 16px;
+}
+
+.comment_header {
+  margin: 0;
+}
+
+.comment_header h4 {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  color: #32333d;
+}
+
+.comment_header h4 strong {
+  color: #ef5259;
+}
+
+.comment_header a {
+  position: absolute;
+  right: 17px;
+  top: 10px;
+  font-size: 12px;
+  font-size: 1.2rem;
+  line-height: 16px;
+  line-height: 1.6rem;
+  color: #666;
+  text-decoration: none;
+}
+
+.comment_list {
+}
+
+.comment_item {
+  position: relative;
+  padding: 16px 8px 16px 48px;
+}
+
+.comment_item + .comment_item {
+  border-top: 1px solid #e5e5e5;
+}
+
+.comment_thumb {
+  position: absolute;
+  left: 0;
+  top: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.comment_thumb.author:after {
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  top: -2px;
+  bottom: -2px;
+  border: 2px dotted #ef5259;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 2px #fff;
+  content: '';
+}
+
+.comment_content {
+  min-height: 24px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 16px;
+  color: #666;
+}
+
+.comment_function {
+  display: block;
+  margin-top: 2px;
+  margin-bottom: -8px;
+  font-size: 11px;
+  line-height: 14px;
+  color: #999;
+  text-align: right;
+}
+
+.comment_function a,
+.comment_function .created,
+.comment_content .created {
+  font-size: 11px;
+  color: #999;
+  text-decoration: none;
+}
+
+.comment_content .nickname {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.comment_content p {
+  word-break: break-all;
+}
+
+.comment-nothing {
+  padding: 32px 0;
+  color: #999;
+  text-align: center;
+}
+
+.comment_form {
+  position: relative;
+  padding: 16px;
+  background-color: #f3f3f3;
+}
+
+li .comment_form {
+  margin-left: 50px;
+  border-top: 1px dashed #b8b8b8;
+}
+
+.comment_form input[type="checkbox"] {
+  position: absolute;
+  visibility: hidden;
+}
+
+.label-border {
+  display: inline-block;
+  padding: 0 2px;
+  border: 1px solid #ef5359;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 12px;
+  color: #ef5359;
+  vertical-align: top;
+}
+
+@media screen and (min-width: 768px) {
+  .comment {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 132px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .comment_form {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}

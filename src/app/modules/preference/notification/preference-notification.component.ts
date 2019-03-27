@@ -5,12 +5,13 @@ import { HtmlClassService, LocationService } from '@app/shared/services';
 import { Notification } from '@app/core/models';
 
 @Component({
-  selector: 'app-notification',
+  selector: 'app-preference-notification',
   templateUrl: './preference-notification.component.html',
   styleUrls: ['./preference-notification.component.scss']
 })
 export class PreferenceNotificationComponent implements OnInit {
   readonly user: any;
+  show = false;
   notifications$: Observable<Notification[]>;
 
   constructor(
@@ -35,6 +36,10 @@ export class PreferenceNotificationComponent implements OnInit {
   goBack(e: any) {
     e.preventDefault();
     this.locationService.goBack();
+  }
+
+  onToggle() {
+    console.log('toggle', !this.show);
   }
 
 }

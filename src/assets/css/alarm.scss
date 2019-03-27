@@ -1,0 +1,120 @@
+header {
+  border-radius: 5px 5px 0 0;
+}
+
+.alarm {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 49px;
+  bottom: 0;
+  background-color: #f3f3f3;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.alarm_header {
+  position: relative;
+  background-color: #fff;
+}
+
+.alarm_header h3 {
+  margin: 0;
+  padding: 10px 17px 9px;
+  font-weight: normal;
+  font-size: 1.2rem;
+  font-size: 12px;
+  line-height: 1.6rem;
+  line-height: 16px;
+  color: #32333d;
+}
+
+.alarm_list {
+  padding: 0 16px;
+}
+
+.alarm_nothing {
+  padding: 70px 0;
+  font-size: 12px;
+  font-size: 1.2rem;
+  line-height: 16px;
+  line-height: 1.6rem;
+  color: #666;
+  text-align: center;
+}
+
+.alarm_nothing:before {
+  display: block;
+  width: 100px;
+  height: 100px;
+  height: 100px;
+  margin: 0 auto 7px;
+  border-radius: 50%;
+  background-image: url(/assets/img/nothing.png);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 102px 102px;
+  content: '';
+}
+
+.alarm_item {
+  position: relative;
+  padding: 16px 8px 16px 56px;
+
+  a {
+    text-decoration: none;
+  }
+
+  & + & {
+    border-top: 1px solid #e5e5e5;
+  }
+}
+
+.alarm_thumb {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 45px;
+  height: 45px;
+  margin: auto;
+  border-radius: 50%;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.alarm_thumb .new {
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  width: 18px;
+  height: 18px;
+  background-image: url(/assets/img/icon_new.png);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 18px 18px;
+}
+
+.alarm_content {
+  min-height: 24px;
+  margin: 0;
+  font-size: 12px;
+  font-size: 1.2rem;
+  line-height: 16px;
+  line-height: 1.6rem;
+  color: #666;
+}
+
+.alarm_created {
+  display: block;
+  margin-top: 4px;
+  margin-bottom: -12px;
+  font-size: 11px;
+  font-size: 1.1rem;
+  line-height: 16px;
+  line-height: 1.6rem;
+  color: #999;
+  text-align: right;
+}

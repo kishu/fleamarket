@@ -1,0 +1,207 @@
+.large_list {
+  list-style-type: none;
+  padding: 8px;
+
+  li {
+    padding: 8px;
+    box-sizing: border-box;
+  }
+
+  .item {
+    overflow: hidden;
+    position: relative;
+    background-color: #fff;
+
+    > a {
+      display: block;
+      text-decoration: none;
+    }
+
+    .goods_thumb {
+      display: block;
+      position: relative;
+      width: 100%;
+      padding-bottom: 64%;
+      border-radius: 5px;
+      background-position: 50% 50%;
+      background-size: cover;
+      overflow: hidden;
+      &.soldout:before {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        content: '';
+      }
+    }
+  }
+
+  .author_thumb {
+    position: absolute;
+    left: 8px;
+    bottom: 8px;
+    width: 46px;
+    height: 46px;
+    border: 1px solid #fff;
+    z-index: 1;
+  }
+
+  .text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 6px 8px 6px 72px;
+    color: #fff;
+    text-align: right;
+    &:before {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 32px;
+      background-color: rgba(0, 0, 0, 0.5);
+      content: '';
+    }
+
+    .name {
+      position: absolute;
+      right: 0;
+      bottom: 12px;
+      padding: 2px 5px;
+      background-color: rgba(0, 0, 0, 0.7);
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 24px;
+    }
+  }
+
+  .price {
+    padding: 4px 8px;
+    font-size: 16px;
+    color: #161616;
+    line-height: 24px;
+    text-align: right;
+  }
+
+  .tag {
+    display: none;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 2px 0 6px;
+    color: #161616;
+    white-space: nowrap;
+
+    dt {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      margin-right: 4px;
+      background-image: url('/assets/img/tag-svgrepo-com.svg');
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+      background-size: 20px auto;
+      color: transparent;
+      overflow: hidden;
+      vertical-align: top;
+    }
+
+    dd {
+      display: inline-block;
+      margin: 0;
+      font-size: 14px;
+      line-height: 24px;
+      vertical-align: top;
+
+      span + span:before {
+        content: ', ';
+      }
+    }
+  }
+}
+
+.feed {
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+  margin: 0;
+  line-height: 24px;
+  color: #161616;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.feed dt {
+  display: inline-block;
+  position: relative;
+}
+
+.feed dt path {
+  fill: #fff;
+}
+
+.feed dt svg:nth-child(1) path {
+  stroke: none;
+  stroke-width: 0;
+  fill: rgba(0, 0, 0, 0.2);
+}
+
+.feed dt svg:nth-child(2) path {
+  stroke: none;
+  stroke-width: 0;
+  fill: none;
+}
+
+.feed dt svg:nth-child(2) {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.feed dt.on svg:nth-child(1) path {
+  stroke: #fff;
+}
+
+.feed dt.on svg:nth-child(2) path {
+  stroke: none;
+  fill: #ef5259;
+}
+
+.feed dd {
+  display: inline-block;
+  margin: 0 12px 0 0;
+  font-size: 16px;
+  line-height: 24px;
+  vertical-align: top;
+}
+
+.feed .like {
+  width: 24px;
+  height: 24px;
+  margin-right: 3px;
+  vertical-align: top;
+}
+
+.feed .comment {
+  width: 24px;
+  height: 24px;
+  margin-right: 3px;
+  vertical-align: top;
+}
+
+.label-soldout {
+  display: inline-block;
+  margin: -2px 2px -2px -5px;
+  padding: 4px 5px;
+  border-radius: 0;
+  background-color: #fff;
+  font-size: 14px;
+  line-height: 20px;
+  color: #161616;
+  vertical-align: top;
+  text-shadow: none;
+}

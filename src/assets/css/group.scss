@@ -1,0 +1,68 @@
+.group {
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.group h2 {
+  float: left;
+  position: relative;
+  z-index: 5;
+  margin: 0;
+  margin-bottom: -16px;
+  padding: 8px 16px;
+  font-weight: normal;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.group h2 a {
+  display: inline-block;
+  position: relative;
+  font-size: 16px;
+  line-height: 24px;
+  color: #bbb;
+  vertical-align: bottom;
+  transition-duration: 0.2s;
+}
+
+.group h2 a span {
+  display: block;
+  position: relative;
+  padding: 8px 0;
+}
+
+.group h2 a:before {
+  position: absolute;
+  left: 100%;
+  right: 0;
+  bottom: 8px;
+  height: 1px;
+  background-color: #161616;
+  transition-duration: 0.2s;
+  content: '';
+}
+
+.group h2 a.on {
+  font-weight: bold;
+  color: #161616;
+}
+
+.group h2 a.on:before {
+  left: 0 !important;
+  right: 0 !important;
+  opacity: 1;
+}
+
+.group h2 a ~ a:before {
+  left: 0;
+  right: 100%;
+}
+
+.group h2 > span {
+ display: inline-block;
+ padding: 8px 4px;
+ font-weight: normal;
+ font-size: 16px;
+ color: #bbb;
+}
