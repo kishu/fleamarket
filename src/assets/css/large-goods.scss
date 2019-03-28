@@ -26,7 +26,16 @@
       background-position: 50% 50%;
       background-size: cover;
       overflow: hidden;
-      &.soldout:before {
+      &:before {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 32px;
+        background-color: rgba(0, 0, 0, 0.5);
+        content: '';
+      }
+      &.soldout:after {
         position: absolute;
         left: 0;
         right: 0;
@@ -50,31 +59,35 @@
 
   .text {
     position: absolute;
-    left: 0;
+    left: 72px;
     right: 0;
-    bottom: 0;
-    padding: 6px 8px 6px 72px;
+    bottom: 8px;
+    z-index: 1;
     color: #fff;
     text-align: right;
-    &:before {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 32px;
-      background-color: rgba(0, 0, 0, 0.5);
-      content: '';
-    }
+    white-space: nowrap;
 
     .name {
-      position: absolute;
-      right: 0;
-      bottom: 12px;
+      display: inline-block;
       padding: 2px 5px;
       background-color: rgba(0, 0, 0, 0.7);
       font-weight: bold;
       font-size: 20px;
       line-height: 24px;
+      box-sizing: border-box;
+    }
+
+    .label-soldout {
+      display: inline-block;
+      margin: 0;
+      padding: 4px 5px;
+      border-radius: 0;
+      background-color: #fff;
+      font-size: 14px;
+      line-height: 20px;
+      color: #161616;
+      vertical-align: top;
+      text-shadow: none;
     }
   }
 
@@ -191,17 +204,4 @@
   height: 24px;
   margin-right: 3px;
   vertical-align: top;
-}
-
-.label-soldout {
-  display: inline-block;
-  margin: -2px 2px -2px -5px;
-  padding: 4px 5px;
-  border-radius: 0;
-  background-color: #fff;
-  font-size: 14px;
-  line-height: 20px;
-  color: #161616;
-  vertical-align: top;
-  text-shadow: none;
 }

@@ -38,9 +38,9 @@
               <div class="goods_thumb"
                 [ngClass]="{'soldout': goods.soldOut}"
                 [ngStyle]="{'background-image': 'url(' + goods.images[0] + ')'}">
-                <div class="text">
-                  <div class="name ellipsis">
-                    <span class="label-soldout" *ngIf="goods.soldOut">Sold out</span>
+                <div class="text ellipsis">
+                  <span class="label-soldout" *ngIf="goods.soldOut">Sold out</span>
+                  <div class="name">
                     {{ goods.title }}
                   </div>
                 </div>
