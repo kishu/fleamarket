@@ -3,7 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { HtmlClassService, LocationService } from '@app/shared/services';
+import { GlobalToggleService, HtmlClassService, LocationService } from '@app/shared/services';
+
 import { AuthService, FileUploadService, UserService } from '@app/core/http';
 import { SpinnerService } from '@app/shared/services/spinner.service';
 import { ImageFile } from '@app/core/models';
@@ -33,7 +34,8 @@ export class PreferenceUserComponent implements OnInit {
     private userService: UserService,
     private fileUploadService: FileUploadService,
     private spinnerService: SpinnerService,
-    private htmlClassService: HtmlClassService
+    private htmlClassService: HtmlClassService,
+    private globalToggleService: GlobalToggleService
   ) {
     const user = this.authService.user;
     this.photoURL = user.photoURL;
@@ -129,4 +131,9 @@ export class PreferenceUserComponent implements OnInit {
     e.preventDefault();
     this.locationService.goBack();
   }
+
+  onClickNotification() {
+    this.globalToggleService.notification$.next();
+  }
+
 }
