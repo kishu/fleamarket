@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 export class GlobalToggleService {
 
   notification$ = new Subject<boolean>();
+  preference$ = new Subject<boolean>();
 
   constructor() { }
 }

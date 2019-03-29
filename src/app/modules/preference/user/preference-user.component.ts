@@ -11,13 +11,14 @@ import { ImageFile } from '@app/core/models';
 import { environment } from '@environments/environment';
 
 @Component({
-  selector: 'app-user',
+  selector: 'app-preference-user',
   templateUrl: './preference-user.component.html',
   styleUrls: ['./preference-user.component.scss']
 })
 export class PreferenceUserComponent implements OnInit {
   preferenceForm: FormGroup;
   photoURL: string | ArrayBuffer;
+  show = false;
 
   private imageFile: ImageFile;
   private submitting = false;
@@ -110,7 +111,9 @@ export class PreferenceUserComponent implements OnInit {
 
   onClickSignOut() {
     this.authService.signOut().then(
-      () => this.router.navigate(['/verification'])
+      () => {
+        this.router.navigate(['/verification']);
+      }
     );
   }
 
@@ -134,6 +137,14 @@ export class PreferenceUserComponent implements OnInit {
 
   onClickNotification() {
     this.globalToggleService.notification$.next();
+  }
+
+  onClickPreference() {
+    this.globalToggleService.preference$.next();
+  }
+
+  onToggle() {
+    console.log('toggle', !this.show);
   }
 
 }

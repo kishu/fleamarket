@@ -1,1 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
+
+.wrap {
+  height: 100%;
+  padding-top: 48px;
+  box-sizing: border-box;
+}
+
+.margin1 {
+  margin-top: 8px;
+}
+
+.margin2 {
+  margin-top: 16px;
+}
+
+.margin3 {
+  margin-top: 24px;
+}
+
+.margin4 {
+  margin-top: 32px;
+}
+
+.margin5 {
+  margin-top: 40px;
+}
+
+.copyright {
+  margin-top: 16px;
+  padding: 40px 0 24px;
+  border-top: 1px solid #e5e5e5;
+  background-color: #f3f3f3;
+  font-size: 11px;
+  line-height: 16px;
+  color: #999;
+  text-align: center;
+
+  .goods-detail & {
+    margin-top: 0;
+    border: 0;
+    padding-top: 8px;
+
+    @media screen and (min-width: 768px) {
+      margin-top: 16px;
+      padding-top: 24px;
+      border-top: 1px solid #e5e5e5;
+    }
+  }
+}

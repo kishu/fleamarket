@@ -1,0 +1,16 @@
+@import "../../../../assets/css/form";
+
+header {
+  border-radius: 5px 5px 0 0;
+}
+
+.preference {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 49px;
+  bottom: 0;
+  background-color: #f3f3f3;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}

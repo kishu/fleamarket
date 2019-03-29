@@ -1,32 +1,21 @@
-<div class="wrap sub form">
-  <header>
-    <h1>내정보 설정</h1>
-    <a href="#" (click)="goBack($event)" class="close">
-      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M38 12.83L35.17 10 24 21.17 12.83 10 10 12.83 21.17 24 10 35.17 12.83 38 24 26.83 35.17 38 38 35.17 26.83 24z"/></svg>
-    </a>
-    <a (click)="onClickNotification()" class="user-alarm svg-lineType on">
-      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" class="new"><path fill="#010101" d="M24 44c2.21 0 4-1.79 4-4h-8c0 2.21 1.79 4 4 4zm12-12V22c0-6.15-3.27-11.28-9-12.64V8c0-1.66-1.34-3-3-3s-3 1.34-3 3v1.36c-5.73 1.36-9 6.49-9 12.64v10l-4 4v2h32v-2l-4-4z"/></svg>
-      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" class="new"><path fill="#010101" d="M24 44c2.21 0 4-1.79 4-4h-8c0 2.21 1.79 4 4 4zm12-12V22c0-6.15-3.27-11.28-9-12.64V8c0-1.66-1.34-3-3-3s-3 1.34-3 3v1.36c-5.73 1.36-9 6.49-9 12.64v10l-4 4v2h32v-2l-4-4z"/></svg>
-    </a>
-    <span class="user-profile svg-lineType">
-      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M24 24c4.42 0 8-3.59 8-8 0-4.42-3.58-8-8-8s-8 3.58-8 8c0 4.41 3.58 8 8 8zm0 4c-5.33 0-16 2.67-16 8v4h32v-4c0-5.33-10.67-8-16-8z"/></svg>
-      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M24 24c4.42 0 8-3.59 8-8 0-4.42-3.58-8-8-8s-8 3.58-8 8c0 4.41 3.58 8 8 8zm0 4c-5.33 0-16 2.67-16 8v4h32v-4c0-5.33-10.67-8-16-8z"/></svg>
-    </span>
-  </header>
+<header>
+  <h1>내정보 설정</h1>
+</header>
+<div class="preference form">
   <section>
-    <form [formGroup]="preferenceForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="preferenceForm" (ngSubmit)="onSubmit(); onClickPreference();">
       <div class="profile_border margin3">
         <div class="profile_thumb" [style.backgroundImage]="'url(' + photoURL  + ')'"></div>
         <div class="profile_camera"></div>
         <input type="file"
-               accept="image/gif, image/jpeg, image/png"
-               (change)="onChangeImage($event)">
+                accept="image/gif, image/jpeg, image/png"
+                (change)="onChangeImage($event)">
       </div>
       <div class="table margin3">
         <div class="td">
           <input type="text"
-                 name="displayName" formControlName="displayName"
-                 maxlength="20" placeholder="이름을 입력하세요" class="input">
+                  name="displayName" formControlName="displayName"
+                  maxlength="20" placeholder="이름을 입력하세요" class="input">
           <div *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)" class="explain">
             <span *ngIf="displayName.errors.required" class="explain small">이름을 입력하세요.</span>
           </div>
@@ -36,8 +25,8 @@
       <div class="table margin2">
         <div class="td">
           <input type="text"
-                 name="desc" formControlName="desc"
-                 maxlenth="100" placeholder="자기소개" class="input">
+                  name="desc" formControlName="desc"
+                  maxlenth="100" placeholder="자기소개" class="input">
         </div>
       </div>
       <p class="explain small">연락처, 메신저 ID 등 연락 가능한 방법을 적어주세요.</p>
@@ -64,14 +53,15 @@
           <div class="td">
             <div class="switch">
               <input type="checkbox" id="notification.interest"
-                     name="notice" formControlName="interest">
+                      name="notice" formControlName="interest">
               <label for="notification.interest"><span></span></label>
             </div>
           </div>
         </div>
       </ng-container>
       <button type="submit" [disabled]="preferenceForm.invalid" class="button margin5">변경</button>
-      <button type="button" (click)="onClickSignOut()" class="button margin2 temp">로그아웃</button>
+      <button type="button" (click)="onClickSignOut(); onClickPreference();" class="button margin2 temp">로그아웃</button>
     </form>
   </section>
 </div>
+

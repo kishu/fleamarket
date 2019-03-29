@@ -85,23 +85,23 @@ section.main {
   box-sizing: border-box;
 }
 
-.wrap .margin1 {
+.margin1 {
   margin-top: 8px;
 }
 
-.wrap .margin2 {
+.margin2 {
   margin-top: 16px;
 }
 
-.wrap .margin3 {
+.margin3 {
   margin-top: 24px;
 }
 
-.wrap .margin4 {
+.margin4 {
   margin-top: 32px;
 }
 
-.wrap .margin5 {
+.margin5 {
   margin-top: 40px;
 }
 
@@ -223,7 +223,7 @@ section.main {
   position: fixed;
   left: 0;
   right: 0;
-  top: 0;
+  top: 48px;
   bottom: 0;
   background-color: #fff;
 }

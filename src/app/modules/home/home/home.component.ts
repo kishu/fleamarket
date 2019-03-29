@@ -130,4 +130,8 @@ export class HomeComponent implements OnInit {
     this.globalToggleService.notification$.next();
   }
 
+  onClickPreference() {
+    this.globalToggleService.preference$.next();
+  }
+
 }

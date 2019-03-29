@@ -11,6 +11,7 @@ import { User } from '@app/core/models';
 export class AppComponent {
   title = '2nd Market';
   isShowNotification = false;
+  isShowPreference = false;
   readonly user: User;
 
   constructor(
@@ -28,9 +29,22 @@ export class AppComponent {
         this.htmlClassService.toggle('no-scroll');
       }
     });
+    this.globalToggleService.preference$.asObservable().subscribe(isShow => {
+      if (isShow === undefined) {
+        this.isShowPreference = !this.isShowPreference;
+        this.htmlClassService.toggle('no-scroll');
+      } else {
+        this.isShowPreference = isShow;
+        this.htmlClassService.toggle('no-scroll');
+      }
+    });
   }
 
   onClickNotification() {
     this.globalToggleService.notification$.next();
+  }
+
+  onClickPreference() {
+    this.globalToggleService.preference$.next();
   }
 }
