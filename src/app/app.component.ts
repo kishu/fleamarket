@@ -11,7 +11,7 @@ import { User } from '@app/core/models';
 export class AppComponent {
   title = '2nd Market';
   isShowNotification = false;
-  user: User;
+  readonly user: User;
 
   constructor(
     private globalToggleService: GlobalToggleService,

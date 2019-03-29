@@ -38,10 +38,13 @@
               <div class="goods_thumb"
                 [ngClass]="{'soldout': goods.soldOut}"
                 [ngStyle]="{'background-image': 'url(' + goods.images[0] + ')'}">
-                <div class="text ellipsis">
-                  <span class="label-soldout" *ngIf="goods.soldOut">Sold out</span>
-                  <div class="name">
-                    {{ goods.title }}
+                <div class="goods-name-wrap"
+                  [ngClass]="{'soldout': goods.soldOut}">
+                  <div class="goods-name">
+                    <div class="label-soldout" *ngIf="goods.soldOut">Sold out</div>
+                    <div class="name-area ellipsis">
+                      {{ goods.title }}
+                    </div>
                   </div>
                 </div>
                 <span class="author_thumb" [style.backgroundImage]="'url(' + goods.user.photoURL + ')'"></span>

@@ -23,6 +23,7 @@
       width: 100%;
       padding-bottom: 64%;
       border-radius: 5px;
+      background-color: rgba(0, 0, 0, 0.5);
       background-position: 50% 50%;
       background-size: cover;
       overflow: hidden;
@@ -57,37 +58,51 @@
     z-index: 1;
   }
 
-  .text {
+  .goods-name-wrap {
     position: absolute;
-    left: 72px;
+    left: 0;
     right: 0;
-    bottom: 8px;
+    bottom: 0;
+    padding: 8px 0 8px 72px;
     z-index: 1;
     color: #fff;
     text-align: right;
-    white-space: nowrap;
-
-    .name {
-      display: inline-block;
-      padding: 2px 5px;
-      background-color: rgba(0, 0, 0, 0.7);
-      font-weight: bold;
-      font-size: 20px;
-      line-height: 24px;
-      box-sizing: border-box;
+    &.soldout {
+      padding-left: 144px;
     }
 
-    .label-soldout {
+    .goods-name {
       display: inline-block;
-      margin: 0;
-      padding: 4px 5px;
-      border-radius: 0;
-      background-color: #fff;
-      font-size: 14px;
-      line-height: 20px;
-      color: #161616;
-      vertical-align: top;
-      text-shadow: none;
+      position: relative;
+      max-width: 100%;
+
+      .label-soldout {
+        position: absolute;
+        right: 100%;
+        top: 0;
+        width: 60px;
+        padding: 4px 5px;
+        border-radius: 0;
+        background-color: #fff;
+        font-size: 14px;
+        line-height: 20px;
+        color: #161616;
+        text-align: center;
+        white-space: nowrap;
+      }
+      .name-area {
+        display: block;
+        padding: 2px 5px;
+        background-color: rgba(0, 0, 0, 0.7);
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 24px;
+
+        .name {
+          height: 24px;
+          overflow: hidden;
+        }
+      }
     }
   }
 
