@@ -53,3 +53,19 @@
     padding-top: 24px;
   }
 }
+
+.button {
+  box-sizing: border-box;
+
+  &.small {
+    padding: 7px 0;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  &.gray {
+    border-color: #999;
+    background-color: #999;
+    color: #fff;
+  }
+}
