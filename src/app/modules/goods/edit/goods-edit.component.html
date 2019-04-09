@@ -4,6 +4,10 @@
     <a href="#" (click)="goBack($event)" class="back">
       <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M30.83 32.67l-9.17-9.17 9.17-9.17L28 11.5l-12 12 12 12z"/></svg>
     </a>
+    <a
+      (click)="onSubmit()"
+      class="submit"
+      [ngClass]="{'disabled': editForm.invalid}">등록</a>
   </header>
   <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
     <section>
@@ -218,17 +222,8 @@
         </div>
       </div>
     </section>
-    <section>
-      <div class="table spacing">
-        <div class="td">
-          <a href="#" class="button cancel">취소</a>
-        </div>
-        <div class="td">
-          <button type="submit"
-                  [disabled]="editForm.invalid"
-                  class="button">등록</button>
-        </div>
-      </div>
-    </section>
   </form>
+  <div class="copyright">
+    Copyright © 2019 Team Second Market. All Rights Reserved.
+  </div>
 </div>
