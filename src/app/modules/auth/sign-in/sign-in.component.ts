@@ -84,23 +84,19 @@ export class SignInComponent implements OnInit {
     const displayName = this.displayNameForm.get('displayName').value;
     const verification = this.verification;
 
-    fromPromise(this.verification.groupRef.get()).pipe(
-      map(d => d.data().name),
-      switchMap(groupName => {
-        const user = {
-          groupRef: this.verification.groupRef,
-          groupName,
-          email: verification.email,
-          displayName,
-          photoURL: environment.defaultPhotoURL,
-          notification: {
-            goods: true,
-            interest: true
-          },
-          desc: `세컨드마켓 ${displayName}입니다!`
-        } as User;
-        return this.userService.setUser(this.userId, user);
-      }),
+    const user = {
+      groupRef: this.verification.groupRef,
+      email: verification.email,
+      displayName,
+      photoURL: environment.defaultPhotoURL,
+      notification: {
+        goods: true,
+        interest: true
+      },
+      desc: `세컨드마켓 ${displayName}입니다!`
+    } as User;
+
+    fromPromise(this.userService.setUser(this.userId, user)).pipe(
       switchMap(() => this.auth.signInUserById(this.userId))
     ).subscribe(() => {
       this.router.navigate(['/group']).then(

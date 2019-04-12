@@ -99,7 +99,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
       this.spinnerService.show(true);
 
       this.verificationCode = (Math.floor(1000 + Math.random() * 9000)).toString();
-
+      // console.log(this.verificationCode);
       const account = this.mailForm.get('account').value;
       const group = this.mailForm.get('group').value;
       const email = `${account}@${group.domain}`;
