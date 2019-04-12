@@ -175,8 +175,9 @@ export class GoodsDetailComponent implements OnInit {
         userRef: this.auth.getUserRef(),
         goodsRef: this.commentService.getGoodsRef(this.goods.id),
         user: {
-          displayName: this.auth.user.displayName,
+          groupRef: this.auth.user.groupRef,
           groupName: this.auth.group.name,
+          displayName: this.auth.user.displayName,
           photoURL: this.auth.user.photoURL
         },
         body: this.commentForm.get('body').value as string,

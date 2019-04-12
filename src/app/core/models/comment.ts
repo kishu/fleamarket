@@ -9,6 +9,7 @@ export class Comment {
     displayName: string;
     photoURL: string;
     groupName: string;
+    groupRef: firestore.DocumentReference;
   };
   goodsRef: firestore.DocumentReference;
   body: string;
