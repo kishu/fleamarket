@@ -26,14 +26,11 @@ import { environment } from '@environments/environment';
 import { PersistenceService } from '@app/shared/services';
 import { SpinnerService } from '@app/shared/services/spinner.service';
 import { SpinnerComponent } from '@app/shared/components/spinner/spinner.component';
-import { first } from 'rxjs/operators';
 
-export function signIn(auth: AuthService) {
+export function signIn(authService: AuthService) {
   return () => {
-    return new Promise((resolve, reject) => {
-      auth.signIn$.asObservable().pipe(first()).subscribe(
-        () => resolve()
-      );
+    return new Promise(resolve => {
+      authService.checkIn().subscribe(() => resolve());
     });
   };
 }

@@ -35,7 +35,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private groupService: GroupService,
     private userService: UserService,
-    private verificationSerice: VerificationService,
+    private verificationService: VerificationService,
     private firebaseUtilService: FirebaseUtilService,
     private spinnerService: SpinnerService,
     private htmlClassService: HtmlClassService
@@ -117,7 +117,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
         created: this.firebaseUtilService.getServerTimeStamp()
       } as Verification;
 
-      const verification$ = this.verificationSerice.add(verification);
+      const verification$ = this.verificationService.add(verification);
 
       return zip(sendMail$, verification$)
         .subscribe(([, v]) => {

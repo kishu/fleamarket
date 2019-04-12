@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, } from '@angular/fire/firestore';
-import { of, Subject, Subscription, zip } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { merge, of } from 'rxjs';
+import { filter, first, map, share, switchMap, tap } from 'rxjs/operators';
 import { Group, User } from '@app/core/models';
-import { FirebaseUtilService } from '@app/shared/services';
 
 import * as firebase from 'firebase/app';
 import DocumentReference = firebase.firestore.DocumentReference;
+import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
 @Injectable({
   providedIn: 'root'
@@ -16,19 +16,22 @@ export class AuthService {
   user: User;
   userRef: DocumentReference;
   group: Group;
-  signIn$ = new Subject<boolean>();
-
-  private subscription: Subscription;
 
   constructor(
     private afs: AngularFirestore,
     private afAuth: AngularFireAuth,
-    private firebaseUtilService: FirebaseUtilService,
-    ) {
-    this.afAuth.user.subscribe(user =>
-      user ?
-        this.subscribeUser(user.uid) :
-        this.unSubscribeUser()
+  ) { }
+
+  checkIn() {
+    return this.afAuth.user.pipe(
+      first(),
+      switchMap(u => {
+        if (u) {
+          return this.signInUserById(u.uid);
+        } else {
+          return of(null);
+        }
+      })
     );
   }
 
@@ -49,44 +52,34 @@ export class AuthService {
   }
 
   signOut() {
+    this.signOutUser();
     return this.afAuth.auth.signOut();
   }
 
-  signInUser$(id: string) {
-    const user$ = () => {
-      return this.afs.doc(`users/${id}`).snapshotChanges()
-        .pipe(map(this.firebaseUtilService.dispatchAction));
-    };
+  signInUserById(id: string) {
+    const source = this.afs.doc(`users/${id}`).get().pipe(share());
 
-    const group$ = (user: User) => {
-      return user.groupRef.get()
-        .then(this.firebaseUtilService.dispatchSnapshot);
-    };
-
-    return user$().pipe(
-      switchMap((user: User) => zip(of(user), group$(user))),
-      tap(([user, group]) => {
-        this.user = user;
-        this.userRef = this.afs.doc(`users/${user.id}`).ref;
-        this.group = group;
-      })
+    const user$ = source.pipe(
+      filter(d => d.exists),
+      map(d => ({ id: d.id, ...d.data() } as User)),
+      tap(u => this.user = u),
+      tap(u => this.userRef = this.afs.doc(`users/${u.id}`).ref),
+      switchMap((u: User) => u.groupRef.get()),
+      map((d: DocumentSnapshot) => ({ id: d.id, ...d.data() } as Group)),
+      tap((g: Group) => this.group = g)
     );
+
+    const nouser$ = source.pipe(
+      filter(d => !d.exists)
+    );
+
+    return merge(user$, nouser$);
   }
 
-  subscribeUser(id: string) {
-    this.subscription = this.signInUser$(id).subscribe(
-      () => this.signIn$.next(true)
-    );
-  }
-
-  unSubscribeUser() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-
+  signOutUser() {
     this.user = null;
+    this.userRef = null;
     this.group = null;
-    this.signIn$.next(false);
   }
 
   // todo remove

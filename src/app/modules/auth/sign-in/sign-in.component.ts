@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
-import { first, switchMap, tap } from 'rxjs/operators';
+import { fromPromise } from 'rxjs/internal-compatibility';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { AuthService, GroupService, UserService, VerificationService } from '@app/core/http';
 import { HtmlClassService, SpinnerService } from '@app/shared/services';
 import { User, Verification } from '@app/core/models';
@@ -19,8 +20,10 @@ import Timestamp = firebase.firestore.Timestamp;
 export class SignInComponent implements OnInit {
   displayNameForm: FormGroup;
   socialSignIn = false;
+
   private verification: Verification;
-  private user: User;
+  private isExistedUser = false;
+  private userId: string;
 
   constructor(
     private fb: FormBuilder,
@@ -56,62 +59,74 @@ export class SignInComponent implements OnInit {
 
   onClickSignIn(target: string) {
     this.spinnerService.show(true);
-    const verification = this.verification;
 
-    const createNewUser = (id, displayName) => ({
-      id,
-      groupRef: verification.groupRef,
-      email: verification.email,
-      displayName,
-      photoURL: environment.defaultPhotoURL,
-      notification: {
-        goods: true,
-        interest: true
+    this.auth.signIn(target).then(
+      c => {
+        this.userService.getUser(c.user.uid)
+          .subscribe(u => {
+            this.isExistedUser = !!u;
+            this.userId = u ? u.id : c.user.uid;
+            const displayName = u ? u.displayName : c.user.displayName;
+            this.displayNameForm.get('displayName').setValue(displayName);
+            this.spinnerService.show(false);
+            this.socialSignIn = true;
+          });
       },
-      desc: `세컨드마켓 ${displayName}입니다!`
-    } as User);
-
-    const signIn = (afUser) => {
-      this.socialSignIn = true;
-      const uid = afUser.user.uid;
-      this.userService.getUser(uid)
-        .subscribe((user: User) => {
-          if (user) {
-            this.user = user;
-            this.displayNameForm.get('displayName').setValue(user.displayName);
-          } else {
-            this.user = createNewUser(uid, afUser.user.displayName);
-            this.displayNameForm.get('displayName').setValue(afUser.user.displayName);
-          }
-          this.spinnerService.show(false);
-        });
-    };
-
-    const error = (err) => {
-      alert(err.message);
-      this.spinnerService.show(false);
-    };
-
-    this.auth.signIn(target).then(signIn, error);
-  }
-
-  onSubmitSignIn() {
-    this.spinnerService.show(true);
-    const displayName = this.displayNameForm.get('displayName').value
-    const user = this.user = Object.assign(this.user, { displayName });
-    this.userService.setUser(this.user.id, user).then(
-      () => {
-        this.auth.signInUser$(this.user.id).pipe(first()).subscribe((_) => {
-          this.router.navigate(['/group']).then(
-            () => this.spinnerService.show(false)
-          );
-        });
-      },
-      (err) => {
-        alert(err);
+      err => {
+        alert(err.message);
         this.spinnerService.show(false);
       }
     );
+  }
+
+  private registerUser() {
+    this.spinnerService.show(true);
+    const displayName = this.displayNameForm.get('displayName').value;
+    const verification = this.verification;
+
+    fromPromise(this.verification.groupRef.get()).pipe(
+      map(d => d.data().name),
+      switchMap(groupName => {
+        const user = {
+          groupRef: this.verification.groupRef,
+          groupName,
+          email: verification.email,
+          displayName,
+          photoURL: environment.defaultPhotoURL,
+          notification: {
+            goods: true,
+            interest: true
+          },
+          desc: `세컨드마켓 ${displayName}입니다!`
+        } as User;
+        return this.userService.setUser(this.userId, user);
+      }),
+      switchMap(() => this.auth.signInUserById(this.userId))
+    ).subscribe(() => {
+      this.router.navigate(['/group']).then(
+        () => this.spinnerService.show(false)
+      );
+    });
+  }
+
+  private updateUser() {
+    this.spinnerService.show(true);
+    const displayName = this.displayNameForm.get('displayName').value;
+    const updatePromise = this.userService.updateDisplayName(this.userId, displayName);
+
+    fromPromise(updatePromise).pipe(
+      switchMap(() => this.auth.signInUserById(this.userId))
+    ).subscribe(() => {
+      this.router.navigate(['/group']).then(
+        () => this.spinnerService.show(false)
+      );
+    });
+  }
+
+  onSubmitSignIn() {
+    this.isExistedUser ?
+      this.updateUser() :
+      this.registerUser();
   }
 
 }

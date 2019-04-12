@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable} from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { iif, Observable } from 'rxjs';
+import { filter, first, map, pluck } from 'rxjs/operators';
 import { User, UserPreference } from '@app/core/models';
 import { FirebaseUtilService } from '@app/shared/services';
+
+import * as firebase from 'firebase/app';
+import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +22,15 @@ export class UserService {
   }
 
   getUser(uid): Observable<User | null> {
-    return this.afs.doc<User>(`users/${uid}`)
-      .snapshotChanges().pipe(
-        first(),
-        map(this.firebaseUtilService.dispatchAction)
-      );
+    return this.afs.doc<User>(`users/${uid}`).get().pipe(
+      map(d => {
+        if (d.exists) {
+          return { id: d.id, ...d.data() } as User;
+        } else {
+          return null;
+        }
+      })
+    );
   }
 
   setUser(id: string, user: User): Promise<void> {

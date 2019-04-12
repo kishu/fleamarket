@@ -39,6 +39,7 @@ export class Group {
 export class User {
   id?: string;
   groupRef: firestore.DocumentReference;
+  groupName: string;
   email: string;
   displayName: string;
   desc: string;

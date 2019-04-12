@@ -38,4 +38,5 @@ export class GroupService {
   getRef(id: string): DocumentReference {
     return this.afs.doc(`groups/${id}`).ref;
   }
+
 }
