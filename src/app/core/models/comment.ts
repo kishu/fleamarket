@@ -8,6 +8,7 @@ export class Comment {
   user: {
     displayName: string;
     photoURL: string;
+    groupName: string;
   };
   goodsRef: firestore.DocumentReference;
   body: string;

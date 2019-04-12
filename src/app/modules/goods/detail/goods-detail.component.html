@@ -134,6 +134,7 @@
                 <div class="comment_content">
                   <strong class="nickname">
                     {{ comment.user.displayName }}
+                    {{ comment.user.groupName }}
                     <span *ngIf="comment.userRef.id === goods.userRef.id" class="label-border">판매자</span>
                   </strong>
                   <p>{{ comment.body }}</p>
