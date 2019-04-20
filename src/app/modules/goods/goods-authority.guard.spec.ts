@@ -1,6 +1,6 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 
-import { GoodsAuthorityGuard } from './goods-authority-guard.service';
+import { GoodsAuthorityGuard } from './goods-authority.guard';
 
 describe('GoodsAuthorityGuard', () => {
   beforeEach(() => {

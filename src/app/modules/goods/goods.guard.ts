@@ -3,7 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angul
 import { DocumentReference } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { first, map, tap } from 'rxjs/operators';
-import { AuthService, GoodsService, UserService, } from '@app/core/http';
+import { AuthService, GoodsService } from '@app/core/http';
 import { Goods } from '@app/core/models';
 
 @Injectable({
@@ -12,14 +12,12 @@ import { Goods } from '@app/core/models';
 export class GoodsGuard implements CanActivate {
   constructor(
     private auth: AuthService,
-    private goodsService: GoodsService,
-    private userService: UserService,
+    private goodsService: GoodsService
   ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    const list = next.paramMap.get('market');
     const userGroupRef: DocumentReference = this.auth.user.groupRef;
     const goodsId = next.paramMap.get('goodsId');
     const selectedGoods = this.goodsService.cachedGoods;
@@ -29,17 +27,17 @@ export class GoodsGuard implements CanActivate {
       goods$ = of(this.goodsService.cachedGoods);
     } else {
       goods$ = this.goodsService.getGoods(goodsId).pipe(
+        first(),
         tap(goods => this.goodsService.cachedGoods = goods)
       );
     }
 
     return goods$.pipe(
-      first(),
       map(goods => {
-        if (list === 'lounge') {
+        if (goods.market.lounge) {
           return true;
         } else {
-          return !!(goods.groupRef.id === userGroupRef.id && goods.market.group);
+          return !!(goods.groupRef.isEqual(userGroupRef) && goods.market.group);
         }
       })
     );
