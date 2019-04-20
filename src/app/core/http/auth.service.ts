@@ -52,8 +52,9 @@ export class AuthService {
   }
 
   signOut() {
-    this.signOutUser();
-    return this.afAuth.auth.signOut();
+    return this.afAuth.auth.signOut().then(
+      () => this.signOutUser()
+    );
   }
 
   signInUserById(id: string) {

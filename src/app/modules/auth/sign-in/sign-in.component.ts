@@ -113,7 +113,7 @@ export class SignInComponent implements OnInit {
     fromPromise(updatePromise).pipe(
       switchMap(() => this.auth.signInUserById(this.userId))
     ).subscribe(() => {
-      this.router.navigate(['/group']).then(
+      this.router.navigate(['/']).then(
         () => this.spinnerService.show(false)
       );
     });
