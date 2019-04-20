@@ -1,12 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ViewportScroller } from '@angular/common';
 import { ActivatedRoute, Router, Scroll } from '@angular/router';
 import { firestore } from 'firebase';
-import { BehaviorSubject, Observable, } from 'rxjs';
-import { filter, first, map, tap, withLatestFrom } from 'rxjs/operators';
+import * as firebase from 'firebase/app';
+import Timestamp = firebase.firestore.Timestamp;
+import { combineLatest, Observable, Subject } from 'rxjs';
+import { filter, first, tap } from 'rxjs/operators';
 import { AuthService, InterestService, GoodsService, GoodsListService } from '@app/core/http';
 import { GlobalToggleService, HtmlClassService, PersistenceService } from '@app/shared/services';
-import { Goods, Interest, Market } from '@app/core/models';
+import { Goods, Interest } from '@app/core/models';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +22,7 @@ export class HomeComponent implements OnInit {
   sortOption: boolean;
   exceptSoldOut: boolean;
   goodsList$: Observable<Goods[]>;
+  private limit = 30;
   private submitting = false;
 
   constructor(
@@ -38,21 +41,26 @@ export class HomeComponent implements OnInit {
     this.userPhotoURL = this.auth.user.photoURL;
     this.groupName = this.auth.group.name;
 
-    const scroll$ = new BehaviorSubject<Scroll | null>(null);
+    const scroll$ = new Subject<Scroll | null>();
+    const fetch$ = new Subject();
 
     this.goodsList$ = this.goodsListService.goodsList$.pipe(
-      withLatestFrom(scroll$),
-      tap(([, e]: [any, Scroll]) => {
-        if (e !== null) {
-          window.setTimeout(() => {
-            this.viewportScroller.scrollToPosition(e.position);
-          }, 0);
-          scroll$.next(null);
-        }
-      }),
-      map(([goodsList]) => goodsList),
-      tap(() => this.submitting = false)
+      filter(g => g !== null),
+      tap(() => this.submitting = false),
+      tap(() => fetch$.next())
     );
+
+    combineLatest(fetch$, scroll$).pipe(
+      tap(([, s]) => {
+        window.setTimeout(() => {
+          this.viewportScroller.scrollToPosition(s.position);
+        }, 0);
+      })
+    ).subscribe();
+
+    if (!this.goodsListService.cached) {
+      this.getGoodsList(Timestamp.now(), true);
+    }
 
     this.router.events.pipe(
       filter( e => e !== null),
@@ -60,18 +68,19 @@ export class HomeComponent implements OnInit {
       first(),
       filter((e: Scroll) => e.position && e.position[1] > 0),
     ).subscribe((e: Scroll) => scroll$.next(e));
-
-    this.route.paramMap.subscribe(paramMap => {
-      this.market = paramMap.get('market');
-      goodsListService.query$.next({
-        market: this.market as Market,
-        exceptSoldOut: this.exceptSoldOut
-      });
-    });
    }
 
   ngOnInit() {
     this.htmlClassService.set('home');
+  }
+
+  getGoodsList(startAfter: Timestamp, scan: boolean) {
+    this.goodsListService.more({
+      groupRef: this.auth.user.groupRef,
+      startAfter,
+      limit: this.limit,
+      scan
+    });
   }
 
   interested(goods: Goods) {
@@ -85,10 +94,6 @@ export class HomeComponent implements OnInit {
       this.submitting = true;
       this.exceptSoldOut = checked;
       this.persistenceService.set('exceptSoldOut', checked);
-      this.goodsListService.query$.next({
-        market: this.market as Market,
-        exceptSoldOut: checked
-      });
     }
     this.sortOption = false;
   }
@@ -99,7 +104,7 @@ export class HomeComponent implements OnInit {
     const interest: Interest = {
       userRef,
       goodsRef: this.goodsService.getGoodsRef(goods.id),
-      market: this.market
+      // market: this.market
     };
 
     if (index === -1) {
@@ -114,7 +119,7 @@ export class HomeComponent implements OnInit {
   onClickMore(startAfter: firestore.Timestamp) {
     if (!this.submitting) {
       this.submitting = true;
-      this.goodsListService.more$.next(startAfter);
+      this.getGoodsList(startAfter, true);
     }
   }
 
