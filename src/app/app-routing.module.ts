@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from '@app/shared/guards';
 import { IntroComponent } from '@app/modules/home/intro/intro.component';
+import { HomeComponent } from '@app/modules/home/home/home.component';
 
 const routes: Routes = [
-  { path: '',  redirectTo: '/group', pathMatch: 'full' },
+  { path: '', canActivate: [AuthGuard], component: HomeComponent },
   { path: 'intro', component: IntroComponent }
 ];
 
