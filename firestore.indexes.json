@@ -1,6 +1,14 @@
 {
   "indexes": [
     {
+      "collectionGroup": "goods",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "groupRef", "order": "ASCENDING" },
+        { "fieldPath": "updated", "order": "DESCENDING" }
+      ]
+    },
+    {
       "collectionGroup": "comments",
       "queryScope": "COLLECTION",
       "fields": [
