@@ -1,124 +1,149 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Goods, Market } from '@app/core/models';
-import { firestore } from 'firebase';
-import { AngularFirestore, DocumentReference, QueryFn } from '@angular/fire/firestore';
-import { filter, map, pairwise, switchMap, withLatestFrom } from 'rxjs/operators';
-import { Dispatcher } from '@app/shared/utils/snapshot-dispatcher';
-import { AuthService } from '@app/core/http/auth.service';
+import { AngularFirestore } from '@angular/fire/firestore';
+import * as firebase from 'firebase/app';
+import DocumentReference = firebase.firestore.DocumentReference;
+import Timestamp = firebase.firestore.Timestamp;
+import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
+import { filter, first, map, scan, switchMap, tap } from 'rxjs/operators';
+import { Goods } from '@app/core/models';
 
-export interface GoodsListQuery {
-  market: Market;
-  exceptSoldOut: boolean;
+export interface GoodsListOptions {
+  groupRef: DocumentReference;
+  startAfter: Timestamp;
+  limit: number;
+  scan: boolean;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoodsListService {
-  forceUpdate = false;
-  goodsList$ = new BehaviorSubject<Goods[] | null>(null);
-  more$ = new BehaviorSubject<firestore.Timestamp | null>(null);
-
-  query$: BehaviorSubject<GoodsListQuery> = new BehaviorSubject({
-    market: null,
-    exceptSoldOut: null,
-  });
+  cached = false;
+  goodsList$ = new BehaviorSubject<Goods[]>(null);
+  private options$ = new BehaviorSubject<GoodsListOptions>(null);
 
   constructor(
-    private afs: AngularFirestore,
-    private auth: AuthService
+    private afs: AngularFirestore
   ) {
-    this.query$.asObservable().pipe(
-      pairwise(),
-      filter(([p, n]) => (
-        this.forceUpdate ||
-        (p.market !== n.market) || (p.exceptSoldOut !== n.exceptSoldOut))
-      ),
-      switchMap(([, n]) => this.getGoodsListBy(n.market, n.exceptSoldOut))
-    ).subscribe(goodsList => {
-      this.goodsList$.next(goodsList);
-      this.forceUpdate = false;
-    });
-
-    this.more$.asObservable().pipe(
-      filter(startAfter => startAfter !== null),
-      withLatestFrom(this.query$),
-      switchMap(([startAfter, {market, exceptSoldOut}]) => this.getGoodsListBy(market, exceptSoldOut, startAfter)),
-      map(goodsList => this.goodsList$.getValue().concat(goodsList))
-    ).subscribe(goodsList => this.goodsList$.next(goodsList));
+    this.options$.asObservable().pipe(
+      filter(options => !!options),
+      switchMap(options => (
+        forkJoin(
+          this.getGoodsListByGroup$(options),
+          this.getGoodsListByShared$(options),
+        )
+      )),
+      map(([g1, g2]) => [...g1, ...g2]),
+      map(g => (
+        g.sort((p, n) => (
+          (p.updated as Timestamp).seconds - (n.updated as Timestamp).seconds
+        ))
+      )),
+      map(g => (
+        g.reduce((a, c) => (a.findIndex(i => i.id === c.id) > -1) ? a : [c, ...a], [])
+      )),
+      map(g => g.slice(0, this.options$.getValue().limit)),
+      scan((a, c) => this.options$.getValue().scan ? [...a, ...c] : c, []),
+      tap(() => this.cached = true)
+    ).subscribe(this.goodsList$);
   }
 
-  getGoodsListBy(
-    market: string,
-    soldOut: boolean,
-    startAfter: firestore.Timestamp = null,
-    limit = 10): Observable<Goods[]> {
-    if (market === 'group') {
-      return this.getGoodsListByGroup(this.auth.user.groupRef, soldOut, startAfter, limit);
-    } else if (market === 'lounge') {
-      return this.getGoodsListByLounge(soldOut, startAfter, limit);
-    }
+  more(options: GoodsListOptions) {
+    this.options$.next(options);
   }
 
-  getGoodsListByGroup(
-    groupRef: DocumentReference,
-    exceptSoldOut: boolean,
-    startAfter: firestore.Timestamp | null,
-    limit: number): Observable<Goods[]> {
-    const queryFn = (ref) => {
-      let query = ref
-        .where('groupRef', '==', groupRef)
-        .where('market.group', '==', true)
-        .orderBy('updated', 'desc')
-        .limit(limit);
-      if (exceptSoldOut) {
-        query = query.where('soldOut', '==', false);
-      }
-      if (startAfter) {
-        query = query.startAfter(startAfter);
-      }
-      return query;
-    };
-    return this.getGoodsList(queryFn);
-  }
-
-  getGoodsListByLounge(
-    exceptSoldOut: boolean,
-    startAfter: firestore.Timestamp | null,
-    limit: number): Observable<Goods[]> {
-    const queryFn = (ref) => {
-      let query = ref
-        .where('market.lounge', '==', true)
-        .orderBy('updated', 'desc')
-        .limit(limit);
-      if (exceptSoldOut) {
-        query = query.where('soldOut', '==', false);
-      }
-      if (startAfter) {
-        query = query.startAfter(startAfter);
-      }
-      return query;
-    };
-    return this.getGoodsList(queryFn);
-  }
-
-  getGoodsListByUser(
-    userRef: DocumentReference,
-    market: string,
-    limit: number = 30): Observable<Goods[]> {
-    const queryFn = (ref) => (
-      ref
-        .where('userRef', '==', userRef)
-        .where(`market.${market}`, '==', true)
-        .orderBy('updated', 'desc')
-        .limit(limit)
+  private getGoodsListByGroup$(options: GoodsListOptions): Observable<Goods[]> {
+    return this.afs.collection(
+      'goods',
+      ref => (
+        ref.where('groupRef', '==', options.groupRef)
+          .orderBy('updated', 'desc')
+          .startAfter(options.startAfter)
+          .limit(options.limit * 2)
+      )
+    ).snapshotChanges().pipe(
+      first(),
+      map(actions => (
+        actions.map(a => (
+          { id: a.payload.doc.id, ...a.payload.doc.data() } as Goods
+        ))
+      ))
     );
-    return this.getGoodsList(queryFn);
   }
 
-  getGoodsList(queryFn: QueryFn): Observable<Goods[]> {
-    return this.afs.collection('goods', queryFn).get()
-      .pipe(map(Dispatcher.querySnapshot));
+  private getGoodsListByShared$(options: GoodsListOptions): Observable<Goods[]> {
+    return this.afs.collection(
+      'goods',
+      ref => (
+        ref.where('market.lounge', '==', true)
+          .orderBy('updated', 'desc')
+          .startAfter(options.startAfter)
+          .limit(options.limit * 2)
+      )
+    ).snapshotChanges().pipe(
+      first(),
+      map(actions => (
+        actions.map(a => (
+          { id: a.payload.doc.id, ...a.payload.doc.data() } as Goods
+        ))
+      ))
+    );
   }
+
+  private getUserGoodsListByGroup$(groupRef: DocumentReference, userRef: DocumentReference, limit) {
+    return this.afs.collection(
+      'goods' ,
+      ref => (
+        ref.where('userRef', '==', userRef)
+          .where('groupRef', '==', groupRef)
+          .orderBy('updated', 'desc')
+          .limit(limit)
+      )
+    ).snapshotChanges().pipe(
+      first(),
+      map(actions => (
+        actions.map(a => (
+          { id: a.payload.doc.id, ...a.payload.doc.data() } as Goods
+        ))
+      ))
+    );
+  }
+
+  private getUserGoodsListByShared$(userRef: DocumentReference, limit) {
+    return this.afs.collection(
+      'goods',
+      ref => (
+        ref.where('userRef', '==', userRef)
+          .where('market.lounge', '==', true)
+          .orderBy('updated', 'desc')
+          .limit(limit)
+      )
+    ).snapshotChanges().pipe(
+      first(),
+      map(actions => (
+        actions.map(a => (
+          { id: a.payload.doc.id, ...a.payload.doc.data() } as Goods
+        ))
+      ))
+    );
+  }
+
+  getGoodsListByUser(groupRef: DocumentReference, userRef: DocumentReference, limit) {
+    return forkJoin(
+      this.getUserGoodsListByGroup$(groupRef, userRef, limit * 2),
+      this.getUserGoodsListByShared$(userRef, limit * 2),
+    ).pipe(
+      map(([g1, g2]) => [...g1, ...g2]),
+      map(g => (
+        g.sort((p, n) => (
+          (p.updated as Timestamp).seconds - (n.updated as Timestamp).seconds
+        ))
+      )),
+      map(g => (
+        g.reduce((a, c) => (a.findIndex(i => i.id === c.id) > -1) ? a : [c, ...a], [])
+      )),
+      map(g => g.slice(0, limit))
+    );
+  }
+
 }
