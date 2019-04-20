@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Goods, ImageFile } from '@app/core/models';
-import { AuthService, FileUploadService, GoodsListService, GoodsService } from '@app/core/http';
+import { AuthService, FileUploadService, GoodsService } from '@app/core/http';
 import { HtmlClassService, LocationService } from '@app/shared/services';
 import { SpinnerService } from '@app/shared/services/spinner.service';
 import { targetSelectedValidator } from '@app/modules/goods/target-selected-validator.directive';
@@ -42,7 +42,6 @@ export class GoodsEditComponent implements OnInit {
     private auth: AuthService,
     private locationService: LocationService,
     private goodsService: GoodsService,
-    private goodsListService: GoodsListService,
     private fileUploadService: FileUploadService,
     private spinnerService: SpinnerService,
     private htmlClassService: HtmlClassService
@@ -225,9 +224,8 @@ export class GoodsEditComponent implements OnInit {
   }
 
   success = () => {
-    const market = this.route.snapshot.paramMap.get('market');
-    this.goodsListService.forceUpdate = true;
-    this.router.navigate(['/', market]).then(() => {
+    // this.goodsListService.forceUpdate = true;
+    this.router.navigate(['/']).then(() => {
       this.spinnerService.show(false);
       this.submitting = false;
     });
