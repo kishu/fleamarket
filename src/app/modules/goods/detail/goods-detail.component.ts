@@ -3,7 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, of, zip } from 'rxjs';
 import { filter, pluck, switchMap, tap } from 'rxjs/operators';
-import { AuthService, CommentService, GoodsService, GoodsListService, InterestService } from '@app/core/http';
+import {
+  AuthService,
+  CommentService,
+  GoodsService,
+  InterestService,
+  GoodsListService
+} from '@app/core/http';
 import { GlobalToggleService, HtmlClassService, LocationService } from '@app/shared/services';
 import { Comment, Goods, Market } from '@app/core/models';
 
@@ -14,7 +20,6 @@ import { Comment, Goods, Market } from '@app/core/models';
 })
 export class GoodsDetailComponent implements OnInit {
   authority = false;
-  group: string;
   market: string;
   groupName: string;
   moreImages: boolean;
@@ -67,7 +72,7 @@ export class GoodsDetailComponent implements OnInit {
     ).subscribe(() => {
       this.moreImages = false;
       this.goods = this.goodsService.cachedGoods;
-      this.otherGoods$ = this.goodsListService.getGoodsListByUser(this.goods.userRef, this.market);
+      this.otherGoods$ = this.goodsListService.getGoodsListByUser(this.goods.groupRef, this.goods.userRef, 20);
       this.comments$ = this.commentService.getCommentsByGoods(this.goods.id);
 
       this.authority = (user.id === this.goods.userRef.id);
