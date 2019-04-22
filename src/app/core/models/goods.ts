@@ -9,10 +9,7 @@ export class Goods {
     desc: string,
   };
   groupRef: firestore.DocumentReference;
-  market: {
-    group: boolean;
-    lounge: boolean;
-  };
+  share: boolean;
   images: [{
     id: string;
     url: string;

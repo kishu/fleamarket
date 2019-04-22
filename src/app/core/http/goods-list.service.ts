@@ -75,7 +75,7 @@ export class GoodsListService {
     return this.afs.collection(
       'goods',
       ref => (
-        ref.where('market.lounge', '==', true)
+        ref.where('share', '==', true)
           .orderBy('updated', 'desc')
           .startAfter(options.startAfter)
           .limit(options.limit * 2)
@@ -114,7 +114,7 @@ export class GoodsListService {
       'goods',
       ref => (
         ref.where('userRef', '==', userRef)
-          .where('market.lounge', '==', true)
+          .where('share', '==', true)
           .orderBy('updated', 'desc')
           .limit(limit)
       )

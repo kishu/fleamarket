@@ -34,10 +34,10 @@ export class GoodsGuard implements CanActivate {
 
     return goods$.pipe(
       map(goods => {
-        if (goods.market.lounge) {
+        if (goods.share) {
           return true;
         } else {
-          return !!(goods.groupRef.isEqual(userGroupRef) && goods.market.group);
+          return !!(goods.groupRef.isEqual(userGroupRef) && goods.share);
         }
       })
     );
