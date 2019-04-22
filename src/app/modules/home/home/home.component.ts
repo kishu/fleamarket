@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ViewportScroller } from '@angular/common';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Time, ViewportScroller } from '@angular/common';
 import { ActivatedRoute, Router, Scroll } from '@angular/router';
 import { firestore } from 'firebase';
 import * as firebase from 'firebase/app';
@@ -16,13 +16,16 @@ import { Goods, Interest } from '@app/core/models';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  @ViewChild('observer') observer: ElementRef;
+
   userPhotoURL: string;
   groupName: string;
   market: string;
   sortOption: boolean;
   exceptSoldOut: boolean;
   goodsList$: Observable<Goods[]>;
-  private limit = 30;
+  lastGoods: Goods;
+  private limit = 20;
   private submitting = false;
 
   constructor(
@@ -45,6 +48,7 @@ export class HomeComponent implements OnInit {
 
     this.goodsList$ = this.goodsListService.goodsList$.pipe(
       filter(g => g !== null),
+      tap(g => this.lastGoods = g[g.length - 1]),
       tap(() => this.submitting = false),
       tap(() => fetch$.next())
     );
@@ -71,6 +75,22 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.htmlClassService.set('home');
+
+    let isLeaving = false;
+    const config = {
+      rootMargin: '0px 0px 1500px 0px'
+    };
+    const iObserver = new IntersectionObserver(entries => {
+      const observer = entries[0];
+      if (isLeaving && observer.isIntersecting) {
+        this.getGoodsList(this.lastGoods.updated as Timestamp, true);
+        isLeaving = false;
+      } else {
+        isLeaving = true;
+      }
+    }, config);
+
+    iObserver.observe(this.observer.nativeElement);
   }
 
   getGoodsList(startAfter: Timestamp, scan: boolean) {
