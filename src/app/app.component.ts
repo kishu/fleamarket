@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { GlobalToggleService, HtmlClassService } from '@app/shared/services';
-import { AuthService } from '@app/core/http';
-import { User } from '@app/core/models';
+import { HtmlClassService } from '@app/shared/services';
 
 @Component({
   selector: 'app-root',
@@ -9,42 +7,20 @@ import { User } from '@app/core/models';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = '2nd Market';
-  isShowNotification = false;
-  isShowPreference = false;
-  readonly user: User;
+  title = '세컨드마켓';
+  popup: boolean;
 
   constructor(
-    private globalToggleService: GlobalToggleService,
-    private authService: AuthService,
-    private htmlClassService: HtmlClassService,
-  ) {
-    this.user = this.authService.user;
-    this.globalToggleService.notification$.asObservable().subscribe(isShow => {
-      if (isShow === undefined) {
-        this.isShowNotification = !this.isShowNotification;
-        this.htmlClassService.toggle('no-scroll');
-      } else {
-        this.isShowNotification = isShow;
-        this.htmlClassService.toggle('no-scroll');
-      }
-    });
-    this.globalToggleService.preference$.asObservable().subscribe(isShow => {
-      if (isShow === undefined) {
-        this.isShowPreference = !this.isShowPreference;
-        this.htmlClassService.toggle('no-scroll');
-      } else {
-        this.isShowPreference = isShow;
-        this.htmlClassService.toggle('no-scroll');
-      }
-    });
+    private htmlClassService: HtmlClassService
+  ) { }
+
+  onActivatePopup() {
+    this.popup = true;
+    this.htmlClassService.disableScroll();
   }
 
-  onClickNotification() {
-    this.globalToggleService.notification$.next();
-  }
-
-  onClickPreference() {
-    this.globalToggleService.preference$.next();
+  onDeactivatePopup() {
+    this.popup = false;
+    this.htmlClassService.enableScroll();
   }
 }

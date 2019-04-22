@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService, NotificationService } from '@app/core/http';
-import { HtmlClassService, LocationService } from '@app/shared/services';
+import { LocationService } from '@app/shared/services';
 import { Notification } from '@app/core/models';
 
 @Component({
@@ -18,7 +18,6 @@ export class PreferenceNotificationComponent implements OnInit {
     private auth: AuthService,
     private locationService: LocationService,
     private notificationService: NotificationService,
-    private htmlClassService: HtmlClassService
   ) {
     const user = this.auth.user;
     this.user = {
@@ -29,17 +28,11 @@ export class PreferenceNotificationComponent implements OnInit {
     this.notifications$ = this.notificationService.getNotifications();
   }
 
-  ngOnInit() {
-    this.htmlClassService.set('preference-notification');
-  }
+  ngOnInit() { }
 
-  goBack(e: any) {
-    e.preventDefault();
-    this.locationService.goBack();
-  }
-
-  onToggle() {
-    console.log('toggle', !this.show);
-  }
+  // goBack(e: any) {
+  //   e.preventDefault();
+  //   this.locationService.goBack();
+  // }
 
 }

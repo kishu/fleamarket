@@ -10,7 +10,7 @@ import {
   InterestService,
   GoodsListService
 } from '@app/core/http';
-import { GlobalToggleService, HtmlClassService, LocationService } from '@app/shared/services';
+import { HtmlClassService, LocationService } from '@app/shared/services';
 import { Comment, Goods, Market } from '@app/core/models';
 
 @Component({
@@ -50,8 +50,7 @@ export class GoodsDetailComponent implements OnInit {
     private goodsService: GoodsService,
     private goodsListService: GoodsListService,
     private interestService: InterestService,
-    private htmlClassService: HtmlClassService,
-    private globalToggleService: GlobalToggleService
+    private htmlClassService: HtmlClassService
   ) {
     this.market = route.snapshot.paramMap.get('market');
     this.groupName = this.auth.group.name;
@@ -210,10 +209,6 @@ export class GoodsDetailComponent implements OnInit {
   goBack(e: any) {
     e.preventDefault();
     this.locationService.goBack(this.market);
-  }
-
-  onClickNotification() {
-    this.globalToggleService.notification$.next();
   }
 
 }

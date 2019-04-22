@@ -3,8 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { GlobalToggleService, HtmlClassService, LocationService } from '@app/shared/services';
-
+import { LocationService } from '@app/shared/services';
 import { AuthService, FileUploadService, UserService } from '@app/core/http';
 import { SpinnerService } from '@app/shared/services/spinner.service';
 import { ImageFile } from '@app/core/models';
@@ -34,9 +33,7 @@ export class PreferenceUserComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private fileUploadService: FileUploadService,
-    private spinnerService: SpinnerService,
-    private htmlClassService: HtmlClassService,
-    private globalToggleService: GlobalToggleService
+    private spinnerService: SpinnerService
   ) {
     const user = this.authService.user;
     this.photoURL = user.photoURL;
@@ -51,9 +48,7 @@ export class PreferenceUserComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.htmlClassService.set('preference-user');
-  }
+  ngOnInit() { }
 
   protected upload(): Observable<any> {
     const files = [this.imageFile.file];
@@ -130,21 +125,9 @@ export class PreferenceUserComponent implements OnInit {
     this.submitting = false;
   }
 
-  goBack(e: any) {
-    e.preventDefault();
-    this.locationService.goBack();
-  }
-
-  onClickNotification() {
-    this.globalToggleService.notification$.next();
-  }
-
-  onClickPreference() {
-    this.globalToggleService.preference$.next();
-  }
-
-  onToggle() {
-    console.log('toggle', !this.show);
-  }
+  // goBack(e: any) {
+  //   e.preventDefault();
+  //   this.locationService.goBack();
+  // }
 
 }

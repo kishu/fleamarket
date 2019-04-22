@@ -1,27 +1,46 @@
-import { Injectable, Renderer2 } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HtmlClassService {
-  constructor() { }
+  private htmlRef: HTMLElement;
+  private fixed = ['no-scroll'];
+
+  constructor() {
+    this.htmlRef = document.getElementsByTagName('html')[0] as HTMLElement;
+  }
 
   set(className: string) {
-    const htmlRef = document.getElementsByTagName('html')[0];
-    htmlRef.className = className;
+    const classList = [className];
+    this.fixed.forEach(f => {
+      if (this.htmlRef.classList.contains(f)) {
+        classList.push(f);
+      }
+    });
+    this.htmlRef.className = classList.join(' ');
   }
 
-  toggle(className: string) {
-    const htmlRef = document.getElementsByTagName('html')[0];
+  addClassName(className: string) {
+    this.htmlRef.classList.add(className);
+  }
+
+  removeClassName(className: string) {
+    this.htmlRef.classList.remove(className);
+  }
+
+  enableScroll() {
     const wrapRef = document.getElementsByClassName('wrap')[0] as HTMLElement;
-    let _scrollTop = -(wrapRef.getBoundingClientRect().top);
+    this.removeClassName('no-scroll');
+    wrapRef.style.top = -(window.scrollY) + 'px';
 
-    if (!htmlRef.classList.contains(className)) {
-      wrapRef.style.top = -(window.scrollY) + 'px';
-      htmlRef.classList.add(className);
-    } else {
-      htmlRef.classList.remove(className);
-      window.scrollTo(0, _scrollTop);
-    }
   }
+
+  disableScroll() {
+    const wrapRef = document.getElementsByClassName('wrap')[0] as HTMLElement;
+    const scrollTop = -(wrapRef.getBoundingClientRect().top);
+    this.addClassName('no-scroll');
+    window.scrollTo(0, scrollTop);
+  }
+
 }

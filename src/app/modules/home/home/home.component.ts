@@ -7,7 +7,7 @@ import Timestamp = firebase.firestore.Timestamp;
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { filter, first, tap } from 'rxjs/operators';
 import { AuthService, InterestService, GoodsService, GoodsListService } from '@app/core/http';
-import { GlobalToggleService, HtmlClassService, PersistenceService } from '@app/shared/services';
+import { HtmlClassService, PersistenceService } from '@app/shared/services';
 import { Goods, Interest } from '@app/core/models';
 
 @Component({
@@ -34,8 +34,7 @@ export class HomeComponent implements OnInit {
     private goodsListService: GoodsListService,
     private persistenceService: PersistenceService,
     private viewportScroller: ViewportScroller,
-    private htmlClassService: HtmlClassService,
-    private globalToggleService: GlobalToggleService
+    private htmlClassService: HtmlClassService
   ) {
     this.exceptSoldOut = this.persistenceService.get('exceptSoldOut') || false;
     this.userPhotoURL = this.auth.user.photoURL;
@@ -129,14 +128,6 @@ export class HomeComponent implements OnInit {
 
   showGoodsBy(market: string) {
     this.router.navigate(['/', market]);
-  }
-
-  onClickNotification() {
-    this.globalToggleService.notification$.next();
-  }
-
-  onClickPreference() {
-    this.globalToggleService.preference$.next();
   }
 
 }
