@@ -125,6 +125,11 @@ export class PreferenceUserComponent implements OnInit {
     this.submitting = false;
   }
 
+  onClose(e: Event) {
+    e.preventDefault();
+    this.router.navigate([{outlets: {popup: null}}]);
+  }
+
   // goBack(e: any) {
   //   e.preventDefault();
   //   this.locationService.goBack();

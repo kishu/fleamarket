@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService, NotificationService } from '@app/core/http';
 import { LocationService } from '@app/shared/services';
@@ -15,6 +16,7 @@ export class PreferenceNotificationComponent implements OnInit {
   notifications$: Observable<Notification[]>;
 
   constructor(
+    private router: Router,
     private auth: AuthService,
     private locationService: LocationService,
     private notificationService: NotificationService,
@@ -29,6 +31,11 @@ export class PreferenceNotificationComponent implements OnInit {
   }
 
   ngOnInit() { }
+
+  onClose(e: Event) {
+    e.preventDefault();
+    this.router.navigate([{outlets: {popup: null}}]);
+  }
 
   // goBack(e: any) {
   //   e.preventDefault();
