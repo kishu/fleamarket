@@ -8,7 +8,6 @@ import { Goods, ImageFile } from '@app/core/models';
 import { AuthService, FileUploadService, GoodsService } from '@app/core/http';
 import { HtmlClassService, LocationService } from '@app/shared/services';
 import { SpinnerService } from '@app/shared/services/spinner.service';
-import { targetSelectedValidator } from '@app/modules/goods/target-selected-validator.directive';
 import { environment } from '@environments/environment';
 
 @Component({
@@ -29,7 +28,6 @@ export class GoodsEditComponent implements OnInit {
   editForm: FormGroup;
   imageFiles = new Map<number, ImageFile>();
 
-  get market() { return this.editForm.get('market'); }
   get title() { return this.editForm.get('title'); }
   get desc() { return this.editForm.get('desc'); }
   get price() { return this.editForm.get('price'); }
@@ -72,10 +70,7 @@ export class GoodsEditComponent implements OnInit {
     }
 
     this.editForm = this.fb.group({
-      market: this.fb.group({
-        group: true,
-        lounge: goods.share,
-      }, { validators: targetSelectedValidator }),
+      share: goods.share,
       purchase: [ goods.purchase, Validators.required ],
       condition: [ goods.condition, Validators.required ],
       title: [ goods.title, [ Validators.required,  Validators.maxLength(31) ] ],
