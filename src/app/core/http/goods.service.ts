@@ -96,10 +96,7 @@ export class GoodsService {
         desc: user.desc
       },
       groupRef: user.groupRef,
-      market: {
-        group: true,
-        lounge: false
-      },
+      share: true,
       images: [],
       purchase: '알 수 없음',
       condition: '미개봉',

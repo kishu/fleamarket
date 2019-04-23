@@ -73,8 +73,8 @@ export class GoodsEditComponent implements OnInit {
 
     this.editForm = this.fb.group({
       market: this.fb.group({
-        group: goods.market.group,
-        lounge: goods.market.lounge,
+        group: true,
+        lounge: goods.share,
       }, { validators: targetSelectedValidator }),
       purchase: [ goods.purchase, Validators.required ],
       condition: [ goods.condition, Validators.required ],
