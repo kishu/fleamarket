@@ -211,4 +211,12 @@ export class GoodsDetailComponent implements OnInit {
     this.locationService.goBack(this.market);
   }
 
+  onClickNotification(e: Event) {
+    e.preventDefault();
+    this.router.navigate(
+      [{outlets: {popup: ['notification']}}],
+      { skipLocationChange: true }
+    );
+  }
+
 }

@@ -150,4 +150,20 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/', market]);
   }
 
+  onClickNotification(e: Event) {
+    e.preventDefault();
+    this.router.navigate(
+      [{outlets: {popup: ['notification']}}],
+      { skipLocationChange: true }
+    );
+  }
+
+  onClickPreference(e: Event) {
+    e.preventDefault();
+    this.router.navigate(
+      [{outlets: {popup: ['preference']}}],
+      { skipLocationChange: true }
+    );
+  }
+
 }
