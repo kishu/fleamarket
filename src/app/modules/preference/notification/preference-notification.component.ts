@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AuthService, NotificationService } from '@app/core/http';
 import { LocationService } from '@app/shared/services';
 import { Notification } from '@app/core/models';
@@ -14,6 +14,7 @@ export class PreferenceNotificationComponent implements OnInit {
   readonly user: any;
   show = false;
   notifications$: Observable<Notification[]>;
+  ready$ = new Subject<boolean>();
 
   constructor(
     private router: Router,
@@ -27,7 +28,9 @@ export class PreferenceNotificationComponent implements OnInit {
       displayName: user.displayName,
       desc: user.desc
     };
-    this.notifications$ = this.notificationService.getNotifications();
+    this.ready$.asObservable().subscribe(() => {
+      this.notifications$ = this.notificationService.getNotifications();
+    });
   }
 
   ngOnInit() { }

@@ -1,37 +1,35 @@
-<div class="show preference-notification">
-  <a href="#" (click)="onClose($event)" class="close">
-    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M38 12.83L35.17 10 24 21.17 12.83 10 10 12.83 21.17 24 10 35.17 12.83 38 24 26.83 35.17 38 38 35.17 26.83 24z"/></svg>
-  </a>
-  <div class="alarm-wrap">
-    <header>
-      <h1>알림</h1>
-    </header>
-    <div class="alarm" *ngIf="(notifications$ | async) as notifications">
-      <div class="alarm_header">
-        <h3>새로운 알림 <span>{{notifications.length}}</span> 건</h3>
+<a href="#" (click)="onClose($event)" class="close">
+  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M38 12.83L35.17 10 24 21.17 12.83 10 10 12.83 21.17 24 10 35.17 12.83 38 24 26.83 35.17 38 38 35.17 26.83 24z"/></svg>
+</a>
+<div class="alarm-wrap">
+  <header>
+    <h1>알림</h1>
+  </header>
+  <div class="alarm" *ngIf="(notifications$ | async) as notifications">
+    <div class="alarm_header">
+      <h3>새로운 알림 <span>{{notifications.length}}</span> 건</h3>
+    </div>
+    <div class="alarm_body">
+      <div class="alarm_nothing" *ngIf="notifications.length === 0">
+        알림이 없습니다.
       </div>
-      <div class="alarm_body">
-        <div class="alarm_nothing" *ngIf="notifications.length === 0">
-          알림이 없습니다.
-        </div>
-        <ul class="alarm_list" *ngIf="notifications.length > 0">
-          <li *ngFor="let notification of notifications" class="alarm_item">
-            <!-- <a [routerLink]="['/', notification.market, 'goods', notification.goodsRef.id]"> -->
-            <a>
-              <span class="alarm_thumb" [style.backgroundImage]="'url(' + notification.fromUser.photoURL + ')'"><span class="new"></span></span>
-              <p class="alarm_content">
-                <strong>{{ notification.fromUser.displayName }}</strong>님이
-                <strong>{{ notification.goods.title }}</strong>에 댓글을 남겼습니다:<br>
-                {{ notification.body }}
-              </p>
-              <span class="alarm_created">{{ notification.created | fsTimestamp | distanceInWordsToNow }}</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="alarm_header">
-        <h3>읽은 알림 <span>10</span> 건</h3>
-      </div>
+      <ul class="alarm_list" *ngIf="notifications.length > 0">
+        <li *ngFor="let notification of notifications" class="alarm_item">
+          <!-- <a [routerLink]="['/', notification.market, 'goods', notification.goodsRef.id]"> -->
+          <a>
+            <span class="alarm_thumb" [style.backgroundImage]="'url(' + notification.fromUser.photoURL + ')'"><span class="new"></span></span>
+            <p class="alarm_content">
+              <strong>{{ notification.fromUser.displayName }}</strong>님이
+              <strong>{{ notification.goods.title }}</strong>에 댓글을 남겼습니다:<br>
+              {{ notification.body }}
+            </p>
+            <span class="alarm_created">{{ notification.created | fsTimestamp | distanceInWordsToNow }}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="alarm_header">
+      <h3>읽은 알림 <span>10</span> 건</h3>
     </div>
   </div>
 </div>

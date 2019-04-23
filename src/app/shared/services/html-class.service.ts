@@ -29,18 +29,17 @@ export class HtmlClassService {
     this.htmlRef.classList.remove(className);
   }
 
-  enableScroll() {
-    const wrapRef = document.getElementsByClassName('wrap')[0] as HTMLElement;
-    this.removeClassName('no-scroll');
-    wrapRef.style.top = -(window.scrollY) + 'px';
-
-  }
-
   disableScroll() {
     const wrapRef = document.getElementsByClassName('wrap')[0] as HTMLElement;
-    const scrollTop = -(wrapRef.getBoundingClientRect().top);
+    wrapRef.style.top = -(window.scrollY) + 'px';
     this.addClassName('no-scroll');
-    window.scrollTo(0, scrollTop);
+  }
+
+  enableScroll() {
+    const wrapRef = document.getElementsByClassName('wrap')[0] as HTMLElement;
+    const scrollTop = -(wrapRef.getBoundingClientRect().top);
+    this.removeClassName('no-scroll');
+    setTimeout(() => window.scrollTo(0, scrollTop), 0);
   }
 
 }

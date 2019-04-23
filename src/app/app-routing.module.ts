@@ -5,7 +5,7 @@ import { IntroComponent } from '@app/modules/home/intro/intro.component';
 import { HomeComponent } from '@app/modules/home/home/home.component';
 
 const routes: Routes = [
-  { path: '', canActivate: [AuthGuard], component: HomeComponent },
+  { path: '', canActivate: [AuthGuard], component: HomeComponent, data: {animation: 'HomePage'} },
   { path: 'intro', component: IntroComponent }
 ];
 

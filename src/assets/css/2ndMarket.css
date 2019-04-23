@@ -25,6 +25,7 @@ body {
 }
 
 app-root,
+app-home,
 app-detail {
   display: block;
   height: 100%;

@@ -5,7 +5,7 @@ import { PreferenceNotificationComponent } from '@app/modules/preference/notific
 import { PreferenceUserComponent } from '@app/modules/preference/user/preference-user.component';
 
 const routes: Routes = [
-  {path: 'notification', canActivate: [AuthGuard], component: PreferenceNotificationComponent, outlet: 'popup'},
+  {path: 'notification', canActivate: [AuthGuard], component: PreferenceNotificationComponent, outlet: 'popup', data: {animation: 'NotificationPage'} },
   {path: 'preference', canActivate: [AuthGuard], component: PreferenceUserComponent, outlet: 'popup'}
 ];
 

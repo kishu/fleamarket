@@ -1,8 +1,13 @@
 <router-outlet></router-outlet>
-<router-outlet
-  name="popup"
-  (activate)='onActivatePopup()'
-  (deactivate)='onDeactivatePopup()'></router-outlet>
+<div
+  [@openClose]="popup ? true : false"
+  (@openClose.done)="onPopupAnimationDone()"
+  class="preference-container">
+  <router-outlet
+    name="popup"
+    (activate)='onActivatePopup($event)'
+    (deactivate)='onDeactivatePopup()'></router-outlet>
+</div>
 
 <div *ngIf="popup" class="dimmed"></div>
 <app-spinner></app-spinner>

@@ -6,3 +6,18 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0);
 }
+
+.preference-container {
+  position: fixed;
+  top: 12px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  padding-top: 49px;
+  border-radius: 5px 5px 0 0;
+  background-color: #fff;
+  overflow: hidden;
+  transition-timing-function: ease-out;
+  opacity: 0.5;
+}
