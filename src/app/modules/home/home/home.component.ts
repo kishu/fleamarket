@@ -21,8 +21,7 @@ export class HomeComponent implements OnInit {
   userPhotoURL: string;
   groupName: string;
   market: string;
-  sortOption: boolean;
-  exceptSoldOut: boolean;
+  filterSoldOut: boolean;
   goodsList$: Observable<Goods[]>;
   lastGoods: Goods;
   private limit = 20;
@@ -39,7 +38,7 @@ export class HomeComponent implements OnInit {
     private viewportScroller: ViewportScroller,
     private htmlClassService: HtmlClassService
   ) {
-    this.exceptSoldOut = this.persistenceService.get('exceptSoldOut') || false;
+    this.filterSoldOut = this.persistenceService.get('filterSoldOut') || false;
     this.userPhotoURL = this.auth.user.photoURL;
     this.groupName = this.auth.group.name;
 
@@ -98,6 +97,7 @@ export class HomeComponent implements OnInit {
       groupRef: this.auth.user.groupRef,
       startAfter,
       limit: this.limit,
+      filterSoldOut: this.filterSoldOut,
       scan
     });
   }
@@ -108,13 +108,9 @@ export class HomeComponent implements OnInit {
     ) > -1;
   }
 
-  onClickExceptSoldOut(checked) {
-    if (!this.submitting) {
-      this.submitting = true;
-      this.exceptSoldOut = checked;
-      this.persistenceService.set('exceptSoldOut', checked);
-    }
-    this.sortOption = false;
+  onClickToggleFilterSoldOut() {
+    this.filterSoldOut = !this.filterSoldOut;
+    this.getGoodsList(Timestamp.now(), false);
   }
 
   onClickInterest(goods: Goods) {
@@ -135,19 +131,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  onClickMore(startAfter: firestore.Timestamp) {
-    if (!this.submitting) {
-      this.submitting = true;
-      this.getGoodsList(startAfter, true);
-    }
-  }
-
   onClickGoods(goods: Goods) {
     this.goodsService.cachedGoods = goods;
-  }
-
-  showGoodsBy(market: string) {
-    this.router.navigate(['/', market]);
   }
 
   onClickNotification(e: Event) {

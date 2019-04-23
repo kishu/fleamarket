@@ -18,8 +18,8 @@
         <a class="on"><span>{{ groupName }}</span></a>
       </h2>
       <div class="sorting">
-        <button type="button" class="on" (click)="sortOption = !sortOption">
-          <span>업데이트순{{ exceptSoldOut ? ', 품절제외' : '' }}</span>
+        <button type="button" class="on" (click)="onClickToggleFilterSoldOut()">
+          <span>{{ filterSoldOut ? '품절제외' : '품절포함' }}</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M32 34.02V20h-4v14.02h-6L30 42l8-7.98h-6zM18 6l-8 7.98h6V28h4V13.98h6L18 6z"/></svg>
         </button>
       </div>
@@ -84,29 +84,29 @@
 
   <a href="#" class="top"></a>
 
-  <div class="sort-layer-wrap" *ngIf="sortOption" (click)="sortOption = !sortOption">
-    <div class="sort-layer">
-      <div class="sort-group">
-        <a class="selected">
-          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M18 32.34L9.66 24l-2.83 2.83L18 38l24-24-2.83-2.83z"/></svg>
-          인기순
-        </a>
-        <a>
-          업데이트순
-        </a>
-        <a>
-          가격낮은순
-        </a>
-        <a>
-          가격높은순
-        </a>
-      </div>
-      <div class="sort-group">
-        <a (click)="onClickExceptSoldOut(!exceptSoldOut)">
-          <svg *ngIf="exceptSoldOut" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M18 32.34L9.66 24l-2.83 2.83L18 38l24-24-2.83-2.83z"/></svg>
-          품절상품 제외
-        </a>
-      </div>
-    </div>
-  </div>
+<!--  <div class="sort-layer-wrap" *ngIf="sortOption" (click)="sortOption = !sortOption">-->
+<!--    <div class="sort-layer">-->
+<!--      <div class="sort-group">-->
+<!--        <a class="selected">-->
+<!--          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M18 32.34L9.66 24l-2.83 2.83L18 38l24-24-2.83-2.83z"/></svg>-->
+<!--          인기순-->
+<!--        </a>-->
+<!--        <a>-->
+<!--          업데이트순-->
+<!--        </a>-->
+<!--        <a>-->
+<!--          가격낮은순-->
+<!--        </a>-->
+<!--        <a>-->
+<!--          가격높은순-->
+<!--        </a>-->
+<!--      </div>-->
+<!--      <div class="sort-group">-->
+<!--        <a (click)="onClickExceptSoldOut(!filterSoldOut)">-->
+<!--          <svg *ngIf="filterSoldOut" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M18 32.34L9.66 24l-2.83 2.83L18 38l24-24-2.83-2.83z"/></svg>-->
+<!--          품절상품 제외-->
+<!--        </a>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
 </div>

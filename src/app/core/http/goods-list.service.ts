@@ -6,11 +6,14 @@ import Timestamp = firebase.firestore.Timestamp;
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { filter, first, map, scan, switchMap, tap } from 'rxjs/operators';
 import { Goods } from '@app/core/models';
+import Query = firebase.firestore.Query;
+import CollectionReference = firebase.firestore.CollectionReference;
 
 export interface GoodsListOptions {
   groupRef: DocumentReference;
   startAfter: Timestamp;
   limit: number;
+  filterSoldOut: boolean;
   scan: boolean;
 }
 
@@ -55,12 +58,17 @@ export class GoodsListService {
   private getGoodsListByGroup$(options: GoodsListOptions): Observable<Goods[]> {
     return this.afs.collection(
       'goods',
-      ref => (
-        ref.where('groupRef', '==', options.groupRef)
+      ref => {
+        let query: CollectionReference | Query;
+        query = ref.where('groupRef', '==', options.groupRef)
           .orderBy('updated', 'desc')
           .startAfter(options.startAfter)
-          .limit(options.limit * 2)
-      )
+          .limit(options.limit);
+        if (options.filterSoldOut) {
+          query = query.where('soldOut', '==', false);
+        }
+        return query;
+      }
     ).snapshotChanges().pipe(
       first(),
       map(actions => (
@@ -74,12 +82,17 @@ export class GoodsListService {
   private getGoodsListByShared$(options: GoodsListOptions): Observable<Goods[]> {
     return this.afs.collection(
       'goods',
-      ref => (
-        ref.where('share', '==', true)
+      ref => {
+        let query: CollectionReference | Query;
+        query = ref.where('share', '==', true)
           .orderBy('updated', 'desc')
           .startAfter(options.startAfter)
-          .limit(options.limit * 2)
-      )
+          .limit(options.limit);
+        if (options.filterSoldOut) {
+          query = query.where('soldOut', '==', false);
+        }
+        return query;
+      }
     ).snapshotChanges().pipe(
       first(),
       map(actions => (
@@ -130,8 +143,8 @@ export class GoodsListService {
 
   getGoodsListByUser(groupRef: DocumentReference, userRef: DocumentReference, limit) {
     return forkJoin(
-      this.getUserGoodsListByGroup$(groupRef, userRef, limit * 2),
-      this.getUserGoodsListByShared$(userRef, limit * 2),
+      this.getUserGoodsListByGroup$(groupRef, userRef, limit),
+      this.getUserGoodsListByShared$(userRef, limit),
     ).pipe(
       map(([g1, g2]) => [...g1, ...g2]),
       map(g => (
