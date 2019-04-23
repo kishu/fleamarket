@@ -37,7 +37,7 @@ export class GoodsGuard implements CanActivate {
         if (goods.share) {
           return true;
         } else {
-          return !!(goods.groupRef.isEqual(userGroupRef) && goods.share);
+          return goods.groupRef.isEqual(userGroupRef);
         }
       })
     );
