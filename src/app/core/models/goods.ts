@@ -10,7 +10,7 @@ export class Goods {
   };
   groupRef: firestore.DocumentReference;
   groupName: string;
-  share: boolean;
+  public: boolean;
   images: [{
     id: string;
     url: string;

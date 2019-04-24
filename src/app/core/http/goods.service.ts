@@ -97,7 +97,7 @@ export class GoodsService {
       },
       groupRef: user.groupRef,
       groupName: this.auth.group.name,
-      share: true,
+      public: true,
       images: [],
       purchase: '알 수 없음',
       condition: '미개봉',

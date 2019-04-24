@@ -33,7 +33,7 @@ export class GoodsListService {
       switchMap(options => (
         forkJoin(
           this.getGoodsListByGroup$(options),
-          this.getGoodsListByShared$(options),
+          this.getGoodsListByPublic$(options),
         )
       )),
       map(([g1, g2]) => [...g1, ...g2]),
@@ -79,12 +79,12 @@ export class GoodsListService {
     );
   }
 
-  private getGoodsListByShared$(options: GoodsListOptions): Observable<Goods[]> {
+  private getGoodsListByPublic$(options: GoodsListOptions): Observable<Goods[]> {
     return this.afs.collection(
       'goods',
       ref => {
         let query: CollectionReference | Query;
-        query = ref.where('share', '==', true)
+        query = ref.where('public', '==', true)
           .orderBy('updated', 'desc')
           .startAfter(options.startAfter)
           .limit(options.limit);
@@ -122,12 +122,12 @@ export class GoodsListService {
     );
   }
 
-  private getUserGoodsListByShared$(userRef: DocumentReference, limit) {
+  private getUserGoodsListByPublic$(userRef: DocumentReference, limit) {
     return this.afs.collection(
       'goods',
       ref => (
         ref.where('userRef', '==', userRef)
-          .where('share', '==', true)
+          .where('public', '==', true)
           .orderBy('updated', 'desc')
           .limit(limit)
       )
@@ -144,7 +144,7 @@ export class GoodsListService {
   getGoodsListByUser(groupRef: DocumentReference, userRef: DocumentReference, limit) {
     return forkJoin(
       this.getUserGoodsListByGroup$(groupRef, userRef, limit),
-      this.getUserGoodsListByShared$(userRef, limit),
+      this.getUserGoodsListByPublic$(userRef, limit),
     ).pipe(
       map(([g1, g2]) => [...g1, ...g2]),
       map(g => (

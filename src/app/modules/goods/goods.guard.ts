@@ -34,7 +34,7 @@ export class GoodsGuard implements CanActivate {
 
     return goods$.pipe(
       map(goods => {
-        if (goods.share) {
+        if (goods.public) {
           return true;
         } else {
           return goods.groupRef.isEqual(userGroupRef);

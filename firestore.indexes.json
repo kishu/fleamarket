@@ -20,7 +20,7 @@
       "collectionGroup": "goods",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "share", "order": "ASCENDING" },
+        { "fieldPath": "public", "order": "ASCENDING" },
         { "fieldPath": "updated", "order": "DESCENDING" }
       ]
     },
@@ -38,7 +38,7 @@
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "userRef", "order": "ASCENDING" },
-        { "fieldPath": "share", "order": "ASCENDING" },
+        { "fieldPath": "public", "order": "ASCENDING" },
         { "fieldPath": "updated", "order": "DESCENDING" }
       ]
     },
@@ -55,7 +55,7 @@
       "collectionGroup": "goods",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "share", "order": "ASCENDING" },
+        { "fieldPath": "public", "order": "ASCENDING" },
         { "fieldPath": "soldOut", "order": "ASCENDING" },
         { "fieldPath": "updated", "order": "DESCENDING" }
       ]

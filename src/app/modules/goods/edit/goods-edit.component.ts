@@ -70,7 +70,7 @@ export class GoodsEditComponent implements OnInit {
     }
 
     this.editForm = this.fb.group({
-      share: goods.share,
+      public: goods.public,
       purchase: [ goods.purchase, Validators.required ],
       condition: [ goods.condition, Validators.required ],
       title: [ goods.title, [ Validators.required,  Validators.maxLength(31) ] ],
