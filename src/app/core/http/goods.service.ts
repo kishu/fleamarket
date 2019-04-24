@@ -96,6 +96,7 @@ export class GoodsService {
         desc: user.desc
       },
       groupRef: user.groupRef,
+      groupName: this.auth.group.name,
       share: true,
       images: [],
       purchase: '알 수 없음',

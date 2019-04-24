@@ -8,6 +8,7 @@ import { filter, first, tap } from 'rxjs/operators';
 import { AuthService, InterestService, GoodsService, GoodsListService } from '@app/core/http';
 import { HtmlClassService, PersistenceService } from '@app/shared/services';
 import { Goods, Interest } from '@app/core/models';
+import DocumentReference = firebase.firestore.DocumentReference;
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('observer') observer: ElementRef;
 
   userPhotoURL: string;
+  groupRef: DocumentReference;
   groupName: string;
   market: string;
   filterSoldOut: boolean;
@@ -40,6 +42,7 @@ export class HomeComponent implements OnInit {
     this.filterSoldOut = this.persistenceService.get('filterSoldOut') || false;
     this.userPhotoURL = this.auth.user.photoURL;
     this.groupName = this.auth.group.name;
+    this.groupRef = this.auth.user.groupRef;
 
     const scroll$ = new Subject<Scroll | null>();
     const fetch$ = new Subject();
