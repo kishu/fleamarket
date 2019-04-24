@@ -17,16 +17,13 @@ import { GoodsModule } from '@app/modules/goods/goods.module';
 import { PreferenceModule } from '@app/modules/preference/preference.module';
 import { AppRoutingModule } from '@app/app-routing.module';
 // providers
-import { AuthGuard } from '@app/shared/guards';
 import { AuthService } from '@app/core/http';
+import { AuthGuard } from '@app/shared/guards';
 // components
 import { AppComponent } from '@app/app.component';
+import { SpinnerComponent } from '@app/shared/components/spinner/spinner.component';
 // environment
 import { environment } from '@environments/environment';
-
-import { PersistenceService } from '@app/shared/services';
-import { SpinnerService } from '@app/shared/services/spinner.service';
-import { SpinnerComponent } from '@app/shared/components/spinner/spinner.component';
 
 export function signIn(authService: AuthService) {
   return () => {
@@ -61,8 +58,6 @@ export function signIn(authService: AuthService) {
     Location,
     AuthGuard,
     AuthService,
-    PersistenceService,
-    SpinnerService,
     { provide: FunctionsRegionToken, useValue: environment.firebase.functionsRegion},
     { provide: APP_INITIALIZER, useFactory: signIn, deps: [AuthService], multi: true },
   ],

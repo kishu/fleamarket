@@ -1,13 +1,7 @@
 import { Component } from '@angular/core';
+import { trigger, state, style, animate, transition } from '@angular/animations';
+import { NotificationService } from '@app/core/http';
 import { HtmlClassService } from '@app/shared/services';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition
-} from '@angular/animations';
-import { PreferenceNotificationComponent } from './modules/preference/notification/preference-notification.component';
 
 @Component({
   selector: 'app-root',
@@ -25,27 +19,21 @@ export class AppComponent {
   title = '세컨드마켓';
   popup: boolean;
 
-  private popupComponent: any;
-
   constructor(
+    private notificationService: NotificationService,
     private htmlClassService: HtmlClassService
   ) { }
 
-  onActivatePopup(e: Component) {
+  onActivatePopup() {
     this.popup = true;
     this.htmlClassService.disableScroll();
-    this.popupComponent = e;
   }
 
   onDeactivatePopup() {
     this.popup = false;
     this.htmlClassService.enableScroll();
-    this.popupComponent = null;
   }
 
   onPopupAnimationDone() {
-    if (this.popup && this.popupComponent && this.popupComponent.ready$) {
-      this.popupComponent.ready$.next(true);
-    }
   }
 }

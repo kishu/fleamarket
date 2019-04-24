@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { AuthService, NotificationService } from '@app/core/http';
 import { LocationService } from '@app/shared/services';
 import { Notification } from '@app/core/models';
@@ -28,9 +29,8 @@ export class PreferenceNotificationComponent implements OnInit {
       displayName: user.displayName,
       desc: user.desc
     };
-    this.ready$.asObservable().subscribe(() => {
-      this.notifications$ = this.notificationService.getNotifications();
-    });
+    this.notifications$ = this.notificationService
+      .notificationList$.asObservable().pipe(filter(n => !!n));
   }
 
   ngOnInit() { }
@@ -39,10 +39,5 @@ export class PreferenceNotificationComponent implements OnInit {
     e.preventDefault();
     this.router.navigate([{outlets: {popup: null}}]);
   }
-
-  // goBack(e: any) {
-  //   e.preventDefault();
-  //   this.locationService.goBack();
-  // }
 
 }
