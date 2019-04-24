@@ -214,7 +214,7 @@ export class GoodsDetailComponent implements OnInit {
   onClickNotification(e: Event) {
     e.preventDefault();
     this.router.navigate(
-      [{outlets: {popup: ['notification']}}],
+      [{outlets: {popup: ['preference', 'notification']}}],
       { skipLocationChange: true }
     );
   }

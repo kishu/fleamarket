@@ -5,8 +5,27 @@ import { PreferenceNotificationComponent } from '@app/modules/preference/notific
 import { PreferenceUserComponent } from '@app/modules/preference/user/preference-user.component';
 
 const routes: Routes = [
-  {path: 'notification', canActivate: [AuthGuard], component: PreferenceNotificationComponent, outlet: 'popup', data: {animation: 'NotificationPage'} },
-  {path: 'preference', canActivate: [AuthGuard], component: PreferenceUserComponent, outlet: 'popup'}
+  // {
+  //   path: 'preference',
+  //   canActivate: [AuthGuard],
+  //   children: [
+  //     {path: 'notification', component: PreferenceNotificationComponent, outlet: 'popup', data: {animation: 'NotificationPage'} },
+  //     {path: 'user', component: PreferenceUserComponent, outlet: 'popup'}
+  //   ]
+  // }
+  {
+    path: 'preference/notification',
+    canActivate: [AuthGuard],
+    component: PreferenceNotificationComponent,
+    outlet: 'popup',
+    data: { animation: 'NotificationPage' }
+  },
+  {
+    path: 'preference/user',
+    canActivate: [AuthGuard],
+    component: PreferenceUserComponent,
+    outlet: 'popup'
+  }
 ];
 
 @NgModule({

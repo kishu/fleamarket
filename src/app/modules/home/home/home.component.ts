@@ -1,7 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Time, ViewportScroller } from '@angular/common';
+import { ViewportScroller } from '@angular/common';
 import { ActivatedRoute, Router, Scroll } from '@angular/router';
-import { firestore } from 'firebase';
 import * as firebase from 'firebase/app';
 import Timestamp = firebase.firestore.Timestamp;
 import { combineLatest, Observable, Subject } from 'rxjs';
@@ -138,7 +137,7 @@ export class HomeComponent implements OnInit {
   onClickNotification(e: Event) {
     e.preventDefault();
     this.router.navigate(
-      [{outlets: {popup: ['notification']}}],
+      [{outlets: {popup: ['preference', 'notification']}}],
       { skipLocationChange: true }
     );
   }
@@ -146,7 +145,7 @@ export class HomeComponent implements OnInit {
   onClickPreference(e: Event) {
     e.preventDefault();
     this.router.navigate(
-      [{outlets: {popup: ['preference']}}],
+      [{outlets: {popup: ['preference', 'user']}}],
       { skipLocationChange: true }
     );
   }
