@@ -5,7 +5,7 @@ import * as firebase from 'firebase/app';
 import Timestamp = firebase.firestore.Timestamp;
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { filter, first, tap } from 'rxjs/operators';
-import { AuthService, InterestService, GoodsService, GoodsListService } from '@app/core/http';
+import { AuthService, InterestService, GoodsService, GoodsListService, NotificationService } from '@app/core/http';
 import { HtmlClassService, PersistenceService } from '@app/shared/services';
 import { Goods, Interest } from '@app/core/models';
 import DocumentReference = firebase.firestore.DocumentReference;
@@ -37,7 +37,8 @@ export class HomeComponent implements OnInit {
     private goodsListService: GoodsListService,
     private persistenceService: PersistenceService,
     private viewportScroller: ViewportScroller,
-    private htmlClassService: HtmlClassService
+    private htmlClassService: HtmlClassService,
+    private notificationService: NotificationService,
   ) {
     this.filterSoldOut = this.persistenceService.get('filterSoldOut') || false;
     this.userPhotoURL = this.auth.user.photoURL;

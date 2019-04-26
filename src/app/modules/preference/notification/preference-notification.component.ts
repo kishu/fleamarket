@@ -15,7 +15,6 @@ export class PreferenceNotificationComponent implements OnInit {
   readonly user: any;
   show = false;
   notifications$: Observable<Notification[]>;
-  ready$ = new Subject<boolean>();
 
   constructor(
     private router: Router,

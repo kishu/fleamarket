@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { NotificationService } from '@app/core/http';
 import { HtmlClassService } from '@app/shared/services';
 
 @Component({
@@ -20,7 +19,6 @@ export class AppComponent {
   popup: boolean;
 
   constructor(
-    private notificationService: NotificationService,
     private htmlClassService: HtmlClassService
   ) { }
 
