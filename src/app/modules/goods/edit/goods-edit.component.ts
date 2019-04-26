@@ -24,6 +24,7 @@ export class GoodsEditComponent implements OnInit {
   readonly back: string;
   readonly goods: Goods;
   readonly groupName: string;
+  thumbnailsFileList: FileList;
 
   editForm: FormGroup;
   imageFiles = new Map<number, ImageFile>();
@@ -151,6 +152,8 @@ export class GoodsEditComponent implements OnInit {
         this.imageFiles.set(Date.now(), imageFile);
       });
     }
+
+    this.thumbnailsFileList = e.target.files;
   }
 
   onRotateImage(e: TouchEvent | MouseEvent, img: HTMLElement) {
@@ -219,5 +222,9 @@ export class GoodsEditComponent implements OnInit {
   goBack(e: any) {
     e.preventDefault();
     this.locationService.goBack();
+  }
+
+  onLoadThumbnail(b: Blob) {
+    console.log(b);
   }
 }

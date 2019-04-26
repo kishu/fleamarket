@@ -32,6 +32,9 @@
           </div>
           <button type="button" (click)="onDeleteImageUrlByIndex(i)" class="attach_delete">삭제</button>
         </div>
+        <div *ngFor="let file of thumbnailsFileList | keyvalue" class="goods_thumb_area">
+          <app-thumbnail [file]="file.value" (loaded)="onLoadThumbnail($event)"></app-thumbnail>
+        </div>
         <div *ngFor="let imageFile of imageFiles | keyvalue" class="goods_thumb_area">
           <div data-rotate="0" class="goods_thumb rotate0" [style.backgroundImage]="'url(' + imageFile.value.url + ')'" #img>
             <div class="set_profile_thumb">{{ imageFile.key }}</div>

@@ -8,15 +8,15 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 export class ThumbnailComponent implements OnInit {
   @Input() file: File;
   @Output() loaded = new EventEmitter<Blob>();
-  @ViewChild('imgRef') imageRef: ElementRef;
+  @ViewChild('divRef') divRef: ElementRef;
 
   constructor() { }
 
   ngOnInit() {
+    const divEl = this.divRef.nativeElement as HTMLDivElement;
+    const image = new Image();
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-    const img = this.imageRef.nativeElement as HTMLImageElement;
-    const image = new Image();
     image.src = URL.createObjectURL(this.file);
     image.onload = () => {
       const { width, height } = image;
@@ -27,7 +27,7 @@ export class ThumbnailComponent implements OnInit {
       canvas.height = resizeHeight;
       ctx.drawImage(image, 0, 0, resizeWidth, resizeHeight);
       canvas.toBlob(b => {
-        img.src = URL.createObjectURL(b);
+        divEl.style.backgroundImage = `URL(${URL.createObjectURL(b)})`;
         this.loaded.emit(b);
       });
     };
