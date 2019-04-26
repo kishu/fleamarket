@@ -21,7 +21,6 @@ import { AuthService } from '@app/core/http';
 import { AuthGuard } from '@app/shared/guards';
 // components
 import { AppComponent } from '@app/app.component';
-import { SpinnerComponent } from '@app/shared/components/spinner/spinner.component';
 // environment
 import { environment } from '@environments/environment';
 
@@ -35,8 +34,7 @@ export function signIn(authService: AuthService) {
 
 @NgModule({
   declarations: [
-    AppComponent,
-    SpinnerComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
