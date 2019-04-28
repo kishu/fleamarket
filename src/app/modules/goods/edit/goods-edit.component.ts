@@ -26,9 +26,9 @@ export class GoodsEditComponent implements OnInit {
   readonly back: string;
   readonly goods: Goods;
   readonly groupName: string;
-  private imageFileMap = new Map<string, File>();
 
   editForm: FormGroup;
+  imageFileMap = new Map<string, File>();
 
   get title() { return this.editForm.get('title'); }
   get desc() { return this.editForm.get('desc'); }
