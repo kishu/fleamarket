@@ -1,12 +1,14 @@
+import { v4 as uuid } from 'uuid';
 import { Component, OnInit } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable, of } from 'rxjs';
+import { fromPromise } from 'rxjs/internal-compatibility';
 import { map, switchMap } from 'rxjs/operators';
-import { Goods, ImageFile } from '@app/core/models';
+import { Goods } from '@app/core/models';
 import { AuthService, FileUploadService, GoodsService } from '@app/core/http';
-import { HtmlClassService, LocationService } from '@app/shared/services';
+import { HtmlClassService, ImageFileResizeService, LocationService } from '@app/shared/services';
 import { SpinnerService } from '@app/shared/services/spinner.service';
 import { environment } from '@environments/environment';
 
@@ -24,10 +26,9 @@ export class GoodsEditComponent implements OnInit {
   readonly back: string;
   readonly goods: Goods;
   readonly groupName: string;
-  thumbnailsFileList: FileList;
+  private imageFileMap = new Map<string, File>();
 
   editForm: FormGroup;
-  imageFiles = new Map<number, ImageFile>();
 
   get title() { return this.editForm.get('title'); }
   get desc() { return this.editForm.get('desc'); }
@@ -43,7 +44,8 @@ export class GoodsEditComponent implements OnInit {
     private goodsService: GoodsService,
     private fileUploadService: FileUploadService,
     private spinnerService: SpinnerService,
-    private htmlClassService: HtmlClassService
+    private htmlClassService: HtmlClassService,
+    private imageFileResizeService: ImageFileResizeService
   ) {
     this.newGoods = ( this.route.snapshot.params['goodsId'] === 'new' );
     this.action = this.newGoods ? '등록' : '수정';
@@ -110,50 +112,49 @@ export class GoodsEditComponent implements OnInit {
   }
 
   protected upload(): Observable<any> {
-    const files = [];
-
-    if (this.imageFiles.size === 0) {
+    if (this.imageFileMap.size === 0) {
       return of([]);
     }
 
-    this.imageFiles.forEach(imageFile => {
-      files.push(imageFile.file);
-    });
-
-    const progress$ = [];
-    const response$ = [];
-    const statusList = this.fileUploadService.upload(files, this.uploadPreset);
-
-    for (const key of Object.keys(statusList)) {
-      progress$.push(statusList[key].progress);
-      response$.push(statusList[key].response);
-    }
-
-    // merge(progress$).pipe().subscribe(result => {
-    //   result.subscribe(r => console.log('progress$', r));
-    // });
-    //
-
-    return forkJoin(response$).pipe(
-      map(responses => {
-        return responses.map(response => {
-          return response.body.eager[0].url;
+    return fromPromise(
+      this.imageFileResizeService.resizeImageFileList(
+        this.imageFileMap
+      )
+    ).pipe(
+      switchMap(files => {
+        files.forEach(file => {
+          files.push(file);
         });
+
+        const progress$ = [];
+        const response$ = [];
+        const statusList = this.fileUploadService.upload(files, this.uploadPreset);
+
+        for (const key of Object.keys(statusList)) {
+          progress$.push(statusList[key].progress);
+          response$.push(statusList[key].response);
+        }
+
+        return forkJoin(response$).pipe(
+          map(responses => {
+            return responses.map(response => {
+              return response.body.eager[0].url;
+            });
+          })
+        );
       })
     );
   }
 
-  onChangeImage(e: any) {
-    const files = e.target.files;
-    for (let i = 0; i < files.length; i++) {
-      const file = files.item(i);
-      const imageFile = new ImageFile(file);
-      imageFile.readAsDataURL().then(() => {
-        this.imageFiles.set(Date.now(), imageFile);
-      });
+  onChangeImage(e: Event) {
+    const fileList = (e.target as HTMLInputElement).files;
+    for (let i = 0; i < fileList.length; i++) {
+      const id = uuid();
+      this.imageFileMap.set(
+        id,
+        fileList[i]
+      );
     }
-
-    this.thumbnailsFileList = e.target.files;
   }
 
   onRotateImage(e: TouchEvent | MouseEvent, img: HTMLElement) {
@@ -172,8 +173,8 @@ export class GoodsEditComponent implements OnInit {
     this.goods.images.splice(i, 1);
   }
 
-  onDeleteImageFileByKey(key: number) {
-    this.imageFiles.delete(key);
+  onDeleteImageFileByKey(key: string) {
+    this.imageFileMap.delete(key);
   }
 
   onSubmit() {
@@ -224,7 +225,4 @@ export class GoodsEditComponent implements OnInit {
     this.locationService.goBack();
   }
 
-  onLoadThumbnail(b: Blob) {
-    console.log(b);
-  }
 }
