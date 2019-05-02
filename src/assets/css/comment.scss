@@ -131,15 +131,19 @@ li .comment_form {
   visibility: hidden;
 }
 
-.label-border {
-  display: inline-block;
+.label-seller {
+  position: absolute;
+  left: 20px;
+  top: 48px;
+  z-index: 1;
   padding: 0 2px;
   border: 1px solid #ef5359;
+  background-color: #fff;
   font-weight: normal;
   font-size: 11px;
   line-height: 12px;
   color: #ef5359;
-  vertical-align: top;
+  transform: translateX(-50%);
 }
 
 @media screen and (min-width: 768px) {

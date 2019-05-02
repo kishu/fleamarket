@@ -45,3 +45,13 @@ header h1 {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.close svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.close path {
+  fill: #161616;
+}

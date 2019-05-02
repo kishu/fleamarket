@@ -4,7 +4,10 @@
   </header>
   <section *ngIf="!socialSignIn" class="email">
     <div class="join_thumb join"></div>
-    <p class="explain center">세컨마켓은 소셜 로그인 후 이용하실 수 있습니다.</p>
+    <p class="explain center">
+      <span class="highlight">user@naver.com</span> 메일 인증을 완료했습니다.<br>
+      세컨드마켓 이용을 위해 소셜 로그인을 연동해주세요.
+    </p>
 
     <div class="margin3">
       <button type="button" class="button facebook" (click)="onClickSignIn('facebook')"><strong>facebook</strong> 로그인</button>
@@ -27,7 +30,8 @@
     <section class="verification">
       <h3>닉네임 입력</h3>
       <p class="explain">
-        세컨드마켓에서 사용할 닉네임을 입력해 주세요.
+        세컨드마켓에서 사용할 닉네임을 입력해 주세요.<br>
+        닉네임은 마이 페이지에서 언제든 수정이 가능합니다.
       </p>
 
       <div class="has-valid margin3">

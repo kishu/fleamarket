@@ -7,7 +7,7 @@
     <a
       (click)="onSubmit()"
       class="submit"
-      [ngClass]="{'disabled': editForm.invalid}">등록</a>
+      [ngClass]="{'disabled': editForm.invalid}">{{ action }}</a>
   </header>
   <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
     <section>
@@ -221,8 +221,11 @@
         </div>
       </div>
     </section>
+    <section>
+      <button type="submit" [disabled]="editForm.invalid" class="button" [ngClass]="{'disabled': editForm.invalid}">{{ action }}</button>
+      <div class="copyright">
+        Copyright © 2019 Team Second Market. All Rights Reserved.
+      </div>
+    </section>
   </form>
-  <div class="copyright">
-    Copyright © 2019 Team Second Market. All Rights Reserved.
-  </div>
 </div>

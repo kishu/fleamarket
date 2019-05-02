@@ -1,5 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 
+html {
+  &:before {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: -100px;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    background-image: url(../src/assets/img/1493.jpg);
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    background-size: 100px 100px;
+    content: '';
+  }
+}
+
+
 .wrap {
   height: 100%;
   padding-top: 48px;
@@ -51,6 +69,7 @@
   .goods-edit & {
     margin-top: 0;
     padding-top: 24px;
+    padding-bottom: 8px;
   }
 }
 

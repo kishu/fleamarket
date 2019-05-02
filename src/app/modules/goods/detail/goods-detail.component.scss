@@ -311,14 +311,38 @@
   margin-top: 40px;
   padding: 40px 0 16px;
   border-radius: 5px;
-  background-color: #ef5259;
   font-size: 12px;
   line-height: 18px;
   color: #fff;
   text-align: center;
 }
 
+.author_background {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 5px;
+  background-color: #999;
+  overflow: hidden;
+}
+
+.author_background-blur {
+  position: absolute;
+  left: -16px;
+  right: -16px;
+  top: -16px;
+  bottom: -16px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+  filter: blur(10px) brightness(80%);
+}
+
 .author_info p {
+  position: relative;
+  z-index: 1;
   font-size: 14px;
 }
 
@@ -339,5 +363,7 @@
 }
 
 .author_introduce {
+  position: relative;
+  z-index: 1;
   margin-top: 3px;
 }

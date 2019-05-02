@@ -38,15 +38,15 @@
                 [ngStyle]="{'background-image': 'url(' + goods.images[0] + ')'}">
                 <div class="goods-name-wrap"
                   [ngClass]="{'soldout': goods.soldOut}">
-                  <div *ngIf="groupRef.id !== goods.groupRef.id" class="goods-name">
-                    <div class="name-area ellipsis">{{ goods.groupName }}</div>
-                  </div><br>
                   <div class="goods-name">
                     <div class="label-soldout" *ngIf="goods.soldOut">Sold out</div>
                     <div class="name-area ellipsis">{{ goods.title }}</div>
                   </div>
                 </div>
                 <span class="author_thumb" [style.backgroundImage]="'url(' + goods.user.photoURL + ')'"></span>
+                <div *ngIf="groupRef.id !== goods.groupRef.id" class="group-name">
+                  <div class="name-area ellipsis">{{ goods.groupName }}</div>
+                </div>
               </div>
               <div class="price" *ngIf="goods.price > 0"><strong>{{ goods.price | number: '2.' }}</strong> 원</div>
               <div class="price" *ngIf="goods.price === 0">무료나눔</div>

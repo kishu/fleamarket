@@ -111,13 +111,13 @@ export class GoodsDetailComponent implements OnInit {
   onMenuChange(menu: string) {
     switch (menu) {
       case 'edit':
-        this.router.navigate(['/', this.market, 'goods', this.goods.id, 'edit']);
+        this.router.navigate(['/goods', this.goods.id, 'edit']);
         break;
       case 'delete':
         const answer = confirm('삭제한 상품은 복구할 수 없습니다. 삭제 할까요?');
         if (answer) {
          this.goodsService.deleteGoods(this.goods.id).then(() => {
-          this.router.navigate(['/', this.market]);
+          this.router.navigate(['/']);
          });
         }
         break;

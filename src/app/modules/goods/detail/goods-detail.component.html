@@ -97,6 +97,9 @@
           </div>
 
           <div class="author_info">
+            <div class="author_background">
+              <div class="author_background-blur" [style.backgroundImage]="'url(' + goods.user.photoURL + ')'"></div>
+            </div>
             <span class="author_thumb" [style.backgroundImage]="'url(' + goods.user.photoURL + ')'"></span>
             <p><strong>{{ goods.user.displayName }}</strong>님이 판매중입니다.</p>
             <div class="author_introduce">{{ goods.user.desc }}</div>
@@ -132,11 +135,11 @@
             <li *ngFor="let comment of comments" [attr.data-id]="comment.id" class="comment_item">
               <div>
                 <span class="comment_thumb" [style.backgroundImage]="'url(' + comment.user.photoURL + ')'"></span>
+                <span *ngIf="comment.userRef.id === goods.userRef.id" class="label-seller">판매자</span>
                 <div class="comment_content">
                   <strong class="nickname">
                     {{ comment.user.displayName }}
                     {{ comment.user.groupName }}
-                    <span *ngIf="comment.userRef.id === goods.userRef.id" class="label-border">판매자</span>
                   </strong>
                   <p>{{ comment.body }}</p>
                 </div>
