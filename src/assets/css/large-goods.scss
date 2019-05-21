@@ -11,6 +11,7 @@
     overflow: hidden;
     position: relative;
     background-color: #fff;
+    transform: translateZ(0);
 
     > a {
       display: block;
@@ -44,6 +45,15 @@
         bottom: 0;
         background-color: rgba(0, 0, 0, 0.5);
         content: '';
+      }
+
+      .goods-thumb-cover {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 2;
       }
     }
   }
@@ -89,6 +99,7 @@
       display: inline-block;
       position: relative;
       max-width: 100%;
+      vertical-align: top;
 
       .label-soldout {
         position: absolute;
@@ -233,4 +244,19 @@
   height: 24px;
   margin-right: 3px;
   vertical-align: top;
+}
+
+
+.expanddable {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 48px;
+  z-index: 10;
+  padding-bottom: 64%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  transform-origin: 50% 0;
+  pointer-events: none;
 }

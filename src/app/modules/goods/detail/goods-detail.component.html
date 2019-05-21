@@ -3,7 +3,7 @@
     <h1><a [routerLink]="['/']">세컨드마켓</a></h1>
     <a href="#" (click)="goBack($event)" class="back">
       <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M30.83 32.67l-9.17-9.17 9.17-9.17L28 11.5l-12 12 12 12z"/></svg>
-      <span>{{ groupName }}</span>
+      <!-- <span>{{ groupName }}</span> -->
     </a>
 <!--    <a [routerLink]="[{outlets: {popup: ['notification']}}]" class="user-alarm svg-lineType on">-->
     <a href="" (click)="onClickNotification($event)" class="user-alarm svg-lineType on">
@@ -16,9 +16,7 @@
     <div class="responsive-col">
 
       <div class="content">
-        <div class="single-item">
-          <img [src]="goods.images[0]" width="100%" alt="" style="vertical-align:top;">
-        </div>
+        <div class="single-item" [style.backgroundImage]="'url(' + (goods.images[0] || 'assets/img/noimage.jpg') + ')'"></div>
         <h3 class="goods-name">
           <span class="goods-name-bg">
             {{ goods.title }}

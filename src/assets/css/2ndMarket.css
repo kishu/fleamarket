@@ -326,28 +326,3 @@ section.main {
 .rotate270 {
   transform: rotate(270deg);
 }
-
-@media screen and (min-width: 768px) {
-  .responsive-row {
-    display: table;
-    width: 100%;
-    height: 100%;
-    max-width: 752px;
-    margin: 0 auto;
-    table-layout: fixed;
-  }
-
-  .responsive-col {
-    display: table-cell;
-    width: 50%;
-    height: 100%;
-    vertical-align: top;
-  }
-
-  .content {
-    position: relative;
-    height: 100%;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-}

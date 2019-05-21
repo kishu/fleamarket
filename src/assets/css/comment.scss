@@ -145,22 +145,3 @@ li .comment_form {
   color: #ef5359;
   transform: translateX(-50%);
 }
-
-@media screen and (min-width: 768px) {
-  .comment {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 132px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .comment_form {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
-}

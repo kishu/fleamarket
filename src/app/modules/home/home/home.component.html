@@ -3,11 +3,14 @@
     <div>
       <h1>세컨드마켓</h1>
     </div>
+    <span class="back" [@fadeIn]="expand ? true : false">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M30.83 32.67l-9.17-9.17 9.17-9.17L28 11.5l-12 12 12 12z"/></svg>
+    </span>
     <a href (click)="onClickNotification($event)" class="user-alarm svg-lineType on">
       <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" class="new"><path fill="#010101" d="M24 44c2.21 0 4-1.79 4-4h-8c0 2.21 1.79 4 4 4zm12-12V22c0-6.15-3.27-11.28-9-12.64V8c0-1.66-1.34-3-3-3s-3 1.34-3 3v1.36c-5.73 1.36-9 6.49-9 12.64v10l-4 4v2h32v-2l-4-4z"/></svg>
       <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" class="new"><path fill="#010101" d="M24 44c2.21 0 4-1.79 4-4h-8c0 2.21 1.79 4 4 4zm12-12V22c0-6.15-3.27-11.28-9-12.64V8c0-1.66-1.34-3-3-3s-3 1.34-3 3v1.36c-5.73 1.36-9 6.49-9 12.64v10l-4 4v2h32v-2l-4-4z"/></svg>
     </a>
-    <a href (click)="onClickPreference($event)" class="user-profile svg-lineType on">
+    <a href (click)="onClickPreference($event)" class="user-profile svg-lineType on" [@fadeOut]="expand ? true : false">
       <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M24 24c4.42 0 8-3.59 8-8 0-4.42-3.58-8-8-8s-8 3.58-8 8c0 4.41 3.58 8 8 8zm0 4c-5.33 0-16 2.67-16 8v4h32v-4c0-5.33-10.67-8-16-8z"/></svg>
       <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M24 24c4.42 0 8-3.59 8-8 0-4.42-3.58-8-8-8s-8 3.58-8 8c0 4.41 3.58 8 8 8zm0 4c-5.33 0-16 2.67-16 8v4h32v-4c0-5.33-10.67-8-16-8z"/></svg>
     </a>
@@ -28,14 +31,16 @@
       <section *ngIf="goodsList.length === 0" class="list_nothing">
         <p>{{ market === 'group' ? groupName : '2nd Lounge' }}에는 판매중인 상품이 없습니다.</p>
       </section>
-      <ul *ngIf="goodsList.length > 0" class="large_list" id="goods_list">
+      <ul *ngIf="goodsList.length > 0" [@fadeOut]="expand ? true : false" class="large_list" id="goods_list">
         <li *ngFor="let goods of goodsList">
           <div class="item">
-            <a [routerLink]="['/', 'goods', goods.id]"
-              (click)="onClickGoods(goods)">
+            <!-- <a [routerLink]="['/', 'goods', goods.id]"
+              (click)="onClickGoods(goods)"> -->
+            <a
+              (click)="onExpand(goods, $event)">
               <div class="goods_thumb"
                 [ngClass]="{'soldout': goods.soldOut}"
-                [ngStyle]="{'background-image': 'url(' + goods.images[0] + ')'}">
+                [ngStyle]="{'background-image': 'url(' + (goods.images[0] || 'assets/img/noimage.jpg') + ')'}">
                 <div class="goods-name-wrap"
                   [ngClass]="{'soldout': goods.soldOut}">
                   <div class="goods-name">
@@ -47,6 +52,7 @@
                 <div *ngIf="groupRef.id !== goods.groupRef.id" class="group-name">
                   <div class="name-area ellipsis">{{ goods.groupName }}</div>
                 </div>
+                <div class="goods-thumb-cover"></div>
               </div>
               <div class="price" *ngIf="goods.price > 0"><strong>{{ goods.price | number: '2.' }}</strong> 원</div>
               <div class="price" *ngIf="goods.price === 0">무료나눔</div>
@@ -78,10 +84,17 @@
       </div>
     </ng-container>
   </section>
+  <div class="expanddable"
+    [@expand]="expand ? true : false"
+    (@expand.done)="goDetail(selectedGoods)"
+    [ngStyle]="{
+      'background-image': 'url(' + offset.imageUrl + ')',
+      'transform': 'scale(' + offset.scale + ') translateY(' + offset.top + '%)'
+    }"></div>
 
-  <div #observer class="observer" style="height:0"></div>
+  <div #observer class="observer"></div>
 
-  <a [routerLink]="['/', 'goods', 'new', 'edit']" class="write"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M6 34.5V42h7.5l22.13-22.13-7.5-7.5L6 34.5zm35.41-20.41c.78-.78.78-2.05 0-2.83l-4.67-4.67c-.78-.78-2.05-.78-2.83 0l-3.66 3.66 7.5 7.5 3.66-3.66z"/></svg></a>
+  <a [routerLink]="['/', 'goods', 'new', 'edit']" class="write" [@slideOut]="expand ? true : false"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M6 34.5V42h7.5l22.13-22.13-7.5-7.5L6 34.5zm35.41-20.41c.78-.78.78-2.05 0-2.83l-4.67-4.67c-.78-.78-2.05-.78-2.83 0l-3.66 3.66 7.5 7.5 3.66-3.66z"/></svg></a>
 
   <a href="#" class="top"></a>
 

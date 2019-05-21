@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ViewportScroller } from '@angular/common';
 import { ActivatedRoute, Router, Scroll } from '@angular/router';
 import * as firebase from 'firebase/app';
@@ -13,11 +14,50 @@ import DocumentReference = firebase.firestore.DocumentReference;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  animations: [
+    trigger('expand', [
+      state('true', style({
+        'transform': 'scale(1) translateY(0)'
+       })),
+      state('false', style({  })),
+      transition('false => true', animate(200))
+    ]),
+    trigger('fadeOut', [
+      state('true', style({
+        'opacity': 0
+       })),
+      state('false', style({  })),
+      transition('false => true', animate(200))
+    ]),
+    trigger('fadeIn', [
+      state('true', style({
+        'opacity': 1
+       })),
+      state('false', style({
+        'opacity': 0
+       })),
+      transition('false => true', animate(200))
+    ]),
+    trigger('slideOut', [
+      state('true', style({
+        'transform': 'translateY(200%)'
+       })),
+      state('false', style({  })),
+      transition('false => true', animate(200))
+    ])
+  ]
 })
 export class HomeComponent implements OnInit {
   @ViewChild('observer') observer: ElementRef;
 
+  offset: any = {
+    left: 0,
+    right: 0,
+    top: 0
+  };
+  selectedGoods: Goods;
+  expand: boolean;
   userPhotoURL: string;
   groupRef: DocumentReference;
   groupName: string;
@@ -154,4 +194,22 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  onExpand(goods: Goods, e: Event) {
+    const _offset = (e.target as HTMLInputElement).getBoundingClientRect();
+    this.selectedGoods = goods;
+    this.offset = {
+      left: _offset.left,
+      right: _offset.left,
+      top: (_offset.top - 48) / _offset.height * 100,
+      scale: _offset.width / (document.body as HTMLInputElement).clientWidth,
+      imageUrl: goods.images[0] || 'assets/img/noimage.jpg'
+    };
+    this.expand = !this.expand;
+  }
+
+  goDetail(goods: Goods) {
+    if (goods) {
+      this.router.navigate(['/goods', goods.id]);
+    }
+  }
 }

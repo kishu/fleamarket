@@ -1,69 +1,71 @@
 <a href="#" (click)="onClose($event)" class="close">
   <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M38 12.83L35.17 10 24 21.17 12.83 10 10 12.83 21.17 24 10 35.17 12.83 38 24 26.83 35.17 38 38 35.17 26.83 24z"/></svg>
 </a>
-<header>
-  <h1>마이 페이지</h1>
-</header>
-<div class="preference form">
-  <section>
-    <form [formGroup]="preferenceForm" (ngSubmit)="onSubmit()">
-      <div class="profile_border margin3">
-        <div class="profile_thumb" [style.backgroundImage]="'url(' + photoURL  + ')'"></div>
-        <div class="profile_camera"></div>
-        <input type="file"
-                accept="image/gif, image/jpeg, image/png"
-                (change)="onChangeImage($event)">
-      </div>
-      <div class="table margin3">
-        <div class="td">
-          <input type="text"
-                  name="displayName" formControlName="displayName"
-                  maxlength="20" placeholder="이름을 입력하세요" class="input">
-          <div *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)" class="explain">
-            <span *ngIf="displayName.errors.required" class="explain small">이름을 입력하세요.</span>
-          </div>
+<div class="preference-wrap">
+  <header>
+    <h1>마이 페이지</h1>
+  </header>
+  <div class="preference form">
+    <section>
+      <form [formGroup]="preferenceForm" (ngSubmit)="onSubmit()">
+        <div class="profile_border margin3">
+          <div class="profile_thumb" [style.backgroundImage]="'url(' + photoURL  + ')'"></div>
+          <div class="profile_camera"></div>
+          <input type="file"
+                  accept="image/gif, image/jpeg, image/png"
+                  (change)="onChangeImage($event)">
         </div>
-      </div>
-      <p class="explain small">그룹 내 다른 사용자에게 보여지는 정보입니다.</p>
-      <div class="table margin2">
-        <div class="td">
-          <input type="text"
-                  name="desc" formControlName="desc"
-                  maxlenth="100" placeholder="자기소개" class="input">
-        </div>
-      </div>
-      <p class="explain small">연락처, 메신저 ID 등 연락 가능한 방법을 적어주세요.</p>
-      <ng-container formGroupName="notification">
-        <div class="table margin5">
+        <div class="table margin3">
           <div class="td">
-            <h3>내 상품 알림</h3>
-            <p class="explain small">내 상품에 댓글 알림을 받습니다.</p>
-          </div>
-          <div class="td">
-            <div class="switch">
-              <input type="checkbox" id="notification.goods"
-                name="notice" formControlName="goods">
-              <label for="notification.goods"><span></span></label>
+            <input type="text"
+                    name="displayName" formControlName="displayName"
+                    maxlength="20" placeholder="이름을 입력하세요" class="input">
+            <div *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)" class="explain">
+              <span *ngIf="displayName.errors.required" class="explain small">이름을 입력하세요.</span>
             </div>
           </div>
         </div>
-        <div class="hr margin1"></div>
+        <p class="explain small">그룹 내 다른 사용자에게 보여지는 정보입니다.</p>
         <div class="table margin2">
           <div class="td">
-            <h3>관심 상품 알림</h3>
-            <p class="explain small">관심 상품에 대한 댓글 알림을 받습니다.</p>
-          </div>
-          <div class="td">
-            <div class="switch">
-              <input type="checkbox" id="notification.interest"
-                      name="notice" formControlName="interest">
-              <label for="notification.interest"><span></span></label>
-            </div>
+            <input type="text"
+                    name="desc" formControlName="desc"
+                    maxlenth="100" placeholder="자기소개" class="input">
           </div>
         </div>
-      </ng-container>
-      <button type="submit" [disabled]="preferenceForm.pristine || preferenceForm.invalid" class="button margin5" [ngClass]="{'disabled': preferenceForm.pristine || preferenceForm.invalid}">변경</button>
-      <button type="button" (click)="onClickSignOut();" class="button margin2 temp">로그아웃</button>
-    </form>
-  </section>
+        <p class="explain small">연락처, 메신저 ID 등 연락 가능한 방법을 적어주세요.</p>
+        <ng-container formGroupName="notification">
+          <div class="table margin5">
+            <div class="td">
+              <h3>내 상품 알림</h3>
+              <p class="explain small">내 상품에 댓글 알림을 받습니다.</p>
+            </div>
+            <div class="td">
+              <div class="switch">
+                <input type="checkbox" id="notification.goods"
+                  name="notice" formControlName="goods">
+                <label for="notification.goods"><span></span></label>
+              </div>
+            </div>
+          </div>
+          <div class="hr margin1"></div>
+          <div class="table margin2">
+            <div class="td">
+              <h3>관심 상품 알림</h3>
+              <p class="explain small">관심 상품에 대한 댓글 알림을 받습니다.</p>
+            </div>
+            <div class="td">
+              <div class="switch">
+                <input type="checkbox" id="notification.interest"
+                        name="notice" formControlName="interest">
+                <label for="notification.interest"><span></span></label>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <button type="submit" [disabled]="preferenceForm.pristine || preferenceForm.invalid" class="button margin5" [ngClass]="{'disabled': preferenceForm.pristine || preferenceForm.invalid}">변경</button>
+        <button type="button" (click)="onClickSignOut();" class="button margin2 temp">로그아웃</button>
+      </form>
+    </section>
+  </div>
 </div>

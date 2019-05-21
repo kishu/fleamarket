@@ -55,3 +55,9 @@ header h1 {
 .close path {
   fill: #161616;
 }
+
+.alarm-wrap {
+  header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+}

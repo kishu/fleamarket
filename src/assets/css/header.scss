@@ -5,7 +5,6 @@ header {
   top: 0;
   z-index: 20;
   padding: 8px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   background-color: rgba(0, 0, 0, 0.95);
   overflow: hidden;
 }
@@ -59,7 +58,7 @@ header h1 a {
   text-overflow: ellipsis;
 }
 
-.sub header .back {
+header .back {
   position: absolute;
   left: 8px;
   top: 8px;
@@ -75,13 +74,13 @@ header h1 a {
   text-overflow: ellipsis;
 }
 
-.sub header .back svg {
+header .back svg {
   width: 24px;
   height: 24px;
   vertical-align: top;
 }
 
-.sub header .close {
+header .close {
   position: absolute;
   left: 8px;
   top: 8px;
@@ -97,7 +96,7 @@ header h1 a {
   text-overflow: ellipsis;
 }
 
-.sub header .close svg {
+header .close svg {
   width: 24px;
   height: 24px;
   margin: 2px;
